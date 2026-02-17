@@ -1,13 +1,15 @@
 {
-  "name": "karim-treize-vip",
+  "name": "karim-smm",
   "version": "1.0.0",
+  "description": "SMM Panel",
   "main": "server.js",
-  "dependencies": {
-    "express": "^4.18.2",
-    "path": "^0.12.7"
-  },
   "scripts": {
     "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
-
