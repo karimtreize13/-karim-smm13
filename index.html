@@ -3,83 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMM PRO | KARIM</title>
+    <title>SMM PRO | KARIM13</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        :root { --bg: #0b0724; --card: #ffffff; --primary: #1e0e62; --accent: #00e676; --gold: #f0ad4e; --gray: #f8fafc; --text: #64748b; }
-        body { background-color: var(--bg); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 40px; overflow-x: hidden; }
+        :root { --bg: #0b0724; --card: #ffffff; --primary: #1e0e62; --accent: #00e676; --gold: #f0ad4e; --gray: #f8fafc; }
+        body { background-color: var(--bg); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 40px; }
 
-        /* Sidebar / القائمة الجانبية */
-        .sidebar { position: fixed; left: -280px; top: 0; width: 280px; height: 100%; background: var(--primary); z-index: 10000; transition: 0.3s; padding: 20px; color: white; }
+        /* Menu Button */
+        .menu-trigger { position: fixed; top: 15px; left: 15px; z-index: 11000; color: white; font-size: 26px; cursor: pointer; background: rgba(255,255,255,0.1); padding: 5px 10px; border-radius: 8px; }
+
+        /* Sidebar */
+        .sidebar { position: fixed; left: -280px; top: 0; width: 280px; height: 100%; background: var(--primary); z-index: 12000; transition: 0.4s ease; padding: 20px; color: white; }
         .sidebar.open { left: 0; }
-        .side-item { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: bold; font-size: 14px; }
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; z-index: 9999; }
+        .side-item { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: bold; }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; z-index: 11500; }
         .overlay.show { display: block; }
 
-        /* Header / الهيدر الجديد */
-        .header { padding: 15px; display: flex; justify-content: space-between; align-items: center; color: white; }
-        .header-counter { background: #000; color: var(--accent); padding: 5px 12px; border-radius: 8px; font-family: monospace; font-size: 16px; border: 1px solid #333; box-shadow: 0 0 10px rgba(0,230,118,0.2); }
+        /* Header & Counter */
+        .header { padding: 15px 15px 15px 60px; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .header-counter { background: #000; color: var(--accent); padding: 5px 12px; border-radius: 8px; font-family: monospace; font-size: 18px; border: 1px solid #333; }
 
         /* Stats Card */
-        .stats-box { background: var(--card); margin: 10px 15px; border-radius: 15px; padding: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .stats-box i { font-size: 26px; color: var(--primary); background: var(--gray); padding: 10px; border-radius: 12px; }
-        .stats-box .val { font-size: 22px; font-weight: 900; color: var(--primary); }
-        .stats-box .lbl { font-size: 10px; color: var(--text); font-weight: bold; }
+        .stats-box { background: var(--card); margin: 10px 15px; border-radius: 20px; padding: 15px; display: flex; align-items: center; gap: 15px; }
+        .stats-box .val { font-size: 24px; font-weight: 900; color: var(--primary); }
 
-        /* Icon Grid / شبكة الأيقونات المزدوجة */
-        .icon-grid { background: var(--card); margin: 15px; border-radius: 20px; padding: 12px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        .icon-item { aspect-ratio: 1; background: var(--gray); border-radius: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; border: 1px solid #eee; text-align: center; }
-        .icon-item i { font-size: 18px; margin-bottom: 4px; }
-        .icon-item span { font-size: 8px; font-weight: bold; color: #333; line-height: 1.2; }
-        .icon-item.active { background: var(--primary); color: white; border-color: var(--primary); }
-        .icon-item.active span { color: white; }
-        .icon-item.gold-btn { border: 2px solid var(--gold); background: #fffcf0; }
+        /* Categories Grid */
+        .icon-grid { background: var(--card); margin: 15px; border-radius: 25px; padding: 15px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .icon-item { aspect-ratio: 1; background: var(--gray); border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; border: 1px solid #eee; text-align: center; }
+        .icon-item i { font-size: 20px; margin-bottom: 5px; }
+        .icon-item span { font-size: 8.5px; font-weight: 800; color: #333; line-height: 1.2; }
+        .icon-item.active { background: var(--primary); color: white; }
 
-        /* Main Form */
-        .main-card { background: var(--card); margin: 15px; border-radius: 25px; padding: 20px; }
-        label { font-size: 11px; font-weight: bold; color: var(--text); margin: 10px 0 5px 5px; display: block; }
-        .custom-select, .custom-input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 15px; box-sizing: border-box; font-weight: 600; background: var(--gray); outline: none; }
+        /* Order Card */
+        .main-card { background: var(--card); margin: 15px; border-radius: 25px; padding: 25px; }
+        .custom-select, .custom-input { width: 100%; padding: 15px; border-radius: 15px; border: 1px solid #e2e8f0; margin-bottom: 15px; font-weight: 600; background: var(--gray); outline: none; box-sizing: border-box; }
+        .price-display { text-align: center; font-weight: 900; color: #166534; background: #f0fdf4; padding: 15px; border-radius: 15px; margin-bottom: 20px; border: 2px dashed var(--accent); }
+        .btn-order { background: var(--primary); color: white; width: 100%; padding: 20px; border-radius: 18px; border: none; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+
+        /* History Modal & WhatsApp Button in History */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 15000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-body { background: white; width: 100%; max-width: 400px; border-radius: 30px; padding: 25px; position: relative; }
+        .history-item { background: var(--gray); padding: 15px; border-radius: 18px; margin-bottom: 12px; border-left: 6px solid var(--accent); display: flex; justify-content: space-between; align-items: center; }
+        .wa-history-btn { background: #25d366; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 20px; box-shadow: 0 4px 10px rgba(37,211,102,0.3); }
         
-        .price-display { text-align: center; font-weight: 900; color: #166534; background: #f0fdf4; padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px dashed var(--accent); }
-        .btn-order { background: var(--primary); color: white; width: 100%; padding: 18px; border-radius: 15px; border: none; font-size: 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
-        /* History Modal */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 20000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-body { background: white; width: 100%; max-width: 400px; border-radius: 25px; padding: 20px; position: relative; }
-        .history-item { background: #f8fafc; padding: 12px; border-radius: 12px; margin-bottom: 10px; border-left: 5px solid var(--primary); }
+        /* Payment Buttons */
+        .pay-btn { background: var(--gray); padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; align-items: center; gap: 12px; font-weight: bold; cursor: pointer; border: 1px solid #eee; }
     </style>
 </head>
 <body>
 
+    <div class="menu-trigger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="sidebar" id="sidebar">
-        <div style="text-align: right;"><i class="fas fa-times" onclick="toggleMenu()" style="font-size: 24px; cursor: pointer;"></i></div>
-        <h2 style="color: var(--accent); margin-bottom: 30px;">SMM PRO MENU</h2>
-        <div class="side-item" onclick="toggleMenu()"><i class="fas fa-plus-circle"></i> Nouveau Commande / طلب جديد</div>
-        <div class="side-item" onclick="openHistory()"><i class="fas fa-history"></i> Historique / السجل</div>
-        <div class="side-item"><i class="fas fa-wallet"></i> Ajouter Fonds / شحن رصيد</div>
-        <div class="side-item"><i class="fas fa-headset"></i> Support / الدعم الفني</div>
+        <h2 style="color: var(--accent);">MENU SMM</h2>
+        <div class="side-item" onclick="toggleMenu()"><i class="fas fa-plus-circle"></i> طلب جديد / Nouveau Order</div>
+        <div class="side-item" onclick="openHistory()"><i class="fas fa-history"></i> سجل طلباتي / Historique</div>
+        <div class="side-item" onclick="openPayment()"><i class="fas fa-wallet"></i> شحن الرصيد / Paiement</div>
+        <div class="side-item" onclick="window.open('https://wa.me/213656251947')"><i class="fas fa-headset"></i> الدعم الفني / Support</div>
     </div>
 
     <div class="header">
-        <i class="fas fa-bars" onclick="toggleMenu()" style="font-size: 24px; cursor: pointer;"></i>
+        <div></div>
         <div style="font-weight: 900; font-size: 18px;">KARIM<span style="color:var(--accent)">13</span></div>
         <div class="header-counter" id="topCounter">1,163,858</div>
     </div>
 
     <div class="stats-box">
-        <i class="fas fa-layer-group"></i>
+        <i class="fas fa-chart-line" style="font-size: 25px; color: var(--primary);"></i>
         <div>
             <div class="val" id="mainCounter">1,163,858</div>
-            <div class="lbl">TOTAL DES COMMANDES / إجمالي الطلبات</div>
+            <div style="font-size: 10px; font-weight: bold; color: #64748b;">TOTAL DES COMMANDES / إجمالي الطلبات</div>
         </div>
     </div>
 
     <div class="icon-grid">
-        <div class="icon-item gold-btn" onclick="openHistory()">
-            <i class="fas fa-history" style="color: var(--gold);"></i>
-            <span>Historique<br>السجل</span>
-        </div>
         <div class="icon-item active" onclick="pick('TikTok', this)"><i class="fab fa-tiktok"></i><span>TikTok<br>تيك توك</span></div>
         <div class="icon-item" onclick="pick('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook<br>فيسبوك</span></div>
         <div class="icon-item" onclick="pick('Instagram', this)"><i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram<br>انستقرام</span></div>
@@ -91,41 +89,49 @@
     </div>
 
     <div class="main-card">
-        <label>Service / الخدمة</label>
         <select class="custom-select" id="srvSelect" onchange="calc()"></select>
-
-        <label>Lien / Link / الرابط</label>
         <input type="text" id="link" class="custom-input" placeholder="Lien ici / الرابط هنا...">
-
-        <label>Quantité / الكمية</label>
         <input type="number" id="qty" class="custom-input" value="1000" oninput="calc()">
-
-        <div class="price-display" id="priceDisplay">Coût Total: $0.00</div>
-
-        <button class="btn-order" onclick="submitOrder()">CONFIRMER / تأكيد الطلب 🍬</button>
+        <div class="price-display" id="priceDisplay">Cost: $0.00</div>
+        <button class="btn-order" onclick="submitOrder()">
+            <i class="fab fa-whatsapp"></i> تأكيد الطلب بالواتساب
+        </button>
     </div>
 
     <div class="modal" id="historyModal">
         <div class="modal-body">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h3 style="margin:0;">📋 Historique / السجل</h3>
-                <i class="fas fa-times-circle" onclick="closeHistory()" style="color:red; font-size:24px; cursor:pointer;"></i>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3 style="margin:0;">📋 سجل طلباتك</h3>
+                <i class="fas fa-times-circle" onclick="closeModal('historyModal')" style="color:red; font-size:26px; cursor:pointer;"></i>
             </div>
-            <div id="historyList" style="max-height: 400px; overflow-y: auto; margin-top:15px;"></div>
+            <div id="historyList" style="max-height: 400px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="payModal">
+        <div class="modal-body">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h3 style="margin:0;">💳 شحن الرصيد</h3>
+                <i class="fas fa-times-circle" onclick="closeModal('payModal')" style="color:red; font-size:26px; cursor:pointer;"></i>
+            </div>
+            <div class="pay-btn" onclick="sendPay('Baridimob')">Baridimob / بريدي موب</div>
+            <div class="pay-btn" onclick="sendPay('Redotpay')">Redotpay / ريدو باي</div>
+            <div class="pay-btn" onclick="sendPay('Binance')">Binance / بينونس</div>
+            <div class="pay-btn" onclick="sendPay('Flexy')">Flexy / فليكسي</div>
         </div>
     </div>
 
     <script>
-        const SERVICES = [
-            {id: 3231, cat: "TikTok", n: "👤 TikTok Followers | Real HQ", p: 1.10},
-            {id: 7500, cat: "TikTok", n: "👀 TikTok Views | Instant ⚡", p: 0.006},
-            {id: 8253, cat: "Facebook", n: "👤 FB Followers | Real Profiles", p: 0.47},
-            {id: 4401, cat: "YouTube", n: "⏱️ YouTube Watch Time | 4000H", p: 36.50, f: true},
-            {id: 1873, cat: "YouTube", n: "📺 YouTube Premium | 1 Mois", p: 2.50, f: true},
-            {id: 9106, cat: "Gaming", n: "🎮 PUBG 60 UC | Global", p: 1.50, f: true},
-            {id: 8607, cat: "Premium", n: "🎬 Netflix Premium | 1 Mois", p: 4.50, f: true},
-            {id: 3428, cat: "Telegram", n: "👤 Telegram Members | HQ", p: 1.09},
-            {id: 2482, cat: "Snapchat", n: "👤 Snapchat Followers", p: 24.40}
+        const WA_NUM = "213656251947";
+        const DATA = [
+            {id: 1, cat: "TikTok", n: "👤 TikTok Followers | HQ", p: 1.10},
+            {id: 2, cat: "TikTok", n: "👀 TikTok Views | Instant", p: 0.006},
+            {id: 3, cat: "Facebook", n: "👤 FB Followers | Real", p: 0.47},
+            {id: 4, cat: "YouTube", n: "⏱️ YouTube Watch Time", p: 36.50, f: true},
+            {id: 5, cat: "Gaming", n: "🎮 PUBG 60 UC | Global", p: 1.50, f: true},
+            {id: 6, cat: "Premium", n: "🎬 Netflix 1 Mois", p: 4.50, f: true},
+            {id: 7, cat: "Telegram", n: "👤 Telegram Members", p: 1.09},
+            {id: 8, cat: "Snapchat", n: "👤 Snapchat Followers", p: 24.40}
         ];
 
         function toggleMenu() {
@@ -138,56 +144,65 @@
             if(el) el.classList.add('active');
             const s = document.getElementById('srvSelect');
             s.innerHTML = '';
-            SERVICES.filter(x => x.cat === cat).forEach(x => {
+            DATA.filter(x => x.cat === cat).forEach(x => {
                 s.innerHTML += `<option value="${x.id}">${x.n} ($${x.p})</option>`;
             });
             calc();
         }
 
         function calc() {
-            const srv = SERVICES.find(x => x.id == document.getElementById('srvSelect').value);
+            const srv = DATA.find(x => x.id == document.getElementById('srvSelect').value);
             const q = document.getElementById('qty').value || 0;
             if(srv) {
                 let total = srv.f ? srv.p : (srv.p / 1000 * q);
-                document.getElementById('priceDisplay').innerText = `Coût Total: $${total.toFixed(3)}`;
+                document.getElementById('priceDisplay').innerText = `Total: $${total.toFixed(3)}`;
             }
         }
 
         function submitOrder() {
-            const srv = SERVICES.find(x => x.id == document.getElementById('srvSelect').value);
+            const srv = DATA.find(x => x.id == document.getElementById('srvSelect').value);
             const l = document.getElementById('link').value;
-            const p = document.getElementById('priceDisplay').innerText;
-            if(!l) return alert("Veuillez entrer le lien!");
+            const cost = document.getElementById('priceDisplay').innerText;
+            if(!l) return alert("Link svp!");
 
-            // تسجيل السجل
-            let h = JSON.parse(localStorage.getItem('karim_orders') || '[]');
-            h.push({n: srv.n, p: p, d: new Date().toLocaleString('fr-FR')});
-            localStorage.setItem('karim_orders', JSON.stringify(h));
+            // SAVE TO HISTORY
+            let h = JSON.parse(localStorage.getItem('orders_k13') || '[]');
+            h.push({n: srv.n, p: cost, l: l, d: new Date().toLocaleDateString()});
+            localStorage.setItem('orders_k13', JSON.stringify(h));
 
-            window.open(`https://wa.me/213656251947?text=${encodeURIComponent("Nouveau Commande:\n"+srv.n+"\nLien: "+l+"\n"+p)}`);
+            const msg = `Nouveau Commande:\n- الخدمة: ${srv.n}\n- الرابط: ${l}\n- ${cost}`;
+            window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}`);
         }
 
         function openHistory() {
-            const h = JSON.parse(localStorage.getItem('karim_orders') || '[]');
+            const h = JSON.parse(localStorage.getItem('orders_k13') || '[]');
             const list = document.getElementById('historyList');
-            list.innerHTML = h.length ? '' : '<p style="text-align:center">Aucune commande.</p>';
+            list.innerHTML = h.length ? '' : '<p style="text-align:center">لا يوجد طلبات</p>';
             h.reverse().forEach(o => {
-                list.innerHTML += `<div class="history-item"><b>${o.n}</b><br><small>${o.d}</small><br><span style="color:green; font-weight:bold;">${o.p}</span></div>`;
+                const msg = `Suivi de commande:\n${o.n}\nLien: ${o.l}\n${o.p}`;
+                list.innerHTML += `
+                    <div class="history-item">
+                        <div><b>${o.n}</b><br><small>${o.d} | ${o.p}</small></div>
+                        <a href="https://wa.me/${WA_NUM}?text=${encodeURIComponent(msg)}" class="wa-history-btn">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>`;
             });
             document.getElementById('historyModal').style.display = 'flex';
-            if(document.getElementById('sidebar').classList.contains('open')) toggleMenu();
+            toggleMenu();
         }
 
-        function closeHistory() { document.getElementById('historyModal').style.display = 'none'; }
+        function openPayment() { document.getElementById('payModal').style.display = 'flex'; toggleMenu(); }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function sendPay(m) { window.open(`https://wa.me/${WA_NUM}?text=${encodeURIComponent("Chargement via: "+m)}`); }
 
-        // عداد يتحرك تلقائياً للإيحاء بالنشاط
+        // Counter Logic
         setInterval(() => {
             let val = parseInt(document.getElementById('topCounter').innerText.replace(/,/g, ''));
-            val += Math.floor(Math.random() * 3);
-            let formatted = val.toLocaleString();
-            document.getElementById('topCounter').innerText = formatted;
-            document.getElementById('mainCounter').innerText = formatted;
-        }, 3000);
+            val += Math.floor(Math.random() * 2);
+            document.getElementById('topCounter').innerText = val.toLocaleString();
+            document.getElementById('mainCounter').innerText = val.toLocaleString();
+        }, 5000);
 
         window.onload = () => pick('TikTok', document.querySelector('.icon-item.active'));
     </script>
