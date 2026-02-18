@@ -3,217 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMM PRO | KARIM13</title>
+    <title>KARIM13 | SMM PRO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        :root { --bg: #0b0724; --card: #ffffff; --primary: #1e0e62; --accent: #00e676; --gold: #f0ad4e; --gray: #f8fafc; }
-        body { background-color: var(--bg); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 20px; }
+        :root { --bg: #0b0724; --card: #ffffff; --primary: #1e0e62; --accent: #00e676; --gold: #f0ad4e; --gray: #f8fafc; --text-main: #334155; }
+        body { background-color: var(--bg); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding-bottom: 30px; }
 
         /* الهيدر العلوي */
-        .top-nav { padding: 15px; display: flex; align-items: center; justify-content: space-between; color: white; background: var(--bg); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 900; font-size: 20px; letter-spacing: 1px; }
-        .logo span { color: var(--accent); }
+        .top-header { padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; color: white; background: var(--bg); position: sticky; top: 0; z-index: 1000; }
+        .menu-icon { font-size: 24px; cursor: pointer; }
+        .logo-text { font-weight: 900; font-size: 22px; color: white; }
+        .logo-text span { color: var(--accent); }
+        .order-badge { background: #000; color: var(--accent); padding: 5px 12px; border-radius: 10px; font-family: 'Courier New', Courier, monospace; font-weight: bold; border: 1px solid #333; }
 
-        /* عداد الطلبات العلوي */
-        .total-orders-banner { background: var(--card); margin: 10px 15px; border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .total-orders-banner i { font-size: 35px; color: var(--primary); }
-        .total-num { font-size: 28px; font-weight: 900; color: var(--primary); }
-        .total-text { font-size: 11px; font-weight: bold; color: #64748b; }
+        /* كارت إجمالي الطلبات */
+        .banner-card { background: var(--card); margin: 15px; border-radius: 25px; padding: 25px; display: flex; align-items: center; gap: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .banner-card i { font-size: 40px; color: var(--primary); }
+        .banner-info .count { font-size: 32px; font-weight: 900; color: var(--primary); display: block; line-height: 1; }
+        .banner-info .label { font-size: 11px; font-weight: bold; color: #64748b; text-transform: uppercase; margin-top: 5px; display: block; }
 
-        /* شبكة الأيقونات (اللغتين معاً) */
-        .grid-container { background: var(--card); margin: 15px; border-radius: 25px; padding: 15px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-        .grid-item { background: var(--gray); border-radius: 18px; padding: 12px 5px; text-align: center; cursor: pointer; border: 1px solid #eee; transition: 0.3s; }
-        .grid-item i { font-size: 22px; display: block; margin-bottom: 8px; }
-        .grid-item span { font-size: 9px; font-weight: 800; display: block; line-height: 1.2; color: #333; }
-        .grid-item.active { border: 2.5px solid var(--gold); background: #fffdf2; transform: scale(1.05); }
+        /* شبكة الأيقونات (السر في التصميم هنا) */
+        .services-grid { background: var(--card); margin: 15px; border-radius: 30px; padding: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .service-item { background: var(--gray); border-radius: 20px; padding: 15px 5px; text-align: center; cursor: pointer; border: 1px solid #edf2f7; transition: all 0.3s ease; position: relative; }
+        .service-item i { font-size: 24px; display: block; margin-bottom: 8px; transition: 0.3s; }
+        /* نصوص اللغة المزدوجة */
+        .lang-container { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+        .lang-fr { font-size: 10px; font-weight: 800; color: #1e293b; text-transform: capitalize; }
+        .lang-ar { font-size: 10px; font-weight: 700; color: #64748b; font-family: 'Cairo', sans-serif; }
+        
+        .service-item.active { border: 2.5px solid var(--gold); background: #fffdf5; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(240, 173, 78, 0.2); }
+        .service-item.active i { transform: scale(1.1); }
 
         /* نموذج الطلب */
-        .order-section { background: var(--card); margin: 15px; border-radius: 25px; padding: 25px; }
-        .field-label { font-size: 12px; font-weight: bold; color: #475569; margin-bottom: 8px; display: block; }
-        .input-box { width: 100%; padding: 15px; border-radius: 15px; border: 1px solid #e2e8f0; background: var(--gray); box-sizing: border-box; font-weight: 600; margin-bottom: 20px; outline: none; }
-        .price-tag { text-align: center; color: #15803d; font-weight: 900; font-size: 20px; padding: 18px; border: 2px dashed var(--accent); border-radius: 15px; margin-bottom: 20px; background: #f0fdf4; }
-        .btn-whatsapp { background: var(--primary); color: white; width: 100%; padding: 20px; border-radius: 18px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 12px rgba(30, 14, 98, 0.3); }
+        .order-form { background: var(--card); margin: 15px; border-radius: 30px; padding: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .field-title { font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 8px; display: block; }
+        .custom-input { width: 100%; padding: 16px; border-radius: 15px; border: 1.5px solid #e2e8f0; background: var(--gray); box-sizing: border-box; font-weight: 600; margin-bottom: 20px; font-size: 15px; outline: none; transition: 0.3s; }
+        .custom-input:focus { border-color: var(--primary); background: white; }
+        
+        .price-box { text-align: center; color: #059669; font-weight: 900; font-size: 22px; padding: 20px; border: 2px dashed var(--accent); border-radius: 20px; margin-bottom: 20px; background: #ecfdf5; }
+        .btn-order { background: var(--primary); color: white; width: 100%; padding: 20px; border-radius: 20px; border: none; font-weight: 800; font-size: 16px; cursor: pointer; box-shadow: 0 8px 20px rgba(30, 14, 98, 0.3); }
 
-        /* النوافذ المنبثقة (Modals) */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; z-index: 5000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-box { background: white; width: 100%; max-width: 420px; border-radius: 30px; padding: 25px; max-height: 85vh; overflow-y: auto; position: relative; }
-        .close-modal { position: absolute; top: 15px; right: 15px; font-size: 24px; color: #ef4444; cursor: pointer; }
+        /* نافذة السجل والدفع */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 5000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }
+        .modal-content { background: white; width: 100%; max-width: 420px; border-radius: 35px; padding: 25px; max-height: 85vh; overflow-y: auto; position: relative; }
+        .close-icon { position: absolute; top: 20px; right: 20px; font-size: 26px; color: #ef4444; cursor: pointer; }
 
-        /* تنسيق السجل والدفع داخل النافذة */
-        .item-row { background: var(--gray); padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--accent); }
-        .pay-info { background: #f1f5f9; padding: 15px; border-radius: 15px; margin-bottom: 15px; border: 1px solid #cbd5e1; }
-        .copy-btn { color: var(--primary); cursor: pointer; font-size: 18px; transition: 0.2s; }
-        .copy-btn:active { transform: scale(0.8); }
+        .hist-card { background: var(--gray); padding: 15px; border-radius: 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 6px solid var(--accent); }
+        .pay-method { background: #f1f5f9; padding: 15px; border-radius: 18px; margin-bottom: 15px; border: 1px solid #cbd5e1; }
+        .pay-label { font-weight: 800; font-size: 14px; color: var(--primary); margin-bottom: 8px; display: block; }
+        .pay-box { background: white; padding: 12px; border-radius: 12px; font-family: monospace; font-size: 13px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; }
+        .copy-ico { color: var(--primary); cursor: pointer; font-size: 18px; }
     </style>
 </head>
 <body>
 
-    <div class="top-nav">
-        <i class="fas fa-bars" style="font-size: 24px; cursor: pointer;" onclick="openPay()"></i>
-        <div class="logo">KARIM<span>13</span></div>
-        <div style="background:#000; color:var(--accent); padding:5px 12px; border-radius:10px; font-family:monospace; font-weight:bold;" id="liveCounter">1,163,858</div>
+    <div class="top-header">
+        <i class="fas fa-bars menu-icon" onclick="openHistory()"></i>
+        <div class="logo-text">KARIM<span>13</span></div>
+        <div class="order-badge" id="badgeCount">1,163,858</div>
     </div>
 
-    <div class="total-orders-banner">
+    <div class="banner-card">
         <i class="fas fa-chart-line"></i>
-        <div>
-            <div class="total-num" id="mainCounter">1,163,858</div>
-            <div class="total-text">TOTAL DES COMMANDES / إجمالي الطلبات</div>
+        <div class="banner-info">
+            <span class="count" id="mainCount">1,163,858</span>
+            <span class="label">TOTAL DES COMMANDES / إجمالي الطلبات</span>
         </div>
     </div>
 
-    <div class="grid-container">
-        <div class="grid-item active" onclick="selectCategory('TikTok', this)"><i class="fab fa-tiktok"></i><span>TikTok<br>تيك توك</span></div>
-        <div class="grid-item" onclick="selectCategory('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook<br>فيسبوك</span></div>
-        <div class="grid-item" onclick="selectCategory('Instagram', this)"><i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram<br>انستقرام</span></div>
-        <div class="grid-item" onclick="selectCategory('YouTube', this)"><i class="fab fa-youtube" style="color:red"></i><span>YouTube<br>يوتيوب</span></div>
-        
-        <div class="grid-item" onclick="showHistory()"><i class="fas fa-history" style="color:var(--gold)"></i><span>Historique<br>السجل</span></div>
-        
-        <div class="grid-item" onclick="selectCategory('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram<br>تيليجرام</span></div>
-        <div class="grid-item" onclick="selectCategory('Gaming', this)"><i class="fas fa-gamepad" style="color:#10b981"></i><span>Gaming<br>ألعاب</span></div>
-        <div class="grid-item" onclick="openPay()"><i class="fas fa-wallet" style="color:var(--accent)"></i><span>Paiement<br>شحن الرصيد</span></div>
-    </div>
-
-    <div class="order-section">
-        <label class="field-label">Service / الخدمة</label>
-        <select class="input-box" id="serviceSelect" onchange="calculatePrice()"></select>
-        
-        <label class="field-label">Lien (Link) / الرابط</label>
-        <input type="text" id="orderLink" class="input-box" placeholder="Lien ici / الرابط هنا...">
-        
-        <label class="field-label">Quantité / الكمية</label>
-        <input type="number" id="orderQty" class="input-box" value="1000" oninput="calculatePrice()">
-        
-        <div class="price-tag" id="displayTotal">Total: $0.000</div>
-        
-        <button class="btn-whatsapp" onclick="confirmOrder()">
-            <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب
-        </button>
-    </div>
-
-    <div class="modal-overlay" id="historyModal">
-        <div class="modal-box">
-            <i class="fas fa-times-circle close-modal" onclick="closeAllModals()"></i>
-            <h3 style="text-align:center; margin-top:0;">📋 سجل طلباتك</h3>
-            <div id="historyContent"></div>
+    <div class="services-grid">
+        <div class="service-item active" onclick="changeCategory('TikTok', this)">
+            <i class="fab fa-tiktok"></i>
+            <div class="lang-container">
+                <span class="lang-fr">TikTok</span>
+                <span class="lang-ar">تيك توك</span>
+            </div>
+        </div>
+        <div class="service-item" onclick="changeCategory('Facebook', this)">
+            <i class="fab fa-facebook" style="color:#1877f2"></i>
+            <div class="lang-container">
+                <span class="lang-fr">Facebook</span>
+                <span class="lang-ar">فيسبوك</span>
+            </div>
+        </div>
+        <div class="service-item" onclick="changeCategory('Instagram', this)">
+            <i class="fab fa-instagram" style="color:#e4405f"></i>
+            <div class="lang-container">
+                <span class="lang-fr">Instagram</span>
+                <span class="lang-ar">انستقرام</span>
+            </div>
+        </div>
+        <div class="service-item" onclick="changeCategory('YouTube', this)">
+            <i class="fab fa-youtube" style="color:red"></i>
+            <div class="lang-container">
+                <span class="lang-fr">YouTube</span>
+                <span class="lang-ar">يوتيوب</span>
+            </div>
+        </div>
+        <div class="service-item" onclick="openHistory()">
+            <i class="fas fa-history" style="color:var(--gold)"></i>
+            <div class="lang-container">
+                <span class="lang-fr">Historique</span>
+                <span class="lang-ar">السجل</span>
+            </div>
+        </div>
+        <div class="service-item" onclick="changeCategory('Telegram', this)">
+            <i class="fab fa-telegram" style="color:#0088cc"></i>
+            <div class="lang-container">
+                <span class="lang-fr">Telegram</span>
+                <span class="lang-ar">تيليجرام</span>
+            </div>
+        </div>
+        <div class="service-item" onclick="changeCategory('Gaming', this)">
+            <i class="fas fa-gamepad" style="color:#10b981"></i>
+            <div class="lang-container">
+                <span class="lang-fr">Gaming</span>
+                <span class="lang-ar">ألعاب</span>
+            </div>
+        </div>
+        <div class="service-item" onclick="openPayment()">
+            <i class="fas fa-wallet" style="color:var(--accent)"></i>
+            <div class="lang-container">
+                <span class="lang-fr">Paiement</span>
+                <span class="lang-ar">شحن الرصيد</span>
+            </div>
         </div>
     </div>
 
-    <div class="modal-overlay" id="payModal">
-        <div class="modal-box">
-            <i class="fas fa-times-circle close-modal" onclick="closeAllModals()"></i>
-            <h3 style="text-align:center; margin-top:0;">💳 أرقام الدفع / Paiement</h3>
-            
-            <div class="pay-info">
-                <div style="font-weight:bold; font-size:14px; margin-bottom:5px;">Baridimob / بريدي موب</div>
-                <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:10px; border-radius:10px;">
-                    <span id="ripNum">00799999000012345678</span>
-                    <i class="fas fa-copy copy-btn" onclick="copyText('ripNum')"></i>
-                </div>
-            </div>
+    <div class="order-form">
+        <span class="field-title">Service / الخدمة</span>
+        <select class="custom-input" id="srvList" onchange="calc()"></select>
+        
+        <span class="field-title">Lien (Link) / الرابط</span>
+        <input type="text" id="srvLink" class="custom-input" placeholder="Lien ici / الرابط هنا...">
+        
+        <span class="field-title">Quantité / الكمية</span>
+        <input type="number" id="srvQty" class="custom-input" value="1000" oninput="calc()">
+        
+        <div class="price-box" id="srvTotal">Total: $0.000</div>
+        
+        <button class="btn-order" onclick="processOrder()">COMMANDER / تنفيذ الطلب</button>
+    </div>
 
-            <div class="pay-info">
-                <div style="font-weight:bold; font-size:14px; margin-bottom:5px;">RedotPay / ريدو باي</div>
-                <div style="display:flex; justify-content:space-between; align-items:center; background:white; padding:10px; border-radius:10px;">
-                    <span id="redotID">ID: 55667788</span>
-                    <i class="fas fa-copy copy-btn" onclick="copyText('redotID')"></i>
-                </div>
-            </div>
+    <div class="modal" id="modalHist">
+        <div class="modal-content">
+            <i class="fas fa-times-circle close-icon" onclick="closeModals()"></i>
+            <h3 style="text-align:center; color:var(--primary); margin-top:0;">📋 Historique / السجل</h3>
+            <div id="histBody"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="modalPay">
+        <div class="modal-content">
+            <i class="fas fa-times-circle close-icon" onclick="closeModals()"></i>
+            <h3 style="text-align:center; color:var(--primary); margin-top:0;">💳 Paiement / الدفع</h3>
             
-            <p style="font-size:11px; color:red; text-align:center; font-weight:bold; margin-top:20px;">
-                * بعد الدفع، أرسل الإيصال للواتساب لتفعيل الرصيد.
-            </p>
+            <div class="pay-method">
+                <span class="pay-label">CCP / Baridimob (بريدي موب)</span>
+                <div class="pay-box"><span id="copy1">00799999000012345678</span> <i class="fas fa-copy copy-ico" onclick="doCopy('copy1')"></i></div>
+            </div>
+            <div class="pay-method">
+                <span class="pay-label">RedotPay (ريدو باي)</span>
+                <div class="pay-box"><span id="copy2">ID: 88776655</span> <i class="fas fa-copy copy-ico" onclick="doCopy('copy2')"></i></div>
+            </div>
+            <div class="pay-method">
+                <span class="pay-label">Binance Pay (بينونس)</span>
+                <div class="pay-box"><span id="copy3">Pay ID: 11223344</span> <i class="fas fa-copy copy-ico" onclick="doCopy('copy3')"></i></div>
+            </div>
+            <div class="pay-method">
+                <span class="pay-label">Flexy (فليكسي)</span>
+                <div class="pay-box"><span id="copy4">0600000000</span> <i class="fas fa-copy copy-ico" onclick="doCopy('copy4')"></i></div>
+            </div>
         </div>
     </div>
 
     <script>
-        const WA_LINK = "213656251947";
+        const WHATSAPP_NUM = "213656251947";
         const SERVICES = [
-            {id: 1, cat: "TikTok", n: "👤 TikTok Followers | HQ", p: 1.10},
+            {id: 1, cat: "TikTok", n: "👤 TikTok Followers | Real HQ", p: 1.10},
             {id: 2, cat: "Facebook", n: "👤 FB Followers | Real", p: 0.55},
-            {id: 3, cat: "Instagram", n: "👤 Insta Followers | HQ", p: 0.96},
-            {id: 4, cat: "YouTube", n: "👀 YouTube Views | Real", p: 2.15}
+            {id: 3, cat: "Instagram", n: "👤 Insta Followers | HQ", p: 0.90},
+            {id: 4, cat: "YouTube", n: "👀 YT Views | Real", p: 2.10}
         ];
 
-        function selectCategory(cat, element) {
-            document.querySelectorAll('.grid-item').forEach(i => i.classList.remove('active'));
-            if(element) element.classList.add('active');
-            
-            const select = document.getElementById('serviceSelect');
-            select.innerHTML = '';
-            SERVICES.filter(s => s.cat === cat).forEach(s => {
-                select.innerHTML += `<option value="${s.id}">${s.n} ($${s.p})</option>`;
+        function changeCategory(cat, el) {
+            document.querySelectorAll('.service-item').forEach(i => i.classList.remove('active'));
+            if(el) el.classList.add('active');
+            const list = document.getElementById('srvList');
+            list.innerHTML = '';
+            SERVICES.filter(x => x.cat === cat).forEach(x => {
+                list.innerHTML += `<option value="${x.id}">${x.n} ($${x.p})</option>`;
             });
-            calculatePrice();
+            calc();
         }
 
-        function calculatePrice() {
-            const s = SERVICES.find(x => x.id == document.getElementById('serviceSelect').value);
-            const q = document.getElementById('orderQty').value || 0;
+        function calc() {
+            const s = SERVICES.find(x => x.id == document.getElementById('srvList').value);
+            const q = document.getElementById('srvQty').value || 0;
             if(s) {
                 const total = (s.p / 1000) * q;
-                document.getElementById('displayTotal').innerText = `Total: $${total.toFixed(3)}`;
+                document.getElementById('srvTotal').innerText = `Total: $${total.toFixed(3)}`;
             }
         }
 
-        function confirmOrder() {
-            const s = SERVICES.find(x => x.id == document.getElementById('serviceSelect').value);
-            const l = document.getElementById('orderLink').value;
-            const t = document.getElementById('displayTotal').innerText;
-            if(!l) return alert("Veuillez entrer le lien / يرجى إدخال الرابط");
+        function processOrder() {
+            const s = SERVICES.find(x => x.id == document.getElementById('srvList').value);
+            const l = document.getElementById('srvLink').value;
+            const t = document.getElementById('srvTotal').innerText;
+            if(!l) return alert("Veuillez entrer le lien / الرابط مطلوب");
 
-            // حفظ في السجل المحلي
-            let orders = JSON.parse(localStorage.getItem('k13_history') || '[]');
-            orders.push({ name: s.n, total: t, link: l, time: new Date().toLocaleString('fr-FR') });
-            localStorage.setItem('k13_history', JSON.stringify(orders));
-
-            const message = `طلب جديد:\nالخدمة: ${s.n}\nالرابط: ${l}\n${t}`;
-            window.open(`https://wa.me/${WA_LINK}?text=${encodeURIComponent(message)}`);
+            let history = JSON.parse(localStorage.getItem('k13_orders') || '[]');
+            history.push({ name: s.n, price: t, link: l, date: new Date().toLocaleString() });
+            localStorage.setItem('k13_orders', JSON.stringify(history));
+            
+            alert("Commande enregistrée ! / تم تسجيل الطلب بنجاح");
+            openHistory();
         }
 
-        function showHistory() {
-            const orders = JSON.parse(localStorage.getItem('k13_history') || '[]');
-            const container = document.getElementById('historyContent');
-            container.innerHTML = orders.length ? '' : '<p style="text-align:center; color:#64748b;">لا توجد طلبات سابقة</p>';
+        function openHistory() {
+            const history = JSON.parse(localStorage.getItem('k13_orders') || '[]');
+            const body = document.getElementById('histBody');
+            body.innerHTML = history.length ? '' : '<p style="text-align:center; color:#94a3b8;">Aucun commande / لا توجد طلبات</p>';
             
-            orders.reverse().forEach(o => {
-                container.innerHTML += `
-                <div class="item-row">
+            history.reverse().forEach(o => {
+                const msg = `Suivi de commande:\n${o.name}\nLien: ${o.link}\n${o.price}`;
+                body.innerHTML += `
+                <div class="hist-card">
                     <div>
-                        <div style="font-weight:bold; font-size:12px; color:#1e0e62;">${o.name}</div>
-                        <div style="font-size:10px; color:#64748b;">${o.time}</div>
-                        <div style="color:var(--gold); font-weight:900;">${o.total}</div>
+                        <b style="font-size:12px; color:var(--primary);">${o.name}</b><br>
+                        <small style="color:#64748b;">${o.date}</small><br>
+                        <span style="color:#059669; font-weight:900;">${o.price}</span>
                     </div>
-                    <a href="https://wa.me/${WA_LINK}?text=${encodeURIComponent('Suivi de commande: '+o.name)}" style="color:#25d366; font-size:24px;">
+                    <a href="https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(msg)}" style="color:#25d366; font-size:26px;">
                         <i class="fab fa-whatsapp"></i>
                     </a>
                 </div>`;
             });
-            document.getElementById('historyModal').style.display = 'flex';
+            document.getElementById('modalHist').style.display = 'flex';
         }
 
-        function openPay() { document.getElementById('payModal').style.display = 'flex'; }
-        function closeAllModals() { 
-            document.getElementById('historyModal').style.display = 'none'; 
-            document.getElementById('payModal').style.display = 'none'; 
-        }
+        function openPayment() { document.getElementById('modalPay').style.display = 'flex'; }
+        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        function doCopy(id) { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Copié / تم النسخ"); }
 
-        function copyText(id) {
-            const text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text);
-            alert("Copié / تم النسخ");
-        }
-
-        // عداد الطلبات التلقائي
+        // Live Counter
         setInterval(() => {
-            let num = parseInt(document.getElementById('liveCounter').innerText.replace(/,/g, ''));
-            num += Math.floor(Math.random() * 2);
-            document.getElementById('liveCounter').innerText = num.toLocaleString();
-            document.getElementById('mainCounter').innerText = num.toLocaleString();
-        }, 5000);
+            let n = parseInt(document.getElementById('badgeCount').innerText.replace(/,/g, ''));
+            n += Math.floor(Math.random() * 2);
+            document.getElementById('badgeCount').innerText = n.toLocaleString();
+            document.getElementById('mainCount').innerText = n.toLocaleString();
+        }, 4000);
 
-        window.onload = () => selectCategory('TikTok', document.querySelector('.grid-item.active'));
+        window.onload = () => changeCategory('TikTok', document.querySelector('.service-item.active'));
     </script>
 </body>
 </html>
