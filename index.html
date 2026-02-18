@@ -3,187 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM13 | SMM MULTI-LANG</title>
+    <title>KARIM13 | SMM PRO FULL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0f111a; --card: #1a1d29; --accent: #10b981; --text: #ffffff; --dim: #94a3b8; --border: #2d3244; }
+        :root { --bg: #0a0a15; --card: #111827; --accent: #10b981; --gold: #f59e0b; --text: #e2e8f0; --border: #334155; }
         * { margin:0; padding:0; box-sizing:border-box; font-family: 'Tajawal', sans-serif; }
         body { background: var(--bg); color: var(--text); padding: 15px; transition: 0.3s; }
-        
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .logo { font-size: 22px; font-weight: 900; } .logo span { color: var(--accent); }
-        .lang-switch { background: var(--card); color: white; border: 1px solid var(--border); padding: 5px 12px; border-radius: 10px; cursor: pointer; font-size: 12px; font-weight: bold; }
-        
-        .top-icons { display: flex; gap: 15px; align-items: center; }
-        .top-icons i { font-size: 20px; color: var(--dim); cursor: pointer; }
+        body.fr { direction: ltr; }
 
-        .pay-bar { display: flex; justify-content: space-around; background: var(--card); padding: 12px; border-radius: 15px; margin-bottom: 20px; border: 1px solid var(--border); }
-        .pay-item { text-align: center; font-size: 9px; color: var(--dim); }
-        .pay-item i { display: block; font-size: 16px; color: #f59e0b; margin-bottom: 4px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .logo { font-size: 24px; font-weight: 900; } .logo span { color: var(--accent); }
+        .lang-btn { background: var(--card); border: 1px solid var(--border); color: white; padding: 6px 15px; border-radius: 8px; cursor: pointer; }
 
         .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .item { background: var(--card); border-radius: 15px; padding: 12px 5px; text-align: center; border: 1px solid var(--border); cursor: pointer; }
-        .item.active { border-color: #f59e0b; background: rgba(245, 158, 11, 0.1); }
-        .item i { font-size: 22px; margin-bottom: 5px; display: block; }
-        .item span { font-size: 10px; font-weight: 700; }
+        .item { background: var(--card); border-radius: 15px; padding: 15px 5px; text-align: center; border: 1px solid var(--border); cursor: pointer; }
+        .item.active { border-color: var(--gold); background: rgba(245, 158, 11, 0.1); }
+        .item i { font-size: 28px; margin-bottom: 8px; display: block; }
+        .item span { font-size: 11px; font-weight: 700; }
+
+        .recharge-bar { background: linear-gradient(90deg, #064e3b, #065f46); padding: 15px; border-radius: 15px; text-align: center; cursor: pointer; margin-bottom: 20px; border: 1px solid var(--accent); }
 
         .box { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid var(--border); }
-        label { font-size: 12px; color: var(--dim); margin-bottom: 5px; display: block; }
-        select, input { width: 100%; background: #0f111a; border: 1px solid var(--border); padding: 14px; border-radius: 12px; color: white; margin-bottom: 15px; outline: none; }
-        
-        .total { text-align: center; font-size: 20px; font-weight: 900; color: var(--accent); padding: 12px; border: 2px dashed var(--accent); border-radius: 12px; margin-bottom: 15px; }
-        .btn { background: var(--accent); color: white; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: 900; cursor: pointer; }
+        select, input { width: 100%; background: #0f172a; border: 1px solid var(--border); padding: 14px; border-radius: 12px; color: white; margin-bottom: 12px; outline: none; }
+        .total { text-align: center; font-size: 22px; font-weight: 900; color: var(--accent); padding: 15px; border: 2px dashed var(--accent); border-radius: 12px; margin-bottom: 15px; }
+        .btn-main { background: var(--accent); color: white; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: 900; cursor: pointer; font-size: 16px; }
 
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: var(--card); width: 100%; max-width: 350px; border-radius: 25px; padding: 25px; border: 1px solid var(--border); position: relative; text-align: center; }
-        .close-btn { position: absolute; top: 15px; right: 15px; color: #ff4d4d; cursor: pointer; }
+        .modal-content { background: var(--card); width: 100%; max-width: 380px; border-radius: 25px; padding: 25px; border: 1px solid var(--border); position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 15px; cursor: pointer; color: #ff4d4d; }
     </style>
 </head>
-<body>
+<body class="ar">
 
     <div class="header">
-        <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">Français</button>
+        <i class="fas fa-cog" onclick="openM('loginModal')"></i>
         <div class="logo">KARIM<span>13</span></div>
-        <div class="top-icons">
-            <i class="fas fa-wallet" onclick="openM('payModal')"></i>
-            <i class="fas fa-cog" onclick="openM('adminLoginModal')"></i>
-        </div>
+        <button class="lang-btn" onclick="toggleLang()" id="langSwitcher">Français</button>
     </div>
 
-    <div class="pay-bar">
-        <div class="pay-item"><i class="fas fa-university"></i>BaridiMob</div>
-        <div class="pay-item"><i class="fab fa-bitcoin"></i>Binance</div>
-        <div class="pay-item"><i class="fas fa-mobile-alt"></i>Flexy</div>
-    </div>
+    <div class="grid" id="catGrid"></div>
 
-    <div class="grid" id="categoryGrid">
-        </div>
+    <div class="recharge-bar" onclick="openM('payModal')">
+        <i class="fas fa-wallet"></i> <span id="rechargeTxt">شحن الرصيد / Recharger</span>
+    </div>
 
     <div class="box">
-        <label id="lblService">اختر الخدمة:</label>
         <select id="servSel" onchange="calc()"></select>
-        
-        <label id="lblLink">الرابط:</label>
-        <input type="text" id="linkInp" placeholder="https://...">
-        
-        <div id="qBox">
-            <label id="lblQty">الكمية:</label>
-            <input type="number" id="qInp" value="1000" oninput="calc()">
-        </div>
-        
+        <input type="text" id="linkInp" placeholder="الرابط / Lien">
+        <div id="qGroup"><input type="number" id="qInp" value="1000" oninput="calc()"></div>
         <div class="total" id="total">$0.00</div>
-        <button class="btn" onclick="order()" id="btnOrder">تأكيد الطلب</button>
+        <button class="btn-main" onclick="placeOrder()" id="orderBtn">تأكيد الطلب</button>
     </div>
 
-    <div class="modal" id="payModal"><div class="modal-content"><span class="close-btn" onclick="closeM('payModal')">✖</span><h3 id="payTitle">وسائل الدفع</h3><br><p>BaridiMob: <span style="color:var(--accent)">00799999000123456789</span></p><p>Binance: <span style="color:var(--accent)">556677889</span></p></div></div>
+    <div class="modal" id="payModal"><div class="modal-content"><span class="close-btn" onclick="closeM('payModal')">✖</span><h3 id="payTitle">وسائل الدفع</h3><br><p>BaridiMob: <span style="color:var(--accent)">00799999000123456789</span></p><p>Binance ID: <span style="color:var(--accent)">556677889</span></p></div></div>
     
-    <div class="modal" id="adminLoginModal"><div class="modal-content"><h3>🔐 Admin</h3><br><input type="password" id="aPass" placeholder="Password"><button class="btn" onclick="checkA()">Login</button></div></div>
-    
-    <div class="modal" id="adminControl"><div class="modal-content"><h3>⚙️ Control</h3><br><input type="number" id="tId" placeholder="Order ID"><button class="btn" onclick="done()">Complete ✅</button></div></div>
+    <div class="modal" id="loginModal"><div class="modal-content"><h3>🔐 Admin Login</h3><br><input type="password" id="adminPass" placeholder="Password" style="text-align:center"><button class="btn-main" onclick="checkAuth()">Login</button></div></div>
     
     <div class="modal" id="historyModal"><div class="modal-content"><span class="close-btn" onclick="closeM('historyModal')">✖</span><h3 id="histTitle">السجل</h3><div id="hBody" style="max-height:300px; overflow-y:auto; margin-top:10px;"></div></div></div>
 
     <script>
         let currentLang = 'ar';
-        const translations = {
-            ar: { btn: "Français", service: "اختر الخدمة:", link: "الرابط:", qty: "الكمية:", order: "تأكيد الطلب", pay: "وسائل الدفع", hist: "سجل الطلبات", success: "تم إرسال الطلب بنجاح!", errorLink: "يرجى وضع الرابط!", adminOk: "تم التحديث!" },
-            fr: { btn: "العربية", service: "Choisir le service:", link: "Lien:", qty: "Quantité:", order: "Confirmer la commande", pay: "Paiement", hist: "Historique", success: "Commande envoyée!", errorLink: "Lien requis!", adminOk: "Mis à jour!" }
-        };
-
-        const categories = [
-            { id: 'TikTok', ar: 'تيك توك', fr: 'TikTok', icon: 'fab fa-tiktok' },
-            { id: 'Facebook', ar: 'فيسبوك', fr: 'Facebook', icon: 'fab fa-facebook', color: '#1877f2' },
-            { id: 'YouTube', ar: 'يوتيوب', fr: 'YouTube', icon: 'fab fa-youtube', color: 'red' },
-            { id: 'Gaming', ar: 'ألعاب', fr: 'Gaming', icon: 'fas fa-gamepad', color: '#10b981' },
-            { id: 'Premium', ar: 'بريميوم', fr: 'Premium', icon: 'fas fa-gem', color: '#a855f7' },
-            { id: 'History', ar: 'السجل', fr: 'History', icon: 'fas fa-history' }
+        const cats = [
+            {id:'TikTok', ar:'تيك توك', fr:'TikTok', icon:'fab fa-tiktok', col:'#ff0050'},
+            {id:'Facebook', ar:'فيسبوك', fr:'Facebook', icon:'fab fa-facebook', col:'#1877f2'},
+            {id:'Instagram', ar:'إنستغرام', fr:'Instagram', icon:'fab fa-instagram', col:'#e1306c'},
+            {id:'YouTube', ar:'يوتيوب', fr:'YouTube', icon:'fab fa-youtube', col:'red'},
+            {id:'Telegram', ar:'تليجرام', fr:'Telegram', icon:'fab fa-telegram', col:'#0088cc'},
+            {id:'Snapchat', ar:'سناب شات', fr:'Snapchat', icon:'fab fa-snapchat', col:'#fffc00'},
+            {id:'Premium', ar:'بريميوم', fr:'Premium', icon:'fas fa-gem', col:'#a855f7'},
+            {id:'Gaming', ar:'ألعاب', fr:'Gaming', icon:'fas fa-gamepad', col:'#10b981'},
+            {id:'History', ar:'السجل', fr:'History', icon:'fas fa-history', col:'#f59e0b'}
         ];
 
         const services = [
-            {id:1, cat:"TikTok", n:"TikTok Followers | $1.1", p:1.10},
-            {id:2, cat:"TikTok", n:"TikTok Coins 1000", p:13.0, fixed:true},
-            {id:3, cat:"Facebook", n:"FB Followers Global", p:0.47},
-            {id:4, cat:"Gaming", n:"PUBG 60 UC", p:1.50, fixed:true},
-            {id:5, cat:"Premium", n:"Netflix Premium", p:4.50, fixed:true},
-            {id:6, cat:"Premium", n:"Tax Removal 14%", p:20.0, fixed:true}
+            // تيك توك
+            {id:1, cat:'TikTok', n:'TikTok Followers | HQ ($1.1)', p:1.10},
+            {id:2, cat:'TikTok', n:'TikTok Coins 1000', p:13.00, fixed:true},
+            {id:3, cat:'TikTok', n:'TikTok Views | Instant', p:0.006},
+            // فيسبوك
+            {id:4, cat:'Facebook', n:'FB Followers | Global', p:0.47},
+            {id:5, cat:'Facebook', n:'FB 60k Minutes Watch', p:0.95, fixed:true},
+            // يوتيوب
+            {id:6, cat:'YouTube', n:'YouTube Premium - 1 Month', p:2.50, fixed:true},
+            {id:7, cat:'YouTube', n:'YouTube Subscribers | Real', p:18.62},
+            // بريميوم
+            {id:8, cat:'Premium', n:'Netflix Premium | 1 Month', p:4.50, fixed:true},
+            {id:9, cat:'Premium', n:'Tax Removal 14% (إلغاء الضريبة)', p:20.00, fixed:true},
+            // ألعاب
+            {id:10, cat:'Gaming', n:'PUBG 60 UC', p:1.50, fixed:true},
+            {id:11, cat:'Gaming', n:'PUBG 660 UC', p:12.50, fixed:true},
+            // سناب وتليجرام
+            {id:12, cat:'Snapchat', n:'Snapchat Followers | Real', p:24.40},
+            {id:13, cat:'Telegram', n:'Telegram Members | HQ', p:1.09}
         ];
 
-        function toggleLanguage() {
+        function toggleLang() {
             currentLang = currentLang === 'ar' ? 'fr' : 'ar';
-            document.documentElement.lang = currentLang;
-            document.body.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-            
-            document.getElementById('langBtn').innerText = translations[currentLang].btn;
-            document.getElementById('lblService').innerText = translations[currentLang].service;
-            document.getElementById('lblLink').innerText = translations[currentLang].link;
-            document.getElementById('lblQty').innerText = translations[currentLang].qty;
-            document.getElementById('btnOrder').innerText = translations[currentLang].order;
-            document.getElementById('payTitle').innerText = translations[currentLang].pay;
-            document.getElementById('histTitle').innerText = translations[currentLang].hist;
-            
-            renderCategories();
+            document.body.className = currentLang;
+            document.getElementById('langSwitcher').innerText = currentLang === 'ar' ? 'Français' : 'العربية';
+            document.getElementById('orderBtn').innerText = currentLang === 'ar' ? 'تأكيد الطلب' : 'Confirmer';
+            renderCats();
         }
 
-        function renderCategories() {
-            const grid = document.getElementById('categoryGrid');
+        function renderCats() {
+            const grid = document.getElementById('catGrid');
             grid.innerHTML = '';
-            categories.forEach(cat => {
-                const item = document.createElement('div');
-                item.className = 'item' + (cat.id === 'TikTok' ? ' active' : '');
-                item.onclick = () => cat.id === 'History' ? (openM('historyModal'), showHist()) : setCat(cat.id, item);
-                item.innerHTML = `<i class="${cat.icon}" style="color:${cat.color || ''}"></i><span>${cat[currentLang]}</span>`;
-                grid.appendChild(item);
+            cats.forEach(c => {
+                const div = document.createElement('div');
+                div.className = 'item' + (c.id === 'TikTok' ? ' active' : '');
+                div.onclick = () => c.id === 'History' ? openHistory() : setCat(c.id, div);
+                div.innerHTML = `<i class="${c.icon}" style="color:${c.col}"></i><span>${currentLang==='ar'?c.ar:c.fr}</span>`;
+                grid.appendChild(div);
             });
             setCat('TikTok', grid.firstChild);
         }
 
-        function setCat(c, el) {
+        function setCat(cid, el) {
             document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
-            if(el) el.classList.add('active');
-            const s = document.getElementById('servSel'); s.innerHTML = '';
-            services.filter(x => x.cat === c).forEach(x => { s.innerHTML += `<option value="${x.id}">${x.n}</option>`; });
+            el.classList.add('active');
+            const sel = document.getElementById('servSel'); sel.innerHTML = '';
+            services.filter(s => s.cat === cid).forEach(s => { sel.innerHTML += `<option value="${s.id}">${s.n}</option>`; });
             calc();
         }
 
         function calc() {
             const s = services.find(x => x.id == document.getElementById('servSel').value);
-            const q = document.getElementById('qInp').value;
             if(!s) return;
-            if(s.fixed) { document.getElementById('qBox').style.display='none'; document.getElementById('total').innerText=`$${s.p.toFixed(2)}`; }
-            else { document.getElementById('qBox').style.display='block'; document.getElementById('total').innerText=`$${((s.p * q)/1000).toFixed(3)}`; }
+            if(s.fixed) {
+                document.getElementById('qGroup').style.display='none';
+                document.getElementById('total').innerText=`$${s.p.toFixed(2)}`;
+            } else {
+                document.getElementById('qGroup').style.display='block';
+                let q = document.getElementById('qInp').value;
+                document.getElementById('total').innerText=`$${((s.p * q)/1000).toFixed(3)}`;
+            }
         }
 
-        function order() {
+        function placeOrder() {
             const s = services.find(x => x.id == document.getElementById('servSel').value);
-            const l = document.getElementById('linkInp').value;
-            if(!l) return alert(translations[currentLang].errorLink);
-            const o = { id: Math.floor(1000+Math.random()*9000), name: s.n, total: document.getElementById('total').innerText, status: 'Pending' };
-            let os = JSON.parse(localStorage.getItem('k_os') || '[]'); os.push(o);
-            localStorage.setItem('k_os', JSON.stringify(os)); 
-            alert(translations[currentLang].success);
+            const o = { id: Math.floor(10000+Math.random()*90000), n: s.n, p: document.getElementById('total').innerText, st: 'Pending' };
+            let os = JSON.parse(localStorage.getItem('k_orders') || '[]'); os.push(o);
+            localStorage.setItem('k_orders', JSON.stringify(os));
+            alert(currentLang==='ar'?'تم الطلب!':'Succès!');
         }
 
-        function showHist() {
-            const os = JSON.parse(localStorage.getItem('k_os') || '[]');
+        function openHistory() {
+            const os = JSON.parse(localStorage.getItem('k_orders') || '[]');
             const b = document.getElementById('hBody'); b.innerHTML = os.length ? '' : '...';
-            os.reverse().forEach(o => { b.innerHTML += `<div style="background:#0f111a; padding:10px; border-radius:10px; margin-bottom:10px; border-right:4px solid ${o.status==='Completed'?'#10b981':'#f59e0b'}">#${o.id} - ${o.name}<br><small>${o.total} | ${o.status}</small></div>`; });
+            os.reverse().forEach(o => {
+                b.innerHTML += `<div style="background:#0a0a15; padding:12px; border-radius:10px; margin-bottom:10px; border-right:4px solid ${o.st==='Pending'?'orange':'#10b981'}">
+                #${o.id} - ${o.n}<br><small>${o.p} | ${o.st}</small></div>`;
+            });
+            openM('historyModal');
         }
 
-        function openM(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeM(id) { document.getElementById(id).style.display = 'none'; }
-        
-        function checkA() { if(document.getElementById('aPass').value==="karim13"){ closeM('adminLoginModal'); openM('adminControl'); } else alert("!"); }
-        
-        function done() {
-            const id = document.getElementById('tId').value;
-            let os = JSON.parse(localStorage.getItem('k_os') || '[]');
-            os = os.map(o => { if(o.id == id) o.status='Completed'; return o; });
-            localStorage.setItem('k_os', JSON.stringify(os)); 
-            alert(translations[currentLang].adminOk); closeM('adminControl');
+        function checkAuth() {
+            if(document.getElementById('adminPass').value === 'karim13') {
+                closeM('loginModal');
+                const id = prompt("Order ID to Complete:");
+                if(!id) return;
+                let os = JSON.parse(localStorage.getItem('k_orders') || '[]');
+                os = os.map(o => { if(o.id == id) o.st='Completed'; return o; });
+                localStorage.setItem('k_orders', JSON.stringify(os)); alert("Done!");
+            }
         }
 
-        window.onload = () => renderCategories();
+        function openM(id) { document.getElementById(id).style.display='flex'; }
+        function closeM(id) { document.getElementById(id).style.display='none'; }
+
+        window.onload = () => renderCats();
     </script>
 </body>
 </html>
