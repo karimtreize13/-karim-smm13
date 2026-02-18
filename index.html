@@ -26,9 +26,6 @@
             padding-bottom: 30px;
         }
         body.fr { direction: ltr; text-align: left; }
-        body.fr .rtl-only { display: none; }
-        body.ar .fr-only { display: none; }
-
         .header {
             padding: 16px 20px;
             display: flex;
@@ -225,7 +222,7 @@
         <button class="btn-order" onclick="placeOrder()">تنفيذ الطلب / Passer la commande</button>
     </div>
 
-    <!-- Modal Historique -->
+    <!-- Modal السجل -->
     <div class="modal" id="historyModal">
         <div class="modal-content">
             <i class="fas fa-times close-btn" onclick="closeModals()"></i>
@@ -235,7 +232,7 @@
         </div>
     </div>
 
-    <!-- Modal Recharger -->
+    <!-- Modal الشحن -->
     <div class="modal" id="rechargeModal">
         <div class="modal-content">
             <i class="fas fa-times close-btn" onclick="closeModals()"></i>
@@ -251,7 +248,7 @@
     <script>
         const SERVICES = [
             // --- GIFT & SPECIAL ---
-            { id: 9999, cat: "TikTok", n: "🪙 TikTok Coins - 1000 Pièces | شحن عملات تيك توك - 1000 عملة", p: 13.00 },
+            { id: 9999, cat: "TikTok", n: "🪙 TikTok Coins - 1000 Pièces | شحن عملات تيك توك - 1000 عملة", p: 13.00 },        
             {id: 3231, cat: "TikTok", n: "TikTok Followers | HQ Real | 2K/Day", n_ar: "👤 متابعين تيك توك | حقيقي (2000 يومياً) 🛡️", p: 1.10},  
             {id: 3338, cat: "TikTok", n: "TikTok Followers | HQ Real", n_ar: "👤 متابعين تيك توك جودة عالية | ضمان مدى الحياة ♻️", p: 0.95},
             {id: 3340, cat: "TikTok", n: "TikTok Followers | Perfect Quality", n_ar: "👤 متابعين تيك توك جودة مثالية | ضمان مدى الحياة ♻️", p: 1.10},
@@ -348,7 +345,7 @@
             {id: 13, cat: "Premium", n: "🎁 Netflix Gift | Direct Download", n_ar: "🎁 هدية نتفليكس | تحميل مباشر", p: 0.00, type: "fixed"},
             {id: 8607, cat: "Premium", n: "Netflix Premium | 1 Month", n_ar: "نتفليكس بريميوم | شهر", p: 4.50, type: "fixed"},
             {id: 3364, cat: "Premium", n: "CapCut Premium | 1 Month", n_ar: "كاب كات برو | شهر", p: 6.00, type: "fixed"},
-            {id: 3223, cat: "Premium", n: "🎬 CapCut Pro [3 Months]", n_ar: "🎬 كاب كات برو [3 أشهر]", p: 15.00, type: "fixed", desc: "تفعيل على إيميلك الشخصي | ضمان 3 أشهر"},
+            {id: 3223, cat: "Premium", n: "🎬 CapCut Pro [3 Months]", n_ar: "🎬 كاب كات برو [3 أشهر]", p: 15.00, type: "fixed"},
             {id: 3407, cat: "Premium", n: "Gemini Pro | 2TB Storage", n_ar: "جيمناي برو | 2 تيرا", p: 6.23, type: "fixed"},
             {id: 3226, cat: "Premium", n: "ChatGPT Plus (GPT-4) | 1 Month", n_ar: "تشات جي بي تي بلس (GPT-4) | شهر", p: 5.50, type: "fixed"},
             {id: 3343, cat: "Premium", n: "Blackbox AI (GPT-4, Gemini, DeepSeek) | 3 Month", n_ar: "بلاك بوكس AI (جيميني، جي بي تي، ديب سيك) | 3 أشهر", p: 13.00, type: "fixed"},
@@ -358,7 +355,7 @@
             {id: 3369, cat: "Premium", n: "Tax Removal 14% (Facebook - YouTube - TikTok - Snapchat)", n_ar: "إلغاء ضرائب 14% (فيسبوك - يوتيوب - تيك توك - سناب شات)", p: 20.00, type: "fixed"},
             {id: 1104, cat: "Premium", n: "IPTV Gold | 12 Month", n_ar: "اشتراك IPTV ذهبي | سنة", p: 16.00, type: "fixed"},     
 
-            // --- GAMING (PUBG UC) ---
+            // --- GAMING ---
             {id: 9106, cat: "Gaming", n: "PUBG Mobile | 60 UC | Global", n_ar: "ببجي موبايل | 60 شدة | عالمي ⚡", p: 1.50},
             {id: 9108, cat: "Gaming", n: "PUBG Mobile | 325 UC | Global", n_ar: "ببجي موبايل | 325 شدة | عالمي ⚡", p: 5.50},
             {id: 9109, cat: "Gaming", n: "PUBG Mobile | 660 UC | Global", n_ar: "ببجي موبايل | 660 شدة | عالمي ⚡", p: 12.50},
@@ -402,24 +399,41 @@
                 select.appendChild(opt);
             });
 
+            document.getElementById('quantityInput').disabled = false;
+            document.getElementById('quantityInput').value = 1000;
             calculatePrice();
         }
 
         function calculatePrice() {
             const select = document.getElementById('serviceSelect');
             const opt = select.options[select.selectedIndex];
+            
             if (!opt || !opt.value) {
                 document.getElementById('totalDisplay').textContent = currentLang === 'ar' ? 'الإجمالي: 0.00 $' : 'Total: 0.00 $';
                 return;
             }
 
             const service = SERVICES.find(s => s.id == opt.value);
-            const qty = parseInt(document.getElementById('quantityInput').value) || 0;
-            let total = service.type === 'fixed' ? service.p.toFixed(2) : ((service.p * qty) / 1000).toFixed(3);
+            if (!service) return;
 
-            document.getElementById('totalDisplay').textContent = currentLang === 'ar' 
-                ? `الإجمالي: ${total} $` 
-                : `Total: ${total} $`;
+            const qtyInput = document.getElementById('quantityInput');
+
+            if (service.type === 'fixed') {
+                const total = service.p.toFixed(2);
+                document.getElementById('totalDisplay').textContent = currentLang === 'ar' ? `الإجمالي: ${total} $` : `Total: ${total} $`;
+                qtyInput.disabled = true;
+                qtyInput.value = "—";
+                return;
+            }
+
+            let qty = parseInt(qtyInput.value) || 100;
+            if (qty < 100) qty = 100;
+
+            const total = (service.p * qty) / 1000;
+            const totalStr = total < 0.01 ? total.toFixed(5) : total.toFixed(3);
+
+            document.getElementById('totalDisplay').textContent = currentLang === 'ar' ? `الإجمالي: ${totalStr} $` : `Total: ${totalStr} $`;
+            qtyInput.disabled = false;
         }
 
         function placeOrder() {
@@ -430,7 +444,13 @@
             const service = SERVICES.find(s => s.id == select.value);
             if (!service) return alert(currentLang === 'ar' ? "اختر خدمة" : "Choisissez un service");
 
-            const qty = document.getElementById('quantityInput').value;
+            const qtyInput = document.getElementById('quantityInput');
+            const qty = parseInt(qtyInput.value) || 0;
+
+            if (service.type !== 'fixed' && qty < 100) {
+                return alert(currentLang === 'ar' ? "الكمية يجب أن تكون 100 على الأقل" : "Quantité minimum 100 requise");
+            }
+
             const total = document.getElementById('totalDisplay').textContent;
 
             const order = {
@@ -447,10 +467,7 @@
             orders.push(order);
             localStorage.setItem('k13_orders', JSON.stringify(orders));
 
-            alert(currentLang === 'ar' 
-                ? `تم تسجيل الطلب! رقم الطلب: #${order.id}` 
-                : `Commande enregistrée ! Numéro : #${order.id}`);
-
+            alert(currentLang === 'ar' ? `تم تسجيل الطلب! رقم: #\( {order.id}` : `Commande enregistrée ! N°: # \){order.id}`);
             openHistory();
         }
 
@@ -500,8 +517,11 @@
             if (pass !== "karim13") return alert(currentLang === 'ar' ? "كلمة مرور خاطئة" : "Mot de passe incorrect");
 
             const id = prompt(currentLang === 'ar' ? "رقم الطلب لجعله مكتملاً:" : "Numéro de commande à compléter :");
+            if (!id) return;
+
             let orders = JSON.parse(localStorage.getItem('k13_orders') || '[]');
             const order = orders.find(o => o.id == id);
+
             if (order) {
                 order.status = "Completed";
                 localStorage.setItem('k13_orders', JSON.stringify(orders));
