@@ -7,183 +7,160 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
         :root { --bg: #0b0724; --card: #ffffff; --primary: #1e0e62; --accent: #00e676; --gold: #f0ad4e; --gray: #f8fafc; }
-        body { background-color: var(--bg); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 30px; }
+        body { background-color: var(--bg); font-family: 'Segoe UI', sans-serif; margin: 0; color: #333; }
 
-        /* Header */
-        .top-header { padding: 15px; display: flex; align-items: center; justify-content: space-between; background: var(--bg); position: sticky; top: 0; z-index: 1000; }
-        .logo-text { font-weight: 900; font-size: 20px; color: white; }
-        .logo-text span { color: var(--accent); }
-        .lang-switch { display: flex; gap: 5px; }
-        .lang-btn { background: #334155; color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 10px; cursor: pointer; }
-        .lang-btn.active { background: var(--accent); color: #000; }
-
-        /* Banner */
-        .banner-card { background: var(--card); margin: 15px; border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 15px; }
-        .banner-card i { font-size: 30px; color: var(--primary); }
-        .count-text { font-size: 26px; font-weight: 900; color: var(--primary); }
+        /* Header & Lang */
+        .header { padding: 15px; display: flex; justify-content: space-between; align-items: center; background: var(--bg); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-weight: 900; font-size: 22px; color: white; }
+        .logo span { color: var(--accent); }
+        .lang-box { display: flex; gap: 5px; }
+        .l-btn { background: #334155; color: white; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; }
+        .l-btn.active { background: var(--accent); color: #000; }
 
         /* Grid */
-        .grid-container { background: var(--card); margin: 15px; border-radius: 25px; padding: 15px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        .grid-item { background: var(--gray); border-radius: 15px; padding: 12px 5px; text-align: center; cursor: pointer; border: 1px solid #eee; transition: 0.2s; }
-        .grid-item i { font-size: 22px; display: block; margin-bottom: 5px; }
-        .grid-item span { font-size: 8px; font-weight: 800; display: block; line-height: 1.2; color: #333; }
-        .grid-item.active { border: 2px solid var(--gold); background: #fffcf0; }
+        .grid { background: var(--card); margin: 15px; border-radius: 25px; padding: 15px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .item { background: var(--gray); border-radius: 15px; padding: 12px 5px; text-align: center; cursor: pointer; border: 1px solid #eee; }
+        .item i { font-size: 22px; display: block; margin-bottom: 5px; }
+        .item span { font-size: 8px; font-weight: 800; display: block; line-height: 1.2; }
+        .item.active { border: 2px solid var(--gold); background: #fffcf0; }
 
-        /* Order Form */
-        .order-section { background: var(--card); margin: 15px; border-radius: 25px; padding: 20px; }
-        .input-style { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #e2e8f0; background: var(--gray); box-sizing: border-box; font-weight: 600; margin-bottom: 15px; }
-        .total-box { text-align: center; color: #15803d; font-weight: 900; font-size: 18px; padding: 15px; border: 2px dashed var(--accent); border-radius: 15px; margin-bottom: 15px; background: #f0fdf4; }
-        .order-btn { background: var(--primary); color: white; width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; font-size: 15px; cursor: pointer; width: 100%; }
+        /* Order Box */
+        .order-card { background: var(--card); margin: 15px; border-radius: 25px; padding: 20px; }
+        .inp { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ddd; background: var(--gray); margin-bottom: 12px; box-sizing: border-box; font-weight: bold; }
+        .price { text-align: center; color: #15803d; font-weight: 900; font-size: 18px; padding: 15px; border: 2px dashed var(--accent); border-radius: 15px; margin-bottom: 15px; }
+        .btn-go { background: var(--primary); color: white; width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer; }
+
+        /* Status Badges */
+        .st { padding: 4px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; color: white; }
+        .st-p { background: var(--gold); } /* En attente */
+        .st-c { background: var(--accent); } /* Complété */
 
         /* Modals */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; z-index: 5000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: white; width: 100%; max-width: 400px; border-radius: 25px; padding: 20px; max-height: 80vh; overflow-y: auto; position: relative; }
-        .close-modal { position: absolute; top: 15px; right: 15px; font-size: 22px; color: #ef4444; cursor: pointer; }
+        .modal-c { background: white; width: 100%; max-width: 400px; border-radius: 25px; padding: 20px; max-height: 80vh; overflow-y: auto; position: relative; }
+        .close { position: absolute; top: 15px; right: 15px; font-size: 20px; color: red; cursor: pointer; }
 
-        /* Status Styles */
-        .status-badge { padding: 4px 8px; border-radius: 5px; font-size: 9px; font-weight: bold; color: white; }
-        .status-pending { background: var(--gold); }
-        .status-completed { background: var(--accent); }
-
-        .row-item { background: var(--gray); padding: 12px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--accent); }
-        .pay-card { background: #f1f5f9; padding: 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid #cbd5e1; }
+        .pay-box { background: #f1f5f9; padding: 12px; border-radius: 12px; margin-bottom: 10px; border: 1px solid #ddd; }
+        .row { background: var(--gray); padding: 10px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; border-left: 5px solid var(--accent); }
     </style>
 </head>
 <body>
 
-    <div class="top-header">
-        <i class="fas fa-user-shield" style="color:white; cursor:pointer;" onclick="adminLogin()"></i>
-        <div class="logo-text">KARIM<span>13</span></div>
-        <div class="lang-switch">
-            <button class="lang-btn active">FR</button>
-            <button class="lang-btn">AR</button>
+    <div class="header">
+        <i class="fas fa-cog" style="color:white; cursor:pointer;" onclick="adminPanel()"></i>
+        <div class="logo">KARIM<span>13</span></div>
+        <div class="lang-box">
+            <button class="l-btn active">FR</button>
+            <button class="l-btn">AR</button>
         </div>
     </div>
 
-    <div class="banner-card">
-        <i class="fas fa-chart-line"></i>
-        <div>
-            <span class="count-text" id="liveCount">1,163,858</span>
-            <div style="font-size:10px; font-weight:bold; color:#64748b;">TOTAL DES COMMANDES / إجمالي الطلبات</div>
+    <div class="grid">
+        <div class="item active" onclick="setCat('TikTok', this)"><i class="fab fa-tiktok"></i><span>TikTok<br>تيك توك</span></div>
+        <div class="item" onclick="setCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook<br>فيسبوك</span></div>
+        <div class="item" onclick="setCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram<br>انستقرام</span></div>
+        <div class="item" onclick="openHist()"><i class="fas fa-history" style="color:var(--gold)"></i><span>Historique<br>السجل</span></div>
+        <div class="item" onclick="setCat('Premium', this)"><i class="fas fa-gem" style="color:#a855f7"></i><span>Premium<br>اشتراكات</span></div>
+        <div class="item" onclick="setCat('Gaming', this)"><i class="fas fa-gamepad" style="color:#10b981"></i><span>Gaming<br>ألعاب</span></div>
+        <div class="item" onclick="openPay()" style="grid-column: span 2; background:#f0fdf4;"><i class="fas fa-wallet" style="color:var(--accent)"></i><span>RECHARGER<br>شحن الرصيد</span></div>
+    </div>
+
+    <div class="order-card">
+        <select class="inp" id="sSrv" onchange="calc()"></select>
+        <input type="text" id="sLink" class="inp" placeholder="Lien / الرابط">
+        <input type="number" id="sQty" class="inp" value="1000" oninput="calc()">
+        <div class="price" id="sTotal">Total: $0.000</div>
+        <button class="btn-go" onclick="send()">COMMANDER / تنفيذ الطلب</button>
+    </div>
+
+    <div class="modal" id="mHist">
+        <div class="modal-c">
+            <i class="fas fa-times close" onclick="closeAll()"></i>
+            <h3 style="text-align:center;">📋 Historique / السجل</h3>
+            <div id="hContent"></div>
         </div>
     </div>
 
-    <div class="grid-container">
-        <div class="grid-item active" onclick="setCat('TikTok', this)"><i class="fab fa-tiktok"></i><span>TikTok<br>تيك توك</span></div>
-        <div class="grid-item" onclick="setCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook<br>فيسبوك</span></div>
-        <div class="grid-item" onclick="setCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram<br>انستقرام</span></div>
-        <div class="grid-item" onclick="openHistory()"><i class="fas fa-history" style="color:var(--gold)"></i><span>Historique<br>السجل</span></div>
-        
-        <div class="grid-item" onclick="setCat('Premium', this)"><i class="fas fa-gem" style="color:#a855f7"></i><span>Premium<br>اشتراكات</span></div>
-        <div class="grid-item" onclick="setCat('Gaming', this)"><i class="fas fa-gamepad" style="color:#10b981"></i><span>Gaming<br>ألعاب</span></div>
-        <div class="grid-item" onclick="openPayment()" style="grid-column: span 2; background:#f0fdf4;"><i class="fas fa-wallet" style="color:var(--accent)"></i><span>RECHARGER<br>شحن الرصيد</span></div>
-    </div>
-
-    <div class="order-section">
-        <label style="font-size:11px; font-weight:bold;">Service / الخدمة</label>
-        <select class="input-style" id="srvSelect" onchange="calcTotal()"></select>
-        <input type="text" id="srvLink" class="input-style" placeholder="Lien ici / الرابط هنا...">
-        <input type="number" id="srvQty" class="input-style" value="1000" oninput="calcTotal()">
-        <div class="total-box" id="totalBox">Total: $0.000</div>
-        <button class="order-btn" onclick="placeOrder()">COMMANDER / تنفيذ الطلب</button>
-    </div>
-
-    <div class="modal" id="modalHist">
-        <div class="modal-content">
-            <i class="fas fa-times-circle close-modal" onclick="closeAll()"></i>
-            <h3 style="text-align:center;">📋 السجل / Historique</h3>
-            <div id="histContent"></div>
-        </div>
-    </div>
-
-    <div class="modal" id="modalPay">
-        <div class="modal-content">
-            <i class="fas fa-times-circle close-modal" onclick="closeAll()"></i>
+    <div class="modal" id="mPay">
+        <div class="modal-c">
+            <i class="fas fa-times close" onclick="closeAll()"></i>
             <h3 style="text-align:center;">💳 وسائل الدفع / Paiement</h3>
-            <div class="pay-card"><b>Baridimob (بريدي موب):</b> <br><span id="c1">00799999000012345678</span> <i class="fas fa-copy" onclick="copy('c1')"></i></div>
-            <div class="pay-card"><b>Binance (بينونس):</b> <br><span id="c2">ID: 11223344</span> <i class="fas fa-copy" onclick="copy('c2')"></i></div>
-            <div class="pay-card"><b>Flexy (فليكسي):</b> <br><span id="c3">0600000000</span> <i class="fas fa-copy" onclick="copy('c3')"></i></div>
+            <div class="pay-box"><b>Baridimob:</b> <span id="ccp">00799999000012345678</span> <i class="fas fa-copy" onclick="copy('ccp')"></i></div>
+            <div class="pay-box"><b>Binance:</b> <span id="bin">ID: 11223344</span> <i class="fas fa-copy" onclick="copy('bin')"></i></div>
+            <div class="pay-box"><b>RedotPay:</b> <span id="red">ID: 55667788</span> <i class="fas fa-copy" onclick="copy('red')"></i></div>
+            <div class="pay-box"><b>Flexy:</b> <span id="flx">0600000000</span> <i class="fas fa-copy" onclick="copy('flx')"></i></div>
         </div>
     </div>
 
     <script>
-        const WA_NUMBER = "213656251947";
-        const DATA = [
-            {id: 1, cat: "TikTok", n: "👤 TikTok Followers", p: 1.1},
+        const SERVICES = [
+            {id: 1, cat: "TikTok", n: "👤 Followers TikTok HQ", p: 1.1},
             {id: 2, cat: "Premium", n: "💎 Netflix 1 Mois", p: 5.5}
         ];
 
         function setCat(c, el) {
-            document.querySelectorAll('.grid-item').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
-            const s = document.getElementById('srvSelect');
+            document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
+            if(el) el.classList.add('active');
+            const s = document.getElementById('sSrv');
             s.innerHTML = '';
-            DATA.filter(x => x.cat === c).forEach(x => {
+            SERVICES.filter(x => x.cat === c).forEach(x => {
                 s.innerHTML += `<option value="${x.id}">${x.n} ($${x.p})</option>`;
             });
-            calcTotal();
+            calc();
         }
 
-        function calcTotal() {
-            const s = DATA.find(x => x.id == document.getElementById('srvSelect').value);
-            const q = document.getElementById('srvQty').value;
-            if(s) document.getElementById('totalBox').innerText = `Total: $${((s.p/1000)*q).toFixed(3)}`;
+        function calc() {
+            const s = SERVICES.find(x => x.id == document.getElementById('sSrv').value);
+            const q = document.getElementById('sQty').value;
+            if(s) document.getElementById('sTotal').innerText = `Total: $${((s.p/1000)*q).toFixed(3)}`;
         }
 
-        function placeOrder() {
-            const s = DATA.find(x => x.id == document.getElementById('srvSelect').value);
-            const l = document.getElementById('srvLink').value;
+        function send() {
+            const s = SERVICES.find(x => x.id == document.getElementById('sSrv').value);
+            const l = document.getElementById('sLink').value;
             if(!l) return alert("Link required");
 
-            const order = {
-                id: Date.now(),
-                name: s.n,
-                status: "En attente",
-                date: new Date().toLocaleString(),
-                price: document.getElementById('totalBox').innerText
-            };
-
-            let history = JSON.parse(localStorage.getItem('k13_orders') || '[]');
-            history.push(order);
-            localStorage.setItem('k13_orders', JSON.stringify(history));
-            alert("Commande Enregistrée!");
-            openHistory();
+            const order = { id: Math.floor(1000 + Math.random() * 9000), name: s.n, status: "Pending", date: new Date().toLocaleString(), price: document.getElementById('sTotal').innerText };
+            let h = JSON.parse(localStorage.getItem('k13_h') || '[]');
+            h.push(order);
+            localStorage.setItem('k13_h', JSON.stringify(h));
+            alert("Commande Enregistrée! ID: " + order.id);
+            openHist();
         }
 
-        function openHistory() {
-            const orders = JSON.parse(localStorage.getItem('k13_orders') || '[]');
-            const container = document.getElementById('histContent');
-            container.innerHTML = orders.reverse().map((o, index) => `
-                <div class="row-item">
-                    <div>
-                        <b>${o.name}</b><br><small>${o.date}</small><br>
-                        <span class="status-badge ${o.status === 'Complet' ? 'status-completed' : 'status-pending'}">${o.status}</span>
-                    </div>
-                    <a href="https://wa.me/${WA_NUMBER}?text=Order ID: ${o.id}" style="color:#25d366;"><i class="fab fa-whatsapp"></i></a>
+        function openHist() {
+            const h = JSON.parse(localStorage.getItem('k13_h') || '[]');
+            const cont = document.getElementById('hContent');
+            cont.innerHTML = h.reverse().map(o => `
+                <div class="row">
+                    <div style="font-size:11px;"><b>#${o.id} - ${o.name}</b><br>${o.date}<br>
+                    <span class="st ${o.status === 'Done' ? 'st-c' : 'st-p'}">${o.status === 'Done' ? 'Complété / مكتمل' : 'En attente / قيد الانتظار'}</span></div>
+                    <a href="https://wa.me/213656251947?text=ID:${o.id}" style="color:green; font-size:20px;"><i class="fab fa-whatsapp"></i></a>
                 </div>
             `).join('');
-            document.getElementById('modalHist').style.display = 'flex';
+            document.getElementById('mHist').style.display = 'flex';
         }
 
-        function adminLogin() {
-            const pass = prompt("كلمة سر المدير:");
-            if(pass === "1234") {
-                const orders = JSON.parse(localStorage.getItem('k13_orders') || '[]');
-                const id = prompt("أدخل رقم الطلب (ID) لتغيير حالته إلى 'مكتمل':");
-                const found = orders.find(o => o.id == id);
-                if(found) {
-                    found.status = "Complet";
-                    localStorage.setItem('k13_orders', JSON.stringify(orders));
-                    alert("تم التحديث!");
-                }
+        // لوحة التحكم السرية
+        function adminPanel() {
+            const pass = prompt("Password / كلمة السر:");
+            if(pass === "karim13") {
+                const id = prompt("أدخل رقم الطلب (ID) لتغييره لمكتمل:");
+                let h = JSON.parse(localStorage.getItem('k13_h') || '[]');
+                let obj = h.find(x => x.id == id);
+                if(obj) {
+                    obj.status = "Done";
+                    localStorage.setItem('k13_h', JSON.stringify(h));
+                    alert("تم تحديث حالة الطلب بنجاح!");
+                } else { alert("رقم الطلب غير صحيح"); }
             }
         }
 
-        function openPayment() { document.getElementById('modalPay').style.display = 'flex'; }
+        function openPay() { document.getElementById('mPay').style.display = 'flex'; }
         function closeAll() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
         function copy(id) { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Copié!"); }
-        
-        window.onload = () => setCat('TikTok', document.querySelector('.grid-item.active'));
+
+        window.onload = () => setCat('TikTok', document.querySelector('.item.active'));
     </script>
 </body>
 </html>
