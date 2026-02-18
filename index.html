@@ -6,127 +6,153 @@
     <title>KARIMTREIZE13 | SMM PRO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        :root { --bg: #0b0724; --card: #ffffff; --primary: #1e0e62; --accent: #4f46e5; --text: #1f2937; }
-        body { background-color: var(--bg); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 30px; }
+        :root { --bg: #0b0724; --card: #ffffff; --primary: #1e0e62; --accent: #fbbf24; --light: #f3f4f6; }
+        body { background-color: var(--bg); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 40px; }
         .header { padding: 15px; display: flex; justify-content: space-between; align-items: center; color: white; }
-        
-        /* تصميم الإحصائيات العلوي */
-        .stats-card { background: var(--card); margin: 10px 15px; border-radius: 20px; padding: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .stats-icon { width: 45px; height: 45px; background: #f3f4f6; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 20px; }
-        .stats-val { font-size: 18px; font-weight: 900; color: var(--primary); }
-        .stats-lab { font-size: 11px; color: #6b7280; font-weight: bold; }
-
-        /* شبكة الأيقونات - مطابقة لـ SMM PRO */
+        .visitor-card { background: var(--card); margin: 10px 15px; border-radius: 20px; padding: 15px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .icon-grid { background: var(--card); margin: 15px; border-radius: 25px; padding: 15px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        .icon-box { background: #f3f4f6; aspect-ratio: 1.2; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; transition: 0.2s; color: var(--primary); }
-        .icon-box.active { background: linear-gradient(135deg, #1e0e62, #4f46e5); color: white; }
-
-        .order-box { background: var(--card); margin: 0 15px; border-radius: 25px; padding: 20px; }
-        .search-bar { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f3f4f6; margin-bottom: 15px; outline: none; text-align: center; }
-        .in-f, select { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #e5e7eb; margin-bottom: 12px; font-weight: 600; font-size: 13px; }
-        .btn-order { background: var(--primary); color: white; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; cursor: pointer; }
-
-        /* تتبع الطلب */
-        .track-box { margin: 20px 15px; text-align: center; color: white; border: 1px dashed rgba(255,255,255,0.3); padding: 15px; border-radius: 20px; }
+        .icon-item { aspect-ratio: 1; background: var(--light); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; transition: 0.3s; color: var(--primary); }
+        .icon-item.active { background: var(--primary); color: white; }
+        .order-section { background: var(--card); margin: 0 15px; border-radius: 25px; padding: 25px; }
+        .search-box { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; background: var(--light); margin-bottom: 15px; text-align: center; outline: none; font-weight: bold; }
+        .input-field { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #eee; margin-bottom: 12px; font-weight: 600; box-sizing: border-box; font-size: 13px; }
+        .btn-confirm { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 15px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        .drawer { position: fixed; top: 0; left: -100%; width: 85%; height: 100%; background: var(--bg); z-index: 2000; transition: 0.4s; padding: 20px; box-sizing: border-box; color: white; }
+        .drawer.open { left: 0; }
+        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; z-index:1999; }
     </style>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, addDoc, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
-            authDomain: "karim-smm.firebaseapp.com",
-            projectId: "karim-smm",
-            appId: "1:968826000164:web:aa41869e201784b85c59b1"
-        };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        window.sendOrder = async () => {
-            const link = document.getElementById('mLink').value;
-            if(!link) return alert("الرابط مطلوب!");
-            await addDoc(collection(db, "orders"), {
-                service: document.getElementById('srvSelect').value,
-                link: link,
-                qty: document.getElementById('mQty').value,
-                status: "⏳ En attente",
-                date: new Date()
-            });
-            alert("✅ Commande envoyée !");
-        };
-
-        window.track = () => {
-            const q = query(collection(db, "orders"), where("link", "==", document.getElementById('tIn').value));
-            onSnapshot(q, (s) => {
-                const res = document.getElementById('tRes'); res.innerHTML = "";
-                s.forEach(d => { res.innerHTML += `<div style="background:white;color:black;padding:10px;border-radius:10px;margin-top:5px">${d.data().status}</div>`; });
-            });
-        };
-    </script>
 </head>
 <body>
 
-<div class="header">
-    <div style="font-weight: 900;">KARIM<span style="color:#fbbf24">TREIZE13</span> 🍬</div>
-    <i class="fab fa-telegram" style="color:#0088cc; font-size:24px;"></i>
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="orderDrawer">
+    <h3>HISTORIQUE / السجل</h3>
+    <hr>
+    <div id="trackList"><p>Aucune commande / لا يوجد طلبات</p></div>
 </div>
 
-<div class="stats-card">
-    <div class="stats-icon"><i class="fas fa-users"></i></div>
-    <div>
-        <div class="stats-val">2196</div>
-        <div class="stats-lab">TOTAL ORDERS / إجمالي الطلبات</div>
+<div class="header">
+    <div style="font-weight: 900; font-size: 20px;">KARIM<span style="color:var(--accent)">TREIZE13</span> 🍬</div>
+    <a href="https://t.me/+213656251947" style="color:#0088cc; font-size: 26px;"><i class="fab fa-telegram"></i></a>
+</div>
+
+<div class="visitor-card">
+    <div style="width: 45px; height: 45px; background: #f3f4f6; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 20px;"><i class="fas fa-users"></i></div>
+    <div style="text-align: right;">
+        <span style="font-size: 11px; color: #6b7280; font-weight: bold;">VISITEURS / عداد الزوار</span><br>
+        <img src="https://counter8.optistats.ovh/private/freecounterstat.php?c=8u4m4m1uclx6q9mny663ux8j7ny86lgu" border="0">
     </div>
 </div>
 
 <div class="icon-grid">
-    <div class="icon-box active" onclick="pick('All', this)"><i class="fas fa-bars"></i></div>
-    <div class="icon-box" onclick="pick('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i></div>
-    <div class="icon-box" onclick="pick('TikTok', this)"><i class="fab fa-tiktok"></i></div>
-    <div class="icon-box" onclick="pick('YouTube', this)"><i class="fab fa-youtube" style="color:red"></i></div>
-    <div class="icon-box" onclick="pick('Instagram', this)"><i class="fab fa-instagram" style="color:#e4405f"></i></div>
-    <div class="icon-box" onclick="pick('Telegram', this)"><i class="fab fa-telegram-plane" style="color:#0088cc"></i></div>
-    <div class="icon-box" onclick="pick('X', this)"><i class="fab fa-x-twitter"></i></div>
-    <div class="icon-box" onclick="pick('WhatsApp', this)"><i class="fab fa-whatsapp" style="color:#25d366"></i></div>
-    <div class="icon-box" onclick="pick('Snapchat', this)"><i class="fab fa-snapchat" style="color:#fffc00"></i></div>
-    <div class="icon-box" onclick="pick('LinkedIn', this)"><i class="fab fa-linkedin" style="color:#0077b5"></i></div>
-    <div class="icon-box" onclick="pick('Games', this)"><i class="fas fa-gamepad" style="color:#34d399"></i></div>
-    <div class="icon-box" onclick="pick('Premium', this)"><i class="fas fa-gem" style="color:#a855f7"></i></div>
+    <div class="icon-item active" onclick="pickCat('All', this)"><i class="fas fa-th-large"></i></div>
+    <div class="icon-item" onclick="openDrawer()"><i class="fas fa-history" style="color:#4f46e5"></i></div>
+    <div class="icon-item" onclick="pickCat('TikTok', this)"><i class="fab fa-tiktok"></i></div>
+    <div class="icon-item" onclick="pickCat('Facebook', this)"><i class="fab fa-facebook-f" style="color:#1877f2"></i></div>
+    <div class="icon-item" onclick="pickCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e4405f"></i></div>
+    <div class="icon-item" onclick="pickCat('YouTube', this)"><i class="fab fa-youtube" style="color:red"></i></div>
+    <div class="icon-item" onclick="pickCat('Games', this)"><i class="fas fa-gamepad" style="color:#10b981"></i></div>
+    <div class="icon-item" onclick="pickCat('Premium', this)"><i class="fas fa-gem" style="color:#a855f7"></i></div>
 </div>
 
-<div class="order-box">
-    <input type="text" class="search-bar" placeholder="🔍 Search Services...">
-    <select id="srvSelect" class="in-f"></select>
-    <input type="text" id="mLink" class="in-f" placeholder="Link / Lien">
-    <input type="number" id="mQty" class="in-f" value="1000">
-    <button class="btn-order" onclick="sendOrder()">CONFIRM ORDER 🍬</button>
-</div>
+<div class="order-section">
+    <input type="text" class="search-box" id="srvSearch" oninput="doSearch()" placeholder="🔍 Rechercher un service...">
+    
+    <label style="font-size:11px; font-weight:bold; color:#6b7280;">SERVICE</label>
+    <select class="input-field" id="srvSelect" onchange="doCalc()"></select>
 
-<div class="track-box">
-    <small>Suivre ma commande / تتبع الطلب</small><br>
-    <input type="text" id="tIn" placeholder="Lien..." style="width:70%; padding:8px; border-radius:8px; border:none; margin-top:10px;">
-    <button onclick="track()" style="background:none; border:none; color:#fbbf24; font-weight:bold;">OK</button>
-    <div id="tRes"></div>
+    <label style="font-size:11px; font-weight:bold; color:#6b7280;">LIEN / LINK</label>
+    <input type="text" id="mLink" class="input-field" placeholder="https://...">
+
+    <label style="font-size:11px; font-weight:bold; color:#6b7280;">QUANTITÉ</label>
+    <input type="number" id="mQty" class="input-field" value="1000" oninput="doCalc()">
+
+    <label style="font-size:11px; font-weight:bold; color:#6b7280;">TOTAL PRICE ($)</label>
+    <input type="text" id="chargeOut" class="input-field" readonly value="$0.00" style="color:var(--primary); background:#eee;">
+
+    <button class="btn-confirm" onclick="sendToWA()">CONFIRMER LA COMMANDE 🍬</button>
 </div>
 
 <script>
     const SERVICES = [
-        {cat:"TikTok", n:"TikTok Followers HQ", p:1.8},
-        {cat:"Facebook", n:"Facebook Followers Non-Drop", p:0.5},
-        {cat:"Games", n:"Free Fire 100 Diamonds", p:1.2},
-        {cat:"Telegram", n:"Telegram Channel Boost", p:0.9}
+        // TikTok
+        {id: 3810, cat: "TikTok", n: "TikTok Followers | HQ Real", p: 1.84},
+        {id: 8109, cat: "TikTok", n: "TikTok Followers | Low Quality", p: 0.11},
+        {id: 3338, cat: "TikTok", n: "TikTok Followers | Lifetime ♻️", p: 1.00},
+        {id: 8387, cat: "TikTok", n: "TikTok Views | SuperInstant", p: 0.009},
+        {id: 1521, cat: "TikTok", n: "TikTok Monetizable Followers", p: 3.24},
+        // Facebook
+        {id: 2676, cat: "Facebook", n: "Facebook Followers | Non Drop ♻️", p: 0.54},
+        {id: 3330, cat: "Facebook", n: "Facebook Group Members | Real", p: 0.92},
+        {id: 8395, cat: "Facebook", n: "Facebook 60k Minutes Watch", p: 0.95},
+        // Instagram
+        {id: 7820, cat: "Instagram", n: "Instagram Followers | Real Old", p: 1.00},
+        {id: 7869, cat: "Instagram", n: "Instagram Likes | Instant", p: 0.22},
+        // YouTube
+        {id: 1539, cat: "YouTube", n: "YouTube Subscribers | Non Drop", p: 20.62},
+        {id: 4401, cat: "YouTube", n: "YouTube WatchTime 4000H", p: 36.50},
+        // Games
+        {id: 501, cat: "Games", n: "Free Fire | 100 Diamonds", p: 1.20, type: "fixed"},
+        {id: 503, cat: "Games", n: "PUBG Mobile | 60 UC", p: 1.10, type: "fixed"},
+        // Premium
+        {id: 3407, cat: "Premium", n: "Gemini Pro | Google 2TB", p: 6.23, type: "fixed"},
+        {id: 8607, cat: "Premium", n: "Netflix Premium | 1 Month 4K", p: 4.50, type: "fixed"}
     ];
-    function pick(c, el) {
-        document.querySelectorAll('.icon-box').forEach(b => b.classList.remove('active'));
+
+    let currentCat = 'All';
+
+    function openDrawer() { document.getElementById('orderDrawer').classList.add('open'); document.getElementById('overlay').style.display = 'block'; }
+    function closeDrawer() { document.getElementById('orderDrawer').classList.remove('open'); document.getElementById('overlay').style.display = 'none'; }
+
+    function pickCat(c, el) {
+        document.querySelectorAll('.icon-item').forEach(b => b.classList.remove('active'));
         el.classList.add('active');
+        currentCat = c;
+        loadServices();
+    }
+
+    function loadServices() {
         const s = document.getElementById('srvSelect');
         s.innerHTML = '';
-        SERVICES.filter(x => c === 'All' || x.cat === c).forEach(x => {
-            s.innerHTML += `<option>${x.n} - $${x.p}</option>`;
+        const list = currentCat === 'All' ? SERVICES : SERVICES.filter(x => x.cat === currentCat);
+        list.forEach(x => {
+            s.innerHTML += `<option value="${x.id}">${x.id} - ${x.n}</option>`;
         });
+        doCalc();
     }
-    window.onload = () => pick('All', document.querySelector('.icon-box'));
+
+    function doSearch() {
+        const t = document.getElementById('srvSearch').value.toLowerCase();
+        const s = document.getElementById('srvSelect');
+        s.innerHTML = '';
+        SERVICES.filter(x => x.n.toLowerCase().includes(t) || x.id.toString().includes(t)).forEach(x => {
+            s.innerHTML += `<option value="${x.id}">${x.id} - ${x.n}</option>`;
+        });
+        doCalc();
+    }
+
+    function doCalc() {
+        const id = document.getElementById('srvSelect').value;
+        const srv = SERVICES.find(x => x.id == id);
+        const qty = document.getElementById('mQty').value || 0;
+        if(srv) {
+            let total = srv.type === 'fixed' ? srv.p : (srv.p / 1000 * qty);
+            document.getElementById('chargeOut').value = "$" + total.toFixed(3);
+        }
+    }
+
+    function sendToWA() {
+        const id = document.getElementById('srvSelect').value;
+        const srv = SERVICES.find(x => x.id == id);
+        const link = document.getElementById('mLink').value;
+        const qty = document.getElementById('mQty').value;
+        const total = document.getElementById('chargeOut').value;
+        if(!link) return alert("Please enter link!");
+        const msg = `New Order: ${srv.n}\nID: ${id}\nLink: ${link}\nQty: ${qty}\nTotal: ${total}`;
+        window.open(`https://wa.me/213656251947?text=${encodeURIComponent(msg)}`);
+    }
+
+    window.onload = () => loadServices();
 </script>
 </body>
 </html>
