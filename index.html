@@ -7,29 +7,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
         :root { --bg: #0b0724; --card: #ffffff; --primary: #1e0e62; --accent: #4f46e5; --text: #1f2937; }
-        body { background-color: var(--bg); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 30px; transition: 0.3s; }
+        body { background-color: var(--bg); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 30px; }
         .header { padding: 15px; display: flex; justify-content: space-between; align-items: center; color: white; }
-        .nav-tools { display: flex; gap: 12px; align-items: center; }
-        .tg-link { color: #0088cc; font-size: 28px; text-decoration: none; }
-        .lang-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 11px; font-weight: bold; }
-        .balance-card { background: var(--card); margin: 10px 15px; border-radius: 20px; padding: 18px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-        .visitor-lab { font-size: 11px; color: #6b7280; font-weight: bold; margin-bottom: 4px; }
-        .icon-circle { width: 45px; height: 45px; background: #f3f4f6; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 20px; }
-        .icon-grid { background: var(--card); margin: 15px; border-radius: 25px; padding: 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        .icon-box { background: #f3f4f6; aspect-ratio: 1; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: 0.2s; color: var(--primary); }
-        .icon-box.active { background: var(--primary); color: white; transform: scale(1.05); }
-        .order-box { background: var(--card); margin: 0 15px; border-radius: 25px; padding: 25px; color: var(--text); }
-        .search-input { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ddd; margin-bottom: 15px; text-align: center; font-weight: bold; outline: none; }
-        label { display: block; margin: 10px 5px 5px; font-weight: bold; font-size: 13px; color: #4b5563; }
-        select, .in-f { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #e5e7eb; background: #f9fafb; margin-bottom: 15px; box-sizing: border-box; font-size: 13px; font-weight: 500; }
-        .btn-order { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 15px; font-weight: bold; font-size: 16px; cursor: pointer; }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; padding: 15px; }
-        .modal-box { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 25px; text-align: center; }
-        .acc-info { background: #f3f4f6; padding: 15px; border-radius: 12px; margin: 15px 0; border: 1px dashed var(--accent); font-weight: 900; font-size: 16px; color: var(--accent); word-break: break-all; }
-        /* ستايل سجل التتبع */
-        .track-box { background: rgba(255,255,255,0.1); margin: 20px 15px; padding: 20px; border-radius: 25px; color: white; text-align: center; border: 1px solid rgba(255,255,255,0.2); }
+        
+        /* تصميم الإحصائيات العلوي */
+        .stats-card { background: var(--card); margin: 10px 15px; border-radius: 20px; padding: 15px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .stats-icon { width: 45px; height: 45px; background: #f3f4f6; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 20px; }
+        .stats-val { font-size: 18px; font-weight: 900; color: var(--primary); }
+        .stats-lab { font-size: 11px; color: #6b7280; font-weight: bold; }
+
+        /* شبكة الأيقونات - مطابقة لـ SMM PRO */
+        .icon-grid { background: var(--card); margin: 15px; border-radius: 25px; padding: 15px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .icon-box { background: #f3f4f6; aspect-ratio: 1.2; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; transition: 0.2s; color: var(--primary); }
+        .icon-box.active { background: linear-gradient(135deg, #1e0e62, #4f46e5); color: white; }
+
+        .order-box { background: var(--card); margin: 0 15px; border-radius: 25px; padding: 20px; }
+        .search-bar { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #e5e7eb; background: #f3f4f6; margin-bottom: 15px; outline: none; text-align: center; }
+        .in-f, select { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #e5e7eb; margin-bottom: 12px; font-weight: 600; font-size: 13px; }
+        .btn-order { background: var(--primary); color: white; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: bold; cursor: pointer; }
+
+        /* تتبع الطلب */
+        .track-box { margin: 20px 15px; text-align: center; color: white; border: 1px dashed rgba(255,255,255,0.3); padding: 15px; border-radius: 20px; }
     </style>
-    
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -38,203 +38,95 @@
             apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
             authDomain: "karim-smm.firebaseapp.com",
             projectId: "karim-smm",
-            storageBucket: "karim-smm.firebasestorage.app",
-            messagingSenderId: "968826000164",
             appId: "1:968826000164:web:aa41869e201784b85c59b1"
         };
-
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // وظيفة إرسال الطلب لـ Firebase
-        window.confirmOrder = async () => {
-            const s = document.getElementById('srvSelect').value;
+        window.sendOrder = async () => {
             const link = document.getElementById('mLink').value;
-            const qty = document.getElementById('mQty').value;
-            const pay = document.getElementById('payMethod').value;
-            const total = document.getElementById('chargeOut').value;
-
-            if(!link || !pay) return alert("يرجى إكمال البيانات!");
-
-            try {
-                await addDoc(collection(db, "orders"), {
-                    service: s,
-                    link: link,
-                    quantity: qty,
-                    payment: pay,
-                    total: total,
-                    status: "⏳ قيد الانتظار",
-                    date: new Date()
-                });
-                alert("✅ تم إرسال الطلب بنجاح!");
-                closePay();
-                sendWA(); // فتح واتساب أيضاً كنسخة إضافية
-            } catch (e) { alert("Error: " + e); }
-        }
-
-        // وظيفة تتبع الطلب للزبون
-        window.trackOrder = () => {
-            const val = document.getElementById('trackInput').value;
-            const q = query(collection(db, "orders"), where("link", "==", val));
-            onSnapshot(q, (snap) => {
-                const res = document.getElementById('trackResult');
-                res.innerHTML = "";
-                snap.forEach(doc => {
-                    const d = doc.data();
-                    res.innerHTML += `<div style="background:white; color:black; padding:10px; border-radius:10px; margin-top:10px">
-                        <b>الخدمة:</b> ${d.service} <br> <b>الحالة:</b> <span style="color:blue">${d.status}</span>
-                    </div>`;
-                });
-                if(snap.empty) res.innerHTML = "لا توجد طلبات بهذا الرابط";
+            if(!link) return alert("الرابط مطلوب!");
+            await addDoc(collection(db, "orders"), {
+                service: document.getElementById('srvSelect').value,
+                link: link,
+                qty: document.getElementById('mQty').value,
+                status: "⏳ En attente",
+                date: new Date()
             });
-        }
+            alert("✅ Commande envoyée !");
+        };
+
+        window.track = () => {
+            const q = query(collection(db, "orders"), where("link", "==", document.getElementById('tIn').value));
+            onSnapshot(q, (s) => {
+                const res = document.getElementById('tRes'); res.innerHTML = "";
+                s.forEach(d => { res.innerHTML += `<div style="background:white;color:black;padding:10px;border-radius:10px;margin-top:5px">${d.data().status}</div>`; });
+            });
+        };
     </script>
 </head>
 <body>
 
 <div class="header">
-    <div class="logo" style="font-weight: 900; font-size: 20px;">KARIM<span style="color:#fbbf24">TREIZE13</span> 🍬</div>
-    <div class="nav-tools">
-        <a href="https://t.me/+213656251947" target="_blank" class="tg-link"><i class="fab fa-telegram"></i></a>
-        <button class="lang-btn" onclick="setLang('fr')">FR</button>
-        <button class="lang-btn" onclick="setLang('ar')">AR</button>
-    </div>
+    <div style="font-weight: 900;">KARIM<span style="color:#fbbf24">TREIZE13</span> 🍬</div>
+    <i class="fab fa-telegram" style="color:#0088cc; font-size:24px;"></i>
 </div>
 
-<div class="balance-card">
-    <div class="icon-circle"><i class="fas fa-users"></i></div>
-    <div class="visitor-info">
-        <div id="txtVisitor" class="visitor-lab">VISITEURS / عداد الزوار</div>
-        <img src="https://counter8.optistats.ovh/private/freecounterstat.php?c=8u4m4m1uclx6q9mny663ux8j7ny86lgu" border="0">
+<div class="stats-card">
+    <div class="stats-icon"><i class="fas fa-users"></i></div>
+    <div>
+        <div class="stats-val">2196</div>
+        <div class="stats-lab">TOTAL ORDERS / إجمالي الطلبات</div>
     </div>
 </div>
 
 <div class="icon-grid">
-    <div class="icon-box active" onclick="pickCat('All', this)"><i class="fas fa-th-large"></i></div>
-    <div class="icon-box" onclick="pickCat('TikTok', this)"><i class="fab fa-tiktok"></i></div>
-    <div class="icon-box" onclick="pickCat('Facebook', this)"><i class="fab fa-facebook-f" style="color:#1877f2"></i></div>
-    <div class="icon-box" onclick="pickCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e4405f"></i></div>
-    <div class="icon-box" onclick="pickCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i></div>
-    <div class="icon-box" onclick="pickCat('Games', this)"><i class="fas fa-gamepad" style="color:#ffae00"></i></div>
-    <div class="icon-box" onclick="pickCat('Snapchat', this)"><i class="fab fa-snapchat" style="color:#fffc00; text-shadow: 0 0 1px #000;"></i></div>
-    <div class="icon-box" onclick="pickCat('Premium', this)"><i class="fas fa-gem" style="color:#4f46e5"></i></div>
+    <div class="icon-box active" onclick="pick('All', this)"><i class="fas fa-bars"></i></div>
+    <div class="icon-box" onclick="pick('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i></div>
+    <div class="icon-box" onclick="pick('TikTok', this)"><i class="fab fa-tiktok"></i></div>
+    <div class="icon-box" onclick="pick('YouTube', this)"><i class="fab fa-youtube" style="color:red"></i></div>
+    <div class="icon-box" onclick="pick('Instagram', this)"><i class="fab fa-instagram" style="color:#e4405f"></i></div>
+    <div class="icon-box" onclick="pick('Telegram', this)"><i class="fab fa-telegram-plane" style="color:#0088cc"></i></div>
+    <div class="icon-box" onclick="pick('X', this)"><i class="fab fa-x-twitter"></i></div>
+    <div class="icon-box" onclick="pick('WhatsApp', this)"><i class="fab fa-whatsapp" style="color:#25d366"></i></div>
+    <div class="icon-box" onclick="pick('Snapchat', this)"><i class="fab fa-snapchat" style="color:#fffc00"></i></div>
+    <div class="icon-box" onclick="pick('LinkedIn', this)"><i class="fab fa-linkedin" style="color:#0077b5"></i></div>
+    <div class="icon-box" onclick="pick('Games', this)"><i class="fas fa-gamepad" style="color:#34d399"></i></div>
+    <div class="icon-box" onclick="pick('Premium', this)"><i class="fas fa-gem" style="color:#a855f7"></i></div>
 </div>
 
 <div class="order-box">
-    <input type="text" class="search-input" id="srvSearch" oninput="doSearch()" placeholder="🔍 Rechercher...">
-    <label id="lblSrv">Service</label>
-    <select id="srvSelect" onchange="doCalc()"></select>
-    <label id="lblLink">Lien / Link / Email</label>
-    <input type="text" id="mLink" class="in-f" placeholder="https://... or email">
-    <label id="lblQty">Quantité / Quantity</label>
-    <input type="number" id="mQty" class="in-f" value="1000" oninput="doCalc()">
-    <label id="lblCharge">Total</label>
-    <input type="text" id="chargeOut" class="in-f" readonly value="$0.00" style="color:var(--accent); font-weight:bold;">
-    <button class="btn-order" id="btnMain" onclick="openPay()">Confirmer 🍬</button>
+    <input type="text" class="search-bar" placeholder="🔍 Search Services...">
+    <select id="srvSelect" class="in-f"></select>
+    <input type="text" id="mLink" class="in-f" placeholder="Link / Lien">
+    <input type="number" id="mQty" class="in-f" value="1000">
+    <button class="btn-order" onclick="sendOrder()">CONFIRM ORDER 🍬</button>
 </div>
 
 <div class="track-box">
-    <h3 style="font-size:14px">🔍 تتبع حالة طلبك / Suivre commande</h3>
-    <input type="text" id="trackInput" placeholder="ضع رابطك هنا / Entrez votre lien" style="width:80%; padding:10px; border-radius:10px; border:none; outline:none">
-    <button onclick="trackOrder()" style="background:#fbbf24; border:none; padding:10px; border-radius:10px; margin-top:5px; font-weight:bold cursor:pointer">بحث</button>
-    <div id="trackResult"></div>
-</div>
-
-<div id="payModal" class="modal">
-    <div class="modal-box">
-        <h3 id="mPayTitle">Paiement</h3>
-        <select id="payMethod" onchange="showAcc(this.value)">
-            <option value="">-- Choisir --</option>
-            <option value="BaridiMob">BaridiMob (DZ)</option>
-            <option value="RedotPay">RedotPay (Visa)</option>
-            <option value="Binance">Binance (USDT)</option>
-        </select>
-        <div id="accBox" style="display:none" class="acc-info"></div>
-        <button class="btn-order" style="background:#25d366" onclick="confirmOrder()">تأكيد وإرسال ✅</button>
-        <button onclick="closePay()" id="btnCancel" style="background:none; border:none; color:#888; margin-top:10px; cursor:pointer;">Annuler</button>
-    </div>
+    <small>Suivre ma commande / تتبع الطلب</small><br>
+    <input type="text" id="tIn" placeholder="Lien..." style="width:70%; padding:8px; border-radius:8px; border:none; margin-top:10px;">
+    <button onclick="track()" style="background:none; border:none; color:#fbbf24; font-weight:bold;">OK</button>
+    <div id="tRes"></div>
 </div>
 
 <script>
-    const WALLETS = { "BaridiMob": "00799999001465107315", "RedotPay": "1523336713", "Binance": "1194939141" };
-    let curLang = 'fr';
-    let currentCat = 'All';
-
     const SERVICES = [
-        // قسم الألعاب الجديد
-        {id: 501, cat: "Games", n: "Free Fire | 100 Diamonds", n_ar: "فري فاير | 100 جوهرة", p: 1.20, type: "fixed"},
-        {id: 502, cat: "Games", n: "Free Fire | 530 Diamonds", n_ar: "فري فاير | 530 جوهرة", p: 5.50, type: "fixed"},
-        {id: 503, cat: "Games", n: "PUBG Mobile | 60 UC", n_ar: "ببجي موبايل | 60 شدة", p: 1.10, type: "fixed"},
-        {id: 504, cat: "Games", n: "PUBG Mobile | 325 UC", n_ar: "ببجي موبايل | 325 شدة", p: 4.90, type: "fixed"},
-        
-        {id: 3810, cat: "TikTok", n: "TikTok Followers | HQ Real Profiles", n_ar: "متابعين تيك توك | حسابات حقيقية عالية الجودة", p: 1.84},
-        {id: 2676, cat: "Facebook", n: "Facebook Followers | Non Drop | Lifetime ♻️", n_ar: "متابعين فيسبوك | بدون نقص | ضمان مدى الحياة ♻️", p: 0.54},
-        {id: 7820, cat: "Instagram", n: "Instagram Followers | Real Old | Lifetime ♻️", n_ar: "متابعين انستقرام | حسابات حقيقية قديمة ♻️", p: 1.00},
-        {id: 1539, cat: "YouTube", n: "YouTube Subscribers | Non Drop | Lifetime ♻️", n_ar: "مشتركين يوتيوب | بدون نقص | ضمان مدى الحياة ♻️", p: 20.62}
-        // ... باقي الخدمات التي في كودك ستبقى كما هي ...
+        {cat:"TikTok", n:"TikTok Followers HQ", p:1.8},
+        {cat:"Facebook", n:"Facebook Followers Non-Drop", p:0.5},
+        {cat:"Games", n:"Free Fire 100 Diamonds", p:1.2},
+        {cat:"Telegram", n:"Telegram Channel Boost", p:0.9}
     ];
-
-    function setLang(l) {
-        curLang = l;
-        document.dir = l === 'ar' ? 'rtl' : 'ltr';
-        loadServices();
-    }
-
-    function pickCat(c, el) {
+    function pick(c, el) {
         document.querySelectorAll('.icon-box').forEach(b => b.classList.remove('active'));
         el.classList.add('active');
-        currentCat = c;
-        loadServices();
-    }
-
-    function loadServices() {
         const s = document.getElementById('srvSelect');
         s.innerHTML = '';
-        const list = currentCat === 'All' ? SERVICES : SERVICES.filter(x => x.cat === currentCat);
-        list.forEach(x => {
-            const name = curLang === 'ar' ? `${x.id} - ${x.n_ar}` : `${x.id} - ${x.n}`;
-            s.innerHTML += `<option value="${name}">${name}</option>`;
+        SERVICES.filter(x => c === 'All' || x.cat === c).forEach(x => {
+            s.innerHTML += `<option>${x.n} - $${x.p}</option>`;
         });
-        doCalc();
     }
-
-    function doSearch() {
-        const t = document.getElementById('srvSearch').value.toLowerCase();
-        const s = document.getElementById('srvSelect');
-        s.innerHTML = '';
-        SERVICES.filter(x => x.n.toLowerCase().includes(t) || x.n_ar.includes(t) || x.id.toString().includes(t)).forEach(x => {
-            const name = curLang === 'ar' ? `${x.id} - ${x.n_ar}` : `${x.id} - ${x.n}`;
-            s.innerHTML += `<option value="${name}">${name}</option>`;
-        });
-        doCalc();
-    }
-
-    function doCalc() {
-        const name = document.getElementById('srvSelect').value;
-        const srv = SERVICES.find(x => (curLang==='ar'?`${x.id} - ${x.n_ar}`:`${x.id} - ${x.n}`) == name);
-        const qty = document.getElementById('mQty').value || 0;
-        if(srv) {
-            let total = srv.type === 'fixed' ? srv.p : (srv.p / 1000 * qty);
-            document.getElementById('chargeOut').value = "$" + total.toFixed(4);
-        }
-    }
-
-    function openPay() { document.getElementById('payModal').style.display = 'flex'; }
-    function closePay() { document.getElementById('payModal').style.display = 'none'; }
-    
-    function showAcc(v) {
-        const b = document.getElementById('accBox');
-        if(v && WALLETS[v]) { b.style.display='block'; b.innerText = WALLETS[v]; }
-        else b.style.display='none';
-    }
-
-    function sendWA() {
-        const p = document.getElementById('payMethod').value;
-        const msg = `Order: ${document.getElementById('srvSelect').value}\nLink: ${document.getElementById('mLink').value}\nTotal: ${document.getElementById('chargeOut').value}\nPay: ${p}`;
-        window.open(`https://wa.me/213656251947?text=${encodeURIComponent(msg)}`);
-    }
-
-    window.onload = () => setLang('fr');
+    window.onload = () => pick('All', document.querySelector('.icon-box'));
 </script>
 </body>
 </html>
