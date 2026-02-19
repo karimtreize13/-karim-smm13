@@ -1,188 +1,234 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+  <!DOCTYPE html>
+<html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM13 | SMM PANEL</title>
+    <title>KARIM13 | Official Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #0f141e; --card: #1a222f; --accent: #10b981;
-            --border: #2d3748; --gold: #f59e0b; --text: #ffffff;
-        }
+        :root { --bg: #0f141e; --card: #1a222f; --accent: #10b981; --border: #2d3748; --gold: #f59e0b; --white: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); overflow-x: hidden; }
+        body { background: var(--bg); color: var(--white); overflow-x: hidden; transition: 0.3s; }
 
-        /* الهيدر الاحترافي */
-        .header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 12px 15px; background: var(--bg); border-bottom: 1px solid var(--border);
-            position: sticky; top: 0; z-index: 1000;
-        }
-        .header-left { display: flex; align-items: center; gap: 8px; }
-        .lang-btn { color: #a0aec0; font-size: 11px; font-weight: bold; cursor: pointer; padding: 4px 8px; border-radius: 4px; background: #2d3748; border: none; }
-        .lang-btn.active { color: white; background: var(--accent); }
-        .tg-top { color: #0088cc; font-size: 22px; margin-left: 5px; }
+        /* الهيدر */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .nav-tools { display: flex; align-items: center; gap: 10px; }
+        .lang-btn { background: var(--border); border: none; color: white; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; }
+        .lang-btn.active { background: var(--accent); }
+        .tg-link { color: #0088cc; font-size: 22px; }
 
         .logo { font-size: 18px; font-weight: 900; }
         .logo span { color: var(--accent); }
-        .header-right i { font-size: 22px; color: #a0aec0; cursor: pointer; }
 
-        /* العداد */
-        .stats { display: flex; justify-content: space-around; padding: 12px; background: rgba(16,185,129,0.05); border-bottom: 1px solid var(--border); }
+        /* العداد الإحصائي */
+        .stats-bar { display: flex; justify-content: space-around; padding: 15px; background: rgba(16,185,129,0.05); border-bottom: 1px solid var(--border); }
         .stat-item { text-align: center; }
-        .stat-num { display: block; font-size: 16px; font-weight: 900; color: var(--accent); }
-        .stat-lab { font-size: 9px; color: #718096; }
+        .stat-num { display: block; font-size: 18px; font-weight: 900; color: var(--accent); }
+        .stat-lab { font-size: 10px; color: #718096; }
 
-        /* الشبكة والبطاقات */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 15px; }
-        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 15px 5px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .card.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.05); transform: translateY(-3px); }
-        .card i { font-size: 22px; margin-bottom: 5px; display: block; }
-        .card span { font-size: 10px; font-weight: bold; }
+        /* شبكة الأيقونات */
+        .icon-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 20px; }
+        .icon-box { background: var(--card); border: 1px solid var(--border); aspect-ratio: 1; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; transition: 0.2s; }
+        .icon-box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); transform: scale(1.05); }
 
-        /* نموذج الطلب */
-        .order-section { padding: 0 15px; }
-        .form { background: var(--card); border-radius: 20px; padding: 15px; border: 1px solid var(--border); }
-        select, input { width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 12px; background: #0f141e; border: 1px solid var(--border); color: white; outline: none; font-size: 14px; }
-        .price-display { border: 2px dashed var(--accent); background: rgba(16,185,129,0.1); color: var(--accent); padding: 15px; text-align: center; font-size: 24px; font-weight: 900; border-radius: 12px; margin-bottom: 15px; }
-        .btn-main { width: 100%; background: var(--accent); color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 16px; }
+        /* صندوق الطلب */
+        .order-container { padding: 0 20px; }
+        .form-card { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid var(--border); }
+        .search-in { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: white; margin-bottom: 15px; text-align: center; }
+        select, .in-f { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: white; margin-bottom: 15px; outline: none; font-size: 13px; }
+        .total-box { border: 2px dashed var(--accent); background: rgba(16,185,129,0.1); color: var(--accent); padding: 15px; text-align: center; font-size: 22px; font-weight: 900; border-radius: 12px; margin-bottom: 15px; }
+        .btn-order { background: var(--accent); color: white; border: none; width: 100%; padding: 18px; border-radius: 15px; font-weight: bold; cursor: pointer; }
 
-        /* المودال الشامل (وسائل الدفع) */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000; }
-        .modal-content { background: var(--card); width: 90%; max-width: 400px; padding: 25px; border-radius: 25px; border: 1px solid var(--border); position: relative; }
-        .close-modal { position: absolute; top: 15px; left: 15px; color: #ff4d4d; cursor: pointer; font-weight: bold; }
-        .menu-title { color: var(--gold); font-size: 16px; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 8px; }
-        .copy-box { background: #0f141e; padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; border: 1px solid var(--border); }
-        .copy-btn { color: var(--accent); cursor: pointer; padding: 5px; }
-
-        .wa-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background: #25d366; color: white; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: bold; margin-top: 15px; }
+        /* المودال السري (السجل والدفع) */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-box { background: var(--card); width: 100%; max-width: 400px; padding: 25px; border-radius: 25px; border: 1px solid var(--border); max-height: 80vh; overflow-y: auto; position: relative; }
+        .close-m { position: absolute; top: 15px; left: 15px; color: #ff4d4d; cursor: pointer; }
+        .sec-title { color: var(--gold); margin: 15px 0 10px; font-size: 14px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .copy-item { background: var(--bg); padding: 10px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; border: 1px solid var(--border); }
+        .history-card { background: var(--bg); padding: 10px; border-radius: 10px; margin-bottom: 10px; border-right: 4px solid var(--accent); font-size: 11px; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="header-left">
-            <button class="lang-btn active" onclick="setL('fr')">FR</button>
-            <button class="lang-btn" onclick="setL('ar')">AR</button>
-            <a href="https://t.me/karim_smm" class="tg-top"><i class="fab fa-telegram"></i></a>
-        </div>
-        <div class="logo">KARIM<span>13</span></div>
-        <div class="header-right">
-            <i class="fas fa-cog" onclick="toggleM(true)"></i>
-        </div>
+<div class="header">
+    <div class="nav-tools">
+        <button class="lang-btn active" id="btnFR" onclick="setLang('fr')">FR</button>
+        <button class="lang-btn" id="btnAR" onclick="setLang('ar')">AR</button>
+        <a href="https://t.me/your_telegram" class="tg-link"><i class="fab fa-telegram"></i></a>
+    </div>
+    <div class="logo">KARIM<span>13</span> 🍬</div>
+    <div class="header-right">
+        <i class="fas fa-cog" style="font-size: 22px; cursor: pointer; color: #a0aec0;" onclick="openMenu()"></i>
+    </div>
+</div>
+
+<div class="stats-bar">
+    <div class="stat-item"><span class="stat-num" id="c1">0</span><span class="stat-lab" id="l1">Commandes</span></div>
+    <div class="stat-item"><span class="stat-num" id="c2">0</span><span class="stat-lab" id="l2">Utilisateurs</span></div>
+    <div class="stat-item"><span class="stat-num" id="c3">0</span><span class="stat-lab" id="l3">Services</span></div>
+</div>
+
+<div class="icon-grid" id="catGrid">
     </div>
 
-    <div class="stats">
-        <div class="stat-item"><span class="stat-num" id="s1">0</span><span class="stat-lab">طلب مكتمل</span></div>
-        <div class="stat-item"><span class="stat-num" id="s2">0</span><span class="stat-lab">مستخدم نشط</span></div>
-        <div class="stat-item"><span class="stat-num" id="s3">0</span><span class="stat-lab">خدمة نشطة</span></div>
+<div class="order-container">
+    <div class="form-card">
+        <input type="text" class="search-in" id="srvSearch" oninput="doSearch()" placeholder="🔍 Rechercher...">
+        <select id="srvSelect" onchange="doCalc()"></select>
+        <input type="text" id="mLink" class="in-f" placeholder="Lien / Link">
+        <input type="number" id="mQty" class="in-f" value="1000" oninput="doCalc()">
+        <div class="total-box" id="chargeOut">$0.00</div>
+        <button class="btn-order" onclick="confirmOrder()" id="btnMain">Confirmer 🍬</button>
     </div>
+</div>
 
-    <div class="grid" id="catGrid"></div>
-
-    <div class="order-section">
-        <div class="form">
-            <select id="servSelect" onchange="updateP()"></select>
-            <input type="text" id="link" placeholder="الرابط هنا / Lien">
-            <input type="number" id="qty" value="1000" oninput="updateP()">
-            <div class="price-display" id="total">0.00 $</div>
-            <button class="btn-main" onclick="alert('تم إرسال طلبك!')">تأكيد الطلب / Confirmer</button>
-        </div>
-    </div>
-
-    <div class="modal" id="modalMenu">
-        <div class="modal-content">
-            <span class="close-modal" onclick="toggleM(false)">✖ إغلاق</span>
-            <div style="height: 20px;"></div>
-            
-            <div class="menu-title"><i class="fas fa-wallet"></i> وسائل الدفع (كريم)</div>
-            <div class="copy-box"><span>بريدي موب: <b>00799999000123</b></span><i class="fas fa-copy copy-btn" onclick="copy('00799999000123')"></i></div>
-            <div class="copy-box"><span>Binance ID: <b>55667788</b></span><i class="fas fa-copy copy-btn" onclick="copy('55667788')"></i></div>
-            <div class="copy-box"><span>RedotPay: <b>11223344</b></span><i class="fas fa-copy copy-btn" onclick="copy('11223344')"></i></div>
-            <div class="copy-box" style="opacity:0.7"><span>فليكسي (مؤقت): <b>0600000000</b></span><i class="fas fa-copy copy-btn" onclick="copy('0600000000')"></i></div>
-
-            <a href="https://wa.me/213XXXXXXXXX" class="wa-btn"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
-        </div>
-    </div>
-
-    <script>
-        const CATS = [
-            { id: "tiktok", n: "تيك توك", icon: "fab fa-tiktok", c: "#ff0050" },
-            { id: "facebook", n: "فيسبوك", icon: "fab fa-facebook", c: "#1877f2" },
-            { id: "instagram", n: "إنستقرام", icon: "fab fa-instagram", c: "#e1306c" },
-            { id: "youtube", n: "يوتيوب", icon: "fab fa-youtube", c: "#ff0000" },
-            { id: "telegram", n: "تليجرام", icon: "fab fa-telegram", c: "#0088cc" },
-            { id: "premium", n: "اشتراكات", icon: "fas fa-gem", c: "#a855f7" },
-            { id: "gaming", n: "ألعاب", icon: "fas fa-gamepad", c: "#10b981" }
-        ];
-
-        const SERVICES = [
-            // تيك توك
-            { cat: "tiktok", n: "👤 متابعين تيك توك | حقيقي ♻️", p: 1.10 },
-            { cat: "tiktok", n: "❤️ إعجابات تيك توك | سريع", p: 0.45 },
-            { cat: "tiktok", n: "👀 مشاهدات تيك توك | صاروخ", p: 0.01 },
-            // فيسبوك
-            { cat: "facebook", n: "👤 متابعين بروفايل فيسبوك ♻️", p: 0.55 },
-            { cat: "facebook", n: "🚩 متابعين صفحة فيسبوك ♻️", p: 0.65 },
-            { cat: "facebook", n: "👍 إعجابات منشورات فيسبوك", p: 0.30 },
-            // إنستقرام
-            { cat: "instagram", n: "👤 متابعين إنستقرام ♻️", p: 0.85 },
-            { cat: "instagram", n: "❤️ إعجابات إنستقرام", p: 0.20 },
-            // يوتيوب
-            { cat: "youtube", n: "📺 مشتركين يوتيوب ♻️", p: 18.50 },
-            { cat: "youtube", n: "👀 مشاهدات يوتيوب", p: 2.10 },
-            // تليجرام
-            { cat: "telegram", n: "👥 أعضاء قنوات تليجرام", p: 1.20 },
-            { cat: "telegram", n: "👁️ مشاهدات تليجرام", p: 0.05 },
-            // اشتراكات بريميوم
-            { cat: "premium", n: "🎬 نتفليكس بريميوم | شهر", p: 4.50, fixed: true },
-            { cat: "premium", n: "🎥 يوتيوب بريميوم | شهر", p: 2.00, fixed: true },
-            { cat: "premium", n: "🎨 كانفا برو | سنة", p: 3.00, fixed: true },
-            // ألعاب
-            { cat: "gaming", n: "🎮 شدات ببجي 60 UC", p: 1.20, fixed: true },
-            { cat: "gaming", n: "🎮 شدات ببجي 325 UC", p: 5.40, fixed: true }
-        ];
-
-        let curCat = "tiktok";
-
-        function render() {
-            const g = document.getElementById('catGrid'); g.innerHTML = '';
-            CATS.forEach(c => {
-                g.innerHTML += `<div class="card ${c.id === curCat ? 'active' : ''}" onclick="setCat('${c.id}')"><i class="${c.icon}" style="color:${c.c}"></i><span>${c.n}</span></div>`;
-            });
-            loadS();
-        }
-
-        function setCat(id) { curCat = id; render(); }
+<div id="sideModal" class="modal">
+    <div class="modal-box">
+        <span class="close-m" onclick="closeMenu()">✖</span>
         
-        function loadS() {
-            const s = document.getElementById('servSelect'); s.innerHTML = '';
-            SERVICES.filter(x => x.cat === curCat).forEach(x => {
-                s.innerHTML += `<option value="${x.p}" data-fixed="${x.fixed || false}">${x.n}</option>`;
-            });
-            updateP();
+        <div class="sec-title"><i class="fas fa-clock-rotate-left"></i> <span id="tHistory">Historique</span></div>
+        <div id="historyBox"></div>
+
+        <div class="sec-title"><i class="fas fa-wallet"></i> <span id="tPay">Paiement</span></div>
+        <div class="copy-item"><span>BaridiMob: <b>00799999001465107315</b></span> <i class="fas fa-copy" onclick="copy('00799999001465107315')"></i></div>
+        <div class="copy-item"><span>Binance: <b>1194939141</b></span> <i class="fas fa-copy" onclick="copy('1194939141')"></i></div>
+        <div class="copy-item"><span>RedotPay: <b>1523336713</b></span> <i class="fas fa-copy" onclick="copy('1523336713')"></i></div>
+        
+        <a href="https://wa.me/213656251947" style="text-decoration:none">
+            <button class="btn-order" style="background:#25d366; margin-top:15px;"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+        </a>
+    </div>
+</div>
+
+<script>
+    const WALLETS = { "BaridiMob": "00799999001465107315", "RedotPay": "1523336713", "Binance": "1194939141" };
+    let curLang = 'fr';
+    let currentCat = 'All';
+
+    const CATS = [
+        { id: 'All', icon: 'fas fa-th-large', color: '#fff' },
+        { id: 'TikTok', icon: 'fab fa-tiktok', color: '#ff0050' },
+        { id: 'Facebook', icon: 'fab fa-facebook-f', color: '#1877f2' },
+        { id: 'Instagram', icon: 'fab fa-instagram', color: '#e4405f' },
+        { id: 'YouTube', icon: 'fab fa-youtube', color: '#ff0000' },
+        { id: 'Telegram', icon: 'fab fa-telegram-plane', color: '#0088cc' },
+        { id: 'Snapchat', icon: 'fab fa-snapchat', color: '#fffc00' },
+        { id: 'Premium', icon: 'fas fa-gem', color: '#a855f7' }
+    ];
+
+    // مصفوفة الخدمات التي أرسلتها أنت في الكود السابق
+    const SERVICES = [
+        {id: 9999, cat: "TikTok", n: "TikTok Coins | Recharge (1000 Coins)", n_ar: "شحن عملات تيك توك | (1000 عملة)", p:12.00, type: "fixed"},
+        {id: 3810, cat: "TikTok", n: "TikTok Followers | HQ Real Profiles", n_ar: "متابعين تيك توك | حسابات حقيقية عالية الجودة", p: 1.84},
+        {id: 2676, cat: "Facebook", n: "Facebook Followers | Non Drop | Lifetime ♻️", n_ar: "متابعين فيسبوك | بدون نقص | ضمان مدى الحياة ♻️", p: 0.54},
+        {id: 7820, cat: "Instagram", n: "Instagram Followers | Real Old | Lifetime ♻️", n_ar: "متابعين انستقرام | حسابات حقيقية قديمة ♻️", p: 1.00},
+        {id: 1539, cat: "YouTube", n: "YouTube Subscribers | Non Drop | Lifetime ♻️", n_ar: "مشتركين يوتيوب | بدون نقص | ضمان مدى الحياة ♻️", p: 20.62},
+        {id: 3428, cat: "Telegram", n: "Telegram Members | HQ Real | Lifetime ♻️", n_ar: "أعضاء تليجرام | حقيقي جودة عالية | مدى الحياة ♻️", p: 1.09},
+        {id: 110, cat: "Snapchat", n: "Snapchat Followers | Premium Quality", n_ar: "متابعين سناب شات | جودة متميزة", p: 20.00},
+        {id: 8607, cat: "Premium", n: "Netflix Premium | 1 Month 4K", n_ar: "نتفليكس بريميوم | شهر واحد جودة 4K", p: 4.50, type: "fixed"}
+    ];
+
+    function setLang(l) {
+        curLang = l;
+        document.dir = l === 'ar' ? 'rtl' : 'ltr';
+        document.getElementById('btnAR').classList.toggle('active', l === 'ar');
+        document.getElementById('btnFR').classList.toggle('active', l === 'fr');
+        
+        const t = {
+            'ar': { search: '🔍 ابحث هنا...', btn: 'تأكيد الطلب 🍬', hist: 'سجل الطلبات', pay: 'وسائل الدفع', l1: 'طلبات', l2: 'مستخدمين', l3: 'خدمات' },
+            'fr': { search: '🔍 Rechercher...', btn: 'Confirmer 🍬', hist: 'Historique', pay: 'Paiement', l1: 'Commandes', l2: 'Utilisateurs', l3: 'Services' }
+        }[l];
+
+        document.getElementById('srvSearch').placeholder = t.search;
+        document.getElementById('btnMain').innerText = t.btn;
+        document.getElementById('tHistory').innerText = t.hist;
+        document.getElementById('tPay').innerText = t.pay;
+        document.getElementById('l1').innerText = t.l1; document.getElementById('l2').innerText = t.l2; document.getElementById('l3').innerText = t.l3;
+        
+        renderCats();
+        loadServices();
+    }
+
+    function renderCats() {
+        const grid = document.getElementById('catGrid');
+        grid.innerHTML = '';
+        CATS.forEach(c => {
+            grid.innerHTML += `<div class="icon-box ${c.id === currentCat ? 'active' : ''}" onclick="pickCat('${c.id}')"><i class="${c.icon}" style="color:${c.color}"></i></div>`;
+        });
+    }
+
+    function pickCat(c) { currentCat = c; renderCats(); loadServices(); }
+
+    function loadServices() {
+        const s = document.getElementById('srvSelect');
+        s.innerHTML = '';
+        const list = currentCat === 'All' ? SERVICES : SERVICES.filter(x => x.cat === currentCat);
+        list.forEach(x => {
+            const name = curLang === 'ar' ? x.n_ar : x.n;
+            s.innerHTML += `<option value="${x.id}">${x.id} - ${name}</option>`;
+        });
+        doCalc();
+    }
+
+    function doSearch() {
+        const val = document.getElementById('srvSearch').value.toLowerCase();
+        const s = document.getElementById('srvSelect');
+        s.innerHTML = '';
+        SERVICES.filter(x => x.n.toLowerCase().includes(val) || x.n_ar.includes(val)).forEach(x => {
+            const name = curLang === 'ar' ? x.n_ar : x.n;
+            s.innerHTML += `<option value="${x.id}">${x.id} - ${name}</option>`;
+        });
+        doCalc();
+    }
+
+    function doCalc() {
+        const id = document.getElementById('srvSelect').value;
+        const srv = SERVICES.find(x => x.id == id);
+        const qty = document.getElementById('mQty').value || 0;
+        if(srv) {
+            let total = srv.type === 'fixed' ? srv.p : (srv.p / 1000 * qty);
+            document.getElementById('chargeOut').innerText = "$" + total.toFixed(2);
         }
+    }
 
-        function updateP() {
-            const sel = document.getElementById('servSelect');
-            if(!sel.value) return;
-            const isFixed = sel.options[sel.selectedIndex].getAttribute('data-fixed') === 'true';
-            const q = document.getElementById('qty').value;
-            let total = isFixed ? parseFloat(sel.value) : (parseFloat(sel.value) * q / 1000);
-            document.getElementById('total').innerText = total.toFixed(2) + " $";
-        }
+    function confirmOrder() {
+        const id = document.getElementById('srvSelect').value;
+        const srv = SERVICES.find(x => x.id == id);
+        const link = document.getElementById('mLink').value;
+        if(!link) return alert("Link Error!");
 
-        function toggleM(s) { document.getElementById('modalMenu').style.display = s ? 'flex' : 'none'; }
-        function copy(t) { navigator.clipboard.writeText(t); alert("تم النسخ: " + t); }
-        function setL(l) { document.dir = (l === 'ar' ? 'rtl' : 'ltr'); }
+        const order = {
+            id: Math.floor(Math.random() * 9000) + 1000,
+            name: curLang === 'ar' ? srv.n_ar : srv.n,
+            price: document.getElementById('chargeOut').innerText,
+            date: new Date().toLocaleDateString()
+        };
 
-        function anim(id, target) {
-            let c = 0; let i = setInterval(() => { c += Math.ceil(target/50); if(c>=target){c=target; clearInterval(i);} document.getElementById(id).innerText = c.toLocaleString() + "+"; }, 30);
-        }
+        let h = JSON.parse(localStorage.getItem('myH')) || [];
+        h.unshift(order);
+        localStorage.setItem('myH', JSON.stringify(h));
+        alert("Success! Check History.");
+    }
 
-        window.onload = () => { render(); anim('s1', 15400); anim('s2', 2900); anim('s3', 85); }
-    </script>
+    function openMenu() {
+        document.getElementById('sideModal').style.display = 'flex';
+        const h = JSON.parse(localStorage.getItem('myH')) || [];
+        const box = document.getElementById('historyBox');
+        box.innerHTML = h.map(o => `
+            <div class="history-card">
+                <div style="display:flex; justify-content:space-between"><b>#${o.id}</b> <span>${o.date}</span></div>
+                <div style="margin:5px 0; color:var(--gold)">${o.name}</div>
+                <div style="text-align:right; font-weight:bold; color:var(--accent)">${o.price}</div>
+            </div>
+        `).join('') || '<p style="text-align:center;font-size:12px;color:#555">No orders yet.</p>';
+    }
+
+    function closeMenu() { document.getElementById('sideModal').style.display = 'none'; }
+    function copy(t) { navigator.clipboard.writeText(t); alert("Copied!"); }
+    function anim(id, target) { let c = 0; let i = setInterval(() => { c += Math.ceil(target/50); if(c>=target){c=target; clearInterval(i);} document.getElementById(id).innerText = c.toLocaleString() + "+"; }, 30); }
+
+    window.onload = () => { setLang('fr'); anim('c1', 15400); anim('c2', 2800); anim('c3', 95); }
+</script>
 </body>
 </html>
