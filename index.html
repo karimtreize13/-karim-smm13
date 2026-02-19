@@ -6,51 +6,46 @@
     <title>KARIM13 | PANEL PRO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <style>
         :root { --bg: #0b0f17; --card: #161b26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --white: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
         body { background: var(--bg); color: var(--white); }
-        
-        /* Header */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .lang-switcher { display: flex; gap: 5px; background: #1a202c; padding: 4px; border-radius: 8px; }
-        .lang-btn { padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 6px; border: none; background: none; color: #718096; font-weight: bold; }
+        .lang-switcher { display: flex; gap: 5px; }
+        .lang-btn { padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 6px; border: none; background: #1a202c; color: #718096; font-weight: bold; }
         .lang-btn.active { background: var(--accent); color: white; }
         .nav-icons { display: flex; gap: 15px; align-items: center; }
-        .nav-icons i { font-size: 20px; cursor: pointer; color: var(--white); }
-        .nav-icons a { color: inherit; text-decoration: none; }
-
-        /* Stats Card */
+        .nav-icons a { color: white; text-decoration: none; font-size: 20px; }
+        .nav-icons i { cursor: pointer; font-size: 20px; }
         .stats-header { display: flex; justify-content: space-around; padding: 20px 10px; background: rgba(255,255,255,0.03); margin: 15px; border-radius: 20px; border: 1px solid var(--border); }
-        .stat-item { text-align: center; }
         .stat-item h2 { color: var(--gold); font-size: 22px; font-weight: 900; }
-        .stat-item p { font-size: 10px; color: #a0aec0; margin-top: 5px; text-transform: uppercase; }
-
-        /* Icon Grid */
+        .stat-item p { font-size: 10px; color: #a0aec0; }
         .icon-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
         .icon-box { background: var(--card); border: 1px solid var(--border); border-radius: 15px; padding: 15px 5px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .icon-box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); }
         .icon-box i { font-size: 24px; margin-bottom: 8px; display: block; }
         .icon-box span { font-size: 10px; font-weight: bold; }
-        .icon-box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); transform: translateY(-3px); }
-
-        /* Form */
         .order-section { padding: 0 15px 20px; }
         .card { background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid var(--border); }
         select, input { width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: #fff; outline: none; }
         .price-display { background: rgba(16,185,129,0.1); color: var(--accent); padding: 15px; border-radius: 12px; text-align: center; font-size: 26px; font-weight: 900; border: 2px dashed var(--accent); margin-bottom: 12px; }
         .btn-confirm { width: 100%; padding: 16px; background: var(--accent); border: none; border-radius: 12px; color: white; font-weight: 900; font-size: 16px; cursor: pointer; margin-bottom: 10px; }
-        .btn-whatsapp { width: 100%; padding: 12px; background: #25d366; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
-        /* Modals */
+        .btn-wa { width: 100%; padding: 14px; background: #25d366; border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--card); width: 100%; max-width: 400px; padding: 25px; border-radius: 20px; position: relative; border: 1px solid var(--border); }
-        .close-m { position: absolute; top: 15px; right: 15px; color: #ff4d4d; font-size: 25px; cursor: pointer; }
+        .modal-content { background: var(--card); width: 100%; max-width: 400px; padding: 25px; border-radius: 20px; border: 1px solid var(--border); position: relative; }
         .pay-item { margin-bottom: 10px; background: var(--bg); padding: 12px; border-radius: 10px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .pay-info small { color: var(--gold); display: block; font-size: 10px; font-weight: bold; }
-        .copy-btn { background: var(--gold); border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 10px; font-weight: bold; }
+        .copy-btn { background: var(--gold); border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 10px; }
+        
+        /* استايل لوحة تحكم الطلبات - تظهر لك فقط */
+        #adminSection { display: none; padding: 20px; margin-top: 30px; border-top: 2px solid var(--gold); background: #1a202c; }
+        .order-card { background: var(--card); border: 1px solid var(--border); padding: 15px; border-radius: 10px; margin-bottom: 10px; font-size: 13px; }
+        .status-badge { padding: 4px 8px; border-radius: 5px; font-size: 11px; font-weight: bold; }
+        .pending { background: #f59e0b; color: #000; }
+        .done { background: #10b981; color: #fff; }
     </style>
 </head>
 <body>
@@ -58,20 +53,19 @@
 <div class="header">
     <div class="lang-switcher">
         <button class="lang-btn active" id="btnFr" onclick="changeLang('fr')">FR</button>
-        <button class="lang-btn" id="btnAr" onclick="changeLang('ar')">العربية</button>
+        <button class="lang-btn" id="btnAr" onclick="changeLang('ar')">AR</button>
     </div>
-    <div class="logo">KARIM<span style="color:var(--gold);">13</span></div>
+    <div class="logo" style="font-weight:900">KARIM<span style="color:var(--gold)">13</span></div>
     <div class="nav-icons">
         <a href="https://t.me/karim_treize" target="_blank"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
-        <i class="fas fa-wallet" onclick="openModal('pay')" style="color:var(--gold)"></i>
-        <i class="fas fa-history" onclick="loadOrders()"></i>
-        <i class="fas fa-user-shield" onclick="adminAccess()"></i>
+        <i class="fas fa-wallet" onclick="openModal()" style="color:var(--gold)"></i>
+        <i class="fas fa-user-shield" onclick="showAdmin()" title="Admin Only"></i>
     </div>
 </div>
 
 <div class="stats-header">
-    <div class="stat-item"><h2>15,400+</h2><p id="st1">Commandes</p></div>
-    <div class="stat-item"><h2>2,900+</h2><p id="st2">Utilisateurs</p></div>
+    <div class="stat-item"><h2>15.4K</h2><p id="st1">Commandes</p></div>
+    <div class="stat-item"><h2>2.9K</h2><p id="st2">Clients</p></div>
     <div class="stat-item"><h2>90+</h2><p id="st3">Services</p></div>
 </div>
 
@@ -80,54 +74,38 @@
 <div class="order-section">
     <div class="card">
         <select id="srvSelect" onchange="calc()"></select>
-        <input type="text" id="orderLink" placeholder="Lien / Link / Email">
+        <input type="text" id="orderLink" placeholder="Lien / Link">
         <input type="number" id="orderQty" value="1000" oninput="calc()">
         <div class="price-display" id="totalPrice">$0.00</div>
         <button class="btn-confirm" onclick="sendOrder()" id="btnText">Confirmer 🍬</button>
-        <button class="btn-whatsapp" onclick="contactWA()">
-            <i class="fab fa-whatsapp"></i> <span id="waText">Contact Support</span>
+        <button class="btn-wa" onclick="sendToWA()">
+            <i class="fab fa-whatsapp"></i> <span id="waText">Commander via WhatsApp</span>
         </button>
     </div>
 </div>
 
+<div id="adminSection">
+    <h3 style="color:var(--gold); margin-bottom:15px;">Dashboard Karim (Admin)</h3>
+    <div id="ordersList">Chargement des commandes...</div>
+</div>
+
 <div id="mPay" class="modal">
     <div class="modal-content">
-        <span class="close-m" onclick="closeModal()">×</span>
-        <h3 style="text-align:center; margin-bottom:15px;" id="payTitle">Paiement / الدفع</h3>
-        <div class="pay-item">
-            <div class="pay-info"><small>BaridiMob</small><span id="c1">00799999001465107315</span></div>
-            <button class="copy-btn" onclick="copy('c1')">Copy</button>
-        </div>
-        <div class="pay-item">
-            <div class="pay-info"><small>Binance ID</small><span id="c2">1194939141</span></div>
-            <button class="copy-btn" onclick="copy('c2')">Copy</button>
-        </div>
-        <div class="pay-item">
-            <div class="pay-info"><small>RedotPay ID</small><span id="c3">493914178</span></div>
-            <button class="copy-btn" onclick="copy('c3')">Copy</button>
-        </div>
-        <div class="pay-item" style="border-color: var(--gold);">
-            <div class="pay-info"><small>Flexy (Mobilis)</small><span id="c4">0656251947</span></div>
-            <button class="copy-btn" onclick="copy('c4')">Copy</button>
-        </div>
+        <h3 style="text-align:center; margin-bottom:15px;">Paiement / الدفع</h3>
+        <div class="pay-item"><div><small style="color:var(--gold)">BaridiMob</small><br><span id="c1">00799999001465107315</span></div><button class="copy-btn" onclick="copy('c1')">COPY</button></div>
+        <div class="pay-item"><div><small style="color:var(--gold)">Binance ID</small><br><span id="c2">1194939141</span></div><button class="copy-btn" onclick="copy('c2')">COPY</button></div>
+        <div class="pay-item"><div><small style="color:var(--gold)">RedotPay ID</small><br><span id="c3">493914178</span></div><button class="copy-btn" onclick="copy('c3')">COPY</button></div>
+        <div class="pay-item" style="border-color:var(--gold)"><div><small style="color:var(--gold)">Flexy</small><br><span id="c4">0656251947</span></div><button class="copy-btn" onclick="copy('c4')">COPY</button></div>
+        <button class="btn-confirm" onclick="closeModal()" style="margin-top:10px; background:#444">Fermer</button>
     </div>
 </div>
 
 <script>
-    // Firebase Config
-    const firebaseConfig = {
-      apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
-      authDomain: "karim-smm.firebaseapp.com",
-      projectId: "karim-smm",
-      storageBucket: "karim-smm.firebasestorage.app",
-      messagingSenderId: "968826000164",
-      appId: "1:968826000164:web:aa41869e201784b85c59b1"
-    };
-    firebase.initializeApp(firebaseConfig);
+    const config = { apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0", authDomain: "karim-smm.firebaseapp.com", projectId: "karim-smm" };
+    firebase.initializeApp(config);
     const db = firebase.firestore();
 
     let curL = 'fr', curC = 'TikTok';
-
     const CATS = [
         { id: 'TikTok', fr: 'TikTok', ar: 'تيك توك', icon: 'fab fa-tiktok', color: '#ff0050' },
         { id: 'Facebook', fr: 'Facebook', ar: 'فيسبوك', icon: 'fab fa-facebook-f', color: '#1877f2' },
@@ -140,20 +118,17 @@
     ];
 
     const SERVICES = [
-        { id: 999, cat: 'TikTok', n: 'TikTok Coins - 1000', n_ar: 'عملات تيك توك - 1000', p: 13, fix: true },
-        { id: 101, cat: 'TikTok', n: 'Followers HQ', n_ar: 'متابعين جودة عالية', p: 0.8 },
-        { id: 201, cat: 'Facebook', n: 'Page Likes', n_ar: 'لايكات صفحات', p: 1.5 },
-        { id: 701, cat: 'Premium', n: 'Netflix 1 Month', n_ar: 'نتفليكس شهر', p: 4.5, fix: true }
+        { id: 1, cat: 'TikTok', n: 'Followers HQ', n_ar: 'متابعين جودة عالية', p: 0.8 },
+        { id: 2, cat: 'TikTok', n: 'TikTok Coins 1000', n_ar: '1000 عملة تيك توك', p: 13, fix: true },
+        { id: 3, cat: 'Facebook', n: 'Page Likes', n_ar: 'لايكات صفحات', p: 1.2 }
     ];
 
     function changeLang(l) {
         curL = l;
         document.body.dir = (l === 'ar' ? 'rtl' : 'ltr');
-        document.getElementById('btnFr').classList.toggle('active', l === 'fr');
-        document.getElementById('btnAr').classList.toggle('active', l === 'ar');
-        document.getElementById('st1').innerText = (l === 'ar' ? 'طلبات منفذة' : 'Commandes');
-        document.getElementById('waText').innerText = (l === 'ar' ? 'تواصل عبر واتساب' : 'Contact Support');
+        document.getElementById('st1').innerText = (l === 'ar' ? 'طلبات' : 'Commandes');
         document.getElementById('btnText').innerText = (l === 'ar' ? 'تأكيد الطلب 🍬' : 'Confirmer 🍬');
+        document.getElementById('waText').innerText = (l === 'ar' ? 'اطلب عبر واتساب' : 'Commander via WhatsApp');
         renderCats();
     }
 
@@ -171,14 +146,14 @@
     function loadSrv() {
         const s = document.getElementById('srvSelect'); s.innerHTML = '';
         SERVICES.filter(x => x.cat === curC).forEach(x => {
-            s.innerHTML += `<option value="${x.id}">${curL==='ar'?x.n_ar:x.n}</option>`;
+            s.innerHTML += `<option value="${x.n}">${curL==='ar'?x.n_ar:x.n}</option>`;
         });
         calc();
     }
 
     function calc() {
-        const id = document.getElementById('srvSelect').value;
-        const s = SERVICES.find(x => x.id == id);
+        const name = document.getElementById('srvSelect').value;
+        const s = SERVICES.find(x => x.n == name);
         const q = document.getElementById('orderQty').value || 0;
         if(s) {
             let total = s.fix ? s.p : (s.p / 1000 * q);
@@ -186,36 +161,60 @@
         }
     }
 
-    function contactWA() {
-        const srv = document.getElementById('srvSelect').options[document.getElementById('srvSelect').selectedIndex].text;
-        const link = document.getElementById('orderLink').value;
-        const qty = document.getElementById('orderQty').value;
-        const price = document.getElementById('totalPrice').innerText;
-        const msg = `Bonjour Karim, je veux commander:%0A- Service: ${srv}%0A- Lien: ${link}%0A- Quantité: ${qty}%0A- Prix: ${price}`;
-        window.open(`https://wa.me/213656251947?text=${msg}`);
-    }
-
     async function sendOrder() {
-        const srv = document.getElementById('srvSelect').value;
         const link = document.getElementById('orderLink').value;
-        const qty = document.getElementById('orderQty').value;
-        if(!link) return alert("Lien Requis!");
-        try {
-            await db.collection("orders").add({ service: srv, link: link, quantity: qty, status: "Pending", date: new Date() });
-            alert("✅ Commande Reçue!");
-            openModal('pay');
-        } catch(e) { alert("Error connecting to Firebase"); }
+        if(!link) return alert("Link Missing!");
+        db.collection("orders").add({
+            service: document.getElementById('srvSelect').value,
+            link: link,
+            qty: document.getElementById('orderQty').value,
+            price: document.getElementById('totalPrice').innerText,
+            date: new Date().toLocaleString(),
+            status: "En attente"
+        }).then(() => { alert("✅ Success!"); openModal(); }).catch(() => alert("Error Firebase Rules!"));
     }
 
-    function copy(id) {
-        navigator.clipboard.writeText(document.getElementById(id).innerText);
-        alert("Copié / تم النسخ");
+    // دالة لمشاهدة الطلبات (للكريم فقط)
+    function showAdmin() {
+        let pass = prompt("Mot de passe Admin:");
+        if(pass === "karim13") {
+            document.getElementById('adminSection').style.display = 'block';
+            fetchOrders();
+        } else { alert("Accès refusé!"); }
     }
 
-    function openModal(id) { document.getElementById('mPay').style.display = 'flex'; }
+    function fetchOrders() {
+        const list = document.getElementById('ordersList');
+        db.collection("orders").orderBy("date", "desc").onSnapshot(snap => {
+            list.innerHTML = "";
+            snap.forEach(doc => {
+                const o = doc.data();
+                list.innerHTML += `
+                    <div class="order-card">
+                        <b>Service:</b> ${o.service} <br>
+                        <b>Lien:</b> <a href="${o.link}" style="color:cyan">${o.link}</a> <br>
+                        <b>Quantité:</b> ${o.qty} | <b>Prix:</b> ${o.price} <br>
+                        <small>${o.date}</small> <br>
+                        <span class="status-badge ${o.status === 'Terminé' ? 'done' : 'pending'}">${o.status}</span>
+                        <button onclick="markDone('${doc.id}')" style="float:right; padding:2px 5px; cursor:pointer">OK</button>
+                    </div>`;
+            });
+        });
+    }
+
+    function markDone(id) { db.collection("orders").doc(id).update({ status: "Terminé" }); }
+
+    function sendToWA() {
+        const s = document.getElementById('srvSelect').value;
+        const l = document.getElementById('orderLink').value;
+        const q = document.getElementById('orderQty').value;
+        const p = document.getElementById('totalPrice').innerText;
+        window.open(`https://wa.me/213656251947?text=Commande: ${s}%0ALink: ${l}%0AQty: ${q}%0APrix: ${p}`);
+    }
+
+    function copy(id) { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Copied!"); }
+    function openModal() { document.getElementById('mPay').style.display = 'flex'; }
     function closeModal() { document.getElementById('mPay').style.display = 'none'; }
-    function adminAccess() { if(prompt("Pass:") === "karim13") window.location.href="https://console.firebase.google.com/project/karim-smm/firestore/data"; }
-
     window.onload = () => changeLang('fr');
 </script>
 </body>
