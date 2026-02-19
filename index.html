@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM13 | SMM PANEL FULL</title>
+    <title>KARIM13 | PRO PANEL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -12,28 +12,38 @@
         :root { --bg: #0b0f17; --card: #161b26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --white: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
         body { background: var(--bg); color: var(--white); text-align: center; }
+        
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 1000; }
         .lang-btn { padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 6px; border: none; color: #718096; background: #1a202c; }
         .lang-btn.active { background: var(--accent); color: white; }
         .nav-icons { display: flex; gap: 15px; align-items: center; }
-        .nav-icons a { color: #0088cc; font-size: 20px; }
+        .nav-icons i, .nav-icons a { color: white; font-size: 20px; cursor: pointer; text-decoration: none; }
+
         .stats { display: flex; justify-content: space-around; padding: 20px; margin: 15px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
         .counter { color: var(--gold); font-size: 22px; font-weight: 900; }
+
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
         .box { background: var(--card); padding: 12px 5px; border-radius: 15px; border: 1px solid var(--border); cursor: pointer; }
         .box.active { border-color: var(--gold); background: rgba(245,158,11,0.1); }
         .box i { font-size: 20px; display: block; margin-bottom: 5px; }
-        .box span { font-size: 9px; font-weight: bold; }
+
         .card { background: var(--card); margin: 15px; padding: 20px; border-radius: 20px; border: 1px solid var(--border); }
         select, input { width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; }
         .price-tag { font-size: 32px; font-weight: 900; color: var(--accent); margin: 10px 0; }
         .btn-order { width: 100%; padding: 16px; background: var(--accent); border: none; border-radius: 12px; color: white; font-weight: 900; cursor: pointer; }
-        .history-section { display: none; margin: 15px; text-align: left; padding: 10px; }
-        .order-item { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--gold); position: relative; }
-        .status-badge { position: absolute; top: 10px; right: 10px; padding: 4px 8px; border-radius: 5px; font-size: 10px; }
+
+        /* سجل الطلبات المطور */
+        .history-section { display: none; margin: 15px; text-align: left; padding-bottom: 50px; }
+        .order-item { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 10px; border-right: 4px solid var(--gold); position: relative; }
+        .status-badge { position: absolute; top: 10px; left: 10px; padding: 4px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; }
+        
+        /* أزرار الواتساب والتحكم داخل السجل */
+        .order-actions { display: flex; gap: 10px; margin-top: 12px; }
+        .btn-sm-wa { background: #25d366; color: white; border: none; padding: 8px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 5px; }
+        .btn-sm-admin { background: var(--accent); color: white; border: none; padding: 8px 12px; border-radius: 8px; font-size: 11px; cursor: pointer; }
+
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--card); padding: 25px; border-radius: 25px; width: 100%; max-width: 400px; }
-        .pay-item { background: var(--bg); padding: 12px; border-radius: 10px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
     </style>
 </head>
 <body>
@@ -69,18 +79,24 @@
 </div>
 
 <div id="historyArea" class="history-section">
-    <h3 style="color:var(--gold); margin-bottom:10px;">📦 Historique / السجل</h3>
+    <h3 style="color:var(--gold); margin-bottom:15px; display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-box-open"></i> Snatshot Orders / سجل الطلبات
+    </h3>
     <div id="orderLog"></div>
 </div>
 
 <div id="payM" class="modal">
     <div class="modal-content">
         <h3 style="margin-bottom:20px; color:var(--gold);">PAIEMENT / الدفع</h3>
-        <div class="pay-item"><div><small>BaridiMob</small><br><span id="p1">00799999001465107315</span></div><button onclick="copy('p1')">COPY</button></div>
-        <div class="pay-item"><div><small>Binance ID</small><br><span id="p2">1194939141</span></div><button onclick="copy('p2')">COPY</button></div>
-        <div class="pay-item"><div><small>RedotPay ID</small><br><span id="p3">8254910362</span></div><button onclick="copy('p3')">COPY</button></div>
-        <div class="pay-item"><div><small>Flexy (Mobilis)</small><br><span id="p4">0656251947</span></div><button onclick="copy('p4')">COPY</button></div>
-        <button onclick="closePay()" style="width:100%; padding:10px; margin-top:10px; background:#444; color:white; border:none; border-radius:8px;">Fermer</button>
+        <div style="background:#0b0f17; padding:10px; border-radius:10px; margin-bottom:10px; display:flex; justify-content:space-between;">
+            <span>BaridiMob: <b id="p1">00799999001465107315</b></span>
+            <button onclick="copy('p1')" style="color:var(--gold); background:none; border:none; cursor:pointer;">COPY</button>
+        </div>
+        <div style="background:#0b0f17; padding:10px; border-radius:10px; margin-bottom:10px; display:flex; justify-content:space-between;">
+            <span>Binance: <b id="p2">1194939141</b></span>
+            <button onclick="copy('p2')" style="color:var(--gold); background:none; border:none; cursor:pointer;">COPY</button>
+        </div>
+        <button onclick="closePay()" style="width:100%; padding:10px; margin-top:10px; background:#444; border:none; border-radius:10px; color:white;">Fermer</button>
     </div>
 </div>
 
@@ -91,58 +107,29 @@
 
     let L = 'fr', C = 'TikTok', isAdmin = false;
 
-    // العداد النشط
+    // عداد الطلبات التلقائي
     setInterval(() => {
         let el = document.getElementById('countOrders');
         el.innerText = parseInt(el.innerText) + Math.floor(Math.random() * 2);
-    }, 4000);
+    }, 5000);
 
     const CATS = [
         { id: 'TikTok', fr: 'TikTok', ar: 'تيك توك', icon: 'fab fa-tiktok', col: '#ff0050' },
         { id: 'Facebook', fr: 'Facebook', ar: 'فيسبوك', icon: 'fab fa-facebook-f', col: '#1877f2' },
         { id: 'Instagram', fr: 'Instagram', ar: 'انستقرام', icon: 'fab fa-instagram', col: '#e4405f' },
-        { id: 'YouTube', fr: 'YouTube', ar: 'يوتيوب', icon: 'fab fa-youtube', col: '#ff0000' },
-        { id: 'Telegram', fr: 'Telegram', ar: 'تليجرام', icon: 'fab fa-telegram-plane', col: '#0088cc' },
-        { id: 'Snapchat', fr: 'Snapchat', ar: 'سناب', icon: 'fab fa-snapchat', col: '#fffc00' },
-        { id: 'Gaming', fr: 'Gaming', ar: 'ألعاب', icon: 'fas fa-gamepad', col: '#10b981' },
-        { id: 'Premium', fr: 'Premium', ar: 'بريميوم', icon: 'fas fa-gem', col: '#a855f7' }
+        { id: 'Gaming', fr: 'Gaming', ar: 'ألعاب', icon: 'fas fa-gamepad', col: '#10b981' }
     ];
 
     const SERVICES = [
-        // TikTok
         { cat: "TikTok", n: "🪙 TikTok Coins 1000", n_ar: "1000 عملة تيك توك", p: 13.0, fix: true },
         { cat: "TikTok", n: "👤 TikTok Followers HQ", n_ar: "متابعين تيك توك حقيقي", p: 1.20 },
-        { cat: "TikTok", n: "❤️ TikTok Likes Real", n_ar: "لايكات تيك توك حقيقية", p: 0.10 },
-        { cat: "TikTok", n: "⏱️ TikTok Views Fast", n_ar: "مشاهدات تيك توك سريعة", p: 0.01 },
-        { cat: "TikTok", n: "🔄 TikTok Shares", n_ar: "حركات اكسبلور تيك توك", p: 0.05 },
-        // Facebook
-        { cat: "Facebook", n: "👤 FB Profile Followers", n_ar: "متابعين ملف شخصي فيسبوك", p: 0.90 },
-        { cat: "Facebook", n: "🚩 FB Page Likes/Followers", n_ar: "متابعين صفحة فيسبوك", p: 1.10 },
-        { cat: "Facebook", n: "📺 FB Video Views", n_ar: "مشاهدات فيديو فيسبوك", p: 0.30 },
-        { cat: "Facebook", n: "⏱️ FB 60K Minutes Views", n_ar: "60 ألف دقيقة فيسبوك", p: 1.50, fix: true },
-        // Instagram
-        { cat: "Instagram", n: "👤 Instagram Followers HQ", n_ar: "متابعين انستقرام حقيقي", p: 0.60 },
-        { cat: "Instagram", n: "❤️ Instagram Likes", n_ar: "لايكات انستقرام", p: 0.02 },
-        { cat: "Instagram", n: "📺 Instagram Reel Views", n_ar: "مشاهدات ريلز انستقرام", p: 0.01 },
-        // YouTube
-        { cat: "YouTube", n: "👤 YouTube Subscribers", n_ar: "مشتركين يوتيوب", p: 3.50 },
-        { cat: "YouTube", n: "⏱️ YouTube Watch Time 4K", n_ar: "4000 ساعة مشاهدة يوتيوب", p: 12.0, fix: true },
-        // Telegram
-        { cat: "Telegram", n: "👤 Telegram Channel Members", n_ar: "أعضاء قنوات تليجرام", p: 0.80 },
-        // Gaming
-        { cat: "Gaming", n: "🎮 PUBG 60 UC", n_ar: "ببجي 60 شدة", p: 1.50, fix: true },
-        { cat: "Gaming", n: "🎮 PUBG 325 UC", n_ar: "ببجي 325 شدة", p: 5.50, fix: true },
-        { cat: "Gaming", n: "🎮 Free Fire 110 Diamonds", n_ar: "فري فاير 110 جوهرة", p: 1.30, fix: true },
-        // Premium
-        { cat: "Premium", n: "🎬 Netflix Premium 1 Month", n_ar: "نتفليكس بريميوم شهر", p: 4.50, fix: true },
-        { cat: "Premium", n: "🎨 Canva Pro 1 Year", n_ar: "كانفا برو سنة كاملة", p: 2.50, fix: true }
+        { cat: "Gaming", n: "🎮 PUBG 60 UC", n_ar: "ببجي 60 شدة", p: 1.50, fix: true }
     ];
 
     function setL(l) {
         L = l; document.body.dir = (l==='ar'?'rtl':'ltr');
         document.getElementById('bFr').classList.toggle('active', l==='fr');
         document.getElementById('bAr').classList.toggle('active', l==='ar');
-        document.getElementById('btnOrder').innerText = (l==='ar'?'تأكيد الطلب 🍬':'Confirmer 🍬');
         render();
     }
 
@@ -166,9 +153,7 @@
         const q = document.getElementById('qty').value || 0;
         if(s) {
             let total = s.fix ? s.p : (s.p / 1000 * q);
-            document.getElementById('total').innerText = "$" + total.toFixed(3);
-            const msg = `*Commande KARIM13*%0A- Service: ${L==='ar'?s.n_ar:s.n}%0A- Link: ${document.getElementById('link').value}%0A- Qty: ${q}%0A- Total: $${total.toFixed(3)}`;
-            // رابط الواتساب يتحدث تلقائياً
+            document.getElementById('total').innerText = "$" + total.toFixed(2);
         }
     }
 
@@ -190,15 +175,29 @@
             const list = document.getElementById('orderLog'); list.innerHTML = "";
             snap.forEach(doc => {
                 const d = doc.data();
-                const col = d.status === 'Complet' ? '#10b981' : (d.status === 'Annulé' ? '#ef4444' : '#f59e0b');
-                let h = `<div class="order-item">
+                const col = d.status === 'Complet' ? '#10b981' : '#f59e0b';
+                
+                // تجهيز رسالة الواتساب لكل طلب
+                const waMsg = encodeURIComponent(`Salut Karim, je contacte pour ma commande:\n📦 Service: ${d.srv}\n🔗 Link: ${d.link}\n💰 Prix: ${d.price}\n📌 Status: ${d.status}`);
+                
+                let html = `
+                <div class="order-item">
                     <span class="status-badge" style="background:${col}">${d.status}</span>
-                    <b>${d.srv}</b><br><small>${d.link}</small>`;
+                    <b style="color:var(--gold)">${d.srv}</b><br>
+                    <small>Lien: ${d.link}</small><br>
+                    <small style="color:#aaa;">${d.date}</small>
+                    
+                    <div class="order-actions">
+                        <a href="https://wa.me/213656251947?text=${waMsg}" class="btn-sm-wa" target="_blank">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>`;
+                
                 if(isAdmin) {
-                    h += `<div style="margin-top:10px;"><button onclick="upd('${doc.id}','Complet')" style="background:#10b981; color:white; border:none; padding:4px 8px; border-radius:4px; font-size:10px; cursor:pointer;">Mكتمل</button></div>`;
+                    html += `<button class="btn-sm-admin" onclick="upd('${doc.id}','Complet')">✅ Mكتمل</button>`;
                 }
-                h += `</div>`;
-                list.innerHTML += h;
+                
+                html += `</div></div>`;
+                list.innerHTML += html;
             });
         });
     }
