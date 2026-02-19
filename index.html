@@ -6,43 +6,32 @@
     <title>KARIM13 | PANEL PRO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    
     <style>
         :root { --bg: #0b0f17; --card: #161b26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --white: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--white); overflow-x: hidden; text-align: left; }
-        
-        /* Header */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--bg); border-bottom: 1px solid var(--border); sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 900; font-size: 1.2rem; }
+        body { background: var(--bg); color: var(--white); text-align: left; line-height: 1.6; }
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         .lang-switcher { display: flex; gap: 5px; background: #1a202c; padding: 4px; border-radius: 8px; }
         .lang-btn { padding: 5px 12px; font-size: 11px; cursor: pointer; border-radius: 6px; border: none; background: none; color: #718096; font-weight: bold; }
         .lang-btn.active { background: var(--accent); color: white; }
-
-        /* Stats */
+        .nav-icons { display: flex; gap: 15px; align-items: center; }
+        .nav-icons i, .nav-icons a { font-size: 20px; cursor: pointer; color: var(--white); text-decoration: none; }
         .stats-header { display: flex; justify-content: space-around; padding: 20px 10px; background: rgba(255,255,255,0.03); margin: 15px; border-radius: 20px; border: 1px solid var(--border); }
         .stat-item h2 { color: var(--gold); font-size: 22px; font-weight: 900; }
         .stat-item p { font-size: 10px; color: #718096; margin-top: 5px; }
-
-        /* Categories */
         .icon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
         .icon-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 15px 5px; text-align: center; cursor: pointer; transition: 0.2s; }
         .icon-box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); }
         .icon-box i { font-size: 22px; margin-bottom: 8px; display: block; }
         .icon-box span { font-size: 10px; font-weight: bold; }
-
-        /* Order Form */
         .order-section { padding: 0 15px 20px; }
         .card { background: var(--card); padding: 20px; border-radius: 18px; border: 1px solid var(--border); }
-        select, input { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: #fff; outline: none; }
+        select, input { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: #fff; outline: none; font-size: 14px; }
         .price-display { background: rgba(16,185,129,0.1); color: var(--accent); padding: 15px; border-radius: 12px; text-align: center; font-size: 24px; font-weight: 900; border: 2px dashed var(--accent); margin-bottom: 15px; }
         .btn-confirm { width: 100%; padding: 16px; background: var(--accent); border: none; border-radius: 12px; color: white; font-weight: 900; font-size: 16px; cursor: pointer; }
-
-        /* Modals */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--card); width: 100%; max-width: 400px; padding: 25px; border-radius: 20px; border: 1px solid var(--border); position: relative; }
         .close-m { position: absolute; top: 15px; right: 15px; color: #ff4d4d; font-size: 25px; cursor: pointer; }
-
         .pay-item { margin-bottom: 10px; background: var(--bg); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
         .copy-btn { background: var(--gold); border: none; padding: 5px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; }
     </style>
@@ -55,9 +44,9 @@
         <button class="lang-btn" id="btnAr" onclick="changeLang('ar')">AR</button>
     </div>
     <div class="logo">KARIM<span style="color:var(--gold);">13</span></div>
-    <div class="nav-icons" style="display: flex; gap: 15px;">
+    <div class="nav-icons">
         <a href="https://t.me/karim_treize" target="_blank"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
-        <i class="fas fa-wallet" onclick="openModal('pay')" style="color:var(--gold); cursor:pointer;"></i>
+        <i class="fas fa-wallet" onclick="openModal()" style="color:var(--gold)"></i>
     </div>
 </div>
 
@@ -92,16 +81,16 @@
             <button class="copy-btn" onclick="copy('c2')">Copy</button>
         </div>
         <div class="pay-item">
-            <div><small style="color:var(--gold)">Flexy Mobilis</small><br><span id="c3">0600000000</span></div>
+            <div><small style="color:var(--gold)">Flexy Mobilis</small><br><span id="c3">0656251947</span></div>
             <button class="copy-btn" onclick="copy('c3')">Copy</button>
         </div>
-        <button class="btn-confirm" onclick="window.open('https://wa.me/213656251947')" style="background:#25d366; margin-top:10px;">WhatsApp</button>
+        <button class="btn-confirm" onclick="window.open('https://wa.me/213656251947')" style="background:#25d366; margin-top:10px;">WhatsApp Support</button>
     </div>
 </div>
 
 <script>
     let curL = 'fr';
-    let curC = 'TikTok';
+    let curC = 'Baghdad';
 
     const CATS = [
         { id: 'Baghdad', fr: 'Baghdad', ar: 'بغداد 🇮🇶', icon: 'fas fa-mosque', color: '#007a3d' },
@@ -113,19 +102,25 @@
     ];
 
     const SERVICES = [
-        { id: 1, cat: 'Baghdad', n: 'Iraq Followers', n_ar: 'متابعين عراقين', p: 1.5 },
-        { id: 2, cat: 'TikTok', n: 'TikTok Followers', n_ar: 'متابعين تيك توك', p: 0.8 },
-        { id: 3, cat: 'TikTok', n: 'TikTok Coins 1000', n_ar: '1000 عملة تيك توك', p: 13, fix: true },
-        { id: 4, cat: 'Facebook', n: 'FB Followers', n_ar: 'متابعين فيسبوك', p: 0.9 }
+        { id: 1, cat: 'Baghdad', n: 'Iraq Followers', n_ar: 'متابعين عراقين حقيقي', p: 1.5 },
+        { id: 2, cat: 'Baghdad', n: 'Iraq Likes', n_ar: 'لايكات عراقية', p: 0.5 },
+        { id: 3, cat: 'TikTok', n: 'TikTok Followers', n_ar: 'متابعين تيك توك', p: 0.8 },
+        { id: 4, cat: 'TikTok', n: 'TikTok Coins 1000', n_ar: '1000 عملة تيك توك', p: 13, fix: true },
+        { id: 5, cat: 'Facebook', n: 'FB Followers', n_ar: 'متابعين فيسبوك', p: 0.9 },
+        { id: 6, cat: 'Instagram', n: 'Insta Followers', n_ar: 'متابعين انستقرام', p: 0.7 }
     ];
 
     function changeLang(l) {
         curL = l;
         document.body.dir = (l === 'ar' ? 'rtl' : 'ltr');
+        document.body.style.textAlign = (l === 'ar' ? 'right' : 'left');
         document.getElementById('btnFr').classList.toggle('active', l === 'fr');
         document.getElementById('btnAr').classList.toggle('active', l === 'ar');
         document.getElementById('st1').innerText = (l === 'ar' ? 'طلبات' : 'Commandes');
-        document.getElementById('btnText').innerText = (l === 'ar' ? 'تأكيد الطلب' : 'Confirmer');
+        document.getElementById('st2').innerText = (l === 'ar' ? 'زبائن' : 'Clients');
+        document.getElementById('st3').innerText = (l === 'ar' ? 'خدمات' : 'Services');
+        document.getElementById('btnText').innerText = (l === 'ar' ? 'تأكيد الطلب 🍬' : 'Confirmer 🍬');
+        document.getElementById('orderLink').placeholder = (l === 'ar' ? 'الرابط هنا' : 'Lien / Link');
         renderCats();
     }
 
@@ -160,16 +155,17 @@
     }
 
     function copy(id) {
-        navigator.clipboard.writeText(document.getElementById(id).innerText);
-        alert("Copied!");
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text);
+        alert("Copied / تم النسخ");
     }
 
     function sendOrder() {
-        alert(curL === 'ar' ? "تم استلام الطلب! تواصل معنا للدفع." : "Reçu! Contactez-nous pour payer.");
-        openModal('pay');
+        alert(curL === 'ar' ? "تم إرسال طلبك! يرجى إتمام الدفع." : "Commande envoyée! Veuillez payer.");
+        openModal();
     }
 
-    function openModal(id) { document.getElementById('mPay').style.display = 'flex'; }
+    function openModal() { document.getElementById('mPay').style.display = 'flex'; }
     function closeModal() { document.getElementById('mPay').style.display = 'none'; }
 
     window.onload = () => changeLang('fr');
