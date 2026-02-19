@@ -1,178 +1,521 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM13 | SMM PRO FULL</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root { --bg: #0a0a15; --card: #111827; --accent: #10b981; --gold: #f59e0b; --text: #e2e8f0; --border: #334155; }
-        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); padding: 15px; transition: 0.3s; }
-        body.fr { direction: ltr; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KARIM13 | SMM PRO</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a15;
+      --card: #111827;
+      --primary: #7c3aed;
+      --accent: #10b981;
+      --gold: #f59e0b;
+      --text: #e2e8f0;
+      --gray: #1e293b;
+      --border: #334155;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: linear-gradient(135deg, #0a0a15 0%, #13152e 100%);
+      font-family: 'Tajawal', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 30px;
+    }
+    body.fr { direction: ltr; text-align: left; }
 
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .logo { font-size: 24px; font-weight: 900; } .logo span { color: var(--accent); }
-        .lang-btn { background: var(--card); border: 1px solid var(--border); color: white; padding: 6px 15px; border-radius: 8px; cursor: pointer; }
+    .header {
+      padding: 14px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(17,24,39,0.75);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-size: 23px; font-weight: 900; }
+    .logo span { color: var(--accent); }
 
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .item { background: var(--card); border-radius: 15px; padding: 15px 5px; text-align: center; border: 1px solid var(--border); cursor: pointer; }
-        .item.active { border-color: var(--gold); background: rgba(245, 158, 11, 0.1); }
-        .item i { font-size: 28px; margin-bottom: 8px; display: block; }
-        .item span { font-size: 11px; font-weight: 700; }
+    .menu-btn {
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .menu-btn:hover { background: rgba(255,255,255,0.08); }
 
-        .recharge-bar { background: linear-gradient(90deg, #064e3b, #065f46); padding: 15px; border-radius: 15px; text-align: center; cursor: pointer; margin-bottom: 20px; border: 1px solid var(--accent); }
+    .categories {
+      padding: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+      gap: 14px;
+    }
+    .cat-item {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 18px 10px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    .cat-item:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 25px rgba(16,185,129,0.18);
+    }
+    .cat-item.active {
+      border: 2px solid var(--gold);
+      background: linear-gradient(145deg, #1e293b, #111827);
+    }
+    .cat-item i { font-size: 34px; margin-bottom: 10px; display: block; }
+    .cat-item span { font-size: 13px; font-weight: 700; line-height: 1.3; }
 
-        .box { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid var(--border); }
-        select, input { width: 100%; background: #0f172a; border: 1px solid var(--border); padding: 14px; border-radius: 12px; color: white; margin-bottom: 12px; outline: none; }
-        .total { text-align: center; font-size: 22px; font-weight: 900; color: var(--accent); padding: 15px; border: 2px dashed var(--accent); border-radius: 12px; margin-bottom: 15px; }
-        .btn-main { background: var(--accent); color: white; border: none; width: 100%; padding: 16px; border-radius: 12px; font-weight: 900; cursor: pointer; font-size: 16px; }
+    .order-section {
+      margin: 0 18px 28px;
+      background: var(--card);
+      border-radius: 18px;
+      padding: 22px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+    .order-section select, .order-section input {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #0f172a;
+      color: white;
+      font-size: 15px;
+    }
+    .total-price {
+      background: rgba(16,185,129,0.08);
+      border: 2px dashed var(--accent);
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--accent);
+      margin: 18px 0;
+    }
+    .btn-order {
+      background: linear-gradient(90deg, #10b981, #059669);
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 17px;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-order:hover { opacity: 0.92; }
 
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: var(--card); width: 100%; max-width: 380px; border-radius: 25px; padding: 25px; border: 1px solid var(--border); position: relative; }
-        .close-btn { position: absolute; top: 15px; right: 15px; cursor: pointer; color: #ff4d4d; }
-    </style>
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+    .modal-content {
+      background: var(--card);
+      width: 100%;
+      max-width: 400px;
+      border-radius: 18px;
+      padding: 22px;
+      position: relative;
+      border: 1px solid var(--border);
+      max-height: 82vh;
+      overflow-y: auto;
+    }
+    .close-btn {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-size: 22px;
+      color: #ef4444;
+      cursor: pointer;
+    }
+    body.fr .close-btn { right: auto; left: 18px; }
+
+    .pay-method {
+      background: #0f172a;
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .history-item {
+      background: #0f172a;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 4px solid var(--accent);
+    }
+    body.fr .history-item { border-left: none; border-right: 4px solid var(--accent); }
+
+    .status-badge {
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .pending  { background: #d97706; }
+    .completed { background: #10b981; }
+
+    @media (max-width: 500px) {
+      .categories { gap: 10px; padding: 14px; }
+      .cat-item { padding: 14px 8px; }
+      .cat-item i { font-size: 28px; }
+    }
+  </style>
 </head>
 <body class="ar">
 
-    <div class="header">
-        <i class="fas fa-cog" onclick="openM('loginModal')"></i>
-        <div class="logo">KARIM<span>13</span></div>
-        <button class="lang-btn" onclick="toggleLang()" id="langSwitcher">Français</button>
+  <div class="header">
+    <div></div> <!-- مساحة فارغة يسار -->
+    <div class="logo">KARIM<span>13</span></div>
+    <i class="fas fa-ellipsis-v menu-btn" onclick="document.getElementById('paymentModal').style.display='flex'"></i>
+  </div>
+
+  <div class="categories">
+    <div class="cat-item active" data-cat="TikTok" onclick="setCategory('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span class="cat-label">تيك توك / TikTok</span></div>
+    <div class="cat-item" data-cat="Instagram" onclick="setCategory('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span class="cat-label">إنستغرام / Instagram</span></div>
+    <div class="cat-item" data-cat="Facebook" onclick="setCategory('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span class="cat-label">فيسبوك / Facebook</span></div>
+    <div class="cat-item" data-cat="YouTube" onclick="setCategory('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span class="cat-label">يوتيوب / YouTube</span></div>
+    <div class="cat-item" data-cat="Telegram" onclick="setCategory('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span class="cat-label">تليجرام / Telegram</span></div>
+    <div class="cat-item" data-cat="Snapchat" onclick="setCategory('Snapchat', this)"><i class="fab fa-snapchat-ghost" style="color:#fffc00"></i><span class="cat-label">سناب شات / Snapchat</span></div>
+    <div class="cat-item" data-cat="Premium" onclick="setCategory('Premium', this)"><i class="fas fa-gem" style="color:#a855f7"></i><span class="cat-label">بريميوم / Premium</span></div>
+    <div class="cat-item" data-cat="Gaming" onclick="setCategory('Gaming', this)"><i class="fas fa-gamepad" style="color:#22c55e"></i><span class="cat-label">قيمنق / Gaming</span></div>
+    <div class="cat-item" onclick="openHistory()"><i class="fas fa-history" style="color:var(--gold)"></i><span class="cat-label">السجل / Historique</span></div>
+  </div>
+
+  <div class="order-section">
+    <select id="serviceSelect" onchange="calculatePrice()"></select>
+    <input type="text" id="linkInput" placeholder="الرابط / Lien"/>
+    <input type="number" id="quantityInput" value="1000" min="100" onchange="calculatePrice()"/>
+    <div class="total-price" id="totalDisplay">الإجمالي: 0.00 $ / Total: 0.00 $</div>
+    <button class="btn-order" onclick="placeOrder()">تنفيذ الطلب / Passer la commande</button>
+  </div>
+
+  <!-- سجل الطلبات -->
+  <div class="modal" id="historyModal">
+    <div class="modal-content">
+      <i class="fas fa-times close-btn" onclick="closeModals()"></i>
+      <h2 style="text-align:center; margin-bottom:18px;" class="ar-text">📋 السجل</h2>
+      <h2 style="text-align:center; margin-bottom:18px; display:none;" class="fr-text">📋 Historique</h2>
+      <div id="historyContent"></div>
     </div>
+  </div>
 
-    <div class="grid" id="catGrid"></div>
+  <!-- وسائل الدفع (بدلاً من أيقونة الترس) -->
+  <div class="modal" id="paymentModal">
+    <div class="modal-content">
+      <i class="fas fa-times close-btn" onclick="closeModals()"></i>
+      <h2 style="text-align:center; margin-bottom:20px;" class="ar-text">💳 وسائل الدفع</h2>
+      <h2 style="text-align:center; margin-bottom:20px; display:none;" class="fr-text">💳 Moyens de paiement</h2>
 
-    <div class="recharge-bar" onclick="openM('payModal')">
-        <i class="fas fa-wallet"></i> <span id="rechargeTxt">شحن الرصيد / Recharger</span>
+      <div class="pay-method"><b>Baridimob :</b> 00799999000012345678</div>
+      <div class="pay-method"><b>Binance :</b> ID 11223344</div>
+      <div class="pay-method"><b>RedotPay :</b> ID 55667788</div>
+      <div class="pay-method"><b>Flexy :</b> 0600000000</div>
+      <div class="pay-method" style="margin-top:16px; font-weight:bold; color:var(--accent);">
+        رقم مؤقت للتحويل: <span style="color:white;">10000000</span>
+      </div>
     </div>
+  </div>
 
-    <div class="box">
-        <select id="servSel" onchange="calc()"></select>
-        <input type="text" id="linkInp" placeholder="الرابط / Lien">
-        <div id="qGroup"><input type="number" id="qInp" value="1000" oninput="calc()"></div>
-        <div class="total" id="total">$0.00</div>
-        <button class="btn-main" onclick="placeOrder()" id="orderBtn">تأكيد الطلب</button>
-    </div>
+  <script>
+    const SERVICES = [
+      // جميع الخدمات التي أرسلتها سابقاً
+      { id: 9999, cat: "TikTok", n: "🪙 TikTok Coins - 1000 Pièces | شحن عملات تيك توك - 1000 عملة", p: 13.00 },
+      {id: 3231, cat: "TikTok", n: "TikTok Followers | HQ Real | 2K/Day", n_ar: "👤 متابعين تيك توك | حقيقي (2000 يومياً) 🛡️", p: 1.10},
+      {id: 3338, cat: "TikTok", n: "TikTok Followers | HQ Real", n_ar: "👤 متابعين تيك توك جودة عالية | ضمان مدى الحياة ♻️", p: 0.95},
+      {id: 3340, cat: "TikTok", n: "TikTok Followers | Perfect Quality", n_ar: "👤 متابعين تيك توك جودة مثالية | ضمان مدى الحياة ♻️", p: 1.10},
+      {id: 3810, cat: "TikTok", n: "TikTok Followers | HQ Real Profiles", n_ar: "⚡ متابعين تيك توك حقيقيين | سرعة فائقة | ضمان ♻️", p: 1.99},
+      {id: 1973, cat: "TikTok", n: "TikTok Followers | HQ Real Premium", n_ar: "⭐ متابعين Premium VIP | ضمان مدى الحياة ♻️", p: 2.50},
+      {id: 3284, cat: "TikTok", n: "TikTok Followers | Organic 100%", n_ar: "🌱 متابعين تيك توك عضوي 100% | حقيقي | ضمان ♻️", p: 3.00},
+      {id: 3277, cat: "TikTok", n: "TikTok Followers | Organic VIP", n_ar: "💎 متابعين عضوي VIP | سريع | ضمان تيك توك♻️", p: 3.80},
+      {id: 3355, cat: "TikTok", n: "TikTok Followers | 100% USA 🇺🇸 | Real & Non Drop | 365 Days Refill ♻️", n_ar: "متابعين تيك توك | أمريكا 🇺🇸 | حقيقي وضمان سنة | سرعة خارقة ♻️", p: 4.80},
+      {id: 8526, cat: "TikTok", n: "TikTok Followers | Real ADS Saudi", n_ar: "🇸🇦 متابعين تيك توك حقيقيين عبر الإعلانات | السعودية 🇸🇦", p: 7.50},
+      {id: 8812, cat: "TikTok", n: "🇪🇬 TikTok Followers - Real Egypt (ADS) | متابعين تيك توك - حقيقي مصري (إعلانات)", p: 7.50},
+      {id: 8522, cat: "TikTok", n: "TikTok Followers | Lebanon 🇱🇧 | Real ADS - High Stability", n_ar: "متابعين تيك توك | لبناني حقيقي 🇱🇧 | عبر الإعلانات - ثبات عالٍ", p: 8.50},
+      {id: 1521, cat: "TikTok", n: "TikTok Monetizable Followers", n_ar: "💰 متابعين تفعيل الربح (Monetizable) |تيك توك ضمان  ♻️", p: 5.50},
+      {id: 1972, cat: "TikTok", n: "TikTok Likes | Non Drop", n_ar: "❤️ إعجابات تيك توك | ثابت فوري ⚡ ضمان ♻️", p: 0.0368},
+      {id: 3854, cat: "TikTok", n: "TikTok Likes | HQ Real Profiles", n_ar: "❤️ إعجابات تيك توك  حقيقية HQ | سرعة فائقة ⚡ ضمان ♻️", p: 0.0524},
+      {id: 7572, cat: "TikTok", n: "TikTok Likes | HQ Premium", n_ar: "❤️  إعجابات تيك توك VIP حقيقية | ثابت ⚡ ضمان ♻️", p: 0.0692},
+      {id: 7500, cat: "TikTok", n: "TikTok Views | Instant", n_ar: "👀 مشاهدات تيك توك فورية ⚡ مليونية (بدون ضمان)", p: 0.0060},
+      {id: 8387, cat: "TikTok", n: "TikTok Views | Real SuperInstant", n_ar: "👀 مشاهدات تيك توك حقيقية | سرعة جنونية ⚡", p: 0.007},
+      {id: 8332, cat: "TikTok", n: "TikTok Video Views | Fast", n_ar: "👀 مشاهدات تيك توك فيديو | فوري ⚡ ضمان مدى الحياة ♻️", p: 0.0214},
+      {id: 3490, cat: "TikTok", n: "Monetizable Views | Min 100K", n_ar: "💰 مشاهدات تفعيل الربح | ثابت (100K+) ♻️", p: 0.0625},
+      {id: 3506, cat: "TikTok", n: "Monetizable Views | Min 50K", n_ar: "💰 مشاهدات تفعيل الربح | ثابت (50K+) ♻️", p: 0.0855},
+      {id: 7635, cat: "TikTok", n: "Monetizable Views | Min 10K", n_ar: "💰 مشاهدات تفعيل الربح | ثابت (10K+) ♻️", p: 0.0900},
+      {id: 8119, cat: "TikTok", n: "TikTok Saves | Real", n_ar: "📌 حفظ تيك توك الفيديو (Saves) | حقيقي ⚡ ضمان ♻️", p: 0.0090},
+      {id: 6924, cat: "TikTok", n: "TikTok Saves | Fast", n_ar: "📌 حفظ تيك توك الفيديو | سرعة 500K ⚡ ضمان ♻️", p: 0.0320},
+      {id: 1969, cat: "TikTok", n: "TikTok Shares | SuperFast", n_ar: "🔗 مشاركات تيك توك الفيديو (Shares) | فوري ⚡ ضمان ♻️", p: 0.0268},
+      {id: 7720, cat: "TikTok", n: "TikTok Story Likes | Real", n_ar: "❤️ إعجابات تيك توك ستوري | حقيقي ⚡ ضمان 30 يوم 🔥", p: 0.3365},
+      { id: 3342, cat: "TikTok", n: "💬 TikTok Commentaires - Réel | تعليقات تيك توك مخصصة - حقيقية", p: 2.26 },
+      { id: 9313, cat: "TikTok", n: "💬 TikTok Commentaires - Garantie 30 Jours ♻️ | تعليقات تيك توك - ضمان 30 يوم", p: 4.90 },
 
-    <div class="modal" id="payModal"><div class="modal-content"><span class="close-btn" onclick="closeM('payModal')">✖</span><h3 id="payTitle">وسائل الدفع</h3><br><p>BaridiMob: <span style="color:var(--accent)">00799999000123456789</span></p><p>Binance ID: <span style="color:var(--accent)">556677889</span></p></div></div>
-    
-    <div class="modal" id="loginModal"><div class="modal-content"><h3>🔐 Admin Login</h3><br><input type="password" id="adminPass" placeholder="Password" style="text-align:center"><button class="btn-main" onclick="checkAuth()">Login</button></div></div>
-    
-    <div class="modal" id="historyModal"><div class="modal-content"><span class="close-btn" onclick="closeM('historyModal')">✖</span><h3 id="histTitle">السجل</h3><div id="hBody" style="max-height:300px; overflow-y:auto; margin-top:10px;"></div></div></div>
+      // FACEBOOK
+      {id: 8253, cat: "Facebook", n: "Facebook Followers | Global | Speed: +50K/Day | Lifetime ♻️", n_ar: "متابعين فيسبوك | عالمي | سرعة: +50K يومياً | مدى الحياة ♻️", p: 0.475},
+      {id: 6119, cat: "Facebook", n: "Facebook Followers | Bots Quality | Speed: +100K/Day | Lifetime ♻️", n_ar: "متابعين فيسبوك | جودة بوتات | سرعة: +100K يومياً | مدى الحياة ♻️", p: 0.300},
+      {id: 9149, cat: "Facebook", n: "Facebook Group Members | Real | Lifetime ♻️", n_ar: "أعضاء مجموعات فيسبوك | حقيقي | مدى الحياة ♻️", p: 0.594},
+      {id: 2676, cat: "Facebook", n: "Facebook Followers | Profile", n_ar: "متابعين بروفايل فيسبوك", p: 0.54},
+      {id: 1974, cat: "Facebook", n: "Facebook Followers | 365 Days", n_ar: "متابعين فيسبوك | ضمان سنة", p: 0.41},
+      {id: 3859, cat: "Facebook", n: "Facebook Followers | Bots", n_ar: "متابعين فيسبوك | بوتات", p: 0.32},
+      {id: 3324, cat: "Facebook", n: "Facebook Page Likes", n_ar: "إعجابات صفحات فيسبوك", p: 0.55},
+      {id: 3330, cat: "Facebook", n: "Facebook Group Members", n_ar: "أعضاء مجموعات فيسبوك", p: 0.92},
+      {id: 7498, cat: "Facebook", n: "🇪🇬 FB Followers - 100% Egypt (Lifetime Guarantee)", n_ar: "🇪🇬 متابعين فيسبوك - مصري 100% (ضمان مدى الحياة)", p: 4.02},
+      {id: 3204, cat: "Facebook", n: "🇪🇬 Facebook Page Likes+Followers | Egypt (365 Days Refill)", n_ar: "🇪🇬 إعجابات ومتابعين صفحات فيسبوك | مصر (ضمان 365 يوم)", p: 2.67},
+      {id: 8395, cat: "Facebook", n: "Facebook 60k Minutes", n_ar: "فيسبوك 60 ألف دقيقة", p: 0.95},
+      {id: 815, cat: "Facebook", n: "Facebook 100k Reels Views", n_ar: "مشاهدات ريلز فيسبوك 100ألف", p: 5.59},
+      {id: 3315, cat: "Facebook", n: "Facebook Post Likes | HQ", n_ar: "لايكات منشور فيسبوك | جودة", p: 0.74},
+      {id: 8755, cat: "Facebook", n: "Facebook Reaction | Like 👍", n_ar: "تفاعلات فيسبوك | لايك 👍", p: 0.33},
+      {id: 8756, cat: "Facebook", n: "Facebook Reaction | Love ❤️", n_ar: "تفاعلات فيسبوك | لوف ❤️", p: 0.43},
+      {id: 7592, cat: "Facebook", n: "Facebook Video Views", n_ar: "مشاهدات فيديو فيسبوك", p: 0.99},
+      {id: 1111, cat: "Facebook", n: "Facebook Live Stream", n_ar: "مشاهدات بث مباشر فيسبوك", p: 2.50},
+      {id: 1112, cat: "Facebook", n: "Facebook Arab Comments", n_ar: "تعليقات فيسبوك عربية", p: 8.00},
 
-    <script>
-        let currentLang = 'ar';
-        const cats = [
-            {id:'TikTok', ar:'تيك توك', fr:'TikTok', icon:'fab fa-tiktok', col:'#ff0050'},
-            {id:'Facebook', ar:'فيسبوك', fr:'Facebook', icon:'fab fa-facebook', col:'#1877f2'},
-            {id:'Instagram', ar:'إنستغرام', fr:'Instagram', icon:'fab fa-instagram', col:'#e1306c'},
-            {id:'YouTube', ar:'يوتيوب', fr:'YouTube', icon:'fab fa-youtube', col:'red'},
-            {id:'Telegram', ar:'تليجرام', fr:'Telegram', icon:'fab fa-telegram', col:'#0088cc'},
-            {id:'Snapchat', ar:'سناب شات', fr:'Snapchat', icon:'fab fa-snapchat', col:'#fffc00'},
-            {id:'Premium', ar:'بريميوم', fr:'Premium', icon:'fas fa-gem', col:'#a855f7'},
-            {id:'Gaming', ar:'ألعاب', fr:'Gaming', icon:'fas fa-gamepad', col:'#10b981'},
-            {id:'History', ar:'السجل', fr:'History', icon:'fas fa-history', col:'#f59e0b'}
-        ];
+      // INSTAGRAM
+      {id: 2594, cat: "Instagram", n: "Instagram Followers | Old Accounts + Posts Lifetime ", n_ar: "متابعين انستقرام | حسابات قديمة + الحياة منشورات | ♻️", p: 0.960},
+      {id: 7820, cat: "Instagram", n: "Instagram Followers | Old", n_ar: "متابعين انستقرام | قديم", p: 1.00},
+      {id: 1348, cat: "Instagram", n: "Instagram Followers | Fast", n_ar: "متابعين انستقرام | سريع", p: 1.56},
+      {id: 3779, cat: "Instagram", n: "Instagram Followers | No Drop", n_ar: "متابعين انستقرام | ثابت", p: 2.05},
+      {id: 8801, cat: "Instagram", n: "Instagram Likes | Real", n_ar: "لايكات انستقرام | حقيقي", p: 0.63},
+      {id: 7869, cat: "Instagram", n: "Instagram Likes | Instant", n_ar: "لايكات انستقرام | فوري", p: 0.22},
+      {id: 6441, cat: "Instagram", n: "Instagram Views", n_ar: "مشاهدات انستقرام", p: 0.01},
+      {id: 5501, cat: "Instagram", n: "Instagram Story Views", n_ar: "مشاهدات ستوري انستقرام", p: 0.15},
+      {id: 5502, cat: "Instagram", n: "Instagram Arab Comments", n_ar: "تعليقات انستقرام عربية", p: 4.80},
+      {id: 5503, cat: "Instagram", n: "Instagram Save & Share", n_ar: "حفظ ومشاركة انستقرام", p: 0.22},
 
-        const services = [
-            // تيك توك
-            {id:1, cat:'TikTok', n:'TikTok Followers | HQ ($1.1)', p:1.10},
-            {id:2, cat:'TikTok', n:'TikTok Coins 1000', p:13.00, fixed:true},
-            {id:3, cat:'TikTok', n:'TikTok Views | Instant', p:0.006},
-            // فيسبوك
-            {id:4, cat:'Facebook', n:'FB Followers | Global', p:0.47},
-            {id:5, cat:'Facebook', n:'FB 60k Minutes Watch', p:0.95, fixed:true},
-            // يوتيوب
-            {id:6, cat:'YouTube', n:'YouTube Premium - 1 Month', p:2.50, fixed:true},
-            {id:7, cat:'YouTube', n:'YouTube Subscribers | Real', p:18.62},
-            // بريميوم
-            {id:8, cat:'Premium', n:'Netflix Premium | 1 Month', p:4.50, fixed:true},
-            {id:9, cat:'Premium', n:'Tax Removal 14% (إلغاء الضريبة)', p:20.00, fixed:true},
-            // ألعاب
-            {id:10, cat:'Gaming', n:'PUBG 60 UC', p:1.50, fixed:true},
-            {id:11, cat:'Gaming', n:'PUBG 660 UC', p:12.50, fixed:true},
-            // سناب وتليجرام
-            {id:12, cat:'Snapchat', n:'Snapchat Followers | Real', p:24.40},
-            {id:13, cat:'Telegram', n:'Telegram Members | HQ', p:1.09}
-        ];
+      // YOUTUBE
+      {id: 1873, cat: "YouTube Services", n: "YouTube Premium (1 Mois) Sur Votre Email - Sans Pub | يوتيوب بريميوم (شهر) على إيميلك الشخصي - بدون إعلانات", n_ar: "YouTube Premium (1 Mois) Sur Votre Email - Sans Pub | يوتيوب بريميوم (شهر) على إيميلك الشخصي - بدون إعلانات", p: 2.50, type: "fixed"},
+      {id: 1539, cat: "YouTube", n: "YouTube Subscribers | Real", n_ar: "مشتركين يوتيوب | حقيقي", p:18.62},
+      {id: 1848, cat: "YouTube", n: "YouTube Subscribers | Lifetime", n_ar: "مشتركين يوتيوب | مدى الحياة", p: 30.62},
+      {id: 935, cat: "YouTube", n: "YouTube Likes | Fast", n_ar: "لايكات يوتيوب | سريع", p: 0.23},
+      {id: 3544, cat: "YouTube", n: "YouTube Video Views", n_ar: "مشاهدات يوتيوب", p: 1.00},
+      {id: 3522, cat: "YouTube", n: "YouTube Views | Non Drop | Speed: +500K/Day | Lifetime ♻️", n_ar: "يوتيوب مشاهدات | بدون نقص | سرعة: +500k يومياً | مدى الحياة ♻️", p: 0.700},
+      {id: 3944, cat: "YouTube", n: "YouTube Views | Google ADS | Professional (Min 50K) | Lifetime ♻️", n_ar: "مشاهدات يوتيوب | إعلانات جوجل | باقة 50 ألف (بـ 38$ فقط) | مدى الحياة ♻️", p: 0.770},
+      {id: 4401, cat: "YouTube", n: "YouTube 4000 Watch Hours", n_ar: "4000 ساعة مشاهدة يوتيوب", p: 36.50},
+      {id: 4402, cat: "YouTube", n: "YouTube 1000 Watch Hours", n_ar: "1000 ساعة مشاهدة يوتيوب", p: 10.20},
+      {id: 6275, cat: "YouTube", n: "YouTube Revenue Views", n_ar: "مشاهدات أرباح يوتيوب", p: 3.16},
 
-        function toggleLang() {
-            currentLang = currentLang === 'ar' ? 'fr' : 'ar';
-            document.body.className = currentLang;
-            document.getElementById('langSwitcher').innerText = currentLang === 'ar' ? 'Français' : 'العربية';
-            document.getElementById('orderBtn').innerText = currentLang === 'ar' ? 'تأكيد الطلب' : 'Confirmer';
-            renderCats();
-        }
+      // TELEGRAM
+      {id: 3428, cat: "Telegram", n: "Telegram Members | HQ", n_ar: "أعضاء تليجرام | جودة", p: 1.09},
+      {id: 7102, cat: "Telegram", n: "Telegram Reactions 👍🔥", n_ar: "تفاعلات تليجرام إيجابية", p: 0.90},
+      {id: 2201, cat: "Telegram", n: "Telegram Arab Members", n_ar: "أعضاء تليجرام عرب", p: 5.50},
+      {id: 2204, cat: "Telegram", n: "Telegram Auto Views", n_ar: "مشاهدات تليجرام تلقائية", p: 1.10},
+      {id: 2205, cat: "Telegram", n: "Telegram Premium Members", n_ar: "أعضاء تليجرام بريميوم", p: 13.90},
+      {id: 1121, cat: "Telegram", n: "Telegram Post Views", n_ar: "مشاهدات منشور تليجرام", p: 0.05},
+      {id: 1122, cat: "Telegram", n: "Telegram Poll Votes", n_ar: "تصويت تليجرام", p: 0.40},
+      {id: 1123, cat: "Telegram", n: "Telegram Group Scraper", n_ar: "سحب أعضاء تليجرام", p: 3.00},
+      {id: 1124, cat: "Telegram", n: "Telegram Link Clicks", n_ar: "نقرات روابط تليجرام", p: 2.00},
+      {id: 1125, cat: "Telegram", n: "Telegram Reporting Service", n_ar: "خدمة بلاغات تليجرام", p: 15.00},
+      {id: 1126, cat: "Telegram", n: "Telegram Comments", n_ar: "تعليقات تليجرام", p: 3.50},
 
-        function renderCats() {
-            const grid = document.getElementById('catGrid');
-            grid.innerHTML = '';
-            cats.forEach(c => {
-                const div = document.createElement('div');
-                div.className = 'item' + (c.id === 'TikTok' ? ' active' : '');
-                div.onclick = () => c.id === 'History' ? openHistory() : setCat(c.id, div);
-                div.innerHTML = `<i class="${c.icon}" style="color:${c.col}"></i><span>${currentLang==='ar'?c.ar:c.fr}</span>`;
-                grid.appendChild(div);
-            });
-            setCat('TikTok', grid.firstChild);
-        }
+      // SNAPCHAT
+      {id: 2482, cat: "Snapchat", n: "Snapchat Followers | Real", n_ar: "متابعين سناب شات | حقيقي", p: 24.40},
+      {id: 8325, cat: "Snapchat", n: "Snapchat Video Likes", n_ar: "لايكات فيديو سناب شات", p: 11.72},
+      {id: 1127, cat: "Snapchat", n: "Snapchat Story Views", n_ar: "مشاهدات ستوري سناب شات", p: 5.00},
+      {id: 1128, cat: "Snapchat", n: "Snapchat Spotlight Views", n_ar: "مشاهدات منصة الأضواء", p: 2.00},
+      {id: 1129, cat: "Snapchat", n: "Snapchat Friends Adds", n_ar: "إضافة أصدقاء سناب شات", p: 18.00},
 
-        function setCat(cid, el) {
-            document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
-            const sel = document.getElementById('servSel'); sel.innerHTML = '';
-            services.filter(s => s.cat === cid).forEach(s => { sel.innerHTML += `<option value="${s.id}">${s.n}</option>`; });
-            calc();
-        }
+      // PREMIUM
+      {id: 13, cat: "Premium", n: "🎁 Netflix Gift | Direct Download", n_ar: "🎁 هدية نتفليكس | تحميل مباشر", p: 0.00, type: "fixed"},
+      {id: 8607, cat: "Premium", n: "Netflix Premium | 1 Month", n_ar: "نتفليكس بريميوم | شهر", p: 4.50, type: "fixed"},
+      {id: 3364, cat: "Premium", n: "CapCut Premium | 1 Month", n_ar: "كاب كات برو | شهر", p: 6.00, type: "fixed"},
+      {id: 3223, cat: "Premium", n: "🎬 CapCut Pro [3 Months]", n_ar: "🎬 كاب كات برو [3 أشهر]", p: 15.00, type: "fixed"},
+      {id: 3407, cat: "Premium", n: "Gemini Pro | 2TB Storage", n_ar: "جيمناي برو | 2 تيرا", p: 6.23, type: "fixed"},
+      {id: 3226, cat: "Premium", n: "ChatGPT Plus (GPT-4) | 1 Month", n_ar: "تشات جي بي تي بلس (GPT-4) | شهر", p: 5.50, type: "fixed"},
+      {id: 3343, cat: "Premium", n: "Blackbox AI (GPT-4, Gemini, DeepSeek) | 3 Month", n_ar: "بلاك بوكس AI (جيميني، جي بي تي، ديب سيك) | 3 أشهر", p: 13.00, type: "fixed"},
+      {id: 944, cat: "Premium", n: "🎨 Canva Pro [1-3 Ans] - Pack Premium | كانفا برو [1-3 سنوات] - باقة مميزة", p: 3.00},
+      {id: 1879, cat: "Premium", n: "Spotify Premium | 1 Month", n_ar: "سبوتيفاي بريميوم | شهر", p: 7.00, type: "fixed"},
+      {id: 8584, cat: "Premium", n: "Amazon Prime Video | 2 Devices | 1 Month", n_ar: "أمازون برايم فيديو | جهازين | شهر", p: 4.50, type: "fixed"},
+      {id: 3369, cat: "Premium", n: "Tax Removal 14% (Facebook - YouTube - TikTok - Snapchat)", n_ar: "إلغاء ضرائب 14% (فيسبوك - يوتيوب - تيك توك - سناب شات)", p: 20.00, type: "fixed"},
+      {id: 1104, cat: "Premium", n: "IPTV Gold | 12 Month", n_ar: "اشتراك IPTV ذهبي | سنة", p: 16.00, type: "fixed"},
 
-        function calc() {
-            const s = services.find(x => x.id == document.getElementById('servSel').value);
-            if(!s) return;
-            if(s.fixed) {
-                document.getElementById('qGroup').style.display='none';
-                document.getElementById('total').innerText=`$${s.p.toFixed(2)}`;
-            } else {
-                document.getElementById('qGroup').style.display='block';
-                let q = document.getElementById('qInp').value;
-                document.getElementById('total').innerText=`$${((s.p * q)/1000).toFixed(3)}`;
-            }
-        }
+      // GAMING
+      {id: 9106, cat: "Gaming", n: "PUBG Mobile | 60 UC | Global", n_ar: "ببجي موبايل | 60 شدة | عالمي ⚡", p: 1.50},
+      {id: 9108, cat: "Gaming", n: "PUBG Mobile | 325 UC | Global", n_ar: "ببجي موبايل | 325 شدة | عالمي ⚡", p: 5.50},
+      {id: 9109, cat: "Gaming", n: "PUBG Mobile | 660 UC | Global", n_ar: "ببجي موبايل | 660 شدة | عالمي ⚡", p: 12.50},
+      {id: 9111, cat: "Gaming", n: "PUBG Mobile | 1800 UC | Global", n_ar: "ببجي موبايل | 1800 شدة | عالمي ⚡", p: 30.50},
+      {id: 9112, cat: "Gaming", n: "PUBG Mobile | 3850 UC | Global", n_ar: "ببجي موبايل | 3850 شدة | عالمي ⚡", p: 60.50},
+      {id: 9113, cat: "Gaming", n: "PUBG Mobile | 5650 UC | Global", n_ar: "ببجي موبايل | 5650 شدة | عالمي ⚡", p: 90.50},
+    ];
 
-        function placeOrder() {
-            const s = services.find(x => x.id == document.getElementById('servSel').value);
-            const o = { id: Math.floor(10000+Math.random()*90000), n: s.n, p: document.getElementById('total').innerText, st: 'Pending' };
-            let os = JSON.parse(localStorage.getItem('k_orders') || '[]'); os.push(o);
-            localStorage.setItem('k_orders', JSON.stringify(os));
-            alert(currentLang==='ar'?'تم الطلب!':'Succès!');
-        }
+    let currentLang = 'ar';
 
-        function openHistory() {
-            const os = JSON.parse(localStorage.getItem('k_orders') || '[]');
-            const b = document.getElementById('hBody'); b.innerHTML = os.length ? '' : '...';
-            os.reverse().forEach(o => {
-                b.innerHTML += `<div style="background:#0a0a15; padding:12px; border-radius:10px; margin-bottom:10px; border-right:4px solid ${o.st==='Pending'?'orange':'#10b981'}">
-                #${o.id} - ${o.n}<br><small>${o.p} | ${o.st}</small></div>`;
-            });
-            openM('historyModal');
-        }
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.body.className = lang;
+      document.getElementById('btnAr').classList.toggle('active', lang === 'ar');
+      document.getElementById('btnFr').classList.toggle('active', lang === 'fr');
 
-        function checkAuth() {
-            if(document.getElementById('adminPass').value === 'karim13') {
-                closeM('loginModal');
-                const id = prompt("Order ID to Complete:");
-                if(!id) return;
-                let os = JSON.parse(localStorage.getItem('k_orders') || '[]');
-                os = os.map(o => { if(o.id == id) o.st='Completed'; return o; });
-                localStorage.setItem('k_orders', JSON.stringify(os)); alert("Done!");
-            }
-        }
+      document.getElementById('linkInput').placeholder = lang === 'ar' ? "الرابط / Lien" : "Lien / الرابط";
+      document.querySelector('.btn-order').textContent = lang === 'ar' ? "تنفيذ الطلب" : "Passer la commande";
 
-        function openM(id) { document.getElementById(id).style.display='flex'; }
-        function closeM(id) { document.getElementById(id).style.display='none'; }
+      const active = document.querySelector('.cat-item.active');
+      if (active) setCategory(active.dataset.cat, active);
 
-        window.onload = () => renderCats();
-    </script>
+      calculatePrice();
+    }
+
+    function setCategory(cat, element) {
+      document.querySelectorAll('.cat-item').forEach(el => el.classList.remove('active'));
+      element.classList.add('active');
+
+      const select = document.getElementById('serviceSelect');
+      select.innerHTML = currentLang === 'ar' 
+        ? '<option value="">اختر الخدمة...</option>'
+        : '<option value="">Choisir le service...</option>';
+
+      SERVICES.filter(s => s.cat === cat).forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.id;
+        opt.textContent = currentLang === 'ar' ? (s.n_ar || s.n) : s.n;
+        opt.dataset.price = s.p;
+        opt.dataset.type = s.type || 'per1000';
+        select.appendChild(opt);
+      });
+
+      document.getElementById('quantityInput').disabled = false;
+      document.getElementById('quantityInput').value = 1000;
+      calculatePrice();
+    }
+
+    function calculatePrice() {
+      const select = document.getElementById('serviceSelect');
+      const opt = select.options[select.selectedIndex];
+      
+      if (!opt || !opt.value) {
+        document.getElementById('totalDisplay').textContent = currentLang === 'ar' ? 'الإجمالي: 0.00 $' : 'Total: 0.00 $';
+        return;
+      }
+
+      const service = SERVICES.find(s => s.id == opt.value);
+      if (!service) return;
+
+      const qtyInput = document.getElementById('quantityInput');
+
+      if (service.type === 'fixed') {
+        const total = service.p.toFixed(2);
+        document.getElementById('totalDisplay').textContent = currentLang === 'ar' ? `الإجمالي: ${total} $` : `Total: ${total} $`;
+        qtyInput.disabled = true;
+        qtyInput.value = "—";
+        return;
+      }
+
+      let qty = parseInt(qtyInput.value) || 100;
+      if (qty < 100) qty = 100;
+
+      const total = (service.p * qty) / 1000;
+      const totalStr = total < 0.01 ? total.toFixed(5) : total.toFixed(3);
+
+      document.getElementById('totalDisplay').textContent = currentLang === 'ar' ? `الإجمالي: ${totalStr} $` : `Total: ${totalStr} $`;
+      qtyInput.disabled = false;
+    }
+
+    function placeOrder() {
+      const link = document.getElementById('linkInput').value.trim();
+      if (!link) return alert(currentLang === 'ar' ? "الرابط مطلوب" : "Lien requis");
+
+      const select = document.getElementById('serviceSelect');
+      const service = SERVICES.find(s => s.id == select.value);
+      if (!service) return alert(currentLang === 'ar' ? "اختر خدمة" : "Choisissez un service");
+
+      const qtyInput = document.getElementById('quantityInput');
+      const qty = parseInt(qtyInput.value) || 0;
+
+      if (service.type !== 'fixed' && qty < 100) {
+        return alert(currentLang === 'ar' ? "الكمية يجب أن تكون 100 على الأقل" : "Quantité minimum 100 requise");
+      }
+
+      const total = document.getElementById('totalDisplay').textContent;
+
+      const order = {
+        id: Math.floor(10000 + Math.random() * 90000),
+        service: currentLang === 'ar' ? (service.n_ar || service.n) : service.n,
+        link,
+        quantity: service.type === 'fixed' ? '—' : qty,
+        total,
+        status: "Pending",
+        date: new Date().toLocaleString(currentLang === 'ar' ? 'ar-DZ' : 'fr-FR')
+      };
+
+      let orders = JSON.parse(localStorage.getItem('k13_orders') || '[]');
+      orders.push(order);
+      localStorage.setItem('k13_orders', JSON.stringify(orders));
+
+      alert(currentLang === 'ar' ? `تم تسجيل الطلب! رقم: #\( {order.id}` : `Commande enregistrée ! N°: # \){order.id}`);
+      openHistory();
+    }
+
+    function openHistory() {
+      const orders = JSON.parse(localStorage.getItem('k13_orders') || '[]');
+      const cont = document.getElementById('historyContent');
+      cont.innerHTML = orders.length === 0 
+        ? (currentLang === 'ar' ? '<p style="text-align:center;color:#94a3b8;">لا طلبات بعد...</p>' : '<p style="text-align:center;color:#94a3b8;">Aucune commande...</p>')
+        : '';
+
+      orders.reverse().forEach(o => {
+        const div = document.createElement('div');
+        div.className = 'history-item';
+        div.innerHTML = `
+          <div>
+            <strong>#${o.id} - ${o.service}</strong><br>
+            <small>${o.date}</small><br>
+            <span class="status-badge ${o.status === 'Pending' ? 'pending' : 'completed'}">
+              ${o.status === 'Pending' ? (currentLang === 'ar' ? 'قيد الانتظار' : 'En attente') : (currentLang === 'ar' ? 'مكتمل' : 'Terminée')}
+            </span>
+          </div>
+          <a href="https://wa.me/213656251947?text=${currentLang === 'ar' ? 'طلب رقم' : 'Commande'} ${o.id}" target="_blank" style="font-size:28px;color:#25D366;">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        `;
+        cont.appendChild(div);
+      });
+
+      document.getElementById('historyModal').style.display = 'flex';
+    }
+
+    function closeModals() {
+      document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert(currentLang === 'ar' ? 'تم النسخ!' : 'Copié !');
+      });
+    }
+
+    // لوحة تحكم بسيطة (اختياري – يمكن إزالتها إذا أردت)
+    function adminPanel() {
+      alert(currentLang === 'ar' 
+        ? "لوحة التحكم غير مفعلة في هذه النسخة.\nالسجل محلي فقط (localStorage)." 
+        : "Panneau d'administration non activé dans cette version.\nL'historique est local uniquement (localStorage).");
+    }
+
+    window.onload = () => setCategory('TikTok', document.querySelector('.cat-item.active'));
+  </script>
 </body>
 </html>
