@@ -3,189 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM13 | SMM PRO</title>
+    <title>KARIM13 | Official Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #0a0a15; --card: #111827; --accent: #10b981; --gold: #f59e0b; --text: #e2e8f0; --border: #334155; }
-        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); padding-bottom: 40px; }
-        body.fr { direction: ltr; text-align: left; }
-
-        /* Header */
-        .header {
-            padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
-            background: rgba(17,24,39,0.9); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border);
+        :root {
+            --bg: #0f141e; --card: #1a222f; --accent: #10b981;
+            --border: #2d3748; --gold: #f59e0b; --text: #ffffff;
         }
-        .header-icons { display: flex; align-items: center; gap: 15px; }
-        .header-icons i, .header-icons a { font-size: 20px; cursor: pointer; color: var(--text); text-decoration: none; transition: 0.3s; }
-        .header-icons i:hover { color: var(--gold); }
-        .logo { font-size: 22px; font-weight: 900; } .logo span { color: var(--accent); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background: var(--bg); color: var(--text); }
 
-        /* Categories Grid */
-        .grid { padding: 15px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .cat-item { background: var(--card); border-radius: 12px; padding: 15px 5px; text-align: center; border: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
-        .cat-item i { font-size: 26px; margin-bottom: 6px; display: block; }
-        .cat-item span { font-size: 10px; font-weight: 700; }
-        .cat-item.active { border-color: var(--gold); background: rgba(245, 158, 11, 0.1); }
+        /* الهيدر المطور */
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 20px; background: var(--bg); border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .header-left { display: flex; align-items: center; gap: 8px; }
+        .btn-lang { 
+            background: #2d3748; border: none; color: white; padding: 5px 8px; 
+            border-radius: 5px; cursor: pointer; font-size: 11px; font-weight: bold;
+        }
+        .btn-lang.active { background: var(--accent); }
+        .tg-link { color: #0088cc; font-size: 20px; margin-right: 5px; }
 
-        /* Order Box */
-        .order-box { margin: 0 15px; background: var(--card); border-radius: 15px; padding: 20px; border: 1px solid var(--border); }
-        select, input { width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 10px; border: 1px solid var(--border); background: #0f172a; color: white; outline: none; font-size: 14px; }
-        .total-display { background: rgba(16,185,129,0.1); border: 2px dashed var(--accent); border-radius: 10px; padding: 12px; text-align: center; font-size: 20px; font-weight: 900; color: var(--accent); margin-bottom: 15px; }
-        .btn-main { background: var(--accent); color: white; border: none; width: 100%; padding: 16px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 16px; }
+        .logo { font-size: 20px; font-weight: 900; }
+        .logo span { color: var(--accent); }
 
-        /* Modal الشامل */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: var(--card); width: 100%; max-width: 400px; border-radius: 20px; padding: 25px; border: 1px solid var(--border); position: relative; max-height: 85vh; overflow-y: auto; }
-        .close-btn { position: absolute; top: 15px; left: 15px; color: #ff4d4d; cursor: pointer; font-weight: bold; }
-        
-        .section-title { color: var(--gold); font-size: 16px; margin: 15px 0 10px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #333; padding-bottom: 5px; }
-        .pay-row { background: #0a0a15; padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; border-right: 3px solid var(--accent); }
-        .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .l-btn { padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: #1e293b; color: white; cursor: pointer; font-weight: bold; }
-        .l-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
-        
-        /* Hide classes for language */
-        body.ar .fr-txt { display: none; }
-        body.fr .ar-txt { display: none; }
+        /* العداد الذي صنعناه سابقاً */
+        .stats-container {
+            display: flex; justify-content: space-around;
+            padding: 15px; background: rgba(16, 185, 129, 0.05);
+            border-bottom: 1px solid var(--border);
+        }
+        .stat-item { text-align: center; }
+        .stat-number { display: block; font-size: 18px; font-weight: 900; color: var(--accent); }
+        .stat-label { font-size: 10px; color: #718096; text-transform: uppercase; }
+
+        /* شبكة التصنيفات */
+        .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 20px; }
+        .cat-card {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 15px; padding: 15px 5px; text-align: center; cursor: pointer; transition: 0.3s;
+        }
+        .cat-card.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); }
+        .cat-card i { font-size: 24px; margin-bottom: 8px; display: block; }
+        .cat-card span { font-size: 11px; font-weight: bold; }
+
+        /* صندوق الطلب */
+        .order-container { padding: 0 20px; }
+        .order-card { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid var(--border); }
+        select, input {
+            width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 12px;
+            background: #0f141e; border: 1px solid var(--border); color: white; outline: none;
+        }
+        .price-box {
+            border: 2px dashed var(--accent); background: rgba(16, 185, 129, 0.1);
+            color: var(--accent); padding: 15px; text-align: center; font-size: 24px; 
+            font-weight: 900; border-radius: 12px; margin-bottom: 15px;
+        }
+        .btn-confirm {
+            width: 100%; background: var(--accent); color: white; border: none;
+            padding: 16px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 16px;
+        }
+
+        /* نافذة الإعدادات المخفية */
+        .modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            display: none; align-items: center; justify-content: center; z-index: 2000;
+        }
+        .modal-content { background: var(--card); width: 85%; max-width: 400px; padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
     </style>
 </head>
 <body class="ar">
 
     <div class="header">
-        <div class="header-icons">
-            <i class="fas fa-bars" onclick="openMenu()"></i>
-            <a href="https://t.me/your_telegram" target="_blank"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
+        <div class="header-left">
+            <button class="btn-lang active" onclick="setLang('ar')">AR</button>
+            <button class="btn-lang" onclick="setLang('fr')">FR</button>
+            <a href="https://t.me/your_telegram" class="tg-link"><i class="fab fa-telegram"></i></a>
         </div>
         <div class="logo">KARIM<span>13</span></div>
-        <div class="header-icons">
-             <i class="fas fa-cog" onclick="openAdmin()"></i>
+        <div class="header-right">
+            <i class="fas fa-bars" style="font-size: 22px; cursor: pointer;" onclick="toggleMenu(true)"></i>
         </div>
     </div>
 
-    <div class="grid" id="catGrid"></div>
-
-    <div class="order-box">
-        <select id="serviceSelect" onchange="calculate()"></select>
-        <input type="text" id="linkInput" placeholder="الرابط / Lien">
-        <input type="number" id="qtyInput" value="1000" oninput="calculate()">
-        <div class="total-display" id="totalPrice">0.00 $</div>
-        <button class="btn-main" onclick="confirmOrder()">
-            <span class="ar-txt">تأكيد الطلب</span>
-            <span class="fr-txt">Confirmer</span>
-        </button>
+    <div class="stats-container">
+        <div class="stat-item">
+            <span class="stat-number" id="count-orders">0</span>
+            <span class="stat-label">طلبات مكتملة</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" id="count-users">0</span>
+            <span class="stat-label">مستخدم نشط</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" id="count-services">0</span>
+            <span class="stat-label">خدمة متاحة</span>
+        </div>
     </div>
 
-    <div class="modal" id="mainModal">
+    <div class="cat-grid" id="catGrid"></div>
+
+    <div class="order-container">
+        <div class="order-card">
+            <select id="servList" onchange="calculate()"></select>
+            <input type="text" placeholder="الرابط / URL">
+            <input type="number" id="quantity" value="1000" oninput="calculate()">
+            <div class="price-box" id="priceLabel">0.00 $</div>
+            <button class="btn-confirm" onclick="alert('تم الطلب بنجاح!')">تأكيد الطلب / Confirmer</button>
+        </div>
+    </div>
+
+    <div class="modal" id="sideMenu">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeMenu()">✖</span>
-            
-            <div class="section-title"><i class="fas fa-wallet"></i> <span class="ar-txt">وسائل الدفع</span><span class="fr-txt">Paiement</span></div>
-            <div class="pay-row"><span>BaridiMob:</span> <b>0079999900001234</b></div>
-            <div class="pay-row"><span>Binance ID:</span> <b>55667788</b></div>
-            <div class="pay-row"><span>RedotPay ID:</span> <b>11223344</b></div>
-            <div class="pay-row"><span>Flexy:</span> <b>0600000000 (مؤقت)</b></div>
-
-            <div class="section-title"><i class="fas fa-history"></i> <span class="ar-txt">طلباتك</span><span class="fr-txt">Vos Commandes</span></div>
-            <div id="orderHistory" style="font-size: 12px; text-align: center; color: #777; padding: 10px;">
-                <span class="ar-txt">لا توجد طلبات حالياً</span>
-                <span class="fr-txt">Aucune commande</span>
-            </div>
-
-            <div class="section-title"><i class="fas fa-language"></i> <span class="ar-txt">اللغة</span><span class="fr-txt">Langue</span></div>
-            <div class="lang-grid">
-                <button class="l-btn active" id="btnAr" onclick="setLang('ar')">العربية</button>
-                <button class="l-btn" id="btnFr" onclick="setLang('fr')">Français</button>
-            </div>
+            <h3 style="color: var(--gold); margin-bottom: 20px;">💳 تفاصيل الحساب</h3>
+            <p style="margin-bottom: 10px; font-size: 14px;">BaridiMob: <b style="color:var(--accent)">0079999900012345</b></p>
+            <p style="margin-bottom: 20px; font-size: 14px;">Binance ID: <b style="color:var(--accent)">55667788</b></p>
+            <button class="btn-confirm" style="background: #2d3748;" onclick="toggleMenu(false)">إغلاق</button>
         </div>
     </div>
 
     <script>
-        // دمج الخدمات التي أرسلتها
-        const SERVICES = [
-            { id: 9999, cat: "TikTok", n: "🪙 TikTok Coins - 1000 Pièces", n_ar: "🪙 عملات تيك توك - 1000 عملة", p: 13.00, fixed: true },
-            { id: 3231, cat: "TikTok", n: "TikTok Followers | HQ Real", n_ar: "👤 متابعين تيك توك | حقيقي", p: 1.10 },
-            { id: 3338, cat: "TikTok", n: "TikTok Followers | HQ Real", n_ar: "👤 متابعين تيك توك جودة عالية", p: 0.95 },
-            { id: 1972, cat: "TikTok", n: "TikTok Likes | Non Drop", n_ar: "❤️ إعجابات تيك توك | ثابت", p: 0.0368 },
-            { id: 8253, cat: "Facebook", n: "Facebook Followers | Global", n_ar: "متابعين فيسبوك | عالمي", p: 0.475 },
-            { id: 2594, cat: "Instagram", n: "Instagram Followers | Lifetime", n_ar: "متابعين انستقرام | ضمان", p: 0.960 },
-            { id: 1873, cat: "YouTube", n: "YouTube Premium (1 Month)", n_ar: "يوتيوب بريميوم (شهر)", p: 2.50, fixed: true },
-            { id: 3428, cat: "Telegram", n: "Telegram Members | HQ", n_ar: "أعضاء تليجرام | جودة", p: 1.09 },
-            { id: 2482, cat: "Snapchat", n: "Snapchat Followers | Real", n_ar: "متابعين سناب شات | حقيقي", p: 24.40 },
-            { id: 8607, cat: "Premium", n: "Netflix Premium | 1 Month", n_ar: "نتفليكس بريميوم | شهر", p: 4.50, fixed: true },
-            { id: 9106, cat: "Gaming", n: "PUBG Mobile | 60 UC", n_ar: "ببجي موبايل | 60 شدة", p: 1.50, fixed: true }
-            // ... تم إضافة المنطق للتعامل مع بقية الخدمات المماثلة
-        ];
-
-        const CATS = [
-            { id: "TikTok", icon: "fab fa-tiktok", c: "#ff0050", n: "تيك توك" },
-            { id: "Facebook", icon: "fab fa-facebook", c: "#1877f2", n: "فيسبوك" },
-            { id: "Instagram", icon: "fab fa-instagram", c: "#e1306c", n: "انستقرام" },
-            { id: "YouTube", icon: "fab fa-youtube", c: "red", n: "يوتيوب" },
-            { id: "Telegram", icon: "fab fa-telegram", c: "#0088cc", n: "تليجرام" },
-            { id: "Snapchat", icon: "fab fa-snapchat", c: "#fffc00", n: "سناب" },
-            { id: "Premium", icon: "fas fa-gem", c: "#a855f7", n: "بريميوم" },
-            { id: "Gaming", icon: "fas fa-gamepad", c: "#10b981", n: "ألعاب" }
-        ];
-
-        let currentCat = "TikTok";
-
-        function render() {
-            const grid = document.getElementById('catGrid'); grid.innerHTML = '';
-            CATS.forEach(c => {
-                grid.innerHTML += `
-                <div class="cat-item ${c.id === currentCat ? 'active' : ''}" onclick="setCat('${c.id}')">
-                    <i class="${c.icon}" style="color:${c.c}"></i>
-                    <span>${c.n}</span>
-                </div>`;
-            });
-            loadServices();
+        // العداد الذكي
+        function animateCounter(id, target) {
+            let count = 0;
+            let speed = target / 50;
+            let timer = setInterval(() => {
+                count += Math.ceil(speed);
+                if (count >= target) {
+                    count = target;
+                    clearInterval(timer);
+                }
+                document.getElementById(id).innerText = count.toLocaleString() + "+";
+            }, 30);
         }
 
-        function setCat(id) { currentCat = id; render(); }
+        // تشغيل العداد عند التحميل
+        window.addEventListener('DOMContentLoaded', () => {
+            animateCounter('count-orders', 15400);
+            animateCounter('count-users', 2800);
+            animateCounter('count-services', 120);
+            render();
+        });
 
-        function loadServices() {
-            const sel = document.getElementById('serviceSelect'); sel.innerHTML = '';
-            const isAr = document.body.classList.contains('ar');
-            SERVICES.filter(s => s.cat === currentCat).forEach(s => {
-                sel.innerHTML += `<option value="${s.id}">${isAr ? (s.n_ar || s.n) : s.n}</option>`;
+        const CATS = [
+            { id: "TikTok", n: "تيك توك", icon: "fab fa-tiktok", c: "#ff0050" },
+            { id: "Facebook", n: "فيسبوك", icon: "fab fa-facebook", c: "#1877f2" },
+            { id: "Instagram", n: "إنستقرام", icon: "fab fa-instagram", c: "#e1306c" },
+            { id: "YouTube", n: "يوتيوب", icon: "fab fa-youtube", c: "red" },
+            { id: "Premium", n: "بريميوم", icon: "fas fa-gem", c: "#a855f7" }
+        ];
+
+        const SERVICES = [
+            { id: 3231, cat: "TikTok", n: "متابعين تيك توك | حقيقي", p: 1.10 },
+            { id: 8253, cat: "Facebook", n: "متابعين فيسبوك | عالمي", p: 0.475 }
+        ];
+
+        let activeCat = "TikTok";
+
+        function render() {
+            const g = document.getElementById('catGrid'); g.innerHTML = '';
+            CATS.forEach(c => {
+                g.innerHTML += `<div class="cat-card ${c.id === activeCat ? 'active' : ''}" onclick="setCat('${c.id}')"><i class="${c.icon}" style="color:${c.c}"></i><span>${c.n}</span></div>`;
+            });
+            load();
+        }
+
+        function setCat(id) { activeCat = id; render(); }
+        function load() {
+            const s = document.getElementById('servList'); s.innerHTML = '';
+            SERVICES.filter(x => x.cat === activeCat).forEach(x => {
+                s.innerHTML += `<option value="${x.p}">${x.n}</option>`;
             });
             calculate();
         }
-
         function calculate() {
-            const id = document.getElementById('serviceSelect').value;
-            const s = SERVICES.find(x => x.id == id);
-            if(!s) return;
-            const q = document.getElementById('qtyInput').value;
-            let total = s.fixed ? s.p : (s.p * q / 1000);
-            document.getElementById('totalPrice').innerText = total.toFixed(2) + " $";
+            const p = document.getElementById('servList').value || 0;
+            const q = document.getElementById('quantity').value;
+            document.getElementById('priceLabel').innerText = (p * q / 1000).toFixed(2) + " $";
         }
-
-        function openMenu() { document.getElementById('mainModal').style.display = 'flex'; }
-        function closeMenu() { document.getElementById('mainModal').style.display = 'none'; }
-
-        function setLang(l) {
-            document.body.className = l;
-            document.dir = (l === 'ar') ? 'rtl' : 'ltr';
-            document.getElementById('btnAr').classList.toggle('active', l==='ar');
-            document.getElementById('btnFr').classList.toggle('active', l==='fr');
-            loadServices();
-        }
-
-        function confirmOrder() {
-            alert(document.body.classList.contains('ar') ? "تم استلام طلبك!" : "Commande reçue!");
-            const hist = document.getElementById('orderHistory');
-            hist.innerHTML = `<div class="pay-row">New Order - ${currentCat} <b>Pending</b></div>` + (hist.innerHTML.includes('لا يوجد') ? '' : hist.innerHTML);
-        }
-
-        function openAdmin() {
-            let p = prompt("Enter Key:");
-            if(p === 'karim13') alert("Welcome Karim!");
-        }
-
-        window.onload = render;
+        function toggleMenu(s) { document.getElementById('sideMenu').style.display = s ? 'flex' : 'none'; }
+        function setLang(l) { document.dir = (l === 'ar' ? 'rtl' : 'ltr'); }
     </script>
 </body>
 </html>
