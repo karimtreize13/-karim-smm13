@@ -3,39 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM13 | PRO PANEL</title>
+    <title>KARIM13 | SMM PANEL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <style>
-        :root { --bg: #0b0f17; --card: #161b26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --white: #ffffff; }
+        :root { --bg: #0b0f17; --card: #161b26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --white: #ffffff; --redot: #ff4d4d; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
         body { background: var(--bg); color: var(--white); text-align: center; }
+        
+        /* Header */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 1000; }
-        .lang-switcher { display: flex; gap: 5px; }
-        .lang-btn { padding: 5px 10px; font-size: 12px; border-radius: 5px; border: 1px solid var(--border); background: var(--card); color: white; cursor: pointer; }
-        .lang-btn.active { background: var(--accent); }
-        .nav-icons { display: flex; gap: 15px; align-items: center; }
-        .nav-icons a, .nav-icons i { color: white; font-size: 20px; text-decoration: none; cursor: pointer; }
-        .stats { display: flex; justify-content: space-around; padding: 20px; margin: 15px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
-        .stats h2 { color: var(--gold); font-size: 20px; }
+        .lang-switcher { display: flex; gap: 5px; background: #1a202c; padding: 4px; border-radius: 8px; }
+        .lang-btn { padding: 6px 12px; font-size: 11px; cursor: pointer; border-radius: 6px; border: none; color: #718096; background: none; }
+        .lang-btn.active { background: var(--accent); color: white; }
+        .logo { font-weight: 900; font-size: 20px; }
+        .nav-icons { display: flex; gap: 15px; }
+        .nav-icons i { font-size: 20px; cursor: pointer; color: var(--white); }
+
+        /* Order Card */
+        .card { background: var(--card); margin: 15px; padding: 20px; border-radius: 20px; border: 1px solid var(--border); }
+        select, input { width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: white; outline: none; text-align: center; font-size: 14px; }
+        .price-tag { font-size: 32px; font-weight: 900; color: var(--accent); margin: 10px 0; padding: 15px; border: 2px dashed var(--accent); border-radius: 15px; background: rgba(16,185,129,0.05); }
+        
+        .btn-order { width: 100%; padding: 16px; background: var(--accent); border: none; border-radius: 12px; color: white; font-weight: 900; cursor: pointer; margin-bottom: 10px; font-size: 16px; }
+        .btn-wa { width: 100%; padding: 14px; background: #25d366; border-radius: 12px; color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: bold; }
+
+        /* Payment Modal */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: var(--card); padding: 25px; border-radius: 25px; width: 100%; max-width: 400px; border: 1px solid var(--border); }
+        .pay-item { background: var(--bg); padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); text-align: left; }
+        .pay-item small { color: var(--gold); font-weight: bold; text-transform: uppercase; font-size: 10px; }
+        .copy-btn { background: var(--gold); color: black; border: none; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 900; cursor: pointer; }
+        
+        /* Grid */
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .box { background: var(--card); padding: 15px 5px; border-radius: 15px; border: 1px solid var(--border); cursor: pointer; }
-        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); }
+        .box { background: var(--card); padding: 15px 5px; border-radius: 15px; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
+        .box.active { border-color: var(--gold); background: rgba(245,158,11,0.1); }
         .box i { font-size: 22px; display: block; margin-bottom: 5px; }
         .box span { font-size: 10px; font-weight: bold; }
-        .card { background: var(--card); margin: 15px; padding: 20px; border-radius: 20px; border: 1px solid var(--border); }
-        select, input { width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: white; }
-        .price { font-size: 30px; font-weight: 900; color: var(--accent); margin: 15px 0; padding: 15px; border: 2px dashed var(--accent); border-radius: 10px; }
-        .btn-main { width: 100%; padding: 15px; background: var(--accent); border: none; border-radius: 10px; color: white; font-weight: 900; cursor: pointer; }
-        .btn-wa { width: 100%; padding: 12px; background: #25d366; border-radius: 10px; color: white; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; font-weight: bold; }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--card); padding: 25px; border-radius: 20px; width: 100%; max-width: 400px; border: 1px solid var(--border); }
-        .pay-item { background: var(--bg); padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
-        .copy-btn { background: var(--gold); color: black; border: none; padding: 5px 10px; border-radius: 5px; font-size: 11px; font-weight: bold; cursor: pointer; }
-        .history { display: none; margin: 15px; padding: 15px; background: #1a202c; border-radius: 15px; border: 1px solid var(--gold); text-align: left; }
     </style>
 </head>
 <body>
@@ -47,16 +56,9 @@
     </div>
     <div class="logo">KARIM<span style="color:var(--gold)">13</span></div>
     <div class="nav-icons">
-        <a href="https://t.me/karim_treize" target="_blank"><i class="fab fa-telegram"></i></a>
-        <i class="fas fa-wallet" onclick="openPay()"></i>
+        <i class="fas fa-wallet" onclick="openPay()" style="color:var(--gold)"></i>
         <i class="fas fa-user-shield" onclick="adminLogin()"></i>
     </div>
-</div>
-
-<div class="stats">
-    <div><h2>15K+</h2><p id="st1">Commandes</p></div>
-    <div><h2>2.9K+</h2><p id="st2">Utilisateurs</p></div>
-    <div><h2>90+</h2><p id="st3">Services</p></div>
 </div>
 
 <div id="grid" class="grid"></div>
@@ -65,22 +67,38 @@
     <select id="srv" onchange="calc()"></select>
     <input type="text" id="link" placeholder="Lien / Link / Email" oninput="calc()">
     <input type="number" id="qty" value="1000" oninput="calc()">
-    <div class="price" id="total">$0.00</div>
-    <button class="btn-main" onclick="order()" id="btnOrder">Commander 🍬</button>
+    <div class="price-tag" id="total">$0.00</div>
+    <button class="btn-order" onclick="order()" id="btnOrder">Confirmer la commande 🍬</button>
     <a id="waLink" class="btn-wa" target="_blank">
         <i class="fab fa-whatsapp"></i> <span id="waTxt">Commander via WhatsApp</span>
     </a>
 </div>
 
-<div id="hist" class="history"><div id="logList"></div></div>
-
 <div id="payM" class="modal">
     <div class="modal-content">
-        <h3 style="margin-bottom:20px;">Paiement / الدفع</h3>
-        <div class="pay-item"><div><small style="color:var(--gold)">BaridiMob</small><br><span id="c1">00799999001465107315</span></div><button class="copy-btn" onclick="copy('c1')">COPY</button></div>
-        <div class="pay-item"><div><small style="color:var(--gold)">Binance ID</small><br><span id="c2">1194939141</span></div><button class="copy-btn" onclick="copy('c2')">COPY</button></div>
-        <div class="pay-item"><div><small style="color:var(--gold)">Flexy (Mobilis)</small><br><span id="c3">0656251947</span></div><button class="copy-btn" onclick="copy('c3')">COPY</button></div>
-        <button onclick="closePay()" style="width:100%; padding:12px; background:#444; border:none; border-radius:10px; color:white; cursor:pointer; margin-top:10px;">Fermer</button>
+        <h3 style="margin-bottom:20px; color:var(--gold);">MODE DE PAIEMENT</h3>
+        
+        <div class="pay-item">
+            <div><small>BaridiMob</small><br><span id="c1">00799999001465107315</span></div>
+            <button class="copy-btn" onclick="copy('c1')">COPY</button>
+        </div>
+        
+        <div class="pay-item">
+            <div><small>Binance ID</small><br><span id="c2">1194939141</span></div>
+            <button class="copy-btn" onclick="copy('c2')">COPY</button>
+        </div>
+        
+        <div class="pay-item">
+            <div><small style="color:var(--redot)">RedotPay ID</small><br><span id="c3">8254910362</span></div>
+            <button class="copy-btn" onclick="copy('c3')">COPY</button>
+        </div>
+
+        <div class="pay-item">
+            <div><small>Flexy (Mobilis)</small><br><span id="c4">0656251947</span></div>
+            <button class="copy-btn" onclick="copy('c4')">COPY</button>
+        </div>
+
+        <button onclick="closePay()" style="width:100%; padding:14px; background:#444; border:none; border-radius:12px; color:white; cursor:pointer; margin-top:5px; font-weight: bold;">Fermer / إغلاق</button>
     </div>
 </div>
 
@@ -94,35 +112,22 @@
     const CATS = [
         { id: 'TikTok', fr: 'TikTok', ar: 'تيك توك', icon: 'fab fa-tiktok', col: '#ff0050' },
         { id: 'Facebook', fr: 'Facebook', ar: 'فيسبوك', icon: 'fab fa-facebook-f', col: '#1877f2' },
-        { id: 'Instagram', fr: 'Instagram', ar: 'انستقرام', icon: 'fab fa-instagram', col: '#e4405f' },
-        { id: 'YouTube', fr: 'YouTube', ar: 'يوتيوب', icon: 'fab fa-youtube', col: '#ff0000' },
-        { id: 'Telegram', fr: 'Telegram', ar: 'تليجرام', icon: 'fab fa-telegram-plane', col: '#0088cc' },
-        { id: 'Premium', fr: 'Premium', ar: 'بريميوم', icon: 'fas fa-gem', col: '#a855f7' },
-        { id: 'Gaming', fr: 'Gaming', ar: 'ألعاب', icon: 'fas fa-gamepad', col: '#10b981' }
+        { id: 'Gaming', fr: 'Gaming', ar: 'ألعاب', icon: 'fas fa-gamepad', col: '#10b981' },
+        { id: 'Premium', fr: 'Premium', ar: 'بريميوم', icon: 'fas fa-gem', col: '#a855f7' }
     ];
 
     const SERVICES = [
-        // TIKTOK
         { cat: "TikTok", n: "🪙 1000 TikTok Coins", n_ar: "شحن 1000 عملة تيك توك", p: 13.00, fix: true },
         { cat: "TikTok", n: "👤 TikTok Followers HQ", n_ar: "متابعين تيك توك حقيقي", p: 1.10 },
-        { cat: "TikTok", n: "❤️ TikTok Likes", n_ar: "لايكات تيك توك", p: 0.05 },
-        // FACEBOOK
-        { cat: "Facebook", n: "👤 FB Page Followers", n_ar: "متابعين صفحة فيسبوك", p: 0.80 },
-        { cat: "Facebook", n: "⏱️ FB 60K Minutes", n_ar: "60 ألف دقيقة مشاهدة فيسبوك", p: 1.00, fix: true },
-        // GAMING
         { cat: "Gaming", n: "🎮 PUBG 60 UC", n_ar: "ببجي 60 شدة", p: 1.50, fix: true },
-        { cat: "Gaming", n: "🎮 PUBG 325 UC", n_ar: "ببجي 325 شدة", p: 5.00, fix: true },
-        { cat: "Gaming", n: "🎮 Free Fire 110 Diamonds", n_ar: "فري فاير 110 جوهرة", p: 1.20, fix: true },
-        // PREMIUM
-        { cat: "Premium", n: "🎬 Netflix Premium 1 Month", n_ar: "نتفليكس شهر كامل", p: 4.50, fix: true },
-        { cat: "Premium", n: "🎨 Canva Pro Year", n_ar: "كانفا برو سنة كاملة", p: 3.00, fix: true }
+        { cat: "Premium", n: "🎬 Netflix Premium", n_ar: "نتفليكس شهر", p: 4.50, fix: true }
     ];
 
     function setL(l) {
         L = l; document.body.dir = (l==='ar'?'rtl':'ltr');
         document.getElementById('bFr').classList.toggle('active', l==='fr');
         document.getElementById('bAr').classList.toggle('active', l==='ar');
-        document.getElementById('btnOrder').innerText = (l==='ar'?'تأكيد الطلب 🍬':'Commander 🍬');
+        document.getElementById('btnOrder').innerText = (l==='ar'?'تأكيد الطلب 🍬':'Confirmer la commande 🍬');
         document.getElementById('waTxt').innerText = (l==='ar'?'الطلب عبر واتساب':'Commander via WhatsApp');
         render();
     }
@@ -151,29 +156,20 @@
             let total = s.fix ? s.p : (s.p / 1000 * q);
             const res = total.toFixed(2);
             document.getElementById('total').innerText = "$" + res;
-            const msg = `Karim, Commande:%0A- Service: ${L==='ar'?s.n_ar:s.n}%0A- Link: ${link}%0A- Qty: ${q}%0A- Price: $${res}`;
+            
+            // رسالة واتساب منظمة جداً
+            const msg = `*Nouvelle Commande KARIM13*%0A--------------------------%0A📦 *Service:* ${L==='ar'?s.n_ar:s.n}%0A🔗 *Lien:* ${link}%0A🔢 *Quantité:* ${q}%0A💰 *Prix Total:* $${res}%0A--------------------------%0AMerçi!`;
             document.getElementById('waLink').href = `https://wa.me/213656251947?text=${msg}`;
         }
     }
 
     async function order() {
-        const l = document.getElementById('link').value; if(!l) return alert("Link?");
-        const o = { srv: document.getElementById('srv').value, link: l, qty: document.getElementById('qty').value, price: document.getElementById('total').innerText, date: new Date().toLocaleString() };
-        await db.collection("orders").add(o);
-        alert("Success!"); openPay();
+        const l = document.getElementById('link').value; if(!l) return alert("Lien?");
+        await db.collection("orders").add({ srv: document.getElementById('srv').value, link: l, qty: document.getElementById('qty').value, price: document.getElementById('total').innerText, date: new Date().toLocaleString() });
+        openPay();
     }
 
-    function adminLogin() {
-        if(prompt("Pass:") === "karim13") {
-            document.getElementById('hist').style.display = 'block';
-            db.collection("orders").orderBy("date", "desc").onSnapshot(snap => {
-                const list = document.getElementById('logList'); list.innerHTML = "";
-                snap.forEach(doc => { const d = doc.data(); list.innerHTML += `<div style="background:#000; padding:10px; margin-bottom:5px; border-radius:5px;">${d.srv} - ${d.link}</div>`; });
-            });
-        }
-    }
-
-    function copy(id) { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Copied!"); }
+    function copy(id) { navigator.clipboard.writeText(document.getElementById(id).innerText); alert("Copié / تم النسخ!"); }
     function openPay() { document.getElementById('payM').style.display = 'flex'; }
     function closePay() { document.getElementById('payM').style.display = 'none'; }
     window.onload = () => setL('fr');
