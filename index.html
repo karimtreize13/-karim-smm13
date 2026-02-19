@@ -22,12 +22,12 @@
         .stats-header { display: flex; justify-content: space-around; padding: 20px 10px; background: rgba(255,255,255,0.03); margin: 15px; border-radius: 20px; border: 1px solid var(--border); }
         .stat-item { text-align: center; }
         .stat-item h2 { color: var(--gold); font-size: 24px; font-weight: 900; }
-        .stat-item p { font-size: 10px; color: #718096; text-transform: uppercase; margin-top: 5px; }
-        .icon-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .icon-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 15px 5px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .icon-box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); }
+        .stat-item p { font-size: 10px; color: #718096; margin-top: 5px; }
+        .icon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 15px; }
+        .icon-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 15px 5px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; transition: 0.2s; }
+        .icon-box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); transform: scale(1.05); }
         .icon-box i { font-size: 22px; }
-        .icon-box span { font-size: 9px; font-weight: bold; }
+        .icon-box span { font-size: 10px; font-weight: bold; }
         .order-section { padding: 0 15px 20px; }
         .card { background: var(--card); padding: 20px; border-radius: 18px; border: 1px solid var(--border); }
         select, input { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: #fff; outline: none; }
@@ -36,10 +36,11 @@
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
         .modal-content { background: var(--card); width: 100%; max-width: 450px; padding: 25px; border-radius: 20px; position: relative; border: 1px solid var(--border); max-height: 85vh; overflow-y: auto; }
         .close-m { position: absolute; top: 15px; right: 15px; color: #ff4d4d; font-size: 25px; cursor: pointer; }
-        .pay-item { margin-bottom: 10px; background: var(--bg); padding: 10px; border-radius: 10px; border: 1px solid var(--border); }
+        .pay-item { margin-bottom: 10px; background: var(--bg); padding: 12px; border-radius: 12px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .pay-info { flex-grow: 1; }
         .pay-label { display: block; font-size: 11px; color: var(--gold); font-weight: bold; }
         .pay-value { font-family: monospace; font-size: 13px; color: white; }
-        .order-history-item { background: var(--bg); padding: 12px; border-radius: 10px; margin-bottom: 10px; border-left: 4px solid var(--gold); font-size: 13px; text-align: left; }
+        .copy-btn { background: var(--gold); color: #000; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -80,7 +81,154 @@
     <div class="modal-content">
         <span class="close-m" onclick="closeModal()">×</span>
         <h3 style="text-align:center; margin-bottom:20px;">Paiement / الدفع</h3>
-        <div class="pay-item"><span class="pay-label">BaridiMob:</span><span class="pay-value">00799999001465107315</span></div>
-        <div class="pay-item"><span class="pay-label">Binance ID:</span><span class="pay-value">1194939141</span></div>
-        <div class="pay-item"><span class="pay-label">RedotPay ID:</span><span class="pay-value">493914178</span></div>
-        <div style
+        <div class="pay-item">
+            <div class="pay-info"><span class="pay-label">BaridiMob:</span><span class="pay-value" id="v1">00799999001465107315</span></div>
+            <button class="copy-btn" onclick="copy('v1')">Copy</button>
+        </div>
+        <div class="pay-item">
+            <div class="pay-info"><span class="pay-label">Binance ID:</span><span class="pay-value" id="v2">1194939141</span></div>
+            <button class="copy-btn" onclick="copy('v2')">Copy</button>
+        </div>
+        <h4 style="margin: 15px 0 10px; font-size: 13px; color: var(--accent);">Flexy (Algerie)</h4>
+        <div class="pay-item">
+            <div class="pay-info"><span class="pay-label">Mobilis:</span><span class="pay-value" id="v4">0600000000</span></div>
+            <button class="copy-btn" onclick="copy('v4')">Copy</button>
+        </div>
+        <button class="btn-confirm" onclick="window.open('https://wa.me/213656251947')" style="background:#25d366; margin-top:10px;">
+            <i class="fab fa-whatsapp"></i> WhatsApp Support
+        </button>
+    </div>
+</div>
+
+<div id="mOrders" class="modal">
+    <div class="modal-content">
+        <span class="close-m" onclick="closeModal()">×</span>
+        <h3 id="hist-title">Historique / السجل</h3>
+        <div id="ordersList" style="margin-top:15px;">...</div>
+    </div>
+</div>
+
+<script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
+      authDomain: "karim-smm.firebaseapp.com",
+      projectId: "karim-smm",
+      storageBucket: "karim-smm.firebasestorage.app",
+      messagingSenderId: "968826000164",
+      appId: "1:968826000164:web:aa41869e201784b85c59b1"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let curL = 'fr';
+    let curC = 'TikTok';
+
+    const CATS = [
+        { id: 'Baghdad', fr: 'Baghdad', ar: 'بغداد 🇮🇶', icon: 'fas fa-mosque', color: '#007a3d' },
+        { id: 'TikTok', fr: 'TikTok', ar: 'تيك توك', icon: 'fab fa-tiktok', color: '#ff0050' },
+        { id: 'Facebook', fr: 'Facebook', ar: 'فيسبوك', icon: 'fab fa-facebook-f', color: '#1877f2' },
+        { id: 'Instagram', fr: 'Instagram', ar: 'انستقرام', icon: 'fab fa-instagram', color: '#e4405f' },
+        { id: 'YouTube', fr: 'YouTube', ar: 'يوتيوب', icon: 'fab fa-youtube', color: '#ff0000' },
+        { id: 'Snapchat', fr: 'Snapchat', ar: 'سناب شات', icon: 'fab fa-snapchat', color: '#fffc00' },
+        { id: 'Premium', fr: 'Premium', ar: 'بريميوم', icon: 'fas fa-gem', color: '#a855f7' },
+        { id: 'Gaming', fr: 'Gaming', ar: 'ألعاب', icon: 'fas fa-gamepad', color: '#10b981' }
+    ];
+
+    const SERVICES = [
+        // Baghdad / Iraq Services
+        { id: 9001, cat: "Baghdad", n: "Iraq Followers | Real", n_ar: "متابعين حقيقي من العراق", p: 1.50 },
+        { id: 9002, cat: "Baghdad", n: "Iraq Likes | High Quality", n_ar: "لايكات عراقية جودة عالية", p: 0.50 },
+        // TikTok
+        { id: 101, cat: "TikTok", n: "TikTok Followers | HQ", n_ar: "متابعين تيك توك", p: 0.80 },
+        { id: 9999, cat: "TikTok", n: "TikTok Coins - 1000", n_ar: "عملات تيك توك - 1000", p: 13.00, fix: true },
+        // Gaming
+        { id: 9109, cat: "Gaming", n: "PUBG Mobile - 660 UC", n_ar: "ببجي - 660 شدة", p: 12.50, fix: true }
+    ];
+
+    function copy(id) {
+        const val = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(val);
+        alert("Copié / تم النسخ");
+    }
+
+    function changeLang(l) {
+        curL = l;
+        document.body.dir = (l === 'ar' ? 'rtl' : 'ltr');
+        document.getElementById('btnFr').classList.toggle('active', l === 'fr');
+        document.getElementById('btnAr').classList.toggle('active', l === 'ar');
+        document.getElementById('stat-cmd').innerText = (l === 'ar' ? 'طلبات منفذة' : 'Commandes');
+        document.getElementById('stat-usr').innerText = (l === 'ar' ? 'مستخدمين' : 'Utilisateurs');
+        document.getElementById('stat-srv').innerText = (l === 'ar' ? 'خدمة متاحة' : 'Services');
+        document.getElementById('btnText').innerText = (l === 'ar' ? 'تأكيد الطلب 🍬' : 'Confirmer 🍬');
+        document.getElementById('orderLink').placeholder = (l === 'ar' ? 'الرابط / الايميل' : 'Lien / Link / Email');
+        renderCats();
+    }
+
+    function renderCats() {
+        const g = document.getElementById('catGrid'); g.innerHTML = '';
+        CATS.forEach(c => {
+            const name = (curL === 'ar' ? c.ar : c.fr);
+            g.innerHTML += `<div class="icon-box ${c.id===curC?'active':''}" onclick="setCat('${c.id}')">
+                <i class="${c.icon}" style="color:${c.color}"></i><span>${name}</span>
+            </div>`;
+        });
+        loadSrv();
+    }
+
+    function setCat(id) { curC = id; renderCats(); }
+    function loadSrv() {
+        const s = document.getElementById('srvSelect'); s.innerHTML = '';
+        SERVICES.filter(x => x.cat === curC).forEach(x => {
+            const name = (curL === 'ar' ? x.n_ar : x.n);
+            s.innerHTML += `<option value="${x.id}">${x.id} - ${name}</option>`;
+        });
+        calc();
+    }
+
+    function calc() {
+        const id = document.getElementById('srvSelect').value;
+        const s = SERVICES.find(x => x.id == id);
+        const q = document.getElementById('orderQty').value || 0;
+        if(s) {
+            let total = s.fix ? s.p : (s.p / 1000 * q);
+            document.getElementById('totalPrice').innerText = "$" + total.toFixed(2);
+        }
+    }
+
+    async function sendOrder() {
+        const id = document.getElementById('srvSelect').value;
+        const link = document.getElementById('orderLink').value;
+        const qty = document.getElementById('orderQty').value;
+        if(!link) return alert("Lien Requis!");
+        try {
+            await db.collection("orders").add({ srv: id, link: link, qty: qty, date: new Date(), status: 'Pending' });
+            alert("✅ Commande Reçue!");
+            openModal('pay');
+        } catch(e) { alert("Error"); }
+    }
+
+    async function loadUserOrders() {
+        openModal('orders');
+        const list = document.getElementById('ordersList');
+        list.innerHTML = "...";
+        try {
+            const snapshot = await db.collection("orders").orderBy("date", "desc").limit(8).get();
+            list.innerHTML = "";
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const status = (data.status === 'Pending' ? 'Attente' : 'Terminé ✅');
+                list.innerHTML += `<div style="background:#0b0f17; padding:10px; border-radius:10px; margin-bottom:10px; border-left:3px solid var(--gold); font-size:12px;">
+                    <b>#${data.srv}</b> | Qty: ${data.qty} <br> [${status}]
+                </div>`;
+            });
+        } catch(e) { list.innerHTML = "Error"; }
+    }
+
+    function openModal(id) { document.getElementById('m' + id.charAt(0).toUpperCase() + id.slice(1)).style.display = 'flex'; }
+    function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+    function adminLogin() { if(prompt("Pass:") === "karim13") window.location.href="https://console.firebase.google.com/project/karim-smm/firestore/data/~2Forders"; }
+
+    window.onload = () => changeLang('fr');
+</script>
+</body>
+</html>
