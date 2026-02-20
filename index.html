@@ -3,264 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM TREIZE 13 | ULTIMATE PANEL</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
-    
+    <title>KARIMTREIZE13 | PANEL 🍬</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --text: #ffffff; --border: #2d3748; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); overflow-x: hidden; text-align: center; }
-
-        /* Header */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #0b111b; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 22px; font-weight: 900; }
-        .logo span { color: var(--gold); }
-        .nav-icons { display: flex; gap: 18px; align-items: center; }
-        .nav-icons i, .nav-icons a { font-size: 22px; cursor: pointer; color: var(--text); text-decoration: none; transition: 0.3s; }
-        .nav-icons i:hover { color: var(--gold); }
+        :root { --primary: #fbbf24; --bg: #050505; --card: #111; --text: #fff; --accent: #10b981; }
+        body { background: var(--bg); color: var(--text); font-family: 'Tajawal', sans-serif; margin: 0; padding: 10px; }
         
-        .lang-btn { background: #1e293b; color: #fff; border: 1px solid var(--border); padding: 5px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: bold; }
-        .lang-btn.active { background: var(--gold); color: #000; }
+        /* الهيدر العلوي */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; }
+        .logo { font-size: 24px; font-weight: 900; }
+        .logo span { color: var(--primary); }
 
-        /* Stats */
-        .stats-bar { display: flex; justify-content: space-around; padding: 20px; margin: 15px; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid var(--border); }
-        .stats-bar h2 { color: var(--gold); font-size: 20px; font-weight: 900; }
-        .stats-bar p { font-size: 11px; color: #888; margin-top: 4px; }
+        /* الإحصائيات - كما في الصورة */
+        .stats-container { background: var(--card); border-radius: 20px; padding: 15px; display: flex; justify-content: space-around; margin-bottom: 20px; border: 1px solid rgba(251, 191, 36, 0.2); }
+        .stat-item { text-align: center; }
+        .stat-item h4 { margin: 0; color: var(--primary); font-size: 18px; }
+        .stat-item p { margin: 5px 0 0; font-size: 11px; opacity: 0.7; }
 
-        /* Grid Category */
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 15px; }
-        .box { background: var(--card); padding: 15px 5px; border-radius: 20px; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
-        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); transform: scale(1.05); }
-        .box i { font-size: 24px; margin-bottom: 8px; display: block; }
-        .box span { font-size: 11px; font-weight: 700; }
+        /* شبكة التصنيفات (Grid) */
+        .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+        .cat-card { background: var(--card); border-radius: 15px; padding: 15px 5px; text-align: center; cursor: pointer; border: 2px solid transparent; transition: 0.3s; }
+        .cat-card.active { border-color: var(--primary); background: rgba(251, 191, 36, 0.1); }
+        .cat-card i { font-size: 22px; margin-bottom: 8px; display: block; }
+        .cat-card span { font-size: 10px; font-weight: bold; }
 
-        /* Main Card */
-        .order-card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
-        .select-box { width: 100%; padding: 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 15px; color: #fff; text-align: right; cursor: pointer; font-weight: bold; margin-bottom: 15px; position: relative; }
-        .options-menu { display: none; position: absolute; width: 100%; background: #1e293b; border: 1px solid var(--gold); border-radius: 15px; z-index: 100; max-height: 250px; overflow-y: auto; right: 0; margin-top: 5px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .options-menu div { padding: 14px; border-bottom: 1px solid var(--border); font-size: 13px; text-align: right; }
-        .options-menu div:hover { background: #2d3748; color: var(--gold); }
+        /* ألوان الأيقونات */
+        .fa-tiktok { color: #ff0050; } .fa-facebook { color: #1877f2; } .fa-instagram { color: #e1306c; }
+        .fa-youtube { color: #ff0000; } .fa-telegram { color: #229ed9; } .fa-snapchat { color: #fffc00; }
+        .fa-gem { color: #fbbf24; } .fa-gamepad { color: #00ff88; }
 
-        input { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: #fff; text-align: center; font-size: 16px; font-weight: bold; outline: none; }
-        .price-label { font-size: 38px; font-weight: 900; color: var(--accent); margin: 15px 0; display: block; border: 2px dashed var(--accent); border-radius: 20px; padding: 10px; background: rgba(16,185,129,0.05); }
-        .btn-send { width: 100%; padding: 20px; border: none; border-radius: 20px; background: var(--accent); color: white; font-size: 18px; font-weight: 900; cursor: pointer; transition: 0.3s; }
+        /* لوحة الطلب */
+        .order-panel { background: var(--card); border-radius: 25px; padding: 20px; }
+        .input-group { margin-bottom: 15px; }
+        .label { display: block; font-size: 12px; margin-bottom: 5px; color: var(--primary); }
+        .select-box, .input-field { width: 100%; padding: 14px; border-radius: 12px; background: #1a1a1a; border: 1px solid #333; color: white; box-sizing: border-box; font-family: inherit; }
 
-        /* Modals */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--card); padding: 25px; border-radius: 25px; width: 100%; max-width: 400px; border: 1px solid var(--gold); }
-        .payment-item { background: #0f172a; padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
-        .btn-copy { background: var(--gold); color: #000; border: none; padding: 6px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        
-        .history-list { max-height: 300px; overflow-y: auto; }
-        .hist-card { background: #0f172a; padding: 12px; border-radius: 12px; margin-bottom: 10px; text-align: right; border-right: 4px solid var(--gold); }
+        .price-display { background: rgba(16, 185, 129, 0.1); border: 2px dashed var(--accent); border-radius: 15px; padding: 15px; text-align: center; margin: 15px 0; }
+        .price-display h2 { color: var(--accent); margin: 0; font-size: 28px; }
 
-        /* Language LTR Adjustment */
-        body[dir="ltr"] .select-box, body[dir="ltr"] .options-menu div, body[dir="ltr"] .hist-card { text-align: left; }
-        body[dir="ltr"] .hist-card { border-right: none; border-left: 4px solid var(--gold); }
+        .btn-send { width: 100%; padding: 16px; border-radius: 15px; border: none; background: var(--accent); color: white; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <div class="lang-switch">
-        <button id="btn-ar" class="lang-btn active" onclick="changeLang('ar')">AR</button>
-        <button id="btn-fr" class="lang-btn" onclick="changeLang('fr')">FR</button>
+    <div class="header">
+        <i class="fas fa-bars"></i>
+        <div class="logo">🍬 KARIM<span>13</span></div>
+        <i class="fas fa-user-circle"></i>
     </div>
-    <div class="logo">KARIM<span>13</span> 🍬</div>
-    <div class="nav-icons">
-        <a href="https://t.me/K_13_S" target="_blank"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
-        <i class="fas fa-wallet" style="color:var(--gold)" onclick="openMod('payModal')"></i>
-        <i class="fas fa-history" onclick="showHistory()"></i>
+
+    <div class="stats-container">
+        <div class="stat-item"><h4>+150</h4><p>خدمة</p></div>
+        <div class="stat-item"><h4>+3.5K</h4><p>عميل</p></div>
+        <div class="stat-item"><h4>3102</h4><p>متصل</p></div>
     </div>
-</div>
 
-<div class="stats-bar">
-    <div><h2 id="srv-count">150+</h2><p id="txt-srv">خدمة حصرية</p></div>
-    <div><h2>2.9K+</h2><p id="txt-cli">عميل ثقة</p></div>
-    <div><h2 id="live-users">2552</h2><p id="txt-vis">متصل الآن</p></div>
-</div>
-
-<div class="grid" id="cat-grid">
-    <div class="box active" onclick="setCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span data-ar="تيك توك" data-fr="TikTok">تيك توك</span></div>
-    <div class="box" onclick="setCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span data-ar="فيسبوك" data-fr="Facebook">فيسبوك</span></div>
-    <div class="box" onclick="setCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span data-ar="انستقرام" data-fr="Instagram">انستقرام</span></div>
-    <div class="box" onclick="setCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span data-ar="يوتيوب" data-fr="YouTube">يوتيوب</span></div>
-    <div class="box" onclick="setCat('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span data-ar="تيليجرام" data-fr="Telegram">تيليجرام</span></div>
-    <div class="box" onclick="setCat('Snapchat', this)"><i class="fab fa-snapchat" style="color:#fffc00"></i><span data-ar="سناب شات" data-fr="Snapchat">سناب شات</span></div>
-    <div class="box" onclick="setCat('Premium', this)"><i class="fas fa-gem" style="color:var(--gold)"></i><span data-ar="اشتراكات" data-fr="Premium">اشتراكات</span></div>
-    <div class="box" onclick="setCat('Gaming', this)"><i class="fas fa-gamepad" style="color:var(--accent)"></i><span data-ar="ألعاب" data-fr="Gaming">ألعاب</span></div>
-</div>
-
-<div class="order-card">
-    <div style="position:relative">
-        <div class="select-box" id="srv-active-name" onclick="toggleMenu()">اختر الخدمة...</div>
-        <div class="options-menu" id="srv-menu"></div>
+    <div class="categories-grid" id="catGrid">
+        <div class="cat-card active" onclick="selectCat('TikTok', this)"><i class="fab fa-tiktok"></i><span>تيك توك</span></div>
+        <div class="cat-card" onclick="selectCat('Facebook', this)"><i class="fab fa-facebook"></i><span>فيسبوك</span></div>
+        <div class="cat-card" onclick="selectCat('Instagram', this)"><i class="fab fa-instagram"></i><span>انستقرام</span></div>
+        <div class="cat-card" onclick="selectCat('YouTube', this)"><i class="fab fa-youtube"></i><span>يوتيوب</span></div>
+        <div class="cat-card" onclick="selectCat('Telegram', this)"><i class="fab fa-telegram"></i><span>تليجرام</span></div>
+        <div class="cat-card" onclick="selectCat('Snapchat', this)"><i class="fab fa-snapchat"></i><span>سناب</span></div>
+        <div class="cat-card" onclick="selectCat('Premium', this)"><i class="fas fa-gem"></i><span>اشتراك</span></div>
+        <div class="cat-card" onclick="selectCat('Gaming', this)"><i class="fas fa-gamepad"></i><span>ألعاب</span></div>
     </div>
-    
-    <input type="hidden" id="srv-id">
-    <input type="text" id="link-input" placeholder="الرابط أو الآيدي">
-    <input type="number" id="qty-input" value="1000" oninput="updatePrice()">
-    
-    <div class="price-label" id="price-val">$0.00000</div>
-    
-    <button class="btn-send" onclick="sendWhatsApp()">
-        <span id="txt-btn">إرسال الطلب الآن 🍬</span>
-    </button>
-</div>
 
-<div id="payModal" class="modal">
-    <div class="modal-content">
-        <h3 id="txt-pay-head" style="margin-bottom:20px; color:var(--gold)">وسائل الدفع المتاحة</h3>
-        <div class="payment-item">
-            <button class="btn-copy" onclick="copy('00799999001465107315')">نسخ</button>
-            <div style="text-align:right"><small style="color:var(--gold)">BaridiMob</small><br>00799999001465107315</div>
+    <div class="order-panel">
+        <div class="input-group">
+            <span class="label">اختر الخدمة:</span>
+            <select class="select-box" id="serviceSelect" onchange="updatePrice()"></select>
         </div>
-        <div class="payment-item">
-            <button class="btn-copy" onclick="copy('15884236')">نسخ</button>
-            <div style="text-align:right"><small style="color:#ee4622">RedotPay ID</small><br>15884236</div>
-        </div>
-        <div class="payment-item">
-            <button class="btn-copy" onclick="copy('@karim_13')">نسخ</button>
-            <div style="text-align:right"><small style="color:var(--accent)">Vinos Pay</small><br>@karim_13</div>
-        </div>
-        <button onclick="closeMod('payModal')" style="width:100%; padding:12px; background:#444; color:#fff; border:none; border-radius:15px; margin-top:10px;">إغلاق</button>
-    </div>
-</div>
-
-<div id="histModal" class="modal">
-    <div class="modal-content">
-        <h3 id="txt-hist-head" style="margin-bottom:20px; color:var(--gold)">سجل طلباتي</h3>
-        <div class="history-list" id="hist-content"></div>
-        <button onclick="closeMod('histModal')" style="width:100%; padding:12px; background:#444; color:#fff; border:none; border-radius:15px; margin-top:10px;">إغلاق</button>
-    </div>
-</div>
-
-<script>
-    const SERVICES = [
-        { id: 9999, cat: "TikTok", ar: "شحن عملات تيك توك - 1000 عملة", fr: "TikTok Coins - 1000 Pcs", p: 13.0, fix: true },
-        { id: 3231, cat: "TikTok", ar: "👤 متابعين تيك توك | حقيقي 🛡️", fr: "TikTok Followers | HQ Real", p: 1.1 },
-        { id: 101, cat: "Facebook", ar: "متابعين صفحة فيسبوك حقيقي", fr: "FB Page Followers Real", p: 0.95 },
-        { id: 201, cat: "Instagram", ar: "متابعين انستقرام جودة عالية", fr: "Instagram Followers HQ", p: 1.2 },
-        { id: 801, cat: "Gaming", ar: "ببجي موبايل 325 شدة", fr: "PUBG Mobile 325 UC", p: 5.5, fix: true }
-    ];
-
-    let currentLang = 'ar';
-    let currentCat = 'TikTok';
-
-    function changeLang(l) {
-        currentLang = l;
-        document.body.dir = (l === 'ar') ? 'rtl' : 'ltr';
-        document.getElementById('btn-ar').classList.toggle('active', l === 'ar');
-        document.getElementById('btn-fr').classList.toggle('active', l === 'fr');
         
-        const langMap = {
-            ar: { srv:"خدمة حصرية", cli:"عميل ثقة", vis:"نشط الآن", link:"الرابط أو الآيدي", btn:"إرسال الطلب الآن 🍬", pay:"وسائل الدفع المتاحة", hist:"سجل طلباتي" },
-            fr: { srv:"Services", cli:"Clients", vis:"En ligne", link:"Lien / ID", btn:"Commander Maintenant 🍬", pay:"Moyens de Paiement", hist:"Historique" }
-        }[l];
+        <div class="input-group">
+            <span class="label">الرابط أو الآيدي (Link/ID):</span>
+            <input type="text" class="input-field" id="userLink" placeholder="ضع الرابط هنا...">
+        </div>
 
-        document.getElementById('txt-srv').innerText = langMap.srv;
-        document.getElementById('txt-cli').innerText = langMap.cli;
-        document.getElementById('txt-vis').innerText = langMap.vis;
-        document.getElementById('link-input').placeholder = langMap.link;
-        document.getElementById('txt-btn').innerText = langMap.btn;
-        document.getElementById('txt-pay-head').innerText = langMap.pay;
-        document.getElementById('txt-hist-head').innerText = langMap.hist;
+        <div class="input-group" id="qtyGroup">
+            <span class="label">الكمية:</span>
+            <input type="number" class="input-field" id="quantity" value="1000" oninput="updatePrice()">
+        </div>
 
-        document.querySelectorAll('.box span').forEach(s => s.innerText = s.getAttribute('data-' + l));
-        renderServices();
-    }
+        <div class="price-display">
+            <span style="font-size: 12px; color: #888;">السعر الإجمالي</span>
+            <h2 id="totalPrice">$0.0000</h2>
+        </div>
 
-    function setCat(cat, el) {
-        currentCat = cat;
-        document.querySelectorAll('.box').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        renderServices();
-    }
+        <button class="btn-send" onclick="sendOrder()">
+            <i class="fab fa-whatsapp"></i> تأكيد الطلب عبر واتساب
+        </button>
+    </div>
 
-    function renderServices() {
-        const menu = document.getElementById('srv-menu');
-        const filtered = SERVICES.filter(s => s.cat === currentCat);
-        menu.innerHTML = '';
-        filtered.forEach(s => {
-            const name = (currentLang === 'ar') ? s.ar : s.fr;
-            const div = document.createElement('div');
-            div.innerHTML = `<b>#${s.id}</b> - ${name}`;
-            div.onclick = () => {
-                document.getElementById('srv-active-name').innerText = name;
-                document.getElementById('srv-id').value = s.id;
-                toggleMenu();
-                updatePrice();
-            };
-            menu.appendChild(div);
-        });
-        if(filtered.length > 0) {
-            document.getElementById('srv-active-name').innerText = (currentLang === 'ar') ? filtered[0].ar : filtered[0].fr;
-            document.getElementById('srv-id').value = filtered[0].id;
+    <script>
+        const servicesData = {
+            'TikTok': [
+                { id: 3231, name: "متابعين تيك توك | حقيقي", p: 1.10 },
+                { id: 9999, name: "شحن عملات تيك توك (1000)", p: 14.0, type: 'fixed' },
+                { id: 1972, name: "لايكات تيك توك | ثابت", p: 0.036 },
+                { id: 7500, name: "مشاهدات تيك توك مليونية", p: 0.006 }
+            ],
+            'Facebook': [
+                { id: 8253, name: "متابعين فيسبوك | عالمي", p: 0.47 },
+                { id: 9149, name: "أعضاء جروب فيسبوك", p: 0.59 }
+            ],
+            'Instagram': [
+                { id: 2594, name: "متابعين انستا | جودة", p: 0.96 },
+                { id: 8801, name: "لايكات انستا | حقيقي", p: 0.63 }
+            ],
+            'YouTube': [
+                { id: 1873, name: "يوتيوب بريميوم | شهر", p: 2.50, type: 'fixed' },
+                { id: 3522, name: "مشاهدات يوتيوب | ثابت", p: 0.70 }
+            ],
+            'Telegram': [
+                { id: 3428, name: "أعضاء تليجرام | جودة", p: 1.09 },
+                { id: 2205, name: "أعضاء تليجرام بريميوم", p: 13.90 }
+            ],
+            'Snapchat': [
+                { id: 2482, name: "متابعين سناب | حقيقي", p: 24.40 }
+            ],
+            'Premium': [
+                { id: 8607, name: "نتفليكس بريميوم | شهر", p: 4.50, type: 'fixed' },
+                { id: 3364, name: "كاب كات برو | شهر", p: 6.00, type: 'fixed' }
+            ],
+            'Gaming': [
+                { id: 9108, name: "ببجي موبايل | 325 شدة", p: 5.50, type: 'fixed' },
+                { id: 9109, name: "ببجي موبايل | 660 شدة", p: 12.50, type: 'fixed' }
+            ]
+        };
+
+        let currentCat = 'TikTok';
+
+        function selectCat(cat, el) {
+            currentCat = cat;
+            document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            const sel = document.getElementById('serviceSelect');
+            sel.innerHTML = servicesData[cat].map(s => `<option value="${s.id}">${s.name} (#${s.id})</option>`).join('');
             updatePrice();
         }
-    }
 
-    function updatePrice() {
-        const s = SERVICES.find(x => x.id == document.getElementById('srv-id').value);
-        if(!s) return;
-        const q = document.getElementById('qty-input').value || 0;
-        const total = s.fix ? s.p : (s.p / 1000 * q);
-        document.getElementById('price-val').innerText = "$" + total.toFixed(5);
-    }
+        function updatePrice() {
+            const sId = document.getElementById('serviceSelect').value;
+            const qty = document.getElementById('quantity').value;
+            const s = servicesData[currentCat].find(x => x.id == sId);
+            document.getElementById('qtyGroup').style.display = s.type === 'fixed' ? 'none' : 'block';
+            let total = s.type === 'fixed' ? s.p : (s.p / 1000) * qty;
+            document.getElementById('totalPrice').innerText = "$" + total.toFixed(4);
+        }
 
-    function sendWhatsApp() {
-        const s = SERVICES.find(x => x.id == document.getElementById('srv-id').value);
-        const link = document.getElementById('link-input').value;
-        const qty = document.getElementById('qty-input').value;
-        const price = document.getElementById('price-val').innerText;
+        function sendOrder() {
+            const sId = document.getElementById('serviceSelect').value;
+            const link = document.getElementById('userLink').value;
+            const qty = document.getElementById('quantity').value;
+            const price = document.getElementById('totalPrice').innerText;
+            const s = servicesData[currentCat].find(x => x.id == sId);
 
-        if(!link) return alert(currentLang === 'ar' ? "يرجى إدخال الرابط!" : "Lien requis!");
+            if(!link) return alert("يرجى إدخال الرابط!");
 
-        const message = `*طلب جديد من الموقع*%0A` +
-                        `*الخدمة:* ${s.ar}%0A` +
-                        `*الآيدي:* #${s.id}%0A` +
-                        `*الرابط:* ${link}%0A` +
-                        `*الكمية:* ${qty}%0A` +
-                        `*السعر:* ${price}`;
+            const msg = `*طلب جديد من كريم تراز* 🍬%0A------------------%0A*ID الخدمة:* #${sId}%0A*اسم الخدمة:* ${s.name}%0A*الرابط/الآيدي:* ${link}%0A*الكمية:* ${qty}%0A*السعر الإجمالي:* ${price}%0A------------------`;
+            window.open(`https://wa.me/213656251947?text=${msg}`);
+        }
 
-        // التخزين في السجل المحلي
-        let history = JSON.parse(localStorage.getItem('user_orders') || "[]");
-        history.unshift({ name: s.ar, price: price, date: new Date().toLocaleString('ar-DZ') });
-        localStorage.setItem('user_orders', JSON.stringify(history.slice(0, 20)));
-
-        window.open(`https://wa.me/213656251947?text=${message}`);
-    }
-
-    function showHistory() {
-        openMod('histModal');
-        const content = document.getElementById('hist-content');
-        const history = JSON.parse(localStorage.getItem('user_orders') || "[]");
-        content.innerHTML = history.map(o => `
-            <div class="hist-card">
-                <small style="color:#888">${o.date}</small><br>
-                <b>${o.name}</b><br>
-                <span style="color:var(--accent)">${o.price}</span>
-            </div>
-        `).join('') || (currentLang === 'ar' ? "لا يوجد طلبات سابقة" : "Aucun historique");
-    }
-
-    function toggleMenu() {
-        const m = document.getElementById('srv-menu');
-        m.style.display = (m.style.display === 'block') ? 'none' : 'block';
-    }
-
-    function copy(t) { navigator.clipboard.writeText(t); alert("تم النسخ!"); }
-    function openMod(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeMod(id) { document.getElementById(id).style.display = 'none'; }
-
-    window.onload = () => {
-        changeLang('ar');
-        setInterval(() => {
-            let n = document.getElementById('live-users');
-            n.innerText = parseInt(n.innerText) + Math.floor(Math.random()*3) - 1;
-        }, 3000);
-    };
-</script>
+        selectCat('TikTok', document.querySelector('.cat-card'));
+    </script>
 </body>
 </html>
