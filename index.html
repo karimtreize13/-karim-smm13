@@ -3,178 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM13 🍬 | FULL SERVICES</title>
+    <title>KARIM13 🍬</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
         :root { --primary: #5d5fef; --dark: #0b0e23; --light: #f8f9fd; --yellow: #fbbf24; }
-        body { background-color: var(--light); color: #1a1c2e; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 50px; }
-
-        /* الهيدر العلوي الثابت */
+        body { background-color: var(--light); color: #1a1c2e; font-family: 'Segoe UI', sans-serif; margin: 0; transition: 0.3s; }
+        
+        /* الهيدر العلوي - الأزرار الأربعة */
         .top-nav { background: var(--dark); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 900; font-size: 20px; }
-        .top-icons { display: flex; gap: 15px; align-items: center; }
-        .top-icons i { font-size: 22px; cursor: pointer; color: white; }
-        .fa-telegram { color: #229ed9 !important; }
-        .lang-tag { background: var(--yellow); color: #000; padding: 2px 7px; border-radius: 5px; font-weight: bold; font-size: 12px; }
+        .nav-icons { display: flex; gap: 20px; align-items: center; }
+        .nav-icons i, .nav-icons a { color: white; font-size: 22px; cursor: pointer; text-decoration: none; }
+        .lang-btn { background: var(--yellow); color: #000; padding: 3px 8px; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 12px; }
 
-        /* كارت الإحصائيات */
-        .stats-card { background: white; margin: 15px; padding: 20px; border-radius: 15px; display: flex; align-items: center; gap: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .stats-card i { font-size: 35px; color: var(--primary); opacity: 0.2; }
-        .stats-card h2 { margin: 0; font-size: 24px; }
-        .stats-card p { margin: 0; color: #8b949e; font-size: 12px; }
-
-        /* شبكة أيقونات المنصات */
-        .platforms { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0 15px; margin-bottom: 20px; }
-        .plat-item { background: white; border-radius: 12px; padding: 12px; text-align: center; cursor: pointer; border: 2px solid transparent; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
-        .plat-item.active { border-color: var(--primary); background: #f0f1ff; }
-        .plat-item i { font-size: 22px; display: block; margin-bottom: 5px; }
-
-        /* حاوية الخدمات الرئيسية */
-        .main-box { background: white; margin: 0 15px; padding: 20px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
-        .label { display: block; font-weight: bold; margin-bottom: 10px; font-size: 14px; color: #555; }
+        .container { padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
         
-        .search-area { background: #f1f3f9; padding: 12px; border-radius: 10px; margin-bottom: 15px; color: #8b949e; font-size: 14px; }
+        label { display: block; margin-bottom: 10px; font-weight: bold; font-size: 14px; }
+        select, input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #ddd; background: #f9f9f9; margin-bottom: 20px; outline: none; box-sizing: border-box; }
 
-        /* قائمة الخدمات المنسدلة */
-        .srv-list { border: 1px solid #eee; border-radius: 12px; max-height: 350px; overflow-y: auto; background: #fff; }
-        .srv-item { padding: 15px; border-bottom: 1px solid #f1f1f1; cursor: pointer; transition: 0.2s; }
-        .srv-item:hover { background: #f9faff; }
-        .srv-item.selected { background: #f0f1ff; border-right: 4px solid var(--primary); }
-        
-        .id-label { background: #e0e2f1; color: var(--primary); padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; }
-        .srv-name { display: block; margin-top: 5px; font-size: 13px; font-weight: 600; line-height: 1.4; }
-        .srv-price { display: block; margin-top: 5px; color: var(--primary); font-weight: bold; font-size: 12px; }
+        .price-display { background: #f0f1ff; padding: 15px; border-radius: 12px; text-align: center; border: 2px dashed var(--primary); margin-bottom: 20px; }
+        .price-display span { font-size: 24px; font-weight: 900; color: var(--primary); }
 
-        .btn-send { width: 100%; background: var(--yellow); color: #000; border: none; padding: 18px; border-radius: 12px; font-weight: 900; font-size: 16px; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 10px rgba(251, 191, 36, 0.3); }
+        .confirm-btn { width: 100%; background: var(--yellow); border: none; padding: 18px; border-radius: 12px; font-weight: 900; font-size: 16px; cursor: pointer; }
 
         /* مودال وسائل الدفع */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-body { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 380px; text-align: center; }
-        .pay-row { background: #f1f3f9; padding: 15px; border-radius: 10px; margin-bottom: 10px; text-align: right; border-left: 4px solid var(--primary); }
+        .modal-content { background: white; padding: 25px; border-radius: 20px; width: 100%; max-width: 400px; text-align: right; }
+        .close-btn { background: #eee; border: none; padding: 10px; width: 100%; border-radius: 10px; margin-top: 15px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="top-nav">
-    <div class="logo">KARIM13 🍬</div>
-    <div class="top-icons">
-        <div class="lang-tag">AR</div>
-        <a href="https://t.me/karim_smm13"><i class="fab fa-telegram"></i></a>
-        <i class="fas fa-wallet" onclick="toggleM('payM')"></i>
-        <i class="fas fa-history" onclick="toggleM('histM')"></i>
+    <div style="font-weight: 900; font-size: 20px;">KARIM13 🍬</div>
+    <div class="nav-icons">
+        <div class="lang-btn" id="langToggle" onclick="toggleLanguage()">FR</div>
+        <a href="https://t.me/karim_smm13" target="_blank"><i class="fab fa-telegram" style="color:#229ed9"></i></a>
+        <i class="fas fa-wallet" onclick="openModal('payModal')" style="color:var(--yellow)"></i>
+        <i class="fas fa-history" onclick="openModal('historyModal')"></i>
     </div>
 </div>
 
-<div class="stats-card">
-    <i class="fas fa-shopping-cart"></i>
-    <div>
-        <h2 id="orderCount">1,168,116</h2>
-        <p>Total Panel Orders</p>
-    </div>
-</div>
+<div class="container">
+    <div class="card">
+        <label id="labelCategory">القسم (Category)</label>
+        <select id="categorySelect" onchange="updateServices()">
+            <option value="">-- اختر القسم --</option>
+            <option value="IG">Instagram 📸</option>
+            <option value="TK">TikTok 🎵</option>
+            <option value="FB">Facebook 💙</option>
+        </select>
 
-<div class="platforms">
-    <div class="plat-item active" onclick="loadS('IG', this)"><i class="fab fa-instagram" style="color:#e4405f"></i></div>
-    <div class="plat-item" onclick="loadS('TK', this)"><i class="fab fa-tiktok" style="color:#000"></i></div>
-    <div class="plat-item" onclick="loadS('FB', this)"><i class="fab fa-facebook" style="color:#1877f2"></i></div>
-    <div class="plat-item" onclick="loadS('YT', this)"><i class="fab fa-youtube" style="color:#ff0000"></i></div>
-    <div class="plat-item" onclick="loadS('TG', this)"><i class="fab fa-telegram" style="color:#229ed9"></i></div>
-    <div class="plat-item" onclick="loadS('SC', this)"><i class="fab fa-snapchat" style="color:#fffc00"></i></div>
-    <div class="plat-item" onclick="loadS('PR', this)"><i class="fas fa-gem" style="color:#fbbf24"></i></div>
-    <div class="plat-item" onclick="loadS('GM', this)"><i class="fas fa-gamepad" style="color:#00ff88"></i></div>
-</div>
+        <label id="labelService">الخدمة (Service)</label>
+        <select id="serviceSelect" onchange="calculatePrice()">
+            <option value="">-- اختر الخدمة أولاً --</option>
+        </select>
 
-<div class="main-box">
-    <div class="search-area"><i class="fas fa-search"></i> Search for services...</div>
-    
-    <span class="label">Services List</span>
-    <div class="srv-list" id="srvContainer">
+        <label id="labelLink">الرابط (Link)</label>
+        <input type="text" id="orderLink" placeholder="https://...">
+
+        <label id="labelQty">الكمية (Quantity)</label>
+        <input type="number" id="orderQty" value="1000" oninput="calculatePrice()">
+
+        <div class="price-display">
+            <span id="totalPrice">$0.00</span>
         </div>
 
-    <button class="btn-send" onclick="submit()">تأكيد الطلب عبر واتساب 🍬</button>
+        <button class="confirm-btn" onclick="sendToWhatsApp()" id="btnText">تأكيد الطلب عبر واتساب</button>
+    </div>
 </div>
 
-<div class="modal" id="payM">
-    <div class="modal-body">
-        <h3>وسائل الدفع الجزائري 🇩🇿</h3>
-        <div class="pay-row"><b>BaridiMob:</b><br><span style="color:var(--primary)">00799999001234567890</span></div>
-        <div class="pay-row"><b>CCP:</b><br>21234567 / 80 (KARIM)</div>
-        <button onclick="toggleM('payM')" class="btn-send" style="padding:10px">إغلاق</button>
+<div id="payModal" class="modal">
+    <div class="modal-content">
+        <h3 style="text-align:center">وسائل الدفع 🇩🇿</h3>
+        <p><b>BaridiMob:</b> 00799999001234567890</p>
+        <p><b>CCP:</b> 21234567 / 80 (كريم)</p>
+        <button class="close-btn" onclick="closeModal('payModal')">إغلاق</button>
+    </div>
+</div>
+
+<div id="historyModal" class="modal">
+    <div class="modal-content">
+        <h3 style="text-align:center">سجل طلباتي 🕒</h3>
+        <div id="historyBody" style="font-size: 12px; color: #666; text-align: center;">لا يوجد طلبات سابقة</div>
+        <button class="close-btn" onclick="closeModal('historyModal')">إغلاق</button>
     </div>
 </div>
 
 <script>
-    const SERVICES_DB = [
-        // انستقرام
-        {id: 101, cat: 'IG', n: 'Instagram Followers | Real | 30 Days Refill', p: 0.45},
-        {id: 102, cat: 'IG', n: 'Instagram Likes | Super Fast | HQ', p: 0.12},
-        {id: 103, cat: 'IG', n: 'Instagram Reels Views | Viral Speed', p: 0.05},
-        {id: 104, cat: 'IG', n: 'Instagram Arab Followers | الحقيقيون', p: 1.20},
-        // تيك توك
-        {id: 201, cat: 'TK', n: 'TikTok Followers | Instant Start', p: 0.88},
-        {id: 202, cat: 'TK', n: 'TikTok Likes | Real Users', p: 0.35},
-        {id: 203, cat: 'TK', n: 'TikTok Views | 1M Speed', p: 0.01},
-        {id: 204, cat: 'TK', n: 'TikTok Shares | Boost Ranking', p: 0.15},
-        // فيسبوك
-        {id: 301, cat: 'FB', n: 'Facebook Page Likes | Non-Drop', p: 1.50},
-        {id: 302, cat: 'FB', n: 'Facebook Profile Followers', p: 0.60},
-        {id: 303, cat: 'FB', n: 'Facebook Post Likes | All Emotions', p: 0.25},
-        // يوتيوب
-        {id: 401, cat: 'YT', n: 'YouTube Subscribers | High Quality', p: 12.00},
-        {id: 402, cat: 'YT', n: 'YouTube Watch Time | 4000 Hours', p: 35.00},
-        {id: 403, cat: 'YT', n: 'YouTube Views | Non-Drop', p: 2.10},
-        // تليجرام
-        {id: 501, cat: 'TG', n: 'Telegram Channel Members | Fast', p: 0.95},
-        {id: 502, cat: 'TG', n: 'Telegram Post Views | Last 10 Posts', p: 0.08},
-        // سناب شات
-        {id: 601, cat: 'SC', n: 'Snapchat Public Profile Followers', p: 18.00},
-        // اشتراكات
-        {id: 701, cat: 'PR', n: 'Netflix 1 Month | Shared Account', p: 4.50},
-        {id: 702, cat: 'PR', n: 'Spotify Premium | 1 Month', p: 2.00}
+    const SERVICES = [
+        {id: 3231, cat: "TK", name: "متابعين تيك توك حقيقي", price: 1.10},
+        {id: 8801, cat: "IG", name: "لايكات انستقرام عرب", price: 0.14},
+        {id: 1428, cat: "IG", name: "متابعين انستقرام ضمان", price: 0.45}
     ];
 
-    let currentSrv = null;
+    let currentLang = 'AR';
 
-    function loadS(cat, el) {
-        document.querySelectorAll('.plat-item').forEach(i => i.classList.remove('active'));
-        el.classList.add('active');
+    function updateServices() {
+        const cat = document.getElementById('categorySelect').value;
+        const srvSelect = document.getElementById('serviceSelect');
+        srvSelect.innerHTML = '<option value="">-- اختر الخدمة --</option>';
         
-        const container = document.getElementById('srvContainer');
-        container.innerHTML = '';
-        
-        const filtered = SERVICES_DB.filter(s => s.cat === cat);
-        filtered.forEach(s => {
-            container.innerHTML += `
-                <div class="srv-item" onclick="selectS(this, ${s.id})">
-                    <span class="id-label">ID: ${s.id}</span>
-                    <span class="srv-name">${s.n}</span>
-                    <span class="srv-price">$${s.p.toFixed(2)} per 1000</span>
-                </div>
-            `;
+        SERVICES.filter(s => s.cat === cat).forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s.id;
+            opt.textContent = `ID: ${s.id} - ${s.name}`;
+            srvSelect.appendChild(opt);
         });
+        calculatePrice();
     }
 
-    function selectS(el, id) {
-        document.querySelectorAll('.srv-item').forEach(i => i.classList.remove('selected'));
-        el.classList.add('selected');
-        currentSrv = SERVICES_DB.find(x => x.id === id);
-    }
-
-    function submit() {
-        if(!currentSrv) return alert("اختر خدمة من القائمة!");
-        const link = prompt("أدخل الرابط:");
-        if(link) {
-            const msg = `🚀 طلب جديد من كريم:%0A🆔 ID: ${currentSrv.id}%0A🛠 الخدمة: ${currentSrv.n}%0A🔗 الرابط: ${link}`;
-            window.location.href = `https://wa.me/213656251947?text=${msg}`;
+    function calculatePrice() {
+        const srvId = document.getElementById('serviceSelect').value;
+        const qty = document.getElementById('orderQty').value || 0;
+        const srv = SERVICES.find(s => s.id == srvId);
+        if(srv) {
+            const total = (srv.price / 1000) * qty;
+            document.getElementById('totalPrice').innerText = "$" + total.toFixed(2);
+        } else {
+            document.getElementById('totalPrice').innerText = "$0.00";
         }
     }
 
-    function toggleM(id) {
-        const m = document.getElementById(id);
-        m.style.display = (m.style.display === 'flex') ? 'none' : 'flex';
+    function sendToWhatsApp() {
+        const srvId = document.getElementById('serviceSelect').value;
+        const link = document.getElementById('orderLink').value;
+        const qty = document.getElementById('orderQty').value;
+        const srv = SERVICES.find(s => s.id == srvId);
+
+        if(!srv || !link) {
+            alert(currentLang === 'AR' ? "يرجى ملء كافة الحقول" : "Remplir tous les champs");
+            return;
+        }
+
+        const msg = `🚀 طلب جديد من كريم:%0A🆔 ID: ${srv.id}%0A🛠 الخدمة: ${srv.name}%0A🔗 الرابط: ${link}%0A🔢 الكمية: ${qty}`;
+        window.location.href = `https://wa.me/213656251947?text=${msg}`;
     }
 
-    window.onload = () => loadS('IG', document.querySelector('.plat-item'));
+    function toggleLanguage() {
+        currentLang = (currentLang === 'AR') ? 'FR' : 'AR';
+        document.dir = (currentLang === 'AR') ? 'rtl' : 'ltr';
+        document.getElementById('langToggle').innerText = (currentLang === 'AR') ? 'FR' : 'AR';
+        document.getElementById('btnText').innerText = (currentLang === 'AR') ? 'تأكيد الطلب عبر واتساب' : 'Confirmer sur WhatsApp';
+        // تحديث بقية النصوص حسب الحاجة
+    }
+
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 </script>
+
 </body>
 </html>
