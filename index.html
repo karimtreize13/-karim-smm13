@@ -116,14 +116,9 @@
     </div>
 </div>
     <div id="payModal" class="modal">
+<div id="payModal" class="modal">
     <div class="modal-body" style="width: 95%; max-width: 420px; padding: 20px; border-radius: 20px; background:#1a222d; border: 1px solid var(--gold);">       
         
-        <div style="text-align: center; margin-bottom: 20px;">
-            <a href="https://t.me/YOUR_USERNAME" target="_blank" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px; background: #0088cc; color: white; padding: 10px 20px; border-radius: 50px; font-weight: bold; font-size: 14px; box-shadow: 0 4px 15px rgba(0,136,204,0.3);">
-                <span>Contact Telegram / تواصل معنا</span>
-            </a>
-        </div>
-
         <h3 id="p-title" style="color:var(--gold); margin-bottom:15px; text-align: center; font-size: 18px;">
             Modes de Paiement / وسائل الدفع
         </h3>
@@ -133,35 +128,9 @@
             <div style="margin-bottom: 15px;">
                 <span style="color:var(--gold); font-weight:bold;">CCP / BaridiMob:</span>
                 <div style="display: flex; align-items: center; gap: 5px; margin-top: 5px; direction: ltr;">
-                    <a href="https://wa.me/213000000000" target="_blank" style="background:#25d366; color:white; padding:5px 8px; border-radius:5px; text-decoration:none; font-size:10px; font-weight:bold;">WhatsApp</a>
+                    <a href="https://wa.me/213XXXXXXXXX" target="_blank" style="background:#25d366; color:white; padding:5px 8px; border-radius:5px; text-decoration:none; font-size:10px; font-weight:bold;">WhatsApp</a>
                     <button onclick="copyToClipboard('00799999001465107315', this)" style="background:var(--gold); border:none; border-radius:5px; padding:5px 8px; font-size:10px; cursor:pointer; color:#000; font-weight:bold;">نسخ/Copy</button>
                     <b style="color:var(--accent); font-size:13px; flex-grow:1; text-align:right;">00799999001465107315</b>
-                </div>
-            </div>
-
-            <div style="margin-bottom: 15px;">
-                <span style="color:var(--gold); font-weight:bold;">Binance ID:</span>
-                <div style="display: flex; align-items: center; gap: 5px; margin-top: 5px; direction: ltr;">
-                    <a href="https://wa.me/213000000000" target="_blank" style="background:#25d366; color:white; padding:5px 8px; border-radius:5px; text-decoration:none; font-size:10px; font-weight:bold;">WhatsApp</a>
-                    <button onclick="copyToClipboard('123456789', this)" style="background:var(--gold); border:none; border-radius:5px; padding:5px 8px; font-size:10px; cursor:pointer; color:#000; font-weight:bold;">نسخ/Copy</button>
-                    <b style="color:#fff; font-size:13px; flex-grow:1; text-align:right;">123456789</b>
-                </div>
-            </div>
-
-            <div style="margin-bottom: 15px;">
-                <span style="color:var(--gold); font-weight:bold;">RedotPay ID:</span>
-                <div style="display: flex; align-items: center; gap: 5px; margin-top: 5px; direction: ltr;">
-                    <a href="https://wa.me/213000000000" target="_blank" style="background:#25d366; color:white; padding:5px 8px; border-radius:5px; text-decoration:none; font-size:10px; font-weight:bold;">WhatsApp</a>
-                    <button onclick="copyToClipboard('987654321', this)" style="background:var(--gold); border:none; border-radius:5px; padding:5px 8px; font-size:10px; cursor:pointer; color:#000; font-weight:bold;">نسخ/Copy</button>
-                    <b style="color:#fff; font-size:13px; flex-grow:1; text-align:right;">987654321</b>
-                </div>
-            </div>
-
-            <div style="margin-bottom: 15px;">
-                <span style="color:var(--gold); font-weight:bold;">Flexy / فليكسي:</span>
-                <div style="display: flex; align-items: center; gap: 5px; margin-top: 5px; direction: ltr;">
-                    <a href="https://wa.me/213000000000" target="_blank" style="background:#25d366; color:white; padding:5px 8px; border-radius:5px; text-decoration:none; font-size:10px; font-weight:bold;">WhatsApp</a>
-                    
                 </div>
             </div>
 
@@ -169,53 +138,10 @@
             <p style="font-size:11px; color:#ef4444; text-align:center; font-weight: bold;">* أرسل الوصل عبر الواتساب لتأكيد الدفع</p>
         </div>
 
-        <button onclick="closeModal('payModal')" style="width:100%; padding:14px; background:#444; border:none; border-radius:15px; color:white; margin-top:15px; font-weight:bold; cursor:pointer;">Fermer / إغلاق</button>
+        <button onclick="closeModal('payModal')" style="width:100%; padding:14px; background:#444; border:none; border-radius:15px; color:white; margin-top:15px; font-weight:bold;">إغلاق / Fermer</button>
     </div>
 </div>
-
-<script>
-// دالة النسخ المصححة لتعمل 100%
-function copyToClipboard(text, btn) {
-    navigator.clipboard.writeText(text).then(() => {
-        const originalText = btn.innerText;
-        btn.innerText = "تم!";
-        btn.style.background = "#22c55e"; 
-        btn.style.color = "#fff";
-        setTimeout(() => {
-            btn.innerText = originalText;
-            btn.style.background = "var(--gold)";
-            btn.style.color = "#000";
-        }, 1500);
-    }).catch(err => {
-        alert("فشل النسخ التلقائي، يرجى النسخ يدوياً");
-    });
-}
-</script>
-    
-        <button onclick="closeModal('payModal')" style="width:100%; padding:14px; background:#444; border:none; border-radius:15px; color:white; margin-top:15px; font-weight:bold; cursor:pointer;">
-            Fermer / إغلاق
-        </button>
-    </div>
-</div>
-
-<script>
-function copyToClipboard(text, btn) {
-    navigator.clipboard.writeText(text).then(() => {
-        const originalText = btn.innerText;
-        btn.innerText = "تم!";
-        btn.style.background = "#22c55e"; 
-        btn.style.color = "#fff";
-        setTimeout(() => {
-            btn.innerText = originalText;
-            btn.style.background = "var(--gold)";
-            btn.style.color = "#000";
-        }, 1500);
-    }).catch(err => {
-        alert("يرجى نسخ الرقم يدوياً");
-    });
-}
-</script>
-
+        
 <script>
     // Config Firebase
     firebase.initializeApp({ projectId: "karim-smm" });
