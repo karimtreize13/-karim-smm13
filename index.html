@@ -1,233 +1,221 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM TREIZE 13 | ULTIMATE PANEL</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
+    <title>KARIM13 - Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --text: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); text-align: center; line-height: 1.6; overflow-x: hidden; }
-        
-        /* Header & Nav Icons */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(11, 17, 27, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 900; font-size: 18px; }
-        .logo span { color: var(--gold); }
-        .header-tools { display: flex; gap: 15px; align-items: center; }
-        .icon-nav { font-size: 20px; cursor: pointer; color: var(--text); text-decoration: none; transition: 0.3s; }
-        .icon-nav:hover { color: var(--gold); }
-        .lang-btn { background: #1e293b; color: #94a3b8; border: none; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 11px; font-weight: bold; }
-        .lang-btn.active { background: var(--gold); color: black; }
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent: #fbbf24;
+            --success: #10b981;
+            --text: #f8fafc;
+        }
 
-        /* Stats Section */
-        .stats { display: flex; justify-content: space-around; align-items: center; margin: 15px; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
-        .stats h2 { color: var(--gold); font-size: 16px; }
-        .stats p { font-size: 10px; color: #888; }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text);
+            margin: 0; padding: 15px;
+            transition: all 0.3s ease;
+        }
 
-        /* Categories Grid */
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 10px 15px; }
-        .box { background: var(--card); padding: 12px 5px; border-radius: 15px; border: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
-        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); }
-        .box i { font-size: 20px; display: block; margin-bottom: 5px; }
-        .box span { font-size: 9px; font-weight: bold; }
+        /* شريط اللغة */
+        .lang-bar {
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
 
-        /* Order Form & Custom Select (The Ladder/Sellem) */
-        .card { background: var(--card); margin: 0 15px 20px; padding: 20px; border-radius: 25px; border: 1px solid var(--border); }
-        .custom-select { position: relative; margin-bottom: 12px; text-align: left; }
-        .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px; cursor: pointer; font-size: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .select-items { position: absolute; background: var(--card); border: 1px solid var(--border); top: 100%; left: 0; right: 0; z-index: 99; border-radius: 12px; max-height: 250px; overflow-y: auto; box-shadow: 0 5px 20px #000; }
-        .select-items div { padding: 12px; border-bottom: 1px solid #2d3748; cursor: pointer; font-size: 11px; }
-        .select-items div:hover { background: #1e293b; color: var(--gold); }
-        .select-hide { display: none; }
-        
-        input { width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; outline: none; }
-        .price-tag { font-size: 28px; font-weight: 900; color: var(--accent); margin-bottom: 15px; display: block; border: 1px dashed var(--accent); padding: 8px; border-radius: 15px; }
-        .btn-order { width: 100%; padding: 16px; border: none; border-radius: 15px; background: var(--accent); color: white; font-weight: 900; font-size: 16px; cursor: pointer; }
+        .lang-btn {
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--accent);
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-        /* Payment Modal Styling */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 15px; }
-        .modal-body { background: var(--card); padding: 20px; border-radius: 25px; width: 100%; max-width: 400px; border: 1px solid var(--border); }
-        .pay-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .pay-item { background: #1a222d; padding: 12px; border-radius: 15px; border: 1px solid #2d3748; text-align: center; }
-        .pay-item i { color: var(--gold); font-size: 20px; margin-bottom: 5px; display: block; }
-        .pay-item span { font-size: 10px; font-weight: bold; color: #aaa; }
-        .pay-val { font-size: 11px; color: #fff; margin-top: 5px; word-break: break-all; cursor: pointer; color: var(--accent); }
+        .lang-btn.active { background: var(--accent); color: #000; }
 
-        .history-item { background: #0b111b; padding: 10px; border-radius: 12px; margin-bottom: 8px; text-align: left; border-left: 4px solid var(--gold); font-size: 11px; }
-        [dir="rtl"] .history-item { text-align: right; border-left: 0; border-right: 4px solid var(--gold); }
+        .header { text-align: center; margin-bottom: 25px; }
+        .logo { font-size: 28px; color: var(--accent); font-weight: bold; }
+
+        /* الأقسام الثمانية */
+        .grid-8 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 500px) { .grid-8 { grid-template-columns: repeat(2, 1fr); } }
+
+        .card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .card.active { border-color: var(--accent); background: #334155; }
+        .card i { font-size: 22px; margin-bottom: 5px; display: block; }
+
+        /* الألوان للأيقونات */
+        .fa-tiktok { color: #ff0050; } .fa-facebook { color: #1877f2; }
+        .fa-instagram { color: #e4405f; } .fa-youtube { color: #ff0000; }
+        .fa-telegram { color: #0088cc; } .fa-twitter { color: #1da1f2; }
+        .fa-snapchat { color: #fffc00; } .fa-plus { color: #94a3b8; }
+
+        /* النموذج */
+        .form-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        input, select {
+            width: 100%; padding: 12px; margin: 10px 0;
+            border-radius: 8px; border: 1px solid #334155;
+            background: #0f172a; color: white; box-sizing: border-box;
+        }
+
+        .btn-main {
+            background: var(--success);
+            color: white; border: none; width: 100%;
+            padding: 15px; border-radius: 8px; font-weight: bold;
+            font-size: 18px; cursor: pointer; margin-top: 10px;
+        }
+
+        /* نافذة الدفع */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.85);
+            justify-content: center; align-items: center; z-index: 999;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 20px; border-radius: 20px;
+            width: 90%; max-width: 450px;
+        }
+
+        .pay-item {
+            background: #1e293b; border: 1px solid #475569;
+            padding: 12px; border-radius: 12px; margin-bottom: 10px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        .pay-id { color: #10b981; font-family: monospace; margin: 8px 0; }
+
+        .btn-group { display: flex; gap: 10px; }
+        .btn-copy { background: #64748b; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; }
+        .btn-wa { background: #25d366; color: white; padding: 5px 15px; border-radius: 5px; text-decoration: none; }
+
+        .close-btn { background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 8px; margin-top: 15px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <div class="lang-switch">
-        <button class="lang-btn active" id="btnFr" onclick="setLang('fr')">FR</button>
-        <button class="lang-btn" id="btnAr" onclick="setLang('ar')">AR</button>
-    </div>
-    <div class="logo">KARIM<span>13</span> 🍬</div>
-    <div class="header-tools">
-        <a href="https://t.me/karim_smm13" target="_blank" class="icon-nav"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
-        <i class="fas fa-wallet icon-nav" style="color:var(--gold)" onclick="openModal('payModal')"></i>
-        <i class="fas fa-history icon-nav" onclick="openHistory()"></i>
-    </div>
-</div>
-
-<div class="stats">
-    <div><h2>90+</h2><p id="txt-srv">Services</p></div>
-    <div><h2>2.9K+</h2><p id="txt-cli">Clients</p></div>
-    <div><h2 style="color:var(--accent)">●</h2><p id="txt-vis">En Ligne</p></div>
-</div>
-
-<div class="grid" id="catGrid">
-    <div class="box active" onclick="selectCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span data-ar="تيك توك" data-fr="TikTok">TikTok</span></div>
-    <div class="box" onclick="selectCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span data-ar="فيسبوك" data-fr="Facebook">Facebook</span></div>
-    <div class="box" onclick="selectCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span data-ar="انستقرام" data-fr="Instagram">Instagram</span></div>
-    <div class="box" onclick="selectCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span data-ar="يوتيوب" data-fr="YouTube">YouTube</span></div>
+    <div class="lang-bar">
+        <button class="lang-btn active" id="btnAr" onclick="setLang('ar')">AR</button>
+        <button class="lang-btn" id="btnFr" onclick="setLang('fr')">FR</button>
     </div>
 
-<div class="card">
-    <div class="custom-select">
-        <div class="select-selected" id="selectedSrv" onclick="toggleDropdown()">Choisir Service...</div>
-        <div class="select-items select-hide" id="srvOptions"></div>
+    <div class="header">
+        <div class="logo">KARIM13 🍬</div>
+        <p id="statsText">90+ Services | 2.9K+ Clients</p>
     </div>
-    <input type="hidden" id="srvSelectValue">
-    <input type="text" id="orderLink" placeholder="Lien / ID">
-    <input type="number" id="orderQty" value="1000" oninput="updatePrice()">
-    <span class="price-tag" id="totalPrice">$0.00000</span>
-    <button class="btn-order" onclick="sendOrder()" id="btnSend">Commander Maintenant 🍬</button>
-</div>
 
-<div id="payModal" class="modal">
-    <div class="modal-body">
-        <h3 id="p-title" style="color:var(--gold); font-size: 16px;">Modes de Paiement / وسائل الدفع</h3>
-        <div class="pay-list">
+    <div class="grid-8">
+        <div class="card active" onclick="sel(this)"><i class="fab fa-tiktok"></i><span class="ln" data-ar="تيك توك" data-fr="TikTok">تيك توك</span></div>
+        <div class="card" onclick="sel(this)"><i class="fab fa-facebook"></i><span class="ln" data-ar="فيسبوك" data-fr="Facebook">فيسبوك</span></div>
+        <div class="card" onclick="sel(this)"><i class="fab fa-instagram"></i><span class="ln" data-ar="انستغرام" data-fr="Instagram">انستغرام</span></div>
+        <div class="card" onclick="sel(this)"><i class="fab fa-youtube"></i><span class="ln" data-ar="يوتيوب" data-fr="YouTube">يوتيوب</span></div>
+        <div class="card" onclick="sel(this)"><i class="fab fa-telegram"></i><span class="ln" data-ar="تيليجرام" data-fr="Telegram">تيليجرام</span></div>
+        <div class="card" onclick="sel(this)"><i class="fab fa-twitter"></i><span class="ln" data-ar="تويتر" data-fr="Twitter">Twitter</span></div>
+        <div class="card" onclick="sel(this)"><i class="fab fa-snapchat"></i><span class="ln" data-ar="سناب شات" data-fr="Snapchat">Snapchat</span></div>
+        <div class="card" onclick="sel(this)"><i class="fas fa-plus"></i><span class="ln" data-ar="أخرى" data-fr="Autres">أخرى</span></div>
+    </div>
+
+    <div class="form-container">
+        <select id="serviceSelect">
+            <option class="ln" data-ar="اختر الخدمة..." data-fr="Choisir Service...">اختر الخدمة...</option>
+        </select>
+        <input type="text" id="linkInput" placeholder="Lien / ID">
+        <input type="number" value="1000">
+        <div style="font-size: 24px; color: var(--success); margin: 10px 0;">$0.00000</div>
+        <button class="btn-main ln" data-ar="اطلب الآن 🍬" data-fr="Commander 🍬" onclick="openPay()">اطلب الآن 🍬</button>
+    </div>
+
+    <div id="payModal" class="modal">
+        <div class="modal-content">
+            <h3 class="ln" data-ar="وسائل الدفع" data-fr="Paiement">وسائل الدفع</h3>
+            
             <div class="pay-item">
-                <i class="fas fa-university"></i><span>BaridiMob</span>
-                <div class="pay-val" onclick="copy('00799999001465107315')">00799999001465107315</div>
+                <strong>BaridiMob</strong>
+                <span class="pay-id">00799999001465107315</span>
+                <div class="btn-group">
+                    <button class="btn-copy" onclick="copy('00799999001465107315')"><i class="fas fa-copy"></i></button>
+                    <a href="https://wa.me/2136XXXXXXX" class="btn-wa"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
+
             <div class="pay-item">
-                <i class="fas fa-credit-card"></i><span>RedotPay</span>
-                <div class="pay-val" onclick="copy('ID: 55667788')">ID: 55667788</div>
+                <strong>RedotPay</strong>
+                <span class="pay-id">ID: 55667788</span>
+                <div class="btn-group">
+                    <button class="btn-copy" onclick="copy('55667788')"><i class="fas fa-copy"></i></button>
+                    <a href="https://wa.me/2136XXXXXXX" class="btn-wa"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
-            <div class="pay-item">
-                <i class="fab fa-bitcoin"></i><span>Binance Pay</span>
-                <div class="pay-val" onclick="copy('PayID: 99887766')">ID: 99887766</div>
-            </div>
-            <div class="pay-item">
-                <i class="fas fa-phone-alt"></i><span>Flexy</span>
-                <div class="pay-val" onclick="copy('06XXXXXXXX')">06XXXXXXXX</div>
-            </div>
+
+            <button class="close-btn ln" data-ar="إغلاق" data-fr="Fermer" onclick="closePay()">إغلاق</button>
         </div>
-        <button onclick="closeModal('payModal')" style="width:100%; padding:10px; background:#444; border:none; border-radius:12px; color:white; margin-top:15px; cursor:pointer;">Fermer</button>
     </div>
-</div>
 
-<div id="historyModal" class="modal">
-    <div class="modal-body">
-        <h3 id="h-title" style="color:var(--gold); margin-bottom:10px;">Historique / السجل</h3>
-        <div id="historyContent" style="max-height: 300px; overflow-y: auto;"></div>
-        <button onclick="closeModal('historyModal')" style="width:100%; padding:10px; background:#444; border:none; border-radius:12px; color:white; margin-top:10px;">Fermer</button>
-    </div>
-</div>
+    <script>
+        function setLang(lang) {
+            const html = document.getElementById('mainHtml');
+            const elements = document.querySelectorAll('.ln');
+            
+            if(lang === 'ar') {
+                html.dir = "rtl";
+                html.lang = "ar";
+                document.getElementById('btnAr').classList.add('active');
+                document.getElementById('btnFr').classList.remove('active');
+            } else {
+                html.dir = "ltr";
+                html.lang = "fr";
+                document.getElementById('btnFr').classList.add('active');
+                document.getElementById('btnAr').classList.remove('active');
+            }
 
-<script>
-    firebase.initializeApp({ projectId: "karim-smm" });
-    const db = firebase.firestore();
-    const userToken = localStorage.getItem('k_token') || 'U' + Math.floor(Math.random()*1000000);
-    localStorage.setItem('k_token', userToken);
+            elements.forEach(el => {
+                el.innerText = el.getAttribute('data-' + lang);
+            });
+        }
 
-    let currentLang = 'fr';
-    let activeCat = 'TikTok';
+        function sel(el) {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+        }
 
-    // مصفوفة الخدمات (يمكنك إضافة الـ 100 خدمة هنا)
-    const SERVICES = [
-        {id: 3231, cat: "TikTok", n: "TikTok Followers | HQ Real", n_ar: "👤 متابعين تيك توك | حقيقي 🛡️", p: 1.10},
-        {id: 8253, cat: "Facebook", n: "Facebook Followers | Global", n_ar: "متابعين فيسبوك | عالمي ♻️", p: 0.475},
-        {id: 2594, cat: "Instagram", n: "Instagram Followers | Old Accounts", n_ar: "متابعين انستقرام | حسابات قديمة ♻️", p: 0.960}
-    ];
-
-    function setLang(lang) {
-        currentLang = lang;
-        document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
-        document.getElementById('btnFr').classList.toggle('active', lang === 'fr');
-        document.getElementById('btnAr').classList.toggle('active', lang === 'ar');
-        const ui = {
-            fr: { srv:"Services", cli:"Clients", vis:"En ligne", send:"Commander 🍬", h:"Historique", p:"Paiement", link:"Lien / ID", sel:"Choisir Service..." },
-            ar: { srv:"الخدمات", cli:"العملاء", vis:"نشط الآن", send:"إرسال الطلب الآن 🍬", h:"السجل", p:"الدفع", link:"الرابط أو الآيدي", sel:"اختر الخدمة..." }
-        }[lang];
-        document.getElementById('txt-srv').innerText = ui.srv;
-        document.getElementById('txt-cli').innerText = ui.cli;
-        document.getElementById('txt-vis').innerText = ui.vis;
-        document.getElementById('btnSend').innerText = ui.send;
-        document.getElementById('h-title').innerText = ui.h;
-        document.getElementById('p-title').innerText = ui.p;
-        document.getElementById('orderLink').placeholder = ui.link;
-        document.getElementById('selectedSrv').innerText = ui.sel;
-        document.querySelectorAll('.box span').forEach(el => el.innerText = el.getAttribute('data-' + lang));
-        renderServices();
-    }
-
-    function toggleDropdown() { document.getElementById("srvOptions").classList.toggle("select-hide"); }
-
-    function selectCat(cat, el) {
-        activeCat = cat;
-        document.querySelectorAll('.box').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        renderServices();
-    }
-
-    function renderServices() {
-        const cont = document.getElementById('srvOptions');
-        const filtered = SERVICES.filter(s => s.cat === activeCat);
-        cont.innerHTML = filtered.map(s => `
-            <div onclick="pickSrv(${s.id}, '${(currentLang==='ar'?s.n_ar:s.n)}')">
-                <b>#${s.id}</b> - ${(currentLang==='ar'?s.n_ar:s.n)}
-            </div>
-        `).join('');
-    }
-
-    function pickSrv(id, name) {
-        document.getElementById('selectedSrv').innerText = name;
-        document.getElementById('srvSelectValue').value = id;
-        toggleDropdown(); updatePrice();
-    }
-
-    function updatePrice() {
-        const s = SERVICES.find(x => x.id == document.getElementById('srvSelectValue').value);
-        if(!s) return;
-        const q = document.getElementById('orderQty').value || 0;
-        document.getElementById('totalPrice').innerText = "$" + (s.p / 1000 * q).toFixed(5);
-    }
-
-    async function sendOrder() {
-        const s = SERVICES.find(x => x.id == document.getElementById('srvSelectValue').value);
-        const link = document.getElementById('orderLink').value;
-        if(!s || !link) return alert("Error!");
-        const orderData = { uid: userToken, srv: (currentLang === 'ar' ? s.n_ar : s.n), price: document.getElementById('totalPrice').innerText, status: "Pending", date: new Date().toLocaleString() };
-        await db.collection("orders").add(orderData);
-        window.open(`https://wa.me/213656251947?text=Service: ${orderData.srv} | Link: ${link}`);
-    }
-
-    function openHistory() {
-        openModal('historyModal');
-        db.collection("orders").where("uid", "==", userToken).onSnapshot(snap => {
-            document.getElementById('historyContent').innerHTML = snap.docs.map(doc => {
-                const d = doc.data();
-                return `<div class="history-item"><b>${d.srv}</b><br><small>${d.date}</small><br><span style="color:var(--accent)">${d.status}</span></div>`;
-            }).join('') || "No Orders.";
-        });
-    }
-
-    function copy(t) { navigator.clipboard.writeText(t); alert("Copied!"); }
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    window.onload = () => setLang('fr');
-</script>
+        function openPay() { document.getElementById('payModal').style.display = 'flex'; }
+        function closePay() { document.getElementById('payModal').style.display = 'none'; }
+        
+        function copy(txt) {
+            navigator.clipboard.writeText(txt);
+            alert("Copied: " + txt);
+        }
+    </script>
 </body>
 </html>
