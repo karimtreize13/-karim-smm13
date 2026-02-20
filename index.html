@@ -117,53 +117,60 @@
 </div>
 <div id="payModal" class="modal">
     <div class="modal-body" style="width: 90%; max-width: 400px; padding: 20px; border-radius: 20px;">       
-        <h3 id="p-title" style="color:var(--gold); margin-bottom:15px; text-align: center;">وسائل الدفع</h3>
+        <h3 id="p-title" style="color:var(--gold); margin-bottom:15px; text-align: center; font-size: 20px;">
+            Modes de Paiement / وسائل الدفع
+        </h3>
         
-        <div style="background:#1a222d; padding:20px; border-radius:15px; font-size:14px; text-align:right; direction: rtl; line-height: 1.8; border: 1px solid #2d3748;">                
+        <div style="background:#1a222d; padding:18px; border-radius:15px; font-size:13px; text-align:right; direction: rtl; line-height: 1.6; border: 1px solid #2d3748;">                
             
-            <div style="margin-bottom: 15px;">
+            <div style="margin-bottom: 12px;">
                 <span style="color:var(--gold); font-weight:bold;">CCP / BaridiMob:</span><br>
                 <div style="display: flex; align-items: center; justify-content: space-between; background: #252f3f; padding: 8px; border-radius: 8px; margin-top: 5px; direction: ltr;">
-                    <button onclick="copyToClipboard('00799999001465107315', this)" style="background:var(--gold); border:none; border-radius:5px; padding:4px 10px; font-size:12px; cursor:pointer; color:#000; font-weight:bold;">نسخ</button>
-                    <b style="color:var(--accent); font-size:15px;">00799999001465107315</b>
+                    <button onclick="copyToClipboard('00799999001465107315', this)" style="background:var(--gold); border:none; border-radius:5px; padding:4px 10px; font-size:11px; cursor:pointer; color:#000; font-weight:bold;">Copier / نسخ</button>
+                    <b style="color:var(--accent); font-size:14px;">00799999001465107315</b>
                 </div>
             </div>
 
-            <div style="margin-bottom: 15px;">
+            <div style="margin-bottom: 12px;">
                 <span style="color:var(--gold); font-weight:bold;">Binance ID:</span><br>
                 <div style="display: flex; align-items: center; justify-content: space-between; background: #252f3f; padding: 8px; border-radius: 8px; margin-top: 5px; direction: ltr;">
-                    <button onclick="copyToClipboard('123456789', this)" style="background:var(--gold); border:none; border-radius:5px; padding:4px 10px; font-size:12px; cursor:pointer; color:#000; font-weight:bold;">نسخ</button>
-                    <b style="color:#ffffff; font-size:15px;">123456789</b>
+                    <button onclick="copyToClipboard('123456789', this)" style="background:var(--gold); border:none; border-radius:5px; padding:4px 10px; font-size:11px; cursor:pointer; color:#000; font-weight:bold;">Copier / نسخ</button>
+                    <b style="color:#ffffff; font-size:14px;">123456789</b>
                 </div>
             </div>
 
-            <hr style="border:0; border-top:1px solid #2d3748; margin: 15px 0;">
+            <div style="margin-bottom: 12px;">
+                <span style="color:var(--gold); font-weight:bold;">RedotPay ID:</span><br>
+                <div style="display: flex; align-items: center; justify-content: space-between; background: #252f3f; padding: 8px; border-radius: 8px; margin-top: 5px; direction: ltr;">
+                    <button onclick="copyToClipboard('987654321', this)" style="background:var(--gold); border:none; border-radius:5px; padding:4px 10px; font-size:11px; cursor:pointer; color:#000; font-weight:bold;">Copier / نسخ</button>
+                    <b style="color:#ffffff; font-size:14px;">987654321</b>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <span style="color:var(--gold); font-weight:bold;">Flexy / فليكسي:</span><br>
+                <div style="display: flex; align-items: center; justify-content: space-between; background: #252f3f; padding: 8px; border-radius: 8px; margin-top: 5px; direction: ltr;">
+                    <button onclick="copyToClipboard('0000000000', this)" style="background:var(--gold); border:none; border-radius:5px; padding:4px 10px; font-size:11px; cursor:pointer; color:#000; font-weight:bold;">Copier / نسخ</button>
+                    <b style="color:#888; font-size:14px;">0000000000</b>
+                </div>
+            </div>
+
+            <hr style="border:0; border-top:1px solid #2d3748; margin: 10px 0;">
             
-            <p style="font-size:12px; color:#ef4444; text-align:center; font-weight: bold;">
-                * يرجى إرسال صورة الوصل (Reçu) عبر الواتساب.
+            <p style="font-size:11px; color:#ef4444; text-align:center; font-weight: bold; margin-bottom: 5px;">
+                * يرجى إرسال صورة الوصل عبر الواتساب لتأكيد الدفع.
+            </p>
+            <p style="font-size:10px; color:#888; text-align:center; direction: ltr;">
+                * Envoyez le reçu via WhatsApp pour confirmer.
             </p>
         </div>
 
-        <button onclick="closeModal('payModal')" style="width:100%; padding:15px; background:#444; border:none; border-radius:15px; color:white; margin-top:15px; font-weight:bold;">إغلاق</button>
+        <button onclick="closeModal('payModal')" style="width:100%; padding:14px; background:#444; border:none; border-radius:15px; color:white; margin-top:15px; font-weight:bold; cursor:pointer;">
+            Fermer / إغلاق
+        </button>
     </div>
 </div>
-
-<script>
-function copyToClipboard(text, btn) {
-    navigator.clipboard.writeText(text).then(() => {
-        const originalText = btn.innerText;
-        btn.innerText = "تم!";
-        btn.style.background = "#22c55e"; 
-        btn.style.color = "#fff";
-        setTimeout(() => {
-            btn.innerText = originalText;
-            btn.style.background = "var(--gold)";
-            btn.style.color = "#000";
-        }, 2000);
-    });
-}
-</script>    
-
+    
 <script>
     // Config Firebase
     firebase.initializeApp({ projectId: "karim-smm" });
