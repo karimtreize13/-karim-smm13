@@ -6,175 +6,177 @@
     <title>KARIM13 SMM PANEL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg-dark: #0f111a; --card-bg: #161b22; --main-color: #00d27a; --accent: #ff9f43; --text: #ffffff; }
-        body { background-color: var(--bg-dark); color: var(--text); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding-bottom: 30px; }
+        :root { --bg-dark: #0f111a; --card-bg: #161b22; --main-color: #00d27a; --accent: #ff9f43; --text: #ffffff; --input-bg: #1c2128; }
+        body { background-color: var(--bg-dark); color: var(--text); font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 50px; }
 
         /* الشريط العلوي */
         .top-nav { background: #000; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #333; }
-        .nav-left { display: flex; gap: 6px; }
-        .btn-nav { background: #21262d; border: 1px solid #30363d; color: #fff; padding: 8px 12px; border-radius: 10px; cursor: pointer; text-decoration: none; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-        .btn-lang { background: var(--accent); color: #000; font-weight: bold; border: none; }
-        .logo { font-weight: 900; font-size: 20px; color: #fff; display: flex; align-items: center; gap: 5px; }
+        .lang-switch { display: flex; gap: 5px; }
+        .btn-l { background: #21262d; border: 1px solid #30363d; color: #fff; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .btn-l.active { background: var(--accent); color: #000; border: none; }
+        .logo { font-weight: 900; font-size: 18px; color: #fff; text-decoration: none; }
         .logo span { color: var(--main-color); }
-        .nav-right { display: flex; gap: 10px; }
+        .nav-icons { display: flex; gap: 12px; font-size: 20px; }
+        .nav-icons a { color: #fff; text-decoration: none; }
+        .nav-icons i.fa-wallet { color: var(--accent); }
 
-        /* العدادات الرقمية */
-        .stats-container { display: flex; justify-content: space-around; padding: 20px 10px; background: var(--card-bg); margin: 15px; border-radius: 15px; border: 1px solid #30363d; text-align: center; }
-        .stat-box h4 { margin: 0; color: var(--accent); font-size: 24px; font-weight: 900; }
-        .stat-box p { margin: 5px 0 0; font-size: 11px; opacity: 0.7; }
-        .odometer-box { background: #000; padding: 4px 10px; border-radius: 5px; color: #fff; font-family: monospace; font-size: 20px; border: 1px solid #333; }
+        /* شريط الإحصائيات (العداد السحري) */
+        .stats-area { background: var(--card-bg); margin: 15px; border-radius: 20px; padding: 20px; border: 1px solid #30363d; display: flex; justify-content: space-around; text-align: center; }
+        .stat-item h3 { margin: 0; color: var(--accent); font-size: 22px; }
+        .stat-item p { margin: 5px 0 0; font-size: 11px; color: #aaa; text-transform: uppercase; }
+        .odometer { background: #000; padding: 5px 10px; border-radius: 5px; font-family: 'Courier New', monospace; border: 1px solid #333; color: #00ff88; font-size: 18px; margin-bottom: 5px; display: inline-block; }
 
-        /* شبكة الخدمات (مثل الصورة) */
-        .grid-services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 10px 15px; }
-        .service-item { background: var(--card-bg); border-radius: 18px; padding: 15px 5px; text-align: center; border: 1px solid #30363d; cursor: pointer; transition: 0.3s; text-decoration: none; color: #fff; }
-        .service-item:hover, .service-item.active { border-color: var(--accent); background: #1c2128; box-shadow: 0 0 15px rgba(255, 159, 67, 0.15); }
-        .service-item i { font-size: 28px; display: block; margin-bottom: 10px; }
-        .service-item span { font-size: 10px; font-weight: bold; display: block; }
+        /* شبكة الخدمات الملونة */
+        .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 0 15px; margin-bottom: 20px; }
+        .svc-card { background: var(--card-bg); border-radius: 18px; padding: 15px 5px; text-align: center; border: 2px solid transparent; cursor: pointer; transition: 0.3s; }
+        .svc-card i { font-size: 24px; display: block; margin-bottom: 8px; }
+        .svc-card span { font-size: 11px; font-weight: bold; }
+        .svc-card.selected { border-color: var(--accent); background: #1c2128; box-shadow: 0 0 15px rgba(255, 159, 67, 0.1); }
 
-        /* نموذج الطلب */
-        .order-box { background: var(--card-bg); margin: 15px; padding: 20px; border-radius: 20px; border: 1px solid #30363d; }
-        .field { margin-bottom: 20px; }
-        .field label { display: block; margin-bottom: 10px; font-size: 13px; color: #aaa; }
-        .input-ctrl { width: 100%; background: #0d1117; border: 1px solid #30363d; padding: 14px; border-radius: 12px; color: #fff; font-size: 14px; box-sizing: border-box; }
+        /* منطقة الطلب الذكية */
+        .order-section { background: var(--card-bg); margin: 15px; padding: 20px; border-radius: 25px; border: 1px solid #30363d; }
+        .input-box { margin-bottom: 15px; }
+        .input-box label { display: block; margin-bottom: 8px; font-size: 13px; color: #8b949e; }
+        .input-box select, .input-box input { width: 100%; background: var(--input-bg); border: 1px solid #30363d; padding: 15px; border-radius: 15px; color: #fff; font-size: 14px; outline: none; box-sizing: border-box; }
         
-        .price-tag { background: rgba(0, 210, 122, 0.05); border: 2px dashed var(--main-color); padding: 15px; border-radius: 15px; text-align: center; margin: 20px 0; }
-        .price-tag h2 { margin: 0; color: var(--main-color); font-size: 30px; font-weight: 900; }
+        .price-container { border: 2px dashed var(--main-color); border-radius: 20px; padding: 20px; text-align: center; margin: 20px 0; background: rgba(0, 210, 122, 0.05); }
+        .price-container h2 { margin: 0; font-size: 35px; color: var(--main-color); }
+        .price-container span { font-size: 14px; color: #aaa; }
 
-        .btn-order { background: var(--main-color); color: #000; width: 100%; padding: 16px; border-radius: 15px; border: none; font-weight: 900; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-commander { background: var(--main-color); color: #000; width: 100%; padding: 18px; border-radius: 15px; border: none; font-weight: 900; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
 
-        /* وسائل الدفع */
-        .footer-pay { text-align: center; padding: 20px; background: #000; margin-top: 20px; }
-        .pay-title { font-size: 14px; color: var(--accent); margin-bottom: 15px; display: block; font-weight: bold; }
-        .pay-badges { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-        .badge { background: #161b22; padding: 6px 12px; border-radius: 8px; font-size: 12px; border: 1px solid #333; color: #aaa; }
+        /* وسائل الدفع - الأيقونات */
+        .payments-footer { text-align: center; padding: 20px; }
+        .payments-footer h4 { font-size: 14px; color: #aaa; margin-bottom: 15px; }
+        .pay-list { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .pay-tag { background: #000; border: 1px solid #333; padding: 8px 15px; border-radius: 10px; font-size: 12px; color: #fff; display: flex; align-items: center; gap: 5px; }
+        .pay-tag i { color: var(--main-color); }
 
         [lang="fr"] { direction: ltr; }
-        @media (max-width: 450px) { .grid-services { grid-template-columns: repeat(3, 1fr); } }
     </style>
 </head>
 <body id="mainBody">
 
 <div class="top-nav">
-    <div class="nav-left">
-        <button class="btn-nav btn-lang" onclick="toggleLang()" id="langBtn">FR</button>
-        <button class="btn-nav">AR</button>
+    <div class="lang-switch">
+        <button class="btn-l active" onclick="setLang('ar')" id="arBtn">AR</button>
+        <button class="btn-l" onclick="setLang('fr')" id="frBtn">FR</button>
     </div>
-    <div class="logo">KARIM<span>13</span> 🍬</div>
-    <div class="nav-right">
-        <a href="https://t.me/YOUR_TELEGRAM_USER" class="btn-nav"><i class="fab fa-telegram"></i></a>
-        <a href="#" class="btn-nav"><i class="fas fa-wallet"></i></a>
-        <a href="#" class="btn-nav" onclick="alert('سجل الطلبات فارغ حالياً')"><i class="fas fa-history"></i></a>
-    </div>
-</div>
-
-<div class="stats-container">
-    <div class="stat-box"><h4>90+</h4><p id="t_ser">Services</p></div>
-    <div class="stat-box"><h4>2.9K+</h4><p id="t_cli">Clients</p></div>
-    <div class="stat-box">
-        <div class="odometer-box" id="onlineCounter">2549</div>
-        <p id="t_on">En ligne</p>
+    <a href="#" class="logo">KARIM<span>13</span> 🍬</a>
+    <div class="nav-icons">
+        <a href="https://t.me/YOUR_USER"><i class="fab fa-telegram"></i></a>
+        <a href="#"><i class="fas fa-wallet"></i></a>
+        <a href="#"><i class="fas fa-history"></i></a>
     </div>
 </div>
 
-<div class="grid-services">
-    <a href="javascript:void(0)" class="service-item active" onclick="setCat('TikTok')"><i class="fab fa-tiktok" style="color:#fe2c55"></i><span>TikTok</span></a>
-    <a href="javascript:void(0)" class="service-item" onclick="setCat('Facebook')"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></a>
-    <a href="javascript:void(0)" class="service-item" onclick="setCat('Instagram')"><i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram</span></a>
-    <a href="javascript:void(0)" class="service-item" onclick="setCat('YouTube')"><i class="fab fa-youtube" style="color:#ff0000"></i><span>YouTube</span></a>
-    <a href="javascript:void(0)" class="service-item" onclick="setCat('Telegram')"><i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span></a>
-    <a href="javascript:void(0)" class="service-item" onclick="setCat('Snapchat')"><i class="fab fa-snapchat" style="color:#fffc00"></i><span>Snapchat</span></a>
-    <a href="javascript:void(0)" class="service-item" onclick="setCat('Premium')"><i class="fas fa-gem" style="color:#ff9f43"></i><span>Premium</span></a>
-    <a href="javascript:void(0)" class="service-item" onclick="setCat('Gaming')"><i class="fas fa-gamepad" style="color:#00d27a"></i><span>Gaming</span></a>
+<div class="stats-area">
+    <div class="stat-item"><h3>90+</h3><p id="txt1">Services</p></div>
+    <div class="stat-item"><h3>2.9K+</h3><p id="txt2">Clients</p></div>
+    <div class="stat-item">
+        <div class="odometer" id="liveCounter">2404</div>
+        <p id="txt3">En ligne</p>
+    </div>
 </div>
 
-<div class="order-box">
-    <div class="field">
-        <label id="l_choose">اختر الخدمة:</label>
-        <select class="input-ctrl" id="serviceSelect" onchange="updatePrice()">
-            <option value="160">تيك توك متابعين حقيقي - 160 DA</option>
-            <option value="10">تيك توك مشاهدات - 10 DA</option>
-            <option value="280">فيسبوك متابعين صفحة - 280 DA</option>
-            <option value="1300">يوتيوب مشتركين - 1300 DA</option>
-            <option value="3200">اشتراك أرطغرل سنة - 3200 DA</option>
-            <option value="950">ببجي 325 شدة - 950 DA</option>
+<div class="services-grid">
+    <div class="svc-card selected" onclick="selectMe(this)"><i class="fab fa-tiktok" style="color:#fe2c55"></i><span>TikTok</span></div>
+    <div class="svc-card" onclick="selectMe(this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
+    <div class="svc-card" onclick="selectMe(this)"><i class="fab fa-instagram" style="color:#e4405f"></i><span>Instagram</span></div>
+    <div class="svc-card" onclick="selectMe(this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span>YouTube</span></div>
+    <div class="svc-card" onclick="selectMe(this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
+    <div class="svc-card" onclick="selectMe(this)"><i class="fab fa-snapchat" style="color:#fffc00"></i><span>Snapchat</span></div>
+    <div class="svc-card" onclick="selectMe(this)"><i class="fas fa-gem" style="color:#ff9f43"></i><span>Premium</span></div>
+    <div class="svc-card" onclick="selectMe(this)"><i class="fas fa-gamepad" style="color:#00d27a"></i><span>Gaming</span></div>
+</div>
+
+<div class="order-section">
+    <div class="input-box">
+        <label id="l_svc">Choisir Service...</label>
+        <select id="serviceSelector" onchange="calc()">
+            <option value="160">TikTok Followers | HQ Real - 160 DA</option>
+            <option value="10">TikTok Views | Fast - 10 DA</option>
+            <option value="280">Facebook Page Likes - 280 DA</option>
+            <option value="950">PUBG 325 UC - 950 DA</option>
+            <option value="3200">Ertugrul IPTV 1 Year - 3200 DA</option>
         </select>
     </div>
 
-    <div class="field">
+    <div class="input-box">
         <label id="l_link">رابط الحساب أو الـ ID:</label>
-        <input type="text" class="input-ctrl" placeholder="https://..." id="linkInput">
+        <input type="text" id="link" placeholder="https://www.tiktok.com/@...">
     </div>
 
-    <div class="field">
+    <div class="input-box">
         <label id="l_qty">الكمية:</label>
-        <input type="number" class="input-ctrl" value="1000" id="qtyInput" oninput="updatePrice()">
+        <input type="number" id="qty" value="1000" oninput="calc()">
     </div>
 
-    <div class="price-tag">
-        <p id="l_total" style="margin:0; font-size:12px; color:#aaa;">السعر الإجمالي</p>
-        <h2>DA <span id="finalPrice">160.00</span></h2>
+    <div class="price-container">
+        <h2 id="displayPrice">160.00</h2>
+        <span id="curr">DA</span>
     </div>
 
-    <button class="btn-order" onclick="sendToWhatsApp()">
-        <span id="btn_txt">إرسال الطلب</span> 🍬
+    <button class="btn-commander" onclick="order()">
+        <span id="btnText">إرسال الطلب</span> 🍬
     </button>
 </div>
 
-<div class="footer-pay">
-    <span class="pay-title" id="l_pay">وسائل الدفع المقبولة في الجزائر</span>
-    <div class="pay-badges">
-        <div class="badge">Baridimob - بريدي موب</div>
-        <div class="badge">RedotPay - ريدوت باي</div>
-        <div class="badge">Vinos Pay - فينوس</div>
-        <div class="badge">Flexy - فليكسي</div>
+<div class="payments-footer">
+    <h4 id="pay_title">وسائل الدفع المقبولة</h4>
+    <div class="pay-list">
+        <div class="pay-tag"><i class="fas fa-university"></i> Baridimob</div>
+        <div class="pay-tag"><i class="fas fa-credit-card"></i> RedotPay</div>
+        <div class="pay-tag"><i class="fas fa-wallet"></i> Vinos Pay</div>
+        <div class="pay-tag"><i class="fas fa-mobile-alt"></i> Flexy</div>
     </div>
 </div>
 
 <script>
-    // تحديث السعر تلقائياً
-    function updatePrice() {
-        const pricePer1000 = document.getElementById('serviceSelect').value;
-        const qty = document.getElementById('qtyInput').value;
-        const total = (pricePer1000 * qty) / 1000;
-        document.getElementById('finalPrice').innerText = total.toFixed(2);
+    // تغيير الحالة البصرية للأيقونات
+    function selectMe(el) {
+        document.querySelectorAll('.svc-card').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
     }
 
-    // العداد المتحرك
+    // العداد السحري المتحرك
     setInterval(() => {
-        let count = parseInt(document.getElementById('onlineCounter').innerText);
-        let change = Math.floor(Math.random() * 5) - 2; 
-        document.getElementById('onlineCounter').innerText = count + change;
-    }, 3000);
+        let el = document.getElementById('liveCounter');
+        let val = parseInt(el.innerText);
+        el.innerText = val + (Math.floor(Math.random() * 3) - 1);
+    }, 2000);
 
-    function toggleLang() {
-        const b = document.getElementById('mainBody');
-        const btn = document.getElementById('langBtn');
-        if (b.dir === "rtl") {
-            b.dir = "ltr"; b.lang = "fr"; btn.innerText = "AR";
-            document.getElementById('t_ser').innerText = "Services";
-            document.getElementById('t_on').innerText = "En ligne";
-            document.getElementById('l_choose').innerText = "Choisir Service:";
-            document.getElementById('btn_txt').innerText = "Commander";
+    // حاسبة الأسعار
+    function calc() {
+        let p = document.getElementById('serviceSelector').value;
+        let q = document.getElementById('qty').value;
+        document.getElementById('displayPrice').innerText = ((p * q) / 1000).toFixed(2);
+    }
+
+    // نظام اللغات
+    function setLang(l) {
+        const body = document.getElementById('mainBody');
+        if(l === 'fr') {
+            body.dir = "ltr"; body.lang = "fr";
+            document.getElementById('frBtn').classList.add('active');
+            document.getElementById('arBtn').classList.remove('active');
+            document.getElementById('l_svc').innerText = "Select Service...";
+            document.getElementById('btnText').innerText = "Commander";
+            document.getElementById('pay_title').innerText = "Payment Methods";
         } else {
-            b.dir = "rtl"; b.lang = "ar"; btn.innerText = "FR";
-            document.getElementById('t_ser').innerText = "الخدمات";
-            document.getElementById('t_on').innerText = "متصل الآن";
-            document.getElementById('l_choose').innerText = "اختر الخدمة:";
-            document.getElementById('btn_txt').innerText = "إرسال الطلب";
+            body.dir = "rtl"; body.lang = "ar";
+            document.getElementById('arBtn').classList.add('active');
+            document.getElementById('frBtn').classList.remove('active');
+            document.getElementById('l_svc').innerText = "اختر الخدمة...";
+            document.getElementById('btnText').innerText = "إرسال الطلب";
+            document.getElementById('pay_title').innerText = "وسائل الدفع المقبولة";
         }
     }
 
-    function sendToWhatsApp() {
-        const service = document.getElementById('serviceSelect').options[document.getElementById('serviceSelect').selectedIndex].text;
-        const link = document.getElementById('linkInput').value;
-        const qty = document.getElementById('qtyInput').value;
-        const price = document.getElementById('finalPrice').innerText;
-        
-        const msg = `طلب جديد من كريم SMM:%0A- الخدمة: ${service}%0A- الرابط: ${link}%0A- الكمية: ${qty}%0A- السعر: ${price} DA`;
-        window.location.href = `https://wa.me/213000000000?text=${msg}`;
+    function order() {
+        let msg = "طلب جديد:%0A" + document.getElementById('serviceSelector').options[document.getElementById('serviceSelector').selectedIndex].text;
+        window.location.href = "https://wa.me/213000000000?text=" + msg;
     }
-    
-    updatePrice(); // تشغيل السعر عند التحميل
 </script>
 
 </body>
