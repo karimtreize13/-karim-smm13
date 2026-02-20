@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM TREIZE 13 | PANEL</title>
+    <title>KARIM TREIZE 13 | FINAL PRO</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
     
@@ -16,47 +16,56 @@
             --gold: #f59e0b; --border: #2d3748; --text: #ffffff; 
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); text-align: center; }
+        body { background: var(--bg); color: var(--text); text-align: center; overflow-x: hidden; }
 
-        /* الهيدر العلوي والتنبيه */
+        /* التنبيه العلوي الاحترافي */
+        #toast { 
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px);
+            width: 90%; max-width: 400px; background: var(--accent); color: white; 
+            padding: 15px; border-radius: 15px; font-weight: 900; z-index: 9999;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.5s; opacity: 0;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* الهيدر */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #161c26; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        #toast { position: fixed; top: 80px; left: 5%; width: 90%; background: var(--accent); color: white; padding: 12px; border-radius: 10px; font-weight: 700; display: none; z-index: 2000; animation: slideDown 0.5s; }
-        @keyframes slideDown { from { transform: translateY(-100px); } to { transform: translateY(0); } }
+        .logo { font-weight: 900; font-size: 22px; letter-spacing: 1px; }
+        .logo span { color: var(--gold); }
 
-        /* الأيقونات والأقسام */
+        /* شبكة الأقسام */
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
         .box { background: var(--card); padding: 12px 5px; border-radius: 15px; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
         .box.active { border: 2px solid var(--gold); background: rgba(245, 158, 11, 0.1); }
         .box i { font-size: 22px; margin-bottom: 5px; display: block; }
         .box span { font-size: 10px; font-weight: 800; display: block; }
 
-        /* منطقة الطلب */
+        /* بطاقة الطلب */
         .card { background: var(--card); margin: 15px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
-        .select-btn { width: 100%; padding: 15px; background: var(--bg); border: 2px solid var(--border); border-radius: 15px; color: white; font-weight: 800; display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 10px; }
-        input { width: 100%; padding: 15px; margin-top: 10px; border-radius: 15px; border: 2px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 16px; font-weight: 700; outline: none; }
-        .price-display { font-size: 35px; font-weight: 900; color: var(--accent); margin: 20px 0; display: block; }
-        .btn-order { width: 100%; padding: 18px; border: none; border-radius: 15px; background: var(--accent); color: white; font-weight: 900; font-size: 18px; cursor: pointer; }
+        .select-btn { width: 100%; padding: 18px; background: var(--bg); border: 2px solid var(--border); border-radius: 15px; color: white; font-weight: 800; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        
+        input { width: 100%; padding: 16px; margin-top: 10px; border-radius: 15px; border: 2px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 18px; font-weight: 700; outline: none; }
+        
+        .price-display { font-size: 40px; font-weight: 900; color: var(--accent); margin: 20px 0; display: block; text-shadow: 0 0 10px rgba(16,185,129,0.3); }
 
-        /* القائمة المنسدلة للخدمات */
+        .btn-order { width: 100%; padding: 20px; border: none; border-radius: 15px; background: var(--accent); color: white; font-weight: 900; font-size: 20px; cursor: pointer; box-shadow: 0 5px 15px rgba(16,185,129,0.3); }
+
         .dropdown { display: none; background: #1c2635; border: 1px solid var(--gold); border-radius: 15px; margin-top: 5px; max-height: 200px; overflow-y: auto; text-align: left; }
-        .dropdown div { padding: 12px; border-bottom: 1px solid var(--border); font-size: 13px; cursor: pointer; }
+        .dropdown div { padding: 15px; border-bottom: 1px solid var(--border); font-size: 14px; cursor: pointer; font-weight: 700; }
     </style>
 </head>
 <body>
 
-<div id="toast">✅ Commande enregistrée !</div>
+<div id="toast"><i class="fas fa-check-circle"></i> Commande Enregistrée!</div>
 
 <div class="header">
-    <div class="langs">
-        <button onclick="setLang('fr')" style="background:var(--gold); border:none; padding:5px 10px; border-radius:5px; font-weight:900;">FR</button>
-    </div>
-    <div class="logo" style="font-weight:900; font-size:22px;">KARIM<span>13</span> 🍬</div>
+    <div class="logo">KARIM<span>13</span> 🍬</div>
     <div class="header-icons">
-        <i class="fab fa-telegram" onclick="window.open('https://t.me/K_13_S')" style="color:#0088cc; font-size:20px;"></i>
+        <i class="fab fa-telegram" onclick="window.open('https://t.me/K_13_S', '_blank')" style="color:#0088cc; font-size: 24px;"></i>
     </div>
 </div>
 
-<div class="grid" id="catGrid">
+<div class="grid">
     <div class="box active" onclick="selCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
     <div class="box" onclick="selCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
     <div class="box" onclick="selCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Instagram</span></div>
@@ -80,16 +89,16 @@
 </div>
 
 <script>
-    // 1. ربط Firebase (استبدل بمشروعك إذا كان مختلفاً)
+    // ربط Firebase
     firebase.initializeApp({ projectId: "karim-smm" });
     const db = firebase.firestore();
 
-    // 2. قاعدة بيانات الخدمات (مثال واحد لكل قسم لتعدله لاحقاً)
+    // قاعدة بيانات الخدمات (مثال لكل قسم)
     const SERVICES = [
-        { id: 1001, cat: "TikTok", n: "TikTok Views | Instant", p: 0.02 },
-        { id: 2001, cat: "Facebook", n: "Facebook Followers | Speed", p: 0.47 },
-        { id: 3001, cat: "Instagram", n: "Instagram Likes | HQ", p: 0.15 },
-        { id: 4001, cat: "YouTube", n: "YouTube Subscribers", p: 12.50 }
+        { id: 101, cat: "TikTok", n: "TikTok Views | Fast", p: 0.02 },
+        { id: 201, cat: "Facebook", n: "FB Followers | Real", p: 0.47 },
+        { id: 301, cat: "Instagram", n: "IG Likes | HQ", p: 0.15 },
+        { id: 401, cat: "YouTube", n: "YT Subs | Stable", p: 12.00 }
     ];
 
     let currentCat = 'TikTok';
@@ -136,11 +145,11 @@
         const qty = document.getElementById('qty').value;
         const prc = document.getElementById('total').innerText;
 
-        if(!sid || !lnk) return alert("Veuillez remplir les champs !");
+        if(!sid || !lnk) return alert("Veuillez remplir les informations!");
 
         const s = SERVICES.find(x => x.id == sid);
         
-        // 3. إرسال الطلب لـ Firebase (نفس التنسيق الذي في صورتك)
+        // حفظ الطلب في Firebase
         const orderData = {
             srv: s.n,
             link: lnk,
@@ -155,15 +164,16 @@
             
             // إظهار التنبيه العلوي
             const t = document.getElementById('toast');
-            t.style.display = 'block';
+            t.classList.add('show');
             
-            // التوجيه للواتساب
+            // التوجيه للواتساب بعد 1.5 ثانية
             setTimeout(() => {
-                const msg = encodeURIComponent(`New Order:\nService: ${s.n}\nLink: ${lnk}\nQty: ${qty}\nPrice: ${prc}`);
+                t.classList.remove('show');
+                const msg = encodeURIComponent(`🍬 Commande Karim13:\nService: ${s.n}\nLien: ${lnk}\nQuantité: ${qty}\nPrix: ${prc}`);
                 window.location.href = `https://wa.me/2136562547?text=${msg}`;
             }, 1500);
 
-        } catch (e) { alert("Error database!"); }
+        } catch (e) { alert("Error!"); }
     }
 
     window.onload = renderServices;
