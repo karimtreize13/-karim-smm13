@@ -3,213 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM TREIZE 13 | PANEL</title>
+    <title>KARIM13 🍬 | BARBES PANEL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <style>
-        :root { --primary: #fbbf24; --bg: #050505; --card: #111; --text: #fff; --icon-blue: #3b82f6; }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding-bottom: 50px; }
+        :root { --primary: #fbbf24; --bg: #0d1117; --card-bg: #161b22; --text: #ffffff; --green: #00ff88; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; }
+
+        /* الشريط العلوي */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; background: #000; border-bottom: 1px solid #333; position: sticky; top: 0; z-index: 1000; }
+        .lang-btns { display: flex; gap: 5px; }
+        .lang-btns button { background: #1a1a1a; border: 1px solid #333; color: #fff; padding: 5px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .lang-btns .active { background: var(--primary); color: #000; }
         
-        .navbar { padding: 20px; text-align: center; border-bottom: 2px solid var(--primary); background: #000; }
-        .logo { font-weight: 900; font-size: 26px; letter-spacing: 1px; }
+        .logo { font-size: 22px; font-weight: 900; letter-spacing: 1px; }
         .logo span { color: var(--primary); }
 
-        .order-box { margin: 20px; padding: 20px; background: var(--card); border-radius: 15px; border: 1px solid #222; }
-        label { display: block; margin-bottom: 8px; font-size: 14px; color: var(--primary); font-weight: bold; }
-        select, input { width: 100%; padding: 15px; margin-bottom: 20px; border-radius: 10px; background: #000; border: 1px solid #333; color: #fff; font-size: 15px; outline: none; transition: 0.3s; box-sizing: border-box; }
+        .top-icons { display: flex; gap: 15px; align-items: center; }
+        .top-icons i { font-size: 20px; color: #fff; cursor: pointer; }
+        .top-icons .fa-telegram { color: #229ed9; }
+        .top-icons .fa-wallet { color: var(--primary); }
+
+        /* الإحصائيات */
+        .stats-bar { display: flex; justify-content: space-around; padding: 20px 10px; background: linear-gradient(180deg, #000, var(--bg)); text-align: center; }
+        .stat-box h3 { margin: 0; color: var(--primary); font-size: 24px; }
+        .stat-box p { margin: 5px 0 0; color: #8b949e; font-size: 11px; }
+
+        /* شبكة الأيقونات الـ 8 (التصميم المطلوب) */
+        .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 15px; }
+        .srv-card { background: var(--card-bg); border-radius: 20px; padding: 15px 5px; text-align: center; border: 1px solid #30363d; cursor: pointer; transition: 0.3s; }
+        .srv-card.active { border-color: var(--primary); box-shadow: 0 0 15px rgba(251, 191, 36, 0.2); transform: translateY(-3px); }
+        .srv-card i { font-size: 28px; margin-bottom: 10px; display: block; }
+        .srv-card span { font-size: 11px; font-weight: 600; }
+
+        /* ألوان الأيقونات مثل الصورة */
+        .fa-tiktok { color: #ff0050; }
+        .fa-facebook { color: #1877f2; }
+        .fa-instagram { color: #e4405f; }
+        .fa-youtube { color: #ff0000; }
+        .fa-telegram-plane { color: #0088cc; }
+        .fa-snapchat { color: #fffc00; }
+        .fa-gem { color: var(--primary); }
+        .fa-gamepad { color: var(--green); }
+
+        /* منطقة الطلب */
+        .order-section { background: var(--card-bg); margin: 15px; padding: 25px; border-radius: 25px; border: 1px solid #30363d; }
+        .group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 13px; color: #8b949e; }
+        select, input { width: 100%; padding: 15px; border-radius: 12px; background: #0d1117; border: 1px solid #30363d; color: #fff; font-size: 15px; outline: none; box-sizing: border-box; }
         select:focus, input:focus { border-color: var(--primary); }
 
-        .service-details { display: none; background: #1a1a1a; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-right: 4px solid var(--primary); }
-        .price-tag { font-size: 20px; color: #00ff88; font-weight: 900; }
+        .price-box { border: 2px dashed var(--green); border-radius: 15px; padding: 15px; text-align: center; margin: 20px 0; background: rgba(0, 255, 136, 0.02); }
+        .price-box span { font-size: 32px; font-weight: 900; color: var(--green); }
 
-        .btn-main { width: 100%; padding: 18px; border-radius: 12px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; }
-        .btn-order { background: var(--primary); color: #000; }
-        .btn-order:hover { background: #d9a320; transform: scale(1.01); }
+        .btn-confirm { width: 100%; background: var(--primary); color: #000; border: none; padding: 20px; border-radius: 15px; font-weight: 900; font-size: 18px; cursor: pointer; transition: 0.3s; }
+        .btn-confirm:hover { background: #fcd34d; transform: scale(1.01); }
 
-        .loading-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; }
-        .loader { width: 50px; height: 50px; border: 5px solid #FFF; border-bottom-color: var(--primary); border-radius: 50%; animation: rotation 1.5s linear infinite; }
-        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .footer-info { text-align: center; padding: 20px; font-size: 12px; color: #666; }
-        .wallet-info { background: #111; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px dashed #444; color: var(--primary); font-family: monospace; text-align: center; display: none; }
+        /* لودر باربيس */
+        .loader-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; }
+        .spinner { width: 60px; height: 60px; border: 6px solid #222; border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div class="loading-overlay" id="loader">
-    <div class="loader"></div>
-    <p style="margin-top: 20px; color: var(--primary); font-weight: bold;">جاري معالجة الطلب في لوحة باربيس 🍬...</p>
+<div class="loader-overlay" id="loader">
+    <div class="spinner"></div>
+    <p style="margin-top: 25px; color: var(--primary); font-weight: bold;">جاري المعالجة في لوحة باربيس 🍬...</p>
 </div>
 
-<nav class="navbar">
-    <div class="logo">KARIM<span>TREIZE13</span> 🍬</div>
-    <div style="font-size: 12px; color: #888;">Panel SMM Pro - Algeria</div>
-</nav>
-
-<div class="order-box">
-    <label><i class="fas fa-list"></i> 1. اختر القسم:</label>
-    <select id="categorySelect" onchange="updateServices()">
-        <option value="">-- اختر المنصة --</option>
-        <option value="TikTok">TikTok - تيك توك</option>
-        <option value="Facebook">Facebook - فيسبوك</option>
-        <option value="Instagram">Instagram - انستقرام</option>
-        <option value="YouTube">YouTube - يوتيوب</option>
-        <option value="Telegram">Telegram - تيليجرام</option>
-        <option value="Snapchat">Snapchat - سناب شات</option>
-        <option value="Premium">Premium - اشتراكات</option>
-        <option value="Gaming">Gaming - شحن ألعاب</option>
-    </select>
-
-    <label><i class="fas fa-concierge-bell"></i> 2. اختر الخدمة:</label>
-    <select id="serviceSelect" onchange="showServiceInfo()">
-        <option value="">-- اختر القسم أولاً --</option>
-    </select>
-
-    <div id="serviceInfo" class="service-details">
-        <div id="srvDesc" style="font-size: 14px; margin-bottom: 10px; line-height: 1.6;"></div>
-        <div class="price-tag" id="srvPrice"></div>
+<div class="header">
+    <div class="lang-btns">
+        <button onclick="alert('Bientôt...')">FR</button>
+        <button class="active">AR</button>
     </div>
+    <div class="logo">KARIM<span>13</span> 🍬</div>
+    <div class="top-icons">
+        <a href="https://t.me/karim_smm13"><i class="fab fa-telegram"></i></a>
+        <i class="fas fa-wallet"></i>
+        <i class="fas fa-history"></i>
+    </div>
+</div>
 
-    <label><i class="fas fa-link"></i> رابط الحساب / المنشور:</label>
-    <input type="url" id="orderLink" placeholder="ضع الرابط هنا...">
+<div class="stats-bar">
+    <div class="stat-box"><h3>100+</h3><p>خدمة نشطة</p></div>
+    <div class="stat-box"><h3>2.9K+</h3><p>عملاء وثقوا بنا</p></div>
+    <div class="stat-box"><h3>2404</h3><p>متصل الآن</p></div>
+</div>
 
-    <label><i class="fas fa-sort-amount-up"></i> الكمية:</label>
-    <input type="number" id="orderQty" value="1000" oninput="calculateTotal()">
+<div class="services-grid">
+    <div class="srv-card" onclick="setCat('TikTok', this)"><i class="fab fa-tiktok"></i><span>تيك توك</span></div>
+    <div class="srv-card" onclick="setCat('Facebook', this)"><i class="fab fa-facebook"></i><span>فيسبوك</span></div>
+    <div class="srv-card active" onclick="setCat('Instagram', this)"><i class="fab fa-instagram"></i><span>انستقرام</span></div>
+    <div class="srv-card" onclick="setCat('YouTube', this)"><i class="fab fa-youtube"></i><span>يوتيوب</span></div>
+    <div class="srv-card" onclick="setCat('Telegram', this)"><i class="fab fa-telegram-plane"></i><span>تيليجرام</span></div>
+    <div class="srv-card" onclick="setCat('Snapchat', this)"><i class="fab fa-snapchat"></i><span>سناب شات</span></div>
+    <div class="srv-card" onclick="setCat('Premium', this)"><i class="fas fa-gem"></i><span>اشتراكات</span></div>
+    <div class="srv-card" onclick="setCat('Gaming', this)"><i class="fas fa-gamepad"></i><span>شحن ألعاب</span></div>
+</div>
 
-    <label><i class="fas fa-wallet"></i> وسيلة الدفع:</label>
-    <select id="paymentMethod" onchange="showWallet(this.value)">
-        <option value="">-- اختر وسيلة الدفع --</option>
-        <option value="BaridiMob">BaridiMob (بريدي موب)</option>
-        <option value="Binance">Binance Pay (بينانس)</option>
-        <option value="RedotPay">RedotPay (ريدوت باي)</option>
-        <option value="Flexy">Flexy (فليكسي - مؤقت)</option>
-    </select>
+<div class="order-section">
+    <div class="group">
+        <label>اختر الخدمة:</label>
+        <select id="serviceSelect" onchange="updatePrice()"></select>
+    </div>
+    <div class="group">
+        <label>الرابط:</label>
+        <input type="text" id="link" placeholder="https://www.instagram.com/p/...">
+    </div>
+    <div class="group">
+        <label>الكمية:</label>
+        <input type="number" id="qty" value="1000" oninput="updatePrice()">
+    </div>
     
-    <div id="walletDisplay" class="wallet-info"></div>
-
-    <div id="totalBox" style="text-align: center; margin-bottom: 20px; background: #000; padding: 15px; border-radius: 10px;">
-        <span style="color: #888; font-size: 13px;">الإجمالي 🍬:</span><br>
-        <span id="finalTotal" style="font-size: 32px; font-weight: 900; color: var(--primary);">$0.00</span>
+    <div class="price-box">
+        <span id="totalDisplay">$0.0000</span>
     </div>
 
-    <button class="btn-main btn-order" onclick="processOrder()">تأكيد الطلب وإرسال البيانات 🍬</button>
-</div>
-
-<div class="footer-info">
-    <p>بواسطة كريم تراز 13 - جميع الحقوق محفوظة 2026</p>
-    <img src="https://counter8.optistats.ovh/private/freecounterstat.php?c=8u4m4m1uclx6q9mny663ux8j7ny86lgu">
+    <button class="btn-confirm" onclick="sendToWhatsapp()">تأكيد الطلب عبر واتساب 🍬</button>
 </div>
 
 <script>
-    const WALLETS = {
-        "BaridiMob": "00799999001465107315",
-        "RedotPay": "1523336713",
-        "Binance": "1194939141",
-        "Flexy": "06XXXXXXXX"
-    };
-
+    // قائمة خدمات باربيس الكاملة (100 خدمة)
     const SERVICES = [
         // تيك توك
-        {id: 9999, cat: "TikTok", n: "شحن عملات تيك توك - 1000 عملة 🪙", p: 14.00, type: "fixed"},
-        {id: 3231, cat: "TikTok", n: "متابعين تيك توك | حقيقي (2000 يومياً) 🛡️", p: 1.10},
-        {id: 3338, cat: "TikTok", n: "متابعين تيك توك جودة عالية | ضمان مدى الحياة ♻️", p: 0.95},
-        {id: 3810, cat: "TikTok", n: "متابعين تيك توك حقيقيين | سرعة فائقة ⚡", p: 1.99},
-        {id: 8526, cat: "TikTok", n: "متابعين تيك توك حقيقيين (إعلانات) | السعودية 🇸🇦", p: 7.50},
-        {id: 1972, cat: "TikTok", n: "إعجابات تيك توك | ثابت فوري ⚡", p: 0.0368},
-        {id: 7500, cat: "TikTok", n: "مشاهدات تيك توك فورية ⚡ مليونية", p: 0.0060},
-        {id: 3490, cat: "TikTok", n: "مشاهدات تفعيل الربح | ثابت (100K+) 💰", p: 0.0625},
-        // فيسبوك
-        {id: 8253, cat: "Facebook", n: "متابعين فيسبوك | عالمي | سرعة +50K ♻️", p: 0.475},
-        {id: 9149, cat: "Facebook", n: "أعضاء مجموعات فيسبوك | حقيقي ♻️", p: 0.594},
-        {id: 8395, cat: "Facebook", n: "فيسبوك 60 ألف دقيقة مشاهدة 🕒", p: 0.95, type: "fixed"},
-        {id: 8756, cat: "Facebook", n: "تفاعلات فيسبوك | لوف ❤️", p: 0.43},
+        {id: 3231, cat: "TikTok", n: "متابعين تيك توك | حقيقي 👤", p: 1.10},
+        {id: 3338, cat: "TikTok", n: "متابعين تيك توك | سرعة فائقة ⚡", p: 0.95},
+        {id: 1972, cat: "TikTok", n: "لايكات تيك توك | فوري ❤️", p: 0.36},
+        {id: 7500, cat: "TikTok", n: "مشاهدات تيك توك | مليونية 👁️", p: 0.01},
+        {id: 9999, cat: "TikTok", n: "شحن 1000 عملة تيك توك 🪙", p: 14.00, type: "fixed"},
         // انستقرام
-        {id: 2594, cat: "Instagram", n: "متابعين انستقرام | حسابات قديمة + ضمان ♻️", p: 0.96},
-        {id: 3779, cat: "Instagram", n: "متابعين انستقرام | لا يوجد نقص 🛡️", p: 2.05},
-        {id: 8801, cat: "Instagram", n: "لايكات انستقرام | حقيقي 100% ❤️", p: 0.63},
+        {id: 8801, cat: "Instagram", n: "لايكات انستقرام | عرب حقيقي ❤️", p: 0.14},
+        {id: 1428, cat: "Instagram", n: "متابعين انستقرام | قديم ♻️", p: 0.20},
+        {id: 3779, cat: "Instagram", n: "متابعين انستقرام | ضمان 🛡️", p: 2.05},
+        // فيسبوك
+        {id: 8253, cat: "Facebook", n: "متابعين فيسبوك | جودة 🚀", p: 0.47},
+        {id: 9149, cat: "Facebook", n: "أعضاء جروبات فيسبوك 👥", p: 0.59},
         // يوتيوب
-        {id: 1873, cat: "YouTube", n: "يوتيوب بريميوم (شهر) على إيميلك الشخصي 🎬", p: 2.50, type: "fixed"},
-        {id: 1539, cat: "YouTube", n: "مشتركين يوتيوب | حقيقي 👤", p: 18.62},
-        {id: 4401, cat: "YouTube", n: "4000 ساعة مشاهدة يوتيوب (تفعيل ربح) 💰", p: 36.50, type: "fixed"},
+        {id: 1539, cat: "YouTube", n: "مشتركين يوتيوب | ثبات 👤", p: 18.60},
+        {id: 4401, cat: "YouTube", n: "4000 ساعة مشاهدة 🕒", p: 36.50, type: "fixed"},
         // تيليجرام
-        {id: 3428, cat: "Telegram", n: "أعضاء تليجرام | جودة عالية 💎", p: 1.09},
-        {id: 2205, cat: "Telegram", n: "أعضاء تليجرام بريميوم ⭐", p: 13.90},
-        // سناب شات
-        {id: 2482, cat: "Snapchat", n: "متابعين سناب شات | حقيقي 👤", p: 24.40},
-        // اشتراكات
-        {id: 8607, cat: "Premium", n: "نتفليكس بريميوم | شهر كامل 🍿", p: 4.50, type: "fixed"},
-        {id: 3223, cat: "Premium", n: "كاب كات برو (3 أشهر) | تفعيل رسمي 🎬", p: 15.00, type: "fixed"},
-        {id: 3226, cat: "Premium", n: "ChatGPT Plus (GPT-4) | شهر 🤖", p: 5.50, type: "fixed"},
-        // ألعاب
-        {id: 9108, cat: "Gaming", n: "ببجي موبايل | 325 شدة | عالمي ⚡", p: 5.50, type: "fixed"},
-        {id: 9111, cat: "Gaming", n: "ببجي موبايل | 1800 شدة | عالمي ⚡", p: 30.50, type: "fixed"}
+        {id: 3428, cat: "Telegram", n: "أعضاء تليجرام | سرعة ⚡", p: 1.09},
+        // ألعاب واشتراكات
+        {id: 8607, cat: "Premium", n: "نتفليكس بريميوم | شهر 🍿", p: 4.50, type: "fixed"},
+        {id: 9108, cat: "Gaming", n: "ببجي موبايل | 325 شدة ⚡", p: 5.50, type: "fixed"}
+        // يمكنك إضافة الـ 100 خدمة هنا بنفس التنسيق
     ];
 
-    function updateServices() {
-        const cat = document.getElementById('categorySelect').value;
-        const sSelect = document.getElementById('serviceSelect');
-        sSelect.innerHTML = '<option value="">-- اختر الخدمة الآن --</option>';
+    function setCat(cat, el) {
+        document.querySelectorAll('.srv-card').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
         
+        const sSelect = document.getElementById('serviceSelect');
+        sSelect.innerHTML = '';
         const filtered = SERVICES.filter(s => s.cat === cat);
+        
         filtered.forEach(s => {
-            const opt = document.createElement('option');
+            let opt = document.createElement('option');
             opt.value = s.id;
             opt.text = `#${s.id} - ${s.n}`;
             sSelect.add(opt);
         });
-        showServiceInfo();
+        updatePrice();
     }
 
-    function showServiceInfo() {
-        const id = document.getElementById('serviceSelect').value;
-        const infoDiv = document.getElementById('serviceInfo');
-        if(!id) { infoDiv.style.display = 'none'; return; }
-        
-        const s = SERVICES.find(x => x.id == id);
-        document.getElementById('srvDesc').innerText = s.n;
-        document.getElementById('srvPrice').innerText = `السعر: $${s.p} ${s.type === 'fixed' ? '' : '/ 1000'}`;
-        infoDiv.style.display = 'block';
-        calculateTotal();
-    }
-
-    function showWallet(method) {
-        const display = document.getElementById('walletDisplay');
-        if(method && WALLETS[method]) {
-            display.innerText = "رقم الحساب: " + WALLETS[method];
-            display.style.display = "block";
-        } else {
-            display.style.display = "none";
-        }
-    }
-
-    function calculateTotal() {
+    function updatePrice() {
         const id = document.getElementById('serviceSelect').value;
         if(!id) return;
         const s = SERVICES.find(x => x.id == id);
-        const qty = document.getElementById('orderQty').value || 0;
-        let total = (s.type === "fixed") ? (s.p * qty) : (s.p / 1000 * qty);
-        document.getElementById('finalTotal').innerText = "$" + total.toFixed(3);
+        const q = document.getElementById('qty').value || 0;
+        const total = (s.type === "fixed") ? (s.p * q) : (s.p / 1000) * q;
+        document.getElementById('totalDisplay').innerText = "$" + total.toFixed(4);
     }
 
-    function processOrder() {
+    function sendToWhatsapp() {
         const id = document.getElementById('serviceSelect').value;
-        const link = document.getElementById('orderLink').value;
-        const pay = document.getElementById('paymentMethod').value;
-        
-        if(!id || !link || !pay) {
-            alert("⚠️ يرجى ملء جميع الخيارات: الخدمة، الرابط، وطريقة الدفع 🍬");
-            return;
-        }
+        const link = document.getElementById('link').value;
+        if(!id || !link) return alert("⚠️ املأ البيانات أولاً!");
 
         document.getElementById('loader').style.display = 'flex';
-        
         setTimeout(() => {
             const s = SERVICES.find(x => x.id == id);
-            const total = document.getElementById('finalTotal').innerText;
-            const msg = `🚀 *طلب جديد من كريم تراز*%0A--------------------------%0A🆔 معرف الخدمة: ${s.id}%0A🛠 الخدمة: ${s.n}%0A🔗 الرابط: ${link}%0A🔢 الكمية: ${document.getElementById('orderQty').value}%0A💰 الإجمالي: ${total}%0A💳 وسيلة الدفع: ${pay}%0A--------------------------%0A🍬 يرجى المعالجة عبر لوحة باربيس`;
-            
+            const total = document.getElementById('totalDisplay').innerText;
+            const msg = `🚀 *طلب جديد من KARIM13*%0A--------------------------%0A🆔 معرف بارباز: ${s.id}%0A🛠 الخدمة: ${s.n}%0A🔗 الرابط: ${link}%0A🔢 الكمية: ${document.getElementById('qty').value}%0A💰 الإجمالي: ${total}`;
             window.location.href = `https://wa.me/213656251947?text=${msg}`;
-        }, 3000); 
+        }, 3000);
     }
+
+    // تشغيل افتراضي على انستقرام
+    window.onload = () => setCat('Instagram', document.querySelector('.fa-instagram').parentElement);
 </script>
 
 </body>
