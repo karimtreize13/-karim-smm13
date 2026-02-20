@@ -3,169 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM 13 | PANEL</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;900&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
+    <title>Karim SMM Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --text: #ffffff; --border: #2d3748; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); font-weight: 700; }
-
-        /* Header */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: var(--card); border-bottom: 2px solid var(--border); sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 24px; font-weight: 900; }
-        .logo span { color: var(--gold); }
-        .nav-icons i { font-size: 24px; margin-right: 15px; cursor: pointer; transition: 0.3s; }
-
-        /* Categories Grid */
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .box { background: var(--card); padding: 15px 5px; border-radius: 20px; text-align: center; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
-        .box.active { border: 2px solid var(--gold); background: rgba(245, 158, 11, 0.1); }
-        .box i { font-size: 28px; display: block; margin-bottom: 8px; }
-        .box span { font-size: 12px; font-weight: 900; }
-
-        /* Order Card */
-        .card { background: var(--card); margin: 15px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
-        .input-group { margin-bottom: 15px; position: relative; }
-        input, .select-box { width: 100%; padding: 18px; border-radius: 15px; border: 2px solid var(--border); background: var(--bg); color: white; font-size: 16px; font-weight: 900; text-align: center; }
+        :root { --main: #007bff; --dark: #121212; --bg: #f8f9fa; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; transition: 0.3s; }
         
-        .price-display { font-size: 42px; font-weight: 900; color: var(--accent); margin: 20px 0; text-align: center; }
-        .btn-send { width: 100%; padding: 20px; border: none; border-radius: 20px; background: var(--accent); color: white; font-size: 20px; font-weight: 900; cursor: pointer; }
-
-        /* Modals */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--card); padding: 25px; border-radius: 25px; width: 100%; max-width: 400px; border: 2px solid var(--gold); }
-        .pay-item { background: #1f2937; padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: center; }
+        /* زر اللغة */
+        .lang-btn { position: fixed; top: 15px; left: 15px; z-index: 1000; background: var(--main); color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         
-        /* Dropdown Menu */
-        .dropdown { position: absolute; width: 100%; background: var(--card); border: 1px solid var(--gold); border-radius: 15px; top: 65px; z-index: 100; max-height: 200px; overflow-y: auto; display: none; }
-        .dropdown div { padding: 15px; border-bottom: 1px solid var(--border); cursor: pointer; }
+        header { background: var(--dark); color: white; text-align: center; padding: 50px 20px; border-bottom: 5px solid var(--main); }
+        header h1 { margin: 0; font-size: 2.5em; letter-spacing: 2px; }
+        header p { opacity: 0.8; margin-top: 10px; }
+
+        .container { max-width: 1100px; margin: -40px auto 0; padding: 0 15px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        
+        .card { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-top: 6px solid var(--main); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        
+        .card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        .card-header i { font-size: 35px; }
+        .card-header h3 { margin: 0; font-size: 1.4em; }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        table td { padding: 12px 5px; border-bottom: 1px solid #f1f1f1; font-weight: 600; font-size: 0.95em; }
+        table td:last-child { color: #28a745; text-align: left; font-weight: 800; }
+
+        .btn-order { display: block; text-align: center; background: #25D366; color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+        .btn-order:hover { background: #1ebe57; }
+
+        /* وسائل الدفع */
+        .payment-section { background: white; margin-top: 40px; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .payment-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 20px; }
+        .pay-card { background: #f1f3f5; padding: 10px 20px; border-radius: 10px; font-weight: bold; font-size: 0.9em; border: 1px solid #e0e0e0; }
+
+        /* تحويل اللغة */
+        [lang="fr"] { direction: ltr; }
+        [lang="fr"] table td:last-child { text-align: right; }
     </style>
 </head>
-<body>
+<body id="mainBody">
 
-<div class="header">
-    <div class="logo">KARIM<span>13</span> 🍬</div>
-    <div class="nav-icons">
-        <i class="fab fa-telegram" style="color:#0088cc" onclick="window.open('https://t.me/K_13_S')"></i>
-        <i class="fas fa-wallet" style="color:var(--gold)" onclick="toggleModal('payModal')"></i>
-        <i class="fas fa-history" onclick="alert('سجل الطلبات قيد التحديث')"></i>
+<button class="lang-btn" onclick="toggleLang()" id="langBtn">Français</button>
+
+<header>
+    <h1 id="mainTitle">KARIM SMM PANEL</h1>
+    <p id="subTitle">أرخص وأسرع خدمات السوشيال ميديا في الجزائر</p>
+</header>
+
+<div class="container">
+    <div class="grid">
+
+        <div class="card">
+            <div class="card-header"><i class="fab fa-tiktok" style="color: #000;"></i><h3>تيك توك - TikTok</h3></div>
+            <table>
+                <tr><td>1000 متابع حقيقي</td><td>160 DA</td></tr>
+                <tr><td>1000 مشاهدة فيديو</td><td>10 DA</td></tr>
+                <tr><td>1000 لايك (قلب)</td><td>45 DA</td></tr>
+            </table>
+            <a href="https://wa.me/213000000000" class="btn-order">اطلب عبر واتساب | WhatsApp</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><i class="fab fa-facebook" style="color: #1877F2;"></i><h3>فيسبوك - Facebook</h3></div>
+            <table>
+                <tr><td>1000 متابع صفحة</td><td>280 DA</td></tr>
+                <tr><td>1000 متابع بروفايل</td><td>230 DA</td></tr>
+                <tr><td>1000 لايك منشور</td><td>120 DA</td></tr>
+            </table>
+            <a href="https://wa.me/213000000000" class="btn-order">اطلب عبر واتساب | WhatsApp</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><i class="fab fa-instagram" style="color: #E4405F;"></i><h3>انستقرام - Instagram</h3></div>
+            <table>
+                <tr><td>1000 متابع (ضمان)</td><td>190 DA</td></tr>
+                <tr><td>1000 لايك (سريع)</td><td>40 DA</td></tr>
+                <tr><td>مشاهدات ريلز/ستوري</td><td>15 DA</td></tr>
+            </table>
+            <a href="https://wa.me/213000000000" class="btn-order">اطلب عبر واتساب | WhatsApp</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><i class="fab fa-youtube" style="color: #FF0000;"></i><h3>يوتيوب - YouTube</h3></div>
+            <table>
+                <tr><td>1000 مشترك ثابت</td><td>1300 DA</td></tr>
+                <tr><td>4000 ساعة مشاهدة</td><td>2900 DA</td></tr>
+                <tr><td>1000 لايك فيديو</td><td>180 DA</td></tr>
+            </table>
+            <a href="https://wa.me/213000000000" class="btn-order">اطلب عبر واتساب | WhatsApp</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><i class="fab fa-snapchat" style="color: #FFFC00; text-shadow: 1px 1px #000;"></i><h3>سناب شات - Snapchat</h3></div>
+            <table>
+                <tr><td>متابعين حساب عام</td><td>480 DA</td></tr>
+                <tr><td>زيادة سكور (Score)</td><td>تواصل معنا</td></tr>
+            </table>
+            <a href="https://wa.me/213000000000" class="btn-order">اطلب عبر واتساب | WhatsApp</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><i class="fab fa-telegram" style="color: #0088cc;"></i><h3>تيليجرام - Telegram</h3></div>
+            <table>
+                <tr><td>1000 عضو قناة</td><td>150 DA</td></tr>
+                <tr><td>تفاعل منشورات (آخر 5)</td><td>50 DA</td></tr>
+            </table>
+            <a href="https://wa.me/213000000000" class="btn-order">اطلب عبر واتساب | WhatsApp</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><i class="fas fa-tv" style="color: #ff9800;"></i><h3>اشتراكات أرطغرل - IPTV</h3></div>
+            <table>
+                <tr><td>اشتراك (شهر واحد)</td><td>400 DA</td></tr>
+                <tr><td>اشتراك (6 أشهر)</td><td>1800 DA</td></tr>
+                <tr><td>اشتراك (سنة كاملة)</td><td>3200 DA</td></tr>
+            </table>
+            <a href="https://wa.me/213000000000" class="btn-order">اطلب عبر واتساب | WhatsApp</a>
+        </div>
+
+        <div class="card">
+            <div class="card-header"><i class="fas fa-gamepad" style="color: #4CAF50;"></i><h3>شحن ببجي - PUBG UC</h3></div>
+            <table>
+                <tr><td>60 شدة (UC)</td><td>240 DA</td></tr>
+                <tr><td>325 شدة (UC)</td><td>950 DA</td></tr>
+                <tr><td>660 شدة (UC)</td><td>1850 DA</td></tr>
+            </table>
+            <a href="https://wa.me/213000000000" class="btn-order">اطلب عبر واتساب | WhatsApp</a>
+        </div>
+
     </div>
-</div>
 
-<div class="grid">
-    <div class="box active" onclick="changeCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
-    <div class="box" onclick="changeCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
-    <div class="box" onclick="changeCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Instagram</span></div>
-    <div class="box" onclick="changeCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span>YouTube</span></div>
-    <div class="box" onclick="changeCat('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
-    <div class="box" onclick="changeCat('Gaming', this)"><i class="fas fa-gamepad" style="color:#10b981"></i><span>Gaming</span></div>
-</div>
-
-<div class="card">
-    <div class="input-group">
-        <div class="select-box" id="srvSelected" onclick="toggleDrop()">اختر الخدمة...</div>
-        <div class="dropdown" id="srvDrop"></div>
-    </div>
-    <input type="text" id="link" placeholder="رابط الحساب أو الـ ID">
-    <input type="number" id="qty" value="1000" oninput="calc()">
-    <div class="price-display" id="total">$0.00</div>
-    <button class="btn-send" onclick="submitOrder()">إرسال الطلب 🍬</button>
-</div>
-
-<div id="payModal" class="modal">
-    <div class="modal-content">
-        <h3 style="text-align:center; color:var(--gold); margin-bottom:20px;">وسائل الدفع المتاحة</h3>
-        <div class="pay-item"><small>BaridiMob (RIP)</small><br><b>00799999001465107315</b></div>
-        <div class="pay-item"><small>CCP</small><br><b>14651073 Clé 15</b></div>
-        <div class="pay-item"><small>Binance Pay ID</small><br><b>847522104</b></div>
-        <button onclick="toggleModal('payModal')" style="width:100%; padding:12px; background:var(--gold); border:none; border-radius:12px; font-weight:900; margin-top:10px;">إغلاق</button>
+    <div class="payment-section">
+        <h3 id="payTitle">طرق الدفع المتوفرة - Paiement</h3>
+        <div class="payment-grid">
+            <div class="pay-card">بريدي موب - Baridimob</div>
+            <div class="pay-card">ريدوت باي - RedotPay</div>
+            <div class="pay-card">فينوس بي - Vinos Pay</div>
+            <div class="pay-card">فليكسي - Flexy (مؤقت)</div>
+        </div>
     </div>
 </div>
 
 <script>
-    // إعدادات Firebase
-    firebase.initializeApp({ projectId: "karim-smm" }); // تأكد من أن هذا الـ ID مطابق لمشروعك
-    const db = firebase.firestore();
+    function toggleLang() {
+        const b = document.getElementById('mainBody');
+        const btn = document.getElementById('langBtn');
+        const t1 = document.getElementById('mainTitle');
+        const t2 = document.getElementById('subTitle');
+        const t3 = document.getElementById('payTitle');
 
-    let currentCat = 'TikTok';
-    let selectedSrv = null;
-
-    const SERVICES = [
-        {id: 1, cat: 'TikTok', name: 'متابعين تيك توك | حقيقي 👤', price: 1.10},
-        {id: 2, cat: 'Facebook', name: 'Facebook Followers | Speed ⚡', price: 0.475},
-        {id: 3, cat: 'YouTube', name: 'YouTube Subscribers | Real 🎥', price: 18.62},
-        {id: 4, cat: 'Gaming', name: 'PUBG Mobile 660 UC 🎮', price: 12.50, fix: true}
-    ];
-
-    function changeCat(cat, el) {
-        currentCat = cat;
-        document.querySelectorAll('.box').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        loadSrv();
-    }
-
-    function loadSrv() {
-        const drop = document.getElementById('srvDrop');
-        drop.innerHTML = "";
-        SERVICES.filter(s => s.cat === currentCat).forEach(s => {
-            let item = document.createElement('div');
-            item.innerHTML = s.name;
-            item.onclick = () => {
-                selectedSrv = s;
-                document.getElementById('srvSelected').innerText = s.name;
-                toggleDrop(); calc();
-            };
-            drop.appendChild(item);
-        });
-    }
-
-    function toggleDrop() {
-        const d = document.getElementById('srvDrop');
-        d.style.display = d.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function calc() {
-        if(!selectedSrv) return;
-        const q = document.getElementById('qty').value;
-        const total = selectedSrv.fix ? selectedSrv.price : (selectedSrv.price / 1000 * q);
-        document.getElementById('total').innerText = "$" + total.toFixed(4);
-    }
-
-    async function submitOrder() {
-        const link = document.getElementById('link').value;
-        if(!selectedSrv || !link) return alert("يرجى إكمال البيانات!");
-
-        const orderData = {
-            srv: selectedSrv.name,
-            link: link,
-            price: document.getElementById('total').innerText,
-            status: "Pending",
-            date: new Date().toLocaleString()
-        };
-
-        try {
-            // حفظ في Firebase
-            await db.collection("orders").add(orderData);
-            
-            // فتح واتساب بالرابط الصحيح والرسالة
-            const msg = encodeURIComponent(`طلب جديد من KARIM13 🍬\nالخدمة: ${selectedSrv.name}\nالرابط: ${link}\nالسعر: ${orderData.price}`);
-            window.location.href = `https://wa.me/213656251947?text=${msg}`;
-        } catch(e) {
-            alert("خطأ في الاتصال بقاعدة البيانات!");
+        if (b.dir === "rtl") {
+            b.dir = "ltr"; b.lang = "fr";
+            btn.innerText = "العربية";
+            t1.innerText = "KARIM SMM PANEL";
+            t2.innerText = "Les services SMM les moins chers en Algérie";
+            t3.innerText = "Modes de Paiement";
+        } else {
+            b.dir = "rtl"; b.lang = "ar";
+            btn.innerText = "Français";
+            t1.innerText = "KARIM SMM PANEL";
+            t2.innerText = "أرخص وأسرع خدمات السوشيال ميديا في الجزائر";
+            t3.innerText = "طرق الدفع المتوفرة - Paiement";
         }
     }
-
-    function toggleModal(id) {
-        const m = document.getElementById(id);
-        m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
-    }
-
-    window.onload = loadSrv;
 </script>
-
 </body>
 </html>
