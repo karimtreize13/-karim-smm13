@@ -3,460 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM13 | Official Panel</title>
+    <title>KARIM13 | Premium Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- CSS المتطور (أكثر من 200 سطر من التنسيق) --- */
         :root {
-            --bg-color: #0b111e;
-            --card-bg: #151c2c;
-            --input-bg: #1f2937;
-            --accent: #f39c12;
-            --green: #2ecc71;
-            --text-white: #ffffff;
-            --text-gray: #94a3b8;
-            --border: #2d3748;
+            --bg: #0b111e; --card: #151c2c; --input: #1f2937;
+            --accent: #f39c12; --green: #2ecc71; --text: #ffffff;
+            --text-dim: #94a3b8; --border: #2d3748;
         }
+        * { box-sizing: border-box; transition: 0.3s; font-family: 'Segoe UI', sans-serif; }
+        body { background: var(--bg); color: var(--text); margin: 0; padding: 15px; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .logo { font-size: 22px; font-weight: 800; }
+        .lang-switch { display: flex; background: var(--card); border-radius: 12px; padding: 4px; border: 1px solid var(--border); }
+        .l-btn { padding: 6px 15px; border: none; background: none; color: var(--text-dim); cursor: pointer; border-radius: 8px; font-weight: bold; }
+        .l-btn.active { background: var(--accent); color: #000; }
 
-        * { box-sizing: border-box; transition: 0.3s; -webkit-tap-highlight-color: transparent; }
-        
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-white);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0; padding: 15px;
-            overflow-x: hidden;
-        }
+        /* Stats */
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
+        .stat-item { background: var(--card); padding: 15px 5px; border-radius: 18px; text-align: center; border: 1px solid var(--border); }
+        .stat-item h3 { margin: 0; color: var(--accent); font-size: 18px; }
+        .stat-item p { margin: 5px 0 0; font-size: 10px; color: var(--text-dim); }
 
-        /* الهيدر وأدوات التحكم */
-        header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 10px 0; 
-            margin-bottom: 20px; 
-        }
-        
-        .lang-switch { 
-            display: flex; 
-            background: var(--card-bg); 
-            border-radius: 12px; 
-            padding: 4px; 
-            border: 1px solid var(--border); 
-        }
-        
-        .l-btn { 
-            padding: 8px 20px; 
-            border: none; 
-            background: none; 
-            color: var(--text-gray); 
-            cursor: pointer; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            font-size: 14px;
-        }
-        
-        .l-btn.active { 
-            background: var(--accent); 
-            color: #000; 
-        }
+        /* Services Grid (8 Sections) */
+        .svc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
+        @media (max-width: 500px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
+        .svc-box { background: var(--card); border-radius: 20px; padding: 20px 10px; text-align: center; cursor: pointer; border: 2px solid transparent; }
+        .svc-box.active { border-color: var(--accent); background: #1e293b; }
+        .svc-box i { font-size: 26px; margin-bottom: 10px; display: block; }
+        .svc-box span { font-size: 12px; font-weight: bold; }
 
-        .logo { 
-            font-size: 24px; 
-            font-weight: 900; 
-            letter-spacing: 1px;
-        }
+        /* Icons Colors */
+        .fa-tiktok { color: #fe2c55; } .fa-facebook { color: #1877f2; }
+        .fa-instagram { color: #e1306c; } .fa-youtube { color: #ff0000; }
+        .fa-telegram { color: #0088cc; } .fa-snapchat { color: #fffc00; }
+        .fa-gem { color: var(--accent); } .fa-gamepad { color: var(--green); }
 
-        /* قسم الإحصائيات العلوي */
-        .stats-container { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 12px; 
-            margin-bottom: 30px; 
-        }
-        
-        .stat-box { 
-            background: var(--card-bg); 
-            padding: 20px 10px; 
-            border-radius: 20px; 
-            text-align: center; 
-            border: 1px solid var(--border); 
-            position: relative;
-        }
+        /* Form Area */
+        .form-area { background: var(--card); border-radius: 25px; padding: 20px; border: 1px solid var(--border); }
+        .input-group { background: var(--input); border: 1px solid var(--border); border-radius: 15px; padding: 12px; margin-bottom: 12px; }
+        select, input { width: 100%; background: none; border: none; color: white; outline: none; font-size: 14px; }
+        .price-box { border: 2px dashed var(--green); border-radius: 15px; padding: 20px; text-align: center; margin: 20px 0; color: var(--green); font-size: 30px; font-weight: 900; }
+        .btn-order { background: var(--green); color: white; border: none; width: 100%; padding: 15px; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; }
 
-        .stat-box h3 { 
-            margin: 0; 
-            color: var(--accent); 
-            font-size: 20px; 
-            font-weight: 800;
-        }
-
-        .stat-box p { 
-            margin: 5px 0 0; 
-            font-size: 11px; 
-            color: var(--text-gray); 
-            text-transform: uppercase;
-        }
-
-        .online-dot {
-            height: 10px; width: 10px;
-            background-color: var(--green);
-            border-radius: 50%;
-            display: inline-block;
-            margin-left: 5px;
-            box-shadow: 0 0 8px var(--green);
-        }
-
-        /* شبكة الأقسام الثمانية */
-        .grid-services { 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); 
-            gap: 12px; 
-            margin-bottom: 30px; 
-        }
-
-        @media (max-width: 600px) { 
-            .grid-services { grid-template-columns: repeat(2, 1fr); } 
-        }
-        
-        .svc-item { 
-            background: var(--card-bg); 
-            border-radius: 25px; 
-            padding: 25px 10px; 
-            text-align: center; 
-            cursor: pointer; 
-            border: 2px solid transparent; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .svc-item.active { 
-            border-color: var(--accent); 
-            background: #1e293b; 
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .svc-item i { 
-            font-size: 28px; 
-            margin-bottom: 12px; 
-        }
-
-        .svc-item span { 
-            font-size: 13px; 
-            font-weight: bold; 
-        }
-
-        /* ألوان أيقونات التواصل الاجتماعي */
-        .fa-tiktok { color: #fe2c55; }
-        .fa-facebook { color: #1877f2; }
-        .fa-instagram { color: #e1306c; }
-        .fa-youtube { color: #ff0000; }
-        .fa-telegram { color: #0088cc; }
-        .fa-snapchat { color: #fffc00; text-shadow: 0 0 2px #000; }
-        .fa-gem { color: var(--accent); }
-        .fa-gamepad { color: var(--green); }
-
-        /* منطقة طلب الخدمة */
-        .order-panel { 
-            background: var(--card-bg); 
-            border-radius: 30px; 
-            padding: 25px; 
-            border: 1px solid var(--border); 
-        }
-
-        .field-box { 
-            background: var(--input-bg); 
-            border: 1.5px solid var(--border); 
-            border-radius: 15px; 
-            padding: 15px; 
-            margin-bottom: 15px; 
-            display: flex;
-            align-items: center;
-        }
-
-        select, input { 
-            width: 100%; 
-            background: none; 
-            border: none; 
-            color: white; 
-            outline: none; 
-            font-size: 15px; 
-            font-weight: 500;
-        }
-
-        .price-tag { 
-            border: 2px dashed var(--green); 
-            border-radius: 20px; 
-            padding: 25px; 
-            text-align: center; 
-            margin: 25px 0; 
-            color: var(--green); 
-            font-size: 34px; 
-            font-weight: 900; 
-            background: rgba(46, 204, 113, 0.05);
-        }
-
-        .btn-commander { 
-            background: var(--green); 
-            color: white; 
-            border: none; 
-            width: 100%; 
-            padding: 18px; 
-            border-radius: 20px; 
-            font-size: 18px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.2);
-        }
-
-        .btn-commander:active { transform: scale(0.98); }
-
-        /* نافذة الدفع المتطورة (Modal) */
-        .modal { 
-            display: none; 
-            position: fixed; 
-            top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.95); 
-            z-index: 10000; 
-            justify-content: center; 
-            align-items: center; 
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-inner { 
-            background: var(--card-bg); 
-            width: 92%; 
-            max-width: 450px; 
-            padding: 30px; 
-            border-radius: 35px; 
-            border: 1px solid var(--border); 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .pay-title { 
-            color: var(--accent); 
-            text-align: center; 
-            margin: 0 0 25px 0; 
-            font-size: 22px; 
-            font-weight: 800; 
-        }
-
-        .pay-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .pay-card { 
-            background: var(--input-bg); 
-            padding: 15px; 
-            border-radius: 22px; 
-            border: 1px solid var(--border); 
-            text-align: center;
-        }
-
-        .pay-card i { font-size: 24px; color: var(--accent); margin-bottom: 8px; display: block; }
-        .pay-card h4 { margin: 0 0 8px 0; font-size: 14px; }
-        .acc-id { 
-            color: var(--green); 
-            font-family: 'Courier New', monospace; 
-            font-size: 12px; 
-            word-break: break-all;
-            display: block;
-            margin-bottom: 10px;
-        }
-        
-        .btn-c { 
-            background: #2c3e50; 
-            border: none; 
-            color: white; 
-            padding: 6px 12px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-size: 12px;
-            width: 100%;
-        }
-
-        .btn-close { 
-            margin-top: 20px; 
-            background: #34495e; 
-            border: none; 
-            color: white; 
-            padding: 12px; 
-            border-radius: 15px; 
-            cursor: pointer; 
-            font-size: 16px; 
-            width: 100%;
-            font-weight: bold;
-        }
-
-        /* RTL & Language Support */
+        /* Payment Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: var(--card); width: 92%; max-width: 400px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
+        .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .pay-item { background: var(--input); padding: 15px; border-radius: 18px; border: 1px solid var(--border); text-align: center; }
+        .pay-item code { display: block; color: var(--green); font-size: 10px; margin: 8px 0; }
+        .copy-btn { background: #2c3e50; border: none; color: white; padding: 5px; border-radius: 8px; font-size: 11px; cursor: pointer; width: 100%; }
         body.rtl { direction: rtl; text-align: right; }
-        body.rtl .online-dot { margin-left: 0; margin-right: 5px; }
     </style>
 </head>
-<body id="body">
-
+<body id="b">
 <header>
     <div class="lang-switch">
-        <button class="l-btn active" id="btnFr" onclick="changeLang('fr')">FR</button>
-        <button class="l-btn" id="btnAr" onclick="changeLang('ar')">AR</button>
+        <button class="l-btn active" id="fB" onclick="setL('fr')">FR</button>
+        <button class="l-btn" id="aB" onclick="setL('ar')">AR</button>
     </div>
     <div class="logo">KARIM13 🍬</div>
 </header>
 
-<div class="stats-container">
-    <div class="stat-box"><h3>90+</h3><p class="tr" data-fr="Services" data-ar="خدمة">Services</p></div>
-    <div class="stat-box"><h3>2.9K+</h3><p class="tr" data-fr="Clients" data-ar="عملاء">Clients</p></div>
-    <div class="stat-box"><h3>2549 <span class="online-dot"></span></h3><p class="tr" data-fr="En ligne" data-ar="متصل">En ligne</p></div>
+<div class="stats">
+    <div class="stat-item"><h3>90+</h3><p class="tr" data-fr="Services" data-ar="خدمة">Services</p></div>
+    <div class="stat-item"><h3>2.9K+</h3><p class="tr" data-fr="Clients" data-ar="عملاء">Clients</p></div>
+    <div class="stat-item"><h3>2549</h3><p class="tr" data-fr="En ligne" data-ar="متصل">En ligne</p></div>
 </div>
 
-<div class="grid-services">
-    <div class="svc-item active" onclick="load('tiktok', this)"><i class="fab fa-tiktok"></i><span>TikTok</span></div>
-    <div class="svc-item" onclick="load('facebook', this)"><i class="fab fa-facebook"></i><span>Facebook</span></div>
-    <div class="svc-item" onclick="load('instagram', this)"><i class="fab fa-instagram"></i><span>Instagram</span></div>
-    <div class="svc-item" onclick="load('youtube', this)"><i class="fab fa-youtube"></i><span>YouTube</span></div>
-    <div class="svc-item" onclick="load('telegram', this)"><i class="fab fa-telegram"></i><span>Telegram</span></div>
-    <div class="svc-item" onclick="load('snapchat', this)"><i class="fab fa-snapchat"></i><span>Snapchat</span></div>
-    <div class="svc-item" onclick="load('premium', this)"><i class="fas fa-gem"></i><span class="tr" data-fr="Premium" data-ar="بريميوم">Premium</span></div>
-    <div class="svc-item" onclick="load('gaming', this)"><i class="fas fa-gamepad"></i><span class="tr" data-fr="Gaming" data-ar="ألعاب">Gaming</span></div>
+<div class="svc-grid">
+    <div class="svc-box active" onclick="loadS('tiktok', this)"><i class="fab fa-tiktok"></i><span>TikTok</span></div>
+    <div class="svc-box" onclick="loadS('facebook', this)"><i class="fab fa-facebook"></i><span>Facebook</span></div>
+    <div class="svc-box" onclick="loadS('instagram', this)"><i class="fab fa-instagram"></i><span>Instagram</span></div>
+    <div class="svc-box" onclick="loadS('youtube', this)"><i class="fab fa-youtube"></i><span>YouTube</span></div>
+    <div class="svc-box" onclick="loadS('telegram', this)"><i class="fab fa-telegram"></i><span>Telegram</span></div>
+    <div class="svc-box" onclick="loadS('snapchat', this)"><i class="fab fa-snapchat"></i><span>Snapchat</span></div>
+    <div class="svc-box" onclick="loadS('premium', this)"><i class="fas fa-gem"></i><span class="tr" data-fr="Premium" data-ar="اشتراكات">Premium</span></div>
+    <div class="svc-box" onclick="loadS('gaming', this)"><i class="fas fa-gamepad"></i><span class="tr" data-fr="Gaming" data-ar="شحن ألعاب">Gaming</span></div>
 </div>
 
-<div class="order-panel">
-    <div class="field-box">
-        <select id="srv" onchange="calc()">
-            </select>
-    </div>
-    <div class="field-box"><input type="text" id="link" placeholder="Lien / ID"></div>
-    <div class="field-box"><input type="number" id="qty" value="1000" oninput="calc()"></div>
-    
-    <div class="price-tag" id="prc">$0.00000</div>
-    <button class="btn-commander tr" data-fr="Commander 🍬" data-ar="اطلب الآن 🍬" onclick="openM()">Commander 🍬</button>
+<div class="form-area">
+    <div class="input-group"><select id="srvS" onchange="calc()"></select></div>
+    <div class="input-group"><input type="text" placeholder="Lien / ID"></div>
+    <div class="input-group"><input type="number" id="qty" value="1000" oninput="calc()"></div>
+    <div class="price-box" id="pD">$0.00000</div>
+    <button class="btn-order tr" data-fr="Commander 🍬" data-ar="اطلب الآن 🍬" onclick="openP()">Commander 🍬</button>
 </div>
 
-<div class="modal" id="modal">
-    <div class="modal-inner">
-        <h2 class="pay-title tr" data-fr="Paiement" data-ar="وسائل الدفع">Paiement</h2>
-        
+<div class="modal" id="modalP">
+    <div class="modal-content">
+        <h3 class="tr" data-fr="Paiement" data-ar="وسائل الدفع" style="text-align:center; color:var(--accent);">Paiement</h3>
         <div class="pay-grid">
-            <div class="pay-card">
-                <i class="fas fa-university"></i>
-                <h4>BaridiMob</h4>
-                <span class="acc-id">00799999001465107315</span>
-                <button class="btn-c" onclick="cp('00799999001465107315')">Copy</button>
+            <div class="pay-item">
+                <i class="fas fa-university"></i><h4>BaridiMob</h4>
+                <code>00799999001465107315</code><button class="copy-btn" onclick="cp('00799999001465107315')">Copy</button>
             </div>
-            <div class="pay-card">
-                <i class="fas fa-credit-card"></i>
-                <h4>RedotPay</h4>
-                <span class="acc-id">ID: 55667788</span>
-                <button class="btn-c" onclick="cp('55667788')">Copy</button>
+            <div class="pay-item">
+                <i class="fas fa-credit-card"></i><h4>RedotPay</h4>
+                <code>ID: 55667788</code><button class="copy-btn" onclick="cp('55667788')">Copy</button>
             </div>
-            <div class="pay-card">
-                <i class="fab fa-bitcoin"></i>
-                <h4>Binance</h4>
-                <span class="acc-id">ID: 99887766</span>
-                <button class="btn-c" onclick="cp('99887766')">Copy</button>
+            <div class="pay-item">
+                <i class="fab fa-bitcoin"></i><h4>Binance Pay</h4>
+                <code>ID: 99887766</code><button class="copy-btn" onclick="cp('99887766')">Copy</button>
             </div>
-            <div class="pay-card">
-                <i class="fas fa-phone-alt"></i>
-                <h4>Flexy</h4>
-                <span class="acc-id">06XXXXXXXX</span>
-                <button class="btn-c" onclick="cp('06XXXXXXXX')">Copy</button>
+            <div class="pay-item">
+                <i class="fas fa-phone"></i><h4>Flexy</h4>
+                <code>06XXXXXXXX</code><button class="copy-btn" onclick="cp('06XXXXXXXX')">Copy</button>
             </div>
         </div>
-
-        <button onclick="closeM()" class="btn-close tr" data-fr="Fermer" data-ar="إغلاق">Fermer</button>
+        <button onclick="closeP()" class="tr" data-fr="Fermer" data-ar="إغلاق" style="margin-top:15px; width:100%; border:none; background:#34495e; color:white; padding:10px; border-radius:10px; cursor:pointer;">Fermer</button>
     </div>
 </div>
 
 <script>
-    /* --- JavaScript المتطور (أكثر من 150 سطر من البرمجة) --- */
-    
-    // قاعدة بيانات الخدمات
-    const db = {
-        tiktok: [ {n: "#3231 - TikTok Followers | HQ Real", p: 0.65}, {n: "#9999 - TikTok Coins - 1000 Pcs", p: 12.5} ],
-        facebook: [ {n: "FB Page Likes", p: 1.1}, {n: "FB Followers", p: 0.9} ],
-        instagram: [ {n: "IG Followers [Instant]", p: 0.45}, {n: "IG Likes", p: 0.12} ],
-        youtube: [ {n: "YT Subscribers", p: 5.2}, {n: "YT Views", p: 2.8} ],
-        telegram: [ {n: "TG Members [No Drop]", p: 0.4} ],
-        snapchat: [ {n: "Snapchat Followers", p: 3.5} ],
-        premium: [ {n: "Netflix 1 Month", p: 6.0}, {n: "Spotify Prem", p: 2.5} ],
-        gaming: [ {n: "Free Fire 100 Diamonds", p: 1.15}, {n: "PUBG 60 UC", p: 1.25} ]
+    const data = {
+        tiktok: [ {n: "#3231 - TikTok Followers | HQ Real", p: 1.84} ],
+        facebook: [ {n: "FB Followers | Non Drop", p: 0.44} ],
+        instagram: [ {n: "IG Followers | Real Old", p: 1.00} ],
+        youtube: [ {n: "YT Subscribers | Non Drop", p: 21.62} ],
+        telegram: [ {n: "TG Members | HQ Real", p: 1.09} ],
+        snapchat: [ {n: "Snapchat Followers", p: 3.50} ],
+        premium: [ {n: "Netflix 1 Month", p: 4.50} ],
+        gaming: [ {n: "Free Fire 100 Diamonds", p: 1.15} ]
     };
 
-    // تغيير اللغة
-    function changeLang(l) {
-        const isAr = l === 'ar';
-        document.getElementById('body').className = isAr ? 'rtl' : '';
-        document.getElementById('mainHtml').dir = isAr ? 'rtl' : 'ltr';
-        document.getElementById('btnAr').classList.toggle('active', isAr);
-        document.getElementById('btnFr').classList.toggle('active', !isAr);
-        
-        // ترجمة النصوص
-        document.querySelectorAll('.tr').forEach(e => {
-            e.innerText = e.getAttribute('data-' + l);
-        });
-
-        // تغيير اتجاه أيقونة المتصل
-        const dot = document.querySelector('.online-dot');
-        dot.style.marginLeft = isAr ? '0px' : '5px';
-        dot.style.marginRight = isAr ? '5px' : '0px';
-    }
-
-    // تحميل الخدمات عند الضغط على القسم
-    function load(key, element) {
-        // تحديث التصميم النشط
-        document.querySelectorAll('.svc-item').forEach(i => i.classList.remove('active'));
-        element.classList.add('active');
-
-        // ملء القائمة المنسدلة
-        const select = document.getElementById('srv');
-        select.innerHTML = "";
-        
-        db[key].forEach(service => {
-            let option = document.createElement('option');
-            option.value = service.p;
-            option.text = service.n;
-            select.add(option);
-        });
-
-        // إعادة حساب السعر
+    function loadS(k, el) {
+        document.querySelectorAll('.svc-box').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        const s = document.getElementById('srvS'); s.innerHTML = "";
+        data[k].forEach(i => { let o = document.createElement('option'); o.value = i.p; o.text = i.n; s.add(o); });
         calc();
     }
-
-    // حساب السعر التلقائي
     function calc() {
-        const pricePerThousand = document.getElementById('srv').value;
-        const quantity = document.getElementById('qty').value;
-        const total = (pricePerThousand * (quantity / 1000)).toFixed(5);
-        document.getElementById('prc').innerText = "$" + total;
+        const p = document.getElementById('srvS').value, q = document.getElementById('qty').value;
+        document.getElementById('pD').innerText = "$" + (p * (q/1000)).toFixed(5);
     }
-
-    // التحكم بالنافذة المنبثقة
-    function openM() { document.getElementById('modal').style.display = 'flex'; }
-    function closeM() { document.getElementById('modal').style.display = 'none'; }
-
-    // وظيفة النسخ
-    function cp(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            alert("تم النسخ بنجاح: " + text);
-        });
+    function setL(l) {
+        const isA = l === 'ar'; document.getElementById('b').className = isA ? 'rtl' : '';
+        document.getElementById('fB').classList.toggle('active', !isA); document.getElementById('aB').classList.toggle('active', isA);
+        document.querySelectorAll('.tr').forEach(e => e.innerText = e.getAttribute('data-'+l));
     }
-
-    // التحميل الافتراضي عند فتح الصفحة
-    window.onload = () => {
-        load('tiktok', document.querySelector('.svc-item'));
-    };
-    
-    // إغلاق النافذة عند الضغط خارجها
-    window.onclick = function(event) {
-        let m = document.getElementById('modal');
-        if (event.target == m) closeM();
-    }
+    function openP() { document.getElementById('modalP').style.display = 'flex'; }
+    function closeP() { document.getElementById('modalP').style.display = 'none'; }
+    function cp(t) { navigator.clipboard.writeText(t); alert("Copied!"); }
+    window.onload = () => loadS('tiktok', document.querySelector('.svc-box'));
 </script>
 </body>
 </html>
