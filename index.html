@@ -122,19 +122,45 @@
 </div>
 
 <div id="payModal" class="modal">
-    <div class="modal-body" style="background:#1a222d; border: 1px solid var(--gold);">       
-        <h3 id="p-title" style="color:var(--gold); margin-bottom:15px;">Modes de Paiement</h3>
-        <div style="background:#252f3f; padding:15px; border-radius:15px; text-align:right; direction: rtl;">                
-            <div style="margin-bottom: 15px;">
-                <span style="color:var(--gold); font-weight:bold;">CCP / BaridiMob:</span>
-                <div style="display: flex; align-items: center; gap: 5px; margin-top: 5px; direction: ltr;">
-                    <button onclick="copyToClipboard('00799999001465107315', this)" style="background:var(--gold); border:none; border-radius:5px; padding:5px 8px; font-size:10px; cursor:pointer; font-weight:bold;">Copy</button>
-                    <b style="color:var(--accent); font-size:13px;">00799999001465107315</b>
+    <div class="modal-body" style="background:#1a222d; border: 1px solid var(--gold); width: 95%; max-width: 420px; padding: 20px; border-radius: 20px;">       
+        <h3 id="p-title" style="color:var(--gold); margin-bottom:15px; text-align: center; font-size: 18px;">وسائل الدفع المتاحة</h3>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+
+            <div style="background:#252f3f; padding:12px; border-radius:15px; border-right: 5px solid #f59e0b; text-align: right; direction: rtl;">
+                <span style="color:#f59e0b; font-size: 12px; font-weight: bold;">BaridiMob:</span>
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px; direction: ltr;">
+                    <button onclick="copyToClipboard('00799999001465107315', this)" style="background:#f59e0b; border:none; border-radius:8px; padding:6px 12px; font-size:11px; cursor:pointer; font-weight:bold; color:#000;">Copy</button>
+                    <b style="color:#fff; font-size:13px; flex-grow:1; text-align:right;">00799999001465107315</b>
                 </div>
             </div>
-            <p style="font-size:11px; color:#ef4444; text-align:center; font-weight: bold;">أرسل الوصل عبر الواتساب لتأكيد الدفع</p>
+
+            <div style="background:#252f3f; padding:12px; border-radius:15px; border-right: 5px solid #f3ba2f; text-align: right; direction: rtl;">
+                <span style="color:#f3ba2f; font-size: 12px; font-weight: bold;">Binance Pay:</span>
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px; direction: ltr;">
+                    <button onclick="copyToClipboard('1194939141', this)" style="background:#f3ba2f; border:none; border-radius:8px; padding:6px 12px; font-size:11px; cursor:pointer; font-weight:bold; color:#000;">Copy</button>
+                    <b style="color:#fff; font-size:14px; flex-grow:1; text-align:right;">1194939141</b>
+                </div>
+            </div>
+
+            <div style="background:#252f3f; padding:12px; border-radius:15px; border-right: 5px solid #ef4444; text-align: right; direction: rtl;">
+                <span style="color:#ef4444; font-size: 12px; font-weight: bold;">RedotPay:</span>
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px; direction: ltr;">
+                    <button onclick="copyToClipboard('1523336713', this)" style="background:#ef4444; border:none; border-radius:8px; padding:6px 12px; font-size:11px; cursor:pointer; font-weight:bold; color:#fff;">Copy</button>
+                    <b style="color:#fff; font-size:14px; flex-grow:1; text-align:right;">1523336713</b>
+                </div>
+            </div>
+
+            <div style="background:#252f3f; padding:12px; border-radius:15px; border-right: 5px solid #10b981; text-align: right; direction: rtl;">
+                <span style="color:#10b981; font-size: 12px; font-weight: bold;">Flexy (Mobilis):</span>
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px; direction: ltr;">
+                    <button onclick="copyToClipboard('0656251947', this)" style="background:#10b981; border:none; border-radius:8px; padding:6px 12px; font-size:11px; cursor:pointer; font-weight:bold; color:#fff;">Copy</button>
+                    <b style="color:#fff; font-size:13px; flex-grow:1; text-align:right;">0656251947</b>
+                </div>
+            </div>
+
         </div>
-        <button onclick="closeModal('payModal')" style="width:100%; padding:14px; background:#444; border:none; border-radius:15px; color:white; margin-top:15px;">Fermer</button>
+        <button onclick="closeModal('payModal')" style="width:100%; padding:14px; background:#444; border:none; border-radius:15px; color:white; margin-top:15px; font-weight:bold; cursor:pointer;">إغلاق / Fermer</button>
     </div>
 </div>
 
