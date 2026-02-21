@@ -224,19 +224,13 @@
             date: new Date().toLocaleString(),
             link: link
         };
-
-        // حفظ في Firebase
-        await db.collection("orders").add(orderData);
-
-        // إرسال للواتساب بالآيدي والاسم
-        const msg = `طلب جديد من الموقع 🍬%0A` +
-                    `--------------------%0A` +
-                    `🆔 الآيدي: #${s.id}%0A` +
-                    `🛠 الخدمة: ${orderData.srvName}%0A` +
-                    `🔗 الرابط: ${link}%0A` +
-                    `💰 السعر: ${price}`;
-        
-        window.open(`https://wa.me/213656251947?text=${msg}`, '_blank');
+        function sendWA() {
+        const link = document.getElementById('mLink').value;
+        const pay = document.getElementById('mPay').value;
+        if(!link || !pay) return alert("يرجى ملء الرابط واختيار طريقة الدفع 🍬");
+        const msg = ` 🚀 ملاحظه اذا تميت بطريقه الدفع يمكنك الضغط على الرقم 1 *طلب جديد*%0AID: ${current.id}%0Aالخدمة: ${current.n}%0Aالرابط: ${link}%0Aالإجمالي: ${document.getElementById('totalDisplay').innerText}%0Aالدفع: ${pay}`;
+        window.open(`https://wa.me/213656251947?text=${encodeURIComponent(msg)}`);
+            
     }
 
     function copyText(text, btn) {
