@@ -49,11 +49,7 @@
     }
     .lang-box button.active { background: var(--orange); color: white; }
 
-    .logo {
-      font-size: 24px;
-      font-weight: 900;
-      color: var(--orange);
-    }
+    .logo { font-size: 24px; font-weight: 900; color: var(--orange); }
 
     .telegram-icon {
       font-size: 26px;
@@ -71,11 +67,7 @@
       border: 1px solid var(--orange);
     }
     .stat-item { text-align: center; }
-    .stat-number {
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--gold);
-    }
+    .stat-number { font-size: 22px; font-weight: 900; color: var(--gold); }
     .stat-label { font-size: 11px; color: #94a3b8; }
 
     .categories {
@@ -103,7 +95,7 @@
 
     .service-list {
       margin: 0 16px 20px;
-      max-height: 300px;
+      max-height: 340px;
       overflow-y: auto;
       background: var(--card);
       border-radius: 16px;
@@ -117,12 +109,18 @@
       margin-bottom: 10px;
       cursor: pointer;
       transition: all 0.2s;
+      font-size: 14px;
     }
     .service-item.active, .service-item:hover {
       background: var(--orange);
       color: black;
     }
-    .service-item:last-child { margin-bottom: 0; }
+    .service-item .price {
+      float: left;
+      color: var(--gold);
+      font-weight: bold;
+      margin-left: 8px;
+    }
 
     .order-section {
       margin: 0 16px 30px;
@@ -222,18 +220,10 @@
       justify-content: space-between;
       align-items: center;
     }
-
     .whatsapp-btn {
       color: #25D366;
-      font-size: 24px;
+      font-size: 26px;
       cursor: pointer;
-    }
-
-    @media (max-width: 500px) {
-      .categories { gap: 10px; padding: 12px; }
-      .cat-item { padding: 12px 4px; }
-      .cat-item i { font-size: 26px; }
-      .cat-item span { font-size: 10px; }
     }
   </style>
 </head>
@@ -285,7 +275,7 @@
     <button class="btn-order" onclick="placeOrder()">تنفيذ الطلب / COMMANDER</button>
   </div>
 
-  <!-- نافذة وسائل الدفع -->
+  <!-- نافذة الدفع -->
   <div class="modal" id="paymentModal">
     <div class="modal-content">
       <i class="fas fa-times close-btn" onclick="closeModals()"></i>
@@ -310,7 +300,7 @@
     </div>
   </div>
 
-  <!-- نافذة السجل -->
+  <!-- السجل -->
   <div class="modal" id="historyModal">
     <div class="modal-content">
       <i class="fas fa-times close-btn" onclick="closeModals()"></i>
@@ -335,7 +325,7 @@
       {id: 8522, cat: "TikTok", n: "TikTok Followers | Lebanon 🇱🇧 | Real ADS - High Stability", n_ar: "متابعين تيك توك | لبناني حقيقي 🇱🇧 | عبر الإعلانات - ثبات عالٍ", p: 8.50},
       {id: 1521, cat: "TikTok", n: "TikTok Monetizable Followers", n_ar: "متابعين تفعيل الربح (Monetizable) |تيك توك ضمان  ♻️", p: 5.50},
       {id: 1972, cat: "TikTok", n: "TikTok Likes | Non Drop", n_ar: "إعجابات تيك توك | ثابت فوري ⚡ ضمان ♻️", p: 0.0368},
-      {id: 3854, cat: "TikTok", n: "TikTok Likes | HQ Real Profiles", n_ar: "إعجابات تيك توك  حقيقية HQ | سرعة فائقة ⚡ ضمان ♻️", p: 0.0524},
+      {id: 3854, cat: "TikTok", n: "TikTok Likes | HQ Real Profiles", n_ar: "إعجابات تيك توك حقيقية HQ | سرعة فائقة ⚡ ضمان ♻️", p: 0.0524},
       {id: 7572, cat: "TikTok", n: "TikTok Likes | HQ Premium", n_ar: "إعجابات تيك توك VIP حقيقية | ثابت ⚡ ضمان ♻️", p: 0.0692},
       {id: 7500, cat: "TikTok", n: "TikTok Views | Instant", n_ar: "مشاهدات تيك توك فورية ⚡ مليونية (بدون ضمان)", p: 0.0060},
       {id: 8387, cat: "TikTok", n: "TikTok Views | Real SuperInstant", n_ar: "مشاهدات تيك توك حقيقية | سرعة جنونية ⚡", p: 0.007},
@@ -431,6 +421,7 @@
     ];
 
     let currentLang = 'ar';
+    let selectedService = null;
 
     function setLanguage(lang) {
       currentLang = lang;
@@ -444,8 +435,6 @@
 
       const active = document.querySelector('.cat-item.active');
       if (active) setCategory(active.dataset.cat, active);
-
-      calculatePrice();
     }
 
     function setCategory(cat, element) {
@@ -459,7 +448,7 @@
         const div = document.createElement('div');
         div.className = 'service-item';
         div.innerHTML = `
-          <i class="fas fa-circle" style="color:#f59e0b; margin-right: 8px;"></i>
+          <span class="price">\[ {s.p.toFixed(3)}</span>
           ${currentLang === 'ar' ? (s.n_ar || s.n) : s.n}
         `;
         div.onclick = () => {
@@ -471,13 +460,10 @@
         serviceList.appendChild(div);
       });
 
-      document.getElementById('quantityInput').disabled = false;
       document.getElementById('quantityInput').value = 1000;
       selectedService = null;
       calculatePrice();
     }
-
-    let selectedService = null;
 
     function calculatePrice() {
       if (!selectedService) {
@@ -485,25 +471,12 @@
         return;
       }
 
-      const qtyInput = document.getElementById('quantityInput');
-      let qty = parseFloat(qtyInput.value) || 1000;
-
-      let total = 0;
-      let totalStr = "0.000";
-
-      if (selectedService.type === 'fixed') {
-        total = selectedService.p;
-        totalStr = total.toFixed(3);
-        qtyInput.disabled = true;
-        qtyInput.value = "—";
-      } else {
-        total = (selectedService.p * qty) / 1000;
-        totalStr = total.toFixed(3);
-        qtyInput.disabled = false;
-      }
+      const qty = parseFloat(document.getElementById('quantityInput').value) || 1000;
+      let total = selectedService.type === 'fixed' ? selectedService.p : (selectedService.p * qty) / 1000;
+      const totalStr = total.toFixed(3);
 
       document.getElementById('totalDisplay').textContent = 
-        currentLang === 'ar' ? `الإجمالي: \[ {totalStr}` : `Total: \]{totalStr}`;
+        currentLang === 'ar' ? `الإجمالي: \]{totalStr}` : `Total: $${totalStr}`;
     }
 
     function placeOrder() {
