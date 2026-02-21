@@ -219,7 +219,7 @@
         openModal('historyModal');
         const content = document.getElementById('historyContent');
         content.innerHTML = "...";
-        db.collection("orders").where("uid", "==", userToken).onSnapshot(snap => {
+        db.collection("orders").onSnapshot(snap => {          
             content.innerHTML = snap.docs.map(doc => {
                 const d = doc.data();
                 return `<div class="history-item"><span class="status-badge">${d.status}</span><small>${d.date}</small><br><b>#${d.srvID || '0'} - ${d.srvName || '---'}</b><br><span style="color:var(--accent)">${d.price}</span></div>`;
