@@ -132,7 +132,10 @@ const firebaseConfig = {
   messagingSenderId: "968826000164",
   appId: "1:968826000164:web:aa41869e201784b85c59b1",
   measurementId: "G-466S46HKCB"
-};
+   // يوضع مباشرة تحت السطر 135 في صورتك
+  firebase.initializeApp(firebaseConfig); 
+   const db = firebase.firestore();
+
     const userToken = localStorage.getItem('k_token') || 'U' + Math.floor(Math.random()*1000000);
     localStorage.setItem('k_token', userToken);
 
