@@ -3,61 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM13 | PANEL PRO</title>
+    <title>KARIM TREIZE 13</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #0b0b0f; --card: #16161f; --accent: #f97316; --text: #ffffff; --border: #2a2a35; --success: #10b981; }
         * { margin:0; padding:0; box-sizing:border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); padding-bottom: 30px; }
+        body { background: var(--bg); color: var(--text); padding-bottom: 20px; }
         body.ar { direction: rtl; text-align: right; }
 
-        /* Header */
+        /* Header & Icons */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #000; border-bottom: 1px solid var(--border); position: sticky; top:0; z-index: 1000; }
-        .logo { font-weight: 900; font-size: 20px; color: #fff; }
+        .logo { font-weight: 900; font-size: 18px; text-transform: uppercase; }
         .logo span { color: var(--accent); }
-        .nav-tools { display: flex; gap: 10px; }
-        .tool-btn { width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--accent); cursor: pointer; transition: 0.3s; }
-        .tool-btn:hover { background: var(--accent); color: #000; }
+        .nav-tools { display: flex; gap: 8px; }
+        .tool-btn { width: 38px; height: 38px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--accent); cursor: pointer; }
 
-        /* Status Banner */
-        .stats { display: flex; justify-content: space-around; margin: 15px; background: var(--card); padding: 18px; border-radius: 20px; border: 1px solid var(--border); }
-        .stat-item { text-align: center; }
-        .stat-val { display: block; font-size: 18px; font-weight: 900; color: var(--accent); }
-        .stat-lbl { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        /* Wallet Card (NEW: Top Position) */
+        .wallet-card { margin: 15px; background: linear-gradient(145deg, #1a1a24, #000); padding: 15px; border-radius: 20px; border: 1px solid var(--accent); }
+        .wallet-title { font-size: 12px; color: var(--accent); margin-bottom: 10px; text-align: center; font-weight: 900; }
+        .wallet-item { display: flex; justify-content: space-between; align-items: center; background: #000; padding: 10px; border-radius: 12px; margin-bottom: 8px; border: 1px solid #222; }
+        .wallet-item span { font-size: 12px; font-family: monospace; }
+        .copy-mini { background: var(--accent); color: #000; border: none; padding: 4px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; cursor: pointer; }
+
+        /* Stats Section */
+        .stats { display: flex; justify-content: space-around; margin: 0 15px 15px; }
+        .stat-box { background: var(--card); padding: 10px; border-radius: 15px; text-align: center; flex: 1; margin: 0 5px; border: 1px solid var(--border); }
+        .stat-v { display: block; font-size: 16px; font-weight: 900; color: var(--accent); }
+        .stat-l { font-size: 9px; color: #666; }
 
         /* Category Grid */
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 0 15px; }
-        .cat-box { background: var(--card); border-radius: 20px; padding: 20px 5px; text-align: center; cursor: pointer; border: 1px solid var(--border); transition: 0.3s; }
-        .cat-box.active { border-color: var(--accent); background: rgba(249,115,22,0.15); transform: scale(1.05); }
-        .cat-box i { font-size: 28px; margin-bottom: 10px; display: block; }
-        .cat-box span { font-size: 12px; font-weight: bold; }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0 15px; }
+        .cat-btn { background: var(--card); border-radius: 15px; padding: 15px 5px; text-align: center; cursor: pointer; border: 1px solid var(--border); }
+        .cat-btn.active { border-color: var(--accent); background: rgba(249,115,22,0.1); }
+        .cat-btn i { font-size: 24px; margin-bottom: 8px; display: block; }
+        .cat-btn span { font-size: 10px; font-weight: bold; }
 
-        /* Sellem (The Service Menu) */
-        .order-container { margin: 20px 15px; background: var(--card); padding: 20px; border-radius: 25px; border: 1px solid var(--border); display: none; animation: slideUp 0.4s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        label { display: block; font-size: 12px; color: var(--accent); margin-bottom: 8px; font-weight: bold; }
-        select, input { width: 100%; padding: 15px; background: #000; border: 1px solid var(--border); border-radius: 15px; color: #fff; margin-bottom: 15px; outline: none; font-size: 14px; }
-        
-        /* Payment Section */
-        .pay-area { background: #1a1a24; padding: 15px; border-radius: 15px; margin-bottom: 15px; display: none; align-items: center; justify-content: space-between; border: 1px dashed var(--accent); }
-        .pay-val { font-family: monospace; font-size: 14px; color: #fff; font-weight: bold; }
-        .copy-tag { background: var(--accent); color: #000; border: none; padding: 6px 15px; border-radius: 8px; cursor: pointer; font-weight: 900; font-size: 11px; }
+        /* Order Form (Ladder Style) */
+        .order-panel { margin: 15px; background: var(--card); padding: 20px; border-radius: 20px; border: 1px solid var(--border); display: none; }
+        .order-panel.active { display: block; animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
 
-        .total-display { font-size: 30px; font-weight: 900; color: var(--success); text-align: center; margin: 15px 0; }
-        .whatsapp-btn { width: 100%; padding: 20px; background: var(--accent); border: none; border-radius: 18px; color: #000; font-weight: 900; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 10px 20px rgba(249,115,22,0.2); }
+        label { display: block; font-size: 11px; color: #888; margin-bottom: 6px; margin-left: 5px; }
+        select, input { width: 100%; padding: 14px; background: #000; border: 1px solid var(--border); border-radius: 12px; color: #fff; margin-bottom: 15px; outline: none; }
+        
+        .total-price { font-size: 28px; font-weight: 900; color: var(--success); text-align: center; margin-bottom: 15px; }
+        .btn-confirm { width: 100%; padding: 18px; background: var(--accent); border: none; border-radius: 15px; color: #000; font-weight: 900; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+        /* Custom Alert */
+        .custom-alert { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #000; padding: 12px 20px; border-radius: 10px; font-weight: bold; z-index: 3000; display: none; box-shadow: 0 5px 15px rgba(0,0,0,0.5); font-size: 13px; text-align: center; }
 
         /* History Modal */
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000; }
-        .modal-body { background: var(--card); width: 92%; max-width: 400px; padding: 25px; border-radius: 25px; border: 1px solid var(--border); }
-        .history-card { background: #000; padding: 15px; border-radius: 12px; margin-bottom: 10px; border-left: 5px solid var(--accent); }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal-content { background: var(--card); width: 92%; max-width: 400px; padding: 20px; border-radius: 20px; border: 1px solid var(--border); }
+        .history-item { background: #000; padding: 12px; border-radius: 10px; margin-bottom: 8px; border-right: 4px solid var(--accent); }
     </style>
 </head>
 <body class="fr">
 
+<div class="custom-alert" id="alertBox"></div>
+
 <div class="header">
-    <div class="logo">KARIM<span>13</span> 🍬</div>
+    <div class="logo">KARIM<span>TREIZE13</span> 🍬</div>
     <div class="nav-tools">
         <div class="tool-btn" onclick="showHistory()"><i class="fas fa-history"></i></div>
         <div class="tool-btn" onclick="toggleLang()"><i class="fas fa-language"></i></div>
@@ -65,159 +72,159 @@
     </div>
 </div>
 
+<div class="wallet-card">
+    <div class="wallet-title" data-fr="COORDONNÉES DE PAIEMENT" data-ar="معلومات الدفع">COORDONNÉES DE PAIEMENT</div>
+    <div class="wallet-item">
+        <span>BaridiMob: <b>007999...7315</b></span>
+        <button class="copy-mini" onclick="copy('00799999001465107315')">COPY</button>
+    </div>
+    <div class="wallet-item">
+        <span>Binance Pay: <b>1194939141</b></span>
+        <button class="copy-mini" onclick="copy('1194939141')">COPY</button>
+    </div>
+</div>
+
 <div class="stats">
-    <div class="stat-item"><span class="stat-val">1.2k+</span><span class="stat-lbl" data-fr="En Ligne" data-ar="متصل">En Ligne</span></div>
-    <div class="stat-item"><span class="stat-val">32K</span><span class="stat-lbl" data-fr="Total" data-ar="الإجمالي">Total</span></div>
-    <div class="stat-item"><span class="stat-val">100%</span><span class="stat-lbl" data-fr="Sécurisé" data-ar="آمن">Sécurisé</span></div>
+    <div class="stat-box"><span class="stat-v">1,842</span><span class="stat-l">Online</span></div>
+    <div class="stat-box"><span class="stat-v">32.5K</span><span class="stat-l">Orders</span></div>
+    <div class="stat-box"><span class="stat-v">99.9%</span><span class="stat-l">Fiabilité</span></div>
 </div>
 
 <div class="grid">
-    <div class="cat-box" id="cat-TikTok" onclick="loadSellem('TikTok')"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
-    <div class="cat-box" id="cat-Facebook" onclick="loadSellem('Facebook')"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
-    <div class="cat-box" id="cat-Instagram" onclick="loadSellem('Instagram')"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Insta</span></div>
-    <div class="cat-box" id="cat-YouTube" onclick="loadSellem('YouTube')"><i class="fab fa-youtube" style="color:red"></i><span>YouTube</span></div>
-    <div class="cat-box" id="cat-Telegram" onclick="loadSellem('Telegram')"><i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
-    <div class="cat-box" id="cat-Snapchat" onclick="loadSellem('Snapchat')"><i class="fab fa-snapchat" style="color:#fffc00"></i><span>Snapchat</span></div>
-    <div class="cat-box" id="cat-Premium" onclick="loadSellem('Premium')"><i class="fas fa-gem" style="color:#a855f7"></i><span>Premium</span></div>
-    <div class="cat-box" id="cat-Gaming" onclick="loadSellem('Gaming')"><i class="fas fa-gamepad" style="color:#22c55e"></i><span>Gaming</span></div>
+    <div class="cat-btn" id="cat-TikTok" onclick="activateCat('TikTok')"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
+    <div class="cat-btn" id="cat-Facebook" onclick="activateCat('Facebook')"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
+    <div class="cat-btn" id="cat-Instagram" onclick="activateCat('Instagram')"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Insta</span></div>
+    <div class="cat-btn" id="cat-YouTube" onclick="activateCat('YouTube')"><i class="fab fa-youtube" style="color:red"></i><span>YouTube</span></div>
+    <div class="cat-btn" id="cat-Telegram" onclick="activateCat('Telegram')"><i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
+    <div class="cat-btn" id="cat-Snapchat" onclick="activateCat('Snapchat')"><i class="fab fa-snapchat" style="color:#fffc00"></i><span>Snapchat</span></div>
+    <div class="cat-btn" id="cat-Premium" onclick="activateCat('Premium')"><i class="fas fa-gem" style="color:#a855f7"></i><span>Premium</span></div>
+    <div class="cat-btn" id="cat-Gaming" onclick="activateCat('Gaming')"><i class="fas fa-gamepad" style="color:#22c55e"></i><span>Gaming</span></div>
 </div>
 
-<div class="order-container" id="orderArea">
-    <label data-fr="SÉLECTIONNER LE SERVICE" data-ar="اختر الخدمة المطلوبة">SÉLECTIONNER LE SERVICE</label>
-    <select id="sellemMenu" onchange="pickService(this.value)"></select>
+<div class="order-panel" id="orderPanel">
+    <label data-fr="SERVICE" data-ar="الخدمة">SERVICE</label>
+    <select id="serviceMenu" onchange="updateSrv()"></select>
 
-    <label data-fr="LIEN DE LA PAGE / VIDEO" data-ar="رابط الصفحة أو الفيديو">LIEN DE LA PAGE / VIDEO</label>
-    <input type="url" id="userLink" placeholder="https://...">
+    <label data-fr="LIEN" data-ar="الرابط">LIEN</label>
+    <input type="url" id="srvLink" placeholder="https://...">
 
     <div id="qtySection">
         <label data-fr="QUANTITÉ" data-ar="الكمية">QUANTITÉ</label>
-        <input type="number" id="userQty" value="1000" oninput="recalc()">
+        <input type="number" id="srvQty" value="1000" oninput="recalc()">
     </div>
 
-    <label data-fr="MODE DE PAIEMENT" data-ar="وسيلة الدفع">MODE DE PAIEMENT</label>
-    <select id="userPay" onchange="showWallet(this.value)">
-        <option value="">---</option>
-        <option value="BaridiMob">BaridiMob (Algerie)</option>
-        <option value="RedotPay">RedotPay (ID)</option>
-        <option value="Binance">Binance Pay (USDT)</option>
-        <option value="Flexy">Flexy (Ooredoo/Mobilis)</option>
+    <label data-fr="PAIEMENT" data-ar="وسيلة الدفع">PAIEMENT</label>
+    <select id="srvPay">
+        <option value="BaridiMob">BaridiMob</option>
+        <option value="RedotPay">RedotPay</option>
+        <option value="Binance">Binance Pay</option>
+        <option value="Flexy">Flexy</option>
     </select>
 
-    <div class="pay-area" id="payInfo">
-        <span class="pay-val" id="walletNum"></span>
-        <button class="copy-tag" onclick="doCopy()">COPY</button>
-    </div>
-
-    <div class="total-display" id="finalPrice">$0.0000</div>
-    <button class="whatsapp-btn" onclick="submitToWA()">
-        <i class="fab fa-whatsapp"></i> <span data-fr="CONFIRMER SUR WHATSAPP" data-ar="تأكيد الطلب عبر واتساب">CONFIRMER SUR WHATSAPP</span>
+    <div class="total-price" id="displayTotal">$0.00</div>
+    <button class="btn-confirm" onclick="processOrder()">
+        <i class="fab fa-whatsapp"></i> <span data-fr="CONFIRMER & PAYER" data-ar="تأكيد و دفع">CONFIRMER & PAYER</span>
     </button>
 </div>
 
-<div id="historyMod" class="modal">
-    <div class="modal-body">
-        <h3 style="text-align:center; margin-bottom:20px; color:var(--accent)" data-fr="MES COMMANDES" data-ar="طلباتي">MES COMMANDES</h3>
-        <div id="listHist" style="max-height:300px; overflow-y:auto;"></div>
-        <button onclick="closeMod()" style="width:100%; padding:15px; margin-top:15px; background:#222; color:#fff; border:none; border-radius:15px; font-weight:bold;">FERMER</button>
+<div id="histModal" class="modal">
+    <div class="modal-content">
+        <h3 style="text-align:center; margin-bottom:15px; color:var(--accent)">HISTORIQUE</h3>
+        <div id="histList" style="max-height:300px; overflow-y:auto;"></div>
+        <button onclick="closeHist()" style="width:100%; padding:12px; margin-top:10px; background:#333; color:#fff; border:none; border-radius:10px;">Close</button>
     </div>
 </div>
 
 <script>
-    const DATA_WALLETS = { "BaridiMob": "00799999001465107315", "RedotPay": "1523336713", "Binance": "1194939141", "Flexy": "0600000000" };
-    const ALL_SERVICES = [
-        {id: 3231, cat: "TikTok", n_fr: "👤 TikTok Followers | High Quality", n_ar: "👤 متابعين تيك توك | جودة عالية", p: 1.10},
-        {id: 1972, cat: "TikTok", n_fr: "❤️ TikTok Likes | No Drop", n_ar: "❤️ لايكات تيك توك | بدون نقص", p: 0.03},
-        {id: 8253, cat: "Facebook", n_fr: "👤 FB Followers | Page & Profile", n_ar: "👤 متابعين فيسبوك | بروفايل وصفحات", p: 0.47},
-        {id: 2594, cat: "Instagram", n_fr: "👤 IG Followers | Real Accounts", n_ar: "👤 متابعين انستقرام | حسابات حقيقية", p: 0.96},
-        {id: 3428, cat: "Telegram", n_fr: "👤 TG Members | Fast Delivery", n_ar: "👤 أعضاء تليجرام | تسليم سريع", p: 1.09},
-        {id: 8607, cat: "Premium", n_fr: "🎬 Netflix Premium Account | 1 Month", n_ar: "🎬 حساب نتفليكس بريميوم | شهر كامل", p: 4.50, fixed: true},
-        {id: 9106, cat: "Gaming", n_fr: "🎮 PUBG 60 UC | Global Key", n_ar: "🎮 ببجي 60 شدة | كود عالمي", p: 1.50, fixed: true}
+    const SERVICES = [
+        {id: 1, cat: "TikTok", n_fr: "👤 Followers | HQ", n_ar: "👤 متابعين | جودة عالية", p: 1.10},
+        {id: 2, cat: "TikTok", n_fr: "❤️ Likes | Instant", n_ar: "❤️ إعجابات | فوري", p: 0.05},
+        {id: 3, cat: "Facebook", n_fr: "👤 Followers | Lifetime", n_ar: "👤 متابعين | ضمان مدى الحياة", p: 0.47},
+        {id: 4, cat: "Premium", n_fr: "🎬 Netflix | 1 Month", n_ar: "🎬 نتفليكس | شهر", p: 4.50, fixed: true},
+        {id: 5, cat: "Gaming", n_fr: "🎮 PUBG 60 UC", n_ar: "🎮 ببجي 60 شدة", p: 1.50, fixed: true}
     ];
 
     let currentL = 'fr';
     let activeSrv = null;
 
     function toggleLang() {
-        currentL = (currentL === 'fr' ? 'ar' : 'fr');
+        currentL = currentL === 'fr' ? 'ar' : 'fr';
         document.body.className = currentL;
-        document.querySelectorAll('[data-fr]').forEach(el => { el.innerText = el.getAttribute('data-' + currentL); });
+        document.querySelectorAll('[data-fr]').forEach(el => el.innerText = el.getAttribute('data-' + currentL));
     }
 
-    function loadSellem(cat) {
-        document.querySelectorAll('.cat-box').forEach(b => b.classList.remove('active'));
+    function activateCat(cat) {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
         document.getElementById('cat-'+cat).classList.add('active');
-        const menu = document.getElementById('sellemMenu');
-        menu.innerHTML = `<option value="">--- Select Service ---</option>`;
-        
-        ALL_SERVICES.filter(s => s.cat === cat).forEach(s => {
-            const name = currentL === 'fr' ? s.n_fr : s.n_ar;
-            menu.innerHTML += `<option value="${s.id}">${name} - ($${s.p})</option>`;
+        const menu = document.getElementById('serviceMenu');
+        menu.innerHTML = '<option value="">---</option>';
+        SERVICES.filter(s => s.cat === cat).forEach(s => {
+            menu.innerHTML += `<option value="${s.id}">${currentL==='fr'?s.n_fr:s.n_ar}</option>`;
         });
-        
-        document.getElementById('orderArea').style.display = 'block';
-        window.scrollTo({top: document.getElementById('orderArea').offsetTop - 100, behavior:'smooth'});
+        document.getElementById('orderPanel').classList.add('active');
     }
 
-    function pickService(id) {
-        activeSrv = ALL_SERVICES.find(s => s.id == id);
-        if(!activeSrv) return;
-        document.getElementById('qtySection').style.display = activeSrv.fixed ? 'none' : 'block';
-        document.getElementById('userQty').value = activeSrv.fixed ? 1 : 1000;
-        recalc();
+    function updateSrv() {
+        const id = document.getElementById('serviceMenu').value;
+        activeSrv = SERVICES.find(s => s.id == id);
+        if(activeSrv) {
+            document.getElementById('qtySection').style.display = activeSrv.fixed ? 'none' : 'block';
+            document.getElementById('srvQty').value = activeSrv.fixed ? 1 : 1000;
+            recalc();
+        }
     }
 
     function recalc() {
         if(!activeSrv) return;
-        const q = document.getElementById('userQty').value || 1;
+        const q = document.getElementById('srvQty').value || 1;
         const total = activeSrv.fixed ? (activeSrv.p * q) : (activeSrv.p * q / 1000);
-        document.getElementById('finalPrice').innerText = "$" + total.toFixed(4);
+        document.getElementById('displayTotal').innerText = "$" + total.toFixed(3);
     }
 
-    function showWallet(val) {
-        const info = document.getElementById('payInfo');
-        if(val && DATA_WALLETS[val]) {
-            info.style.display = 'flex';
-            document.getElementById('walletNum').innerText = DATA_WALLETS[val];
-        } else { info.style.display = 'none'; }
+    function copy(txt) {
+        navigator.clipboard.writeText(txt);
+        showAlert(currentL==='fr'?"Copié! ✅":"تم النسخ! ✅");
     }
 
-    function doCopy() {
-        navigator.clipboard.writeText(document.getElementById('walletNum').innerText);
-        alert(currentL === 'fr' ? "Copié avec succès ✅" : "تم النسخ بنجاح ✅");
+    function showAlert(msg) {
+        const b = document.getElementById('alertBox');
+        b.innerText = msg; b.style.display = 'block';
+        setTimeout(() => b.style.display = 'none', 3000);
     }
 
-    function submitToWA() {
-        const link = document.getElementById('userLink').value;
-        const pay = document.getElementById('userPay').value;
-        if(!link || !pay || !activeSrv) return alert("Missing Info!");
+    function processOrder() {
+        const link = document.getElementById('srvLink').value;
+        const pay = document.getElementById('srvPay').value;
+        if(!link || !activeSrv) return showAlert(currentL==='fr'?"Lien manquant!":"الرابط مطلوب!");
 
-        const orderID = Math.floor(100000 + Math.random() * 899999);
-        const orderData = { id: orderID, srv: activeSrv.n_fr, status: "En attente", date: new Date().toLocaleString() };
-        
-        let localH = JSON.parse(localStorage.getItem('karim_orders_v2') || '[]');
-        localH.push(orderData);
-        localStorage.setItem('karim_orders_v2', JSON.stringify(localH));
+        // 1. Show Payment Alert
+        showAlert(currentL==='fr' ? "Utilisez les numéros en haut pour payer! ⬆️" : "استخدم أرقام الدفع الموجودة في الأعلى! ⬆️");
 
-        const text = `*NOUVELLE COMMANDE - KARIM13*%0A--------------------------%0AID: #${orderID}%0AService: ${activeSrv.n_fr}%0ALien: ${link}%0APrix: ${document.getElementById('finalPrice').innerText}%0APaiement: ${pay}%0A--------------------------%0A_Veuillez valider ma commande_`;
-        window.open(`https://wa.me/213656251947?text=${text}`);
+        // 2. Save to History
+        const id = Math.floor(Math.random()*900000);
+        const order = { id, srv: activeSrv.n_fr, status: "En attente", date: new Date().toLocaleString() };
+        let h = JSON.parse(localStorage.getItem('k_orders') || '[]');
+        h.push(order); localStorage.setItem('k_orders', JSON.stringify(h));
+
+        // 3. WhatsApp Redirect after delay
+        setTimeout(() => {
+            const msg = `*COMMANDE - KARIM13*%0AID: #${id}%0ASrv: ${order.srv}%0ALink: ${link}%0APay: ${pay}%0APrice: ${document.getElementById('displayTotal').innerText}`;
+            window.open(`https://wa.me/213656251947?text=${msg}`);
+        }, 2000);
     }
 
     function showHistory() {
-        const h = JSON.parse(localStorage.getItem('karim_orders_v2') || '[]');
-        const list = document.getElementById('listHist');
-        list.innerHTML = h.reverse().map(o => `
-            <div class="history-card">
-                <div style="display:flex; justify-content:space-between; font-size:12px">
-                    <b>#${o.id}</b> <span style="color:var(--accent); font-weight:900">${o.status}</span>
-                </div>
-                <div style="margin-top:8px; font-size:11px">${o.srv}</div>
-                <div style="font-size:9px; color:#444; margin-top:5px">${o.date}</div>
+        const h = JSON.parse(localStorage.getItem('k_orders') || '[]').reverse();
+        document.getElementById('histList').innerHTML = h.map(o => `
+            <div class="history-item">
+                <div style="display:flex;justify-content:space-between"><b>#${o.id}</b> <span>${o.status}</span></div>
+                <div style="font-size:11px;margin-top:5px">${o.srv}</div>
             </div>
-        `).join('') || "No History";
-        document.getElementById('historyMod').style.display = 'flex';
+        `).join('') || "No orders";
+        document.getElementById('histModal').style.display = 'flex';
     }
 
-    function closeMod() { document.getElementById('historyMod').style.display = 'none'; }
+    function closeHist() { document.getElementById('histModal').style.display = 'none'; }
 </script>
 </body>
 </html>
