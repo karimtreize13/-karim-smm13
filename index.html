@@ -14,10 +14,7 @@
         :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --text: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.3s ease; }
         body { background: var(--bg); color: var(--text); text-align: center; line-height: 1.6; overflow-x: hidden; }
-        
-        /* منع التمرير للخلفية عند فتح النافذة */
         body.modal-open { overflow: hidden; }
-
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(11, 17, 27, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         .logo { font-weight: 900; font-size: 20px; }
         .logo span { color: var(--gold); }
@@ -25,36 +22,27 @@
         .lang-btn.active { background: var(--gold); color: black; }
         .header-tools { display: flex; gap: 15px; align-items: center; }
         .icon-nav { font-size: 22px; cursor: pointer; color: var(--text); text-decoration: none; }
-
         .stats { display: flex; justify-content: space-around; align-items: center; margin: 15px; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
         .stats div h2 { color: var(--gold); font-size: 18px; font-weight: 900; }
-
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
         .box { background: var(--card); padding: 15px 5px; border-radius: 18px; border: 1px solid var(--border); cursor: pointer; }
         .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); transform: scale(1.05); }
         .box i { font-size: 24px; display: block; margin-bottom: 8px; }
-
         .card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
         .custom-select { position: relative; margin-bottom: 15px; text-align: left; }
         .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; cursor: pointer; display: flex; justify-content: space-between; }
         .select-items { position: absolute; background: var(--card); border: 1px solid var(--border); top: 100%; left: 0; right: 0; z-index: 99; border-radius: 15px; max-height: 250px; overflow-y: auto; }
         .select-items div { padding: 12px 15px; border-bottom: 1px solid #2d3748; cursor: pointer; }
         .select-hide { display: none; }
-
         input { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; }
         .price-tag { font-size: 30px; font-weight: 900; color: var(--accent); margin-bottom: 20px; display: block; }
         .btn-order { width: 100%; padding: 18px; border: none; border-radius: 18px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; }
-
-        /* النوافذ مع دعم التمرير السلس */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 15px; }
         .modal-body { background: var(--card); padding: 20px; border-radius: 25px; width: 100%; max-width: 400px; border: 1px solid var(--border); max-height: 80vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-        
         .pay-row { background: var(--bg); padding: 10px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
         .copy-btn { background: var(--gold); color: #000; padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer; border: none; }
-
         .history-item { background: var(--bg); padding: 12px; border-radius: 15px; margin-bottom: 10px; text-align: left; border-left: 4px solid var(--gold); position: relative; }
         .status-badge { position: absolute; right: 10px; top: 10px; font-size: 9px; padding: 2px 8px; border-radius: 4px; background: var(--gold); color: #000; font-weight: bold; }
-
         [dir="rtl"] .select-selected, [dir="rtl"] .select-items div, [dir="rtl"] .history-item { text-align: right; }
         [dir="rtl"] .history-item { border-left: none; border-right: 4px solid var(--gold); }
     </style>
@@ -109,7 +97,7 @@
         <div class="pay-row"><div><small>BaridiMob</small><br><b>00799999001465107315</b></div><button class="copy-btn" onclick="copyText('00799999001465107315', this)">Copy</button></div>
         <div class="pay-row"><div><small>Binance ID</small><br><b>1194939141</b></div><button class="copy-btn" onclick="copyText('1194939141', this)">Copy</button></div>
         <div class="pay-row"><div><small>RedotPay ID</small><br><b>1523336713</b></div><button class="copy-btn" onclick="copyText('1523336713', this)">Copy</button></div>
-        <div class="pay-row"><div><small>Flexy (Mobilis)</small><br><b>0656000000</b></div><button class="copy-btn" onclick="copyText('0656000000', this)">Copy</button></div>
+        <div class="pay-row"><div><small>Flexy (Mobilis)</small><br><b>0656251947</b></div><button class="copy-btn" onclick="copyText('0656251947', this)">Copy</button></div>
         <button onclick="closeModal('payModal')" style="width:100%; padding:12px; background:#444; border:none; border-radius:15px; color:white; margin-top:10px;">Fermer</button>
     </div>
 </div>
@@ -123,18 +111,19 @@
 </div>
 
 <script>
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
-  authDomain: "karim-smm.firebaseapp.com",
-  projectId: "karim-smm",
-  storageBucket: "karim-smm.firebasestorage.app",
-  messagingSenderId: "968826000164",
-  appId: "1:968826000164:web:aa41869e201784b85c59b1",
-  measurementId: "G-466S46HKCB"
-   // يوضع مباشرة تحت السطر 135 في صورتك
-  firebase.initializeApp(firebaseConfig); 
-   const db = firebase.firestore();
+    const firebaseConfig = {
+      apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
+      authDomain: "karim-smm.firebaseapp.com",
+      projectId: "karim-smm",
+      storageBucket: "karim-smm.firebasestorage.app",
+      messagingSenderId: "968826000164",
+      appId: "1:968826000164:web:aa41869e201784b85c59b1",
+      measurementId: "G-466S46HKCB"
+    };
+
+    // تفعيل Firebase بشكل صحيح خارج القوس
+    firebase.initializeApp(firebaseConfig); 
+    const db = firebase.firestore();
 
     const userToken = localStorage.getItem('k_token') || 'U' + Math.floor(Math.random()*1000000);
     localStorage.setItem('k_token', userToken);
@@ -216,13 +205,14 @@ const firebaseConfig = {
         if(!link) return alert("Lien Missing!");
         
         const srvName = (currentLang === 'ar' ? s.n_ar : s.n);
-        await db.collection("orders").add({
-            uid: userToken, srvID: s.id, srvName: srvName, price: price,
-            status: "Pending", date: new Date().toLocaleString(), link: link
-        });
-
-        const msg = "🚀 *طلب جديد من الموقع* 🍬\n------------------\n🆔 *ID:* #" + s.id + "\n🛠 *Service:* " + srvName + "\n🔗 *Link:* " + link + "\n💰 *Price:* " + price;
-        window.open("https://wa.me/213656251947?text=" + encodeURIComponent(msg), '_blank');
+        try {
+            await db.collection("orders").add({
+                uid: userToken, srvID: s.id, srvName: srvName, price: price,
+                status: "Pending", date: new Date().toLocaleString(), link: link
+            });
+            const msg = "🚀 *طلب جديد من الموقع* 🍬\n------------------\n🆔 *ID:* #" + s.id + "\n🛠 *Service:* " + srvName + "\n🔗 *Link:* " + link + "\n💰 *Price:* " + price;
+            window.open("https://wa.me/213656251947?text=" + encodeURIComponent(msg), '_blank');
+        } catch(e) { alert("Error: " + e.message); }
     }
 
     function openHistory() {
@@ -233,7 +223,7 @@ const firebaseConfig = {
             content.innerHTML = snap.docs.map(doc => {
                 const d = doc.data();
                 return `<div class="history-item"><span class="status-badge">${d.status}</span><small>${d.date}</small><br><b>#${d.srvID || '0'} - ${d.srvName || '---'}</b><br><span style="color:var(--accent)">${d.price}</span></div>`;
-            }).join('') || "Aucun ordre.";
+            }).reverse().join('') || "Aucun ordre.";
         });
     }
 
