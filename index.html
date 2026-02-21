@@ -28,81 +28,91 @@
     body.fr { direction: ltr; text-align: left; }
 
     .header {
-      padding: 14px 18px;
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(17,24,39,0.75);
+      background: rgba(17,24,39,0.85);
       backdrop-filter: blur(10px);
       position: sticky;
       top: 0;
       z-index: 1000;
       border-bottom: 1px solid var(--border);
     }
-    .logo { font-size: 23px; font-weight: 900; }
-    .logo span { color: var(--accent); }
-
     .lang-box button {
       background: var(--gray);
       color: white;
       border: none;
       padding: 6px 12px;
       border-radius: 6px;
-      font-weight: 600;
-      font-size: 12px;
+      font-weight: bold;
+      font-size: 13px;
       cursor: pointer;
-      transition: all 0.2s;
+      margin-right: 6px;
     }
     .lang-box button.active { background: var(--accent); color: #000; }
 
     .telegram-icon {
-      font-size: 22px;
-      color: white;
+      font-size: 24px;
+      color: #0088cc;
       cursor: pointer;
-      padding: 6px;
-      border-radius: 6px;
-      transition: background 0.2s;
+      padding: 8px;
     }
-    .telegram-icon:hover { background: rgba(255,255,255,0.08); }
+
+    .stats-bar {
+      display: flex;
+      justify-content: space-around;
+      background: rgba(16,185,129,0.08);
+      padding: 12px 0;
+      margin: 0 16px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--accent);
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--gold);
+    }
+    .stat-label {
+      font-size: 12px;
+      color: #94a3b8;
+    }
 
     .categories {
-      padding: 18px;
+      padding: 0 16px 20px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 12px;
     }
     .cat-item {
       background: var(--card);
-      border-radius: 16px;
-      padding: 18px 10px;
+      border-radius: 14px;
+      padding: 16px 8px;
       text-align: center;
       cursor: pointer;
       border: 1px solid var(--border);
-      transition: all 0.3s ease;
+      transition: all 0.3s;
     }
-    .cat-item:hover {
-      transform: translateY(-6px);
-      border-color: var(--accent);
-      box-shadow: 0 10px 25px rgba(16,185,129,0.18);
+    .cat-item.active, .cat-item:hover {
+      border: 2px solid var(--accent);
+      transform: scale(1.05);
     }
-    .cat-item.active {
-      border: 2px solid var(--gold);
-      background: linear-gradient(145deg, #1e293b, #111827);
-    }
-    .cat-item i { font-size: 34px; margin-bottom: 10px; display: block; }
-    .cat-item span { font-size: 13px; font-weight: 700; line-height: 1.3; }
+    .cat-item i { font-size: 32px; margin-bottom: 8px; }
+    .cat-item span { font-size: 12px; font-weight: bold; display: block; }
 
     .order-section {
-      margin: 0 18px 28px;
+      margin: 0 16px 30px;
       background: var(--card);
-      border-radius: 18px;
-      padding: 22px;
+      border-radius: 16px;
+      padding: 20px;
       border: 1px solid var(--border);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
     }
     .order-section select, .order-section input {
       width: 100%;
-      padding: 15px;
+      padding: 14px;
       margin-bottom: 14px;
       border-radius: 10px;
       border: 1px solid var(--border);
@@ -111,71 +121,76 @@
       font-size: 15px;
     }
     .total-price {
-      background: rgba(16,185,129,0.08);
+      background: rgba(16,185,129,0.1);
       border: 2px dashed var(--accent);
-      border-radius: 14px;
-      padding: 18px;
+      border-radius: 12px;
+      padding: 16px;
       text-align: center;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 900;
       color: var(--accent);
-      margin: 18px 0;
+      margin: 16px 0;
     }
     .btn-order {
       background: linear-gradient(90deg, #10b981, #059669);
       color: white;
       border: none;
       width: 100%;
-      padding: 17px;
+      padding: 16px;
       border-radius: 12px;
       font-size: 17px;
-      font-weight: 700;
+      font-weight: bold;
       cursor: pointer;
     }
-    .btn-order:hover { opacity: 0.92; }
 
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.88);
+      background: rgba(0,0,0,0.9);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 2000;
-      padding: 20px;
+      padding: 16px;
     }
     .modal-content {
       background: var(--card);
       width: 100%;
-      max-width: 400px;
-      border-radius: 18px;
-      padding: 22px;
+      max-width: 380px;
+      border-radius: 16px;
+      padding: 20px;
       position: relative;
       border: 1px solid var(--border);
-      max-height: 82vh;
+      max-height: 80vh;
       overflow-y: auto;
     }
     .close-btn {
       position: absolute;
-      top: 14px;
-      right: 18px;
+      top: 12px;
+      right: 16px;
       font-size: 22px;
       color: #ef4444;
       cursor: pointer;
     }
-    body.fr .close-btn { right: auto; left: 18px; }
 
-    .pay-method {
+    .pay-box {
       background: #0f172a;
       padding: 14px;
       border-radius: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       border: 1px solid var(--border);
-      font-size: 14px;
-      text-align: left;
-      direction: ltr;
     }
-    body.fr .pay-method { direction: ltr; text-align: left; }
+    .pay-box b { color: var(--accent); }
+    .copy-btn {
+      background: var(--accent);
+      color: black;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      float: right;
+    }
 
     .history-item {
       background: #0f172a;
@@ -187,16 +202,6 @@
       align-items: center;
       border-left: 4px solid var(--accent);
     }
-    body.fr .history-item { border-left: none; border-right: 4px solid var(--accent); }
-
-    .status-badge {
-      padding: 5px 10px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    .pending  { background: #d97706; }
-    .completed { background: #10b981; }
 
     .whatsapp-btn {
       color: #25D366;
@@ -206,7 +211,7 @@
     }
 
     @media (max-width: 500px) {
-      .categories { gap: 10px; padding: 14px; }
+      .categories { gap: 10px; padding: 12px; }
       .cat-item { padding: 14px 8px; }
       .cat-item i { font-size: 28px; }
     }
@@ -220,64 +225,78 @@
       <button id="btnFr" onclick="setLanguage('fr')">FR</button>
     </div>
     <div class="logo">KARIM<span>13</span></div>
-    <i class="fas fa-ellipsis-v menu-btn" onclick="document.getElementById('menuModal').style.display='flex'"></i>
+    <a href="https://t.me/رابط_تليجرام_الخاص_بك" target="_blank" class="telegram-icon">
+      <i class="fab fa-telegram-plane"></i>
+    </a>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-number">15K+</div>
+      <div class="stat-label">Commandes</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">2.9K+</div>
+      <div class="stat-label">Utilisateurs</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">90+</div>
+      <div class="stat-label">Services</div>
+    </div>
   </div>
 
   <div class="categories">
-    <div class="cat-item active" data-cat="TikTok" onclick="setCategory('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span class="cat-label">تيك توك / TikTok</span></div>
-    <div class="cat-item" data-cat="Instagram" onclick="setCategory('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span class="cat-label">إنستغرام / Instagram</span></div>
-    <div class="cat-item" data-cat="Facebook" onclick="setCategory('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span class="cat-label">فيسبوك / Facebook</span></div>
-    <div class="cat-item" data-cat="YouTube" onclick="setCategory('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span class="cat-label">يوتيوب / YouTube</span></div>
-    <div class="cat-item" data-cat="Telegram" onclick="setCategory('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span class="cat-label">تليجرام / Telegram</span></div>
-    <div class="cat-item" data-cat="Snapchat" onclick="setCategory('Snapchat', this)"><i class="fab fa-snapchat-ghost" style="color:#fffc00"></i><span class="cat-label">سناب شات / Snapchat</span></div>
-    <div class="cat-item" data-cat="Premium" onclick="setCategory('Premium', this)"><i class="fas fa-gem" style="color:#a855f7"></i><span class="cat-label">بريميوم / Premium</span></div>
-    <div class="cat-item" data-cat="Gaming" onclick="setCategory('Gaming', this)"><i class="fas fa-gamepad" style="color:#22c55e"></i><span class="cat-label">قيمنق / Gaming</span></div>
+    <div class="cat-item active" data-cat="TikTok" onclick="setCategory('TikTok', this)"><i class="fab fa-tiktok"></i><span>TikTok</span></div>
+    <div class="cat-item" data-cat="Instagram" onclick="setCategory('Instagram', this)"><i class="fab fa-instagram"></i><span>Instagram</span></div>
+    <div class="cat-item" data-cat="Facebook" onclick="setCategory('Facebook', this)"><i class="fab fa-facebook"></i><span>Facebook</span></div>
+    <div class="cat-item" data-cat="YouTube" onclick="setCategory('YouTube', this)"><i class="fab fa-youtube"></i><span>YouTube</span></div>
+    <div class="cat-item" data-cat="Telegram" onclick="setCategory('Telegram', this)"><i class="fab fa-telegram"></i><span>Telegram</span></div>
+    <div class="cat-item" data-cat="Snapchat" onclick="setCategory('Snapchat', this)"><i class="fab fa-snapchat-ghost"></i><span>Snapchat</span></div>
+    <div class="cat-item" data-cat="Premium" onclick="setCategory('Premium', this)"><i class="fas fa-gem"></i><span>Premium</span></div>
+    <div class="cat-item" data-cat="Gaming" onclick="setCategory('Gaming', this)"><i class="fas fa-gamepad"></i><span>Gaming</span></div>
   </div>
 
   <div class="order-section">
     <select id="serviceSelect" onchange="calculatePrice()"></select>
-    <input type="text" id="linkInput" placeholder="الرابط / Lien"/>
+    <input type="text" id="linkInput" placeholder="Lien / الرابط"/>
     <input type="number" id="quantityInput" value="1000" min="100" onchange="calculatePrice()"/>
-    <div class="total-price" id="totalDisplay">الإجمالي: 0.00 $ / Total: 0.00 $</div>
-    <button class="btn-order" onclick="placeOrder()">تنفيذ الطلب / Passer la commande</button>
+    <div class="total-price" id="totalDisplay">Total: $0.000 / الإجمالي: $0.000</div>
+    <button class="btn-order" onclick="placeOrder()">COMMANDER / تنفيذ الطلب</button>
   </div>
 
-  <!-- القائمة الرئيسية (ثلاث نقاط) -->
-  <div class="modal" id="menuModal">
+  <!-- نافذة وسائل الدفع -->
+  <div class="modal" id="paymentModal">
     <div class="modal-content">
       <i class="fas fa-times close-btn" onclick="closeModals()"></i>
-      
-      <h3 style="text-align:center; margin:0 0 20px; color:var(--accent);">القائمة / Menu</h3>
+      <h2 style="text-align:center; margin-bottom:20px;">Paiement / الدفع</h2>
 
-      <div style="margin:20px 0;">
-        <button onclick="openHistory()" style="width:100%; padding:14px; background:#1e293b; color:white; border:none; border-radius:10px; font-size:16px; margin-bottom:12px; cursor:pointer;">
-          📋 السجل / Historique
-        </button>
+      <div class="pay-box">
+        <b>BaridiMob</b><br>
+        0079999990001465107315
+        <button class="copy-btn" onclick="copyToClipboard('0079999990001465107315')">COPY</button>
       </div>
 
-      <h4 style="text-align:center; margin:20px 0 12px;">💳 وسائل الدفع / Moyens de paiement</h4>
-      <div class="pay-method"><b>Baridimob :</b> 00799999000012345678</div>
-      <div class="pay-method"><b>Binance :</b> ID 11223344</div>
-      <div class="pay-method"><b>RedotPay :</b> ID 55667788</div>
-      <div class="pay-method"><b>Flexy :</b> 0600000000</div>
-      <div class="pay-method" style="margin-top:16px; font-weight:bold; color:var(--accent); text-align:center;">
-        رقم مؤقت للتحويل: <span style="color:white; font-size:18px;">10000000</span>
+      <div class="pay-box">
+        <b>Binance ID</b><br>
+        1194939141
+        <button class="copy-btn" onclick="copyToClipboard('1194939141')">COPY</button>
       </div>
 
-      <div style="margin-top:24px; text-align:center;">
-        <a href="https://t.me/xxxxxx" target="_blank" style="color:var(--accent); font-size:17px; text-decoration:none;">
-          <i class="fab fa-telegram-plane" style="margin-right:8px;"></i> تواصل معنا على تليجرام / Contactez-nous sur Telegram
-        </a>
+      <div class="pay-box">
+        <b>Flexy (Mobilis)</b><br>
+        0656251947
+        <button class="copy-btn" onclick="copyToClipboard('0656251947')">COPY</button>
       </div>
+
+      <button onclick="closeModals()" style="width:100%; padding:14px; background:#334155; color:white; border:none; border-radius:10px; margin-top:16px;">Fermer / إغلاق</button>
     </div>
   </div>
 
-  <!-- نافذة السجل -->
+  <!-- السجل -->
   <div class="modal" id="historyModal">
     <div class="modal-content">
       <i class="fas fa-times close-btn" onclick="closeModals()"></i>
-      <h2 style="text-align:center; margin-bottom:18px;" class="ar-text">📋 السجل</h2>
-      <h2 style="text-align:center; margin-bottom:18px; display:none;" class="fr-text">📋 Historique</h2>
+      <h2 style="text-align:center; margin-bottom:20px;">Historique / السجل</h2>
       <div id="historyContent"></div>
     </div>
   </div>
@@ -401,12 +420,8 @@
       document.getElementById('btnAr').classList.toggle('active', lang === 'ar');
       document.getElementById('btnFr').classList.toggle('active', lang === 'fr');
 
-      document.getElementById('linkInput').placeholder = lang === 'ar' ? "الرابط / Lien" : "Lien / الرابط";
-      document.querySelector('.btn-order').textContent = lang === 'ar' ? "تنفيذ الطلب" : "Passer la commande";
-
-      const active = document.querySelector('.cat-item.active');
-      if (active) setCategory(active.dataset.cat, active);
-
+      document.getElementById('linkInput').placeholder = lang === 'ar' ? "الرابط" : "Lien";
+      document.querySelector('.btn-order').textContent = lang === 'ar' ? "تنفيذ الطلب" : "COMMANDER";
       calculatePrice();
     }
 
@@ -438,7 +453,7 @@
       const opt = select.options[select.selectedIndex];
       
       if (!opt || !opt.value) {
-        document.getElementById('totalDisplay').textContent = currentLang === 'ar' ? 'الإجمالي: 0.00 $' : 'Total: 0.00 $';
+        document.getElementById('totalDisplay').textContent = currentLang === 'ar' ? 'الإجمالي: $0.000' : 'Total: $0.000';
         return;
       }
 
@@ -485,7 +500,7 @@
 
       const order = {
         id: Math.floor(10000 + Math.random() * 90000),
-        service: currentLang === 'ar' ? (service.n_ar || service.n) : s.n,
+        service: currentLang === 'ar' ? (service.n_ar || service.n) : service.n,
         link,
         quantity: service.type === 'fixed' ? '—' : qty,
         total,
@@ -498,7 +513,6 @@
       localStorage.setItem('k13_orders', JSON.stringify(orders));
 
       alert(currentLang === 'ar' ? `تم تسجيل الطلب! رقم: #\( {order.id}` : `Commande enregistrée ! N°: # \){order.id}`);
-      openHistory();
     }
 
     function openHistory() {
@@ -508,7 +522,7 @@
         ? (currentLang === 'ar' ? '<p style="text-align:center;color:#94a3b8;">لا طلبات بعد...</p>' : '<p style="text-align:center;color:#94a3b8;">Aucune commande...</p>')
         : '';
 
-      orders.reverse().forEach(o => {
+      orders.forEach(o => {
         const div = document.createElement('div');
         div.className = 'history-item';
         div.innerHTML = `
@@ -519,7 +533,7 @@
               ${o.status === 'Pending' ? (currentLang === 'ar' ? 'قيد الانتظار' : 'En attente') : (currentLang === 'ar' ? 'مكتمل' : 'Terminée')}
             </span>
           </div>
-          <a href="https://wa.me/213656251947?text=طلب%20رقم:\( {o.id}%0Aالخدمة: \){o.service}%0Aالرابط:\( {o.link}%0Aالكمية: \){o.quantity}%0Aالإجمالي:${o.total}" target="_blank" class="whatsapp-btn">
+          <a href="https://wa.me/213656251947?text=طلب رقم: ${o.id}%0Aالخدمة: ${o.service}%0Aالرابط: ${o.link}%0Aالكمية: ${o.quantity}%0Aالإجمالي: ${o.total}" target="_blank" class="whatsapp-btn">
             <i class="fab fa-whatsapp"></i>
           </a>
         `;
@@ -533,7 +547,15 @@
       document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
     }
 
-    window.onload = () => setCategory('TikTok', document.querySelector('.cat-item.active'));
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert(currentLang === 'ar' ? 'تم النسخ!' : 'Copié !');
+      });
+    }
+
+    window.onload = () => {
+      setCategory('TikTok', document.querySelector('.cat-item.active'));
+    };
   </script>
 </body>
 </html>
