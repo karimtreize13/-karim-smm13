@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM13</title>
+    <title>KARIM TREIZE 13</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     
@@ -13,168 +13,172 @@
     <style>
         :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --text: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); text-align: center; overflow-x: hidden; }
+        body { background: var(--bg); color: var(--text); text-align: center; }
 
-        /* الهيدر - مطابق لصورة 1000154691.jpg */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background: #000; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo-area { display: flex; align-items: center; gap: 8px; font-weight: 900; font-size: 18px; }
-        .logo-area span { color: var(--gold); }
-        .nav-icons { display: flex; gap: 12px; align-items: center; }
-        .nav-btn { background: #222; border: 1px solid #444; border-radius: 8px; padding: 5px 10px; color: white; cursor: pointer; font-size: 12px; font-weight: bold; }
-        .lang-active { background: var(--gold); color: #000; }
+        /* الهيدر العلوي */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: #000; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .logo-box { font-weight: 900; font-size: 19px; display: flex; align-items: center; gap: 5px; }
+        .logo-box span { color: var(--gold); }
+        .nav-actions { display: flex; gap: 8px; }
+        .btn-sm { background: #222; border: 1px solid #444; border-radius: 8px; padding: 5px 10px; color: white; cursor: pointer; font-size: 11px; font-weight: bold; }
 
-        /* شريط الدفع العلوي المطور - مطابق لصورة Screenshot_20260221-061248.jpg */
-        .pay-scroller { display: flex; gap: 10px; padding: 15px; overflow-x: auto; scrollbar-width: none; background: var(--bg); }
-        .pay-card { background: var(--card); border: 1px solid var(--border); padding: 10px 20px; border-radius: 12px; display: flex; align-items: center; gap: 10px; cursor: pointer; min-width: 140px; transition: 0.3s; }
-        .pay-card:active { transform: scale(0.95); border-color: var(--gold); }
-        .pay-card i { color: var(--gold); font-size: 16px; }
-        .pay-card span { font-size: 12px; font-weight: bold; white-space: nowrap; }
+        /* وسائل الدفع في الأعلى - 4 وسائل صالحة للنسخ */
+        .payment-top-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 15px; background: var(--bg); }
+        .pay-card-top { background: var(--card); border: 1px solid var(--border); padding: 10px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: 0.3s; }
+        .pay-card-top:active { transform: scale(0.95); border-color: var(--gold); }
+        .pay-info { display: flex; align-items: center; gap: 8px; }
+        .pay-info i { color: var(--gold); font-size: 14px; }
+        .pay-info span { font-size: 10px; font-weight: bold; white-space: nowrap; }
+        .copy-icon { font-size: 12px; color: #666; }
 
-        /* الإحصائيات - تصميم صورة 1000154682.jpg */
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; margin: 10px 15px; gap: 10px; }
-        .stat-box { background: rgba(255,255,255,0.02); padding: 15px; border-radius: 15px; border: 1px solid var(--border); }
-        .stat-box h2 { color: var(--gold); font-size: 18px; margin-bottom: 4px; }
-        .stat-box p { font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+        /* الإحصائيات */
+        .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; margin: 0 15px 10px; gap: 10px; }
+        .stat-card { background: rgba(255,255,255,0.02); padding: 12px; border-radius: 12px; border: 1px solid var(--border); }
+        .stat-card h2 { color: var(--gold); font-size: 16px; }
+        .stat-card p { font-size: 8px; color: #888; text-transform: uppercase; }
 
-        /* شبكة الأيقونات - صورة 1000154612.jpg */
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .box { background: var(--card); padding: 15px 5px; border-radius: 18px; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
-        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); }
-        .box i { font-size: 22px; display: block; margin-bottom: 8px; }
-        .box span { font-size: 9px; font-weight: bold; }
+        /* شبكة الخدمات (الأيقونات) */
+        .grid-menu { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 10px 15px; }
+        .menu-item { background: var(--card); padding: 12px 5px; border-radius: 15px; border: 1px solid var(--border); cursor: pointer; }
+        .menu-item.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); }
+        .menu-item i { font-size: 20px; margin-bottom: 5px; display: block; }
+        .menu-item span { font-size: 9px; font-weight: bold; }
 
-        /* صندوق الطلب (السلم) - مطابق لصورة 1000154734.jpg */
-        .order-card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
-        .srv-selector { background: var(--bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; margin-bottom: 12px; text-align: left; font-size: 13px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        /* صندوق الطلب */
+        .order-panel { background: var(--card); margin: 10px 15px 20px; padding: 20px; border-radius: 25px; border: 1px solid var(--border); position: relative; }
+        .select-trigger { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 10px; text-align: left; font-size: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         
-        input, select { width: 100%; padding: 16px; margin-bottom: 12px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; outline: none; }
+        input { width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 13px; }
         
-        .price-display { font-size: 34px; font-weight: 900; color: var(--accent); margin: 20px 0; border: 2px dashed var(--accent); border-radius: 20px; padding: 12px; background: rgba(16,185,129,0.05); }
+        .price-badge { font-size: 30px; font-weight: 900; color: var(--accent); margin: 15px 0; border: 2px dashed var(--accent); border-radius: 15px; padding: 10px; background: rgba(16,185,129,0.05); }
 
-        /* زر الواتساب الكبير - مطابق للصورة */
-        .btn-whatsapp { width: 100%; padding: 22px; border: none; border-radius: 22px; background: var(--accent); color: white; font-weight: 900; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 10px 25px rgba(16,185,129,0.3); }
+        /* زر الواتساب الظريف */
+        .wa-btn-cute { width: 85%; margin: 10px auto 0; padding: 16px; border: none; border-radius: 18px; background: var(--accent); color: white; font-weight: 800; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 5px 15px rgba(16,185,129,0.2); }
 
-        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #000; padding: 10px 25px; border-radius: 30px; font-weight: bold; display: none; z-index: 2000; }
-        
         /* قائمة الخدمات المنسدلة */
-        .srv-list { position: absolute; background: var(--card); width: 85%; left: 7.5%; border: 1px solid var(--border); border-radius: 15px; z-index: 100; max-height: 200px; overflow-y: auto; display: none; }
-        .srv-list div { padding: 12px; border-bottom: 1px solid #2d3748; text-align: left; font-size: 12px; }
+        .drop-content { position: absolute; background: var(--card); width: calc(100% - 40px); left: 20px; border: 1px solid var(--border); border-radius: 12px; z-index: 100; max-height: 180px; overflow-y: auto; display: none; box-shadow: 0 10px 30px #000; }
+        .drop-content div { padding: 12px; border-bottom: 1px solid #2d3748; text-align: left; font-size: 11px; }
+
+        #toast-msg { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #000; padding: 10px 25px; border-radius: 30px; font-weight: bold; font-size: 13px; display: none; z-index: 2000; }
     </style>
 </head>
 <body>
 
-<div id="toast">Copié! ✅</div>
+<div id="toast-msg">Copié! ✅</div>
 
 <div class="header">
-    <div class="logo-area">
-        <i class="fas fa-history" onclick="openHistory()" style="cursor:pointer"></i>
-        <i class="fas fa-wallet" style="color:var(--gold)"></i>
-        <i class="fab fa-telegram" style="color:#0088cc"></i>
-        <span>KARIM</span>13 🍬
-    </div>
-    <div class="nav-icons">
-        <button class="nav-btn lang-active" onclick="switchLang('AR')">AR</button>
-        <button class="nav-btn" onclick="switchLang('FR')">FR</button>
+    <div class="logo-box"><span>KARIM</span>13 🍬</div>
+    <div class="nav-actions">
+        <button class="btn-sm" style="background:var(--gold); color:#000;">AR</button>
+        <button class="btn-sm">FR</button>
+        <a href="https://t.me/K_13_S" target="_blank"><button class="btn-sm"><i class="fab fa-telegram"></i></button></a>
     </div>
 </div>
 
-<div class="pay-scroller">
-    <div class="pay-card" onclick="copy('00799999001465107315')"><i class="fas fa-university"></i><span>BaridiMob</span></div>
-    <div class="pay-card" onclick="copy('REDO-12345')"><i class="fas fa-credit-card"></i><span>RedotPay</span></div>
-    <div class="pay-card" onclick="copy('1194939141')"><i class="fab fa-binance"></i><span>Binance</span></div>
-    <div class="pay-card" onclick="copy('06562547')"><i class="fas fa-mobile-alt"></i><span>Flexy</span></div>
-</div>
-
-<div class="stats-grid">
-    <div class="stat-box"><h2>1,842</h2><p>Online</p></div>
-    <div class="stat-box"><h2>32K+</h2><p>Orders</p></div>
-    <div class="stat-box"><h2>0.1s</h2><p>Speed</p></div>
-</div>
-
-<div class="grid" id="catGrid">
-    <div class="box active" onclick="setCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
-    <div class="box" onclick="setCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
-    <div class="box" onclick="setCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Insta</span></div>
-    <div class="box" onclick="setCat('YouTube', this)"><i class="fab fa-youtube" style="color:red"></i><span>YouTube</span></div>
-</div>
-
-<div class="order-card">
-    <div style="position:relative">
-        <div class="srv-selector" onclick="toggleSrv()">
-            <span id="srvName">TikTok Followers | Real HQ</span> <i class="fas fa-chevron-down"></i>
-        </div>
-        <div class="srv-list" id="srvOptions"></div>
+<div class="payment-top-bar">
+    <div class="pay-card-top" onclick="copyNum('00799999001465107315')">
+        <div class="pay-info"><i class="fas fa-university"></i><span>BaridiMob</span></div>
+        <i class="far fa-copy copy-icon"></i>
     </div>
+    <div class="pay-card-top" onclick="copyNum('REDOT-ID-8899')">
+        <div class="pay-info"><i class="fas fa-credit-card"></i><span>RedotPay</span></div>
+        <i class="far fa-copy copy-icon"></i>
+    </div>
+    <div class="pay-card-top" onclick="copyNum('1194939141')">
+        <div class="pay-info"><i class="fab fa-binance"></i><span>Binance</span></div>
+        <i class="far fa-copy copy-icon"></i>
+    </div>
+    <div class="pay-card-top" onclick="copyNum('0656254700')">
+        <div class="pay-info"><i class="fas fa-mobile-alt"></i><span>Flexy</span></div>
+        <i class="far fa-copy copy-icon"></i>
+    </div>
+</div>
+
+<div class="stats-row">
+    <div class="stat-card"><h2>1,842</h2><p>Online</p></div>
+    <div class="stat-card"><h2>34K+</h2><p>Orders</p></div>
+    <div class="stat-card"><h2>FAST</h2><p>Speed</p></div>
+</div>
+
+<div class="grid-menu">
+    <div class="menu-item active" onclick="updateCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
+    <div class="menu-item" onclick="updateCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
+    <div class="menu-item" onclick="updateCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Instagram</span></div>
+    <div class="menu-item" onclick="updateCat('YouTube', this)"><i class="fab fa-youtube" style="color:red"></i><span>YouTube</span></div>
+</div>
+
+<div class="order-panel">
+    <div class="select-trigger" onclick="toggleDrop()">
+        <span id="curSrvName">Sélectionner un service...</span> <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="drop-content" id="dropOptions"></div>
     
-    <input type="text" id="link" placeholder="Lien / URL / ID">
-    <input type="number" id="qty" value="1000" oninput="calculate()">
+    <input type="text" id="orderLink" placeholder="Lien / URL / ID">
+    <input type="number" id="orderQty" value="1000" oninput="doCalc()">
     
-    <select id="payMethod">
-        <option value="BaridiMob">Pay via: BaridiMob</option>
-        <option value="RedotPay">Pay via: RedotPay</option>
-        <option value="Binance">Pay via: Binance</option>
-    </select>
+    <div class="price-badge" id="priceTag">$0.00000</div>
 
-    <div class="price-display" id="total">$1.10000</div>
-
-    <button class="btn-whatsapp" onclick="processOrder()">
-        <i class="fab fa-whatsapp"></i> <span>Commander Maintenant 🍬</span>
+    <button class="wa-btn-cute" onclick="submitToWa()">
+        <i class="fab fa-whatsapp"></i> <span>Commander 🍬</span>
     </button>
 </div>
 
 <script>
-    // الإعدادات والبيانات
-    const services = [
-        { id: 3231, cat: "TikTok", n: "👤 TikTok Followers | Real HQ", p: 1.10 },
-        { id: 1972, cat: "TikTok", n: "❤️ TikTok Likes | Fast", p: 0.50 },
-        { id: 8801, cat: "Instagram", n: "❤️ Insta Likes | Arab", p: 0.75 }
+    // قاعدة بيانات الخدمات لجميع الأقسام
+    const allServices = [
+        { id: 101, cat: "TikTok", n: "👤 TikTok Followers | HQ", p: 1.10 },
+        { id: 102, cat: "TikTok", n: "❤️ TikTok Likes | Fast", p: 0.55 },
+        { id: 201, cat: "Facebook", n: "👤 FB Profile Followers", p: 2.10 },
+        { id: 202, cat: "Facebook", n: "👍 FB Post Likes", p: 0.80 },
+        { id: 301, cat: "Instagram", n: "📸 Insta Followers | Real", p: 0.95 },
+        { id: 401, cat: "YouTube", n: "📺 YouTube Views | Non-Drop", p: 3.50 }
     ];
 
-    let activeSrv = services[0];
+    let selectedSrv = null;
 
-    function toggleSrv() {
-        const el = document.getElementById('srvOptions');
-        el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    function toggleDrop() {
+        const d = document.getElementById('dropOptions');
+        d.style.display = d.style.display === 'block' ? 'none' : 'block';
     }
 
-    function setCat(cat, el) {
-        document.querySelectorAll('.box').forEach(b => b.classList.remove('active'));
+    function updateCat(cat, el) {
+        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
         el.classList.add('active');
-        const filtered = services.filter(s => s.cat === cat);
-        const options = document.getElementById('srvOptions');
-        options.innerHTML = filtered.map(s => `<div onclick="selectSrv(${s.id})"><b>#${s.id}</b> - ${s.n}</div>`).join('');
-        if(filtered[0]) selectSrv(filtered[0].id);
+        const filtered = allServices.filter(s => s.cat === cat);
+        const opt = document.getElementById('dropOptions');
+        opt.innerHTML = filtered.map(s => `<div onclick="pickSrv(${s.id})"><b>#${s.id}</b> - ${s.n}</div>`).join('');
+        if(filtered[0]) pickSrv(filtered[0].id);
     }
 
-    function selectSrv(id) {
-        activeSrv = services.find(s => s.id === id);
-        document.getElementById('srvName').innerText = activeSrv.n;
-        document.getElementById('srvOptions').style.display = 'none';
-        calculate();
+    function pickSrv(id) {
+        selectedSrv = allServices.find(s => s.id === id);
+        document.getElementById('curSrvName').innerText = selectedSrv.n;
+        document.getElementById('dropOptions').style.display = 'none';
+        doCalc();
     }
 
-    function calculate() {
-        const q = document.getElementById('qty').value || 0;
-        document.getElementById('total').innerText = "$" + (activeSrv.p / 1000 * q).toFixed(5);
+    function doCalc() {
+        if(!selectedSrv) return;
+        const q = document.getElementById('orderQty').value || 0;
+        document.getElementById('priceTag').innerText = "$" + (selectedSrv.p / 1000 * q).toFixed(5);
     }
 
-    function copy(txt) {
-        navigator.clipboard.writeText(txt);
-        const t = document.getElementById('toast');
+    function copyNum(val) {
+        navigator.clipboard.writeText(val);
+        const t = document.getElementById('toast-msg');
         t.style.display = 'block';
         setTimeout(() => t.style.display = 'none', 2000);
     }
 
-    function processOrder() {
-        const link = document.getElementById('link').value;
-        const pay = document.getElementById('payMethod').value;
-        if(!link) return alert("Lien manquant!");
-        
-        const msg = `*جديد طلب - KARIM13*%0A*الخدمة:* ${activeSrv.n}%0A*الرابط:* ${link}%0A*الدفع:* ${pay}%0A*المبلغ:* ${document.getElementById('total').innerText}`;
+    function submitToWa() {
+        const link = document.getElementById('orderLink').value;
+        if(!link || !selectedSrv) return alert("Veuillez remplir les informations!");
+        const msg = `*جديد طلب - KARIM13*%0A------------------%0A*الخدمة:* ${selectedSrv.n}%0A*الرابط:* ${link}%0A*المبلغ:* ${document.getElementById('priceTag').innerText}%0A------------------%0A🍬 شكراً لك!`;
         window.open(`https://wa.me/2136562547?text=${msg}`);
     }
 
-    window.onload = () => setCat('TikTok', document.querySelector('.box'));
+    // تشغيل القسم الأول عند الفتح
+    window.onload = () => updateCat('TikTok', document.querySelector('.menu-item'));
 </script>
 </body>
 </html>
