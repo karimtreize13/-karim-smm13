@@ -3,212 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM13 | PRO</title>
+    <title>KARIM13 | PROFESSIONAL PANEL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #030305; --card: #0d0d12; --accent: #f97316; --text: #ffffff; --border: #1f1f27; }
+        :root { --bg: #050508; --card: #111118; --accent: #f97316; --text: #ffffff; --border: #1f1f27; }
         * { margin:0; padding:0; box-sizing:border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); }
-        body.ar { direction: rtl; text-align: right; }
+        body { background: var(--bg); color: var(--text); padding-bottom: 40px; }
+        body.ar { direction: rtl; }
 
-        /* 1. TOP SECRETS HEADER (The Line) */
-        .top-navbar { 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            padding: 10px 15px; 
-            background: #000; 
-            border-bottom: 1px solid var(--border);
-            position: sticky; top: 0; z-index: 2000;
-            overflow-x: auto; white-space: nowrap; gap: 10px;
+        /* 1. الشريط العلوي (الأسرار) */
+        .header-pro { 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 12px 15px; background: #000; border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 2000; gap: 8px;
         }
-        .logo-small { font-weight: 900; font-size: 14px; color: var(--accent); margin-right: 10px; }
+        .logo { font-weight: 900; font-size: 18px; color: var(--accent); white-space: nowrap; }
+        .nav-tools { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+        .tool-btn { 
+            background: #1a1a24; border: 1px solid var(--border); 
+            height: 36px; padding: 0 10px; border-radius: 10px; 
+            display: flex; align-items: center; justify-content: center; gap: 5px; 
+            cursor: pointer; color: var(--accent); font-size: 12px; white-space: nowrap;
+        }
+        .pay-tag { font-family: monospace; color: #fff; font-size: 10px; }
+
+        /* 2. الإحصائيات (الأرقام البرتقالية) */
+        .stats-row { display: flex; justify-content: space-around; padding: 20px 10px; background: #050508; }
+        .stat-item { text-align: center; }
+        .stat-item span { display: block; font-size: 18px; font-weight: 900; color: var(--accent); }
+        .stat-item label { font-size: 9px; color: #555; text-transform: uppercase; margin-top: 4px; }
+
+        /* 3. واجهة الأقسام (Icons) */
+        .icons-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 0 15px; margin-bottom: 25px; }
+        .cat-item { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 18px 5px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .cat-item.active { border-color: var(--accent); background: rgba(249,115,22,0.1); transform: scale(1.05); }
+        .cat-item i { font-size: 24px; margin-bottom: 10px; display: block; }
+        .cat-item span { font-size: 10px; font-weight: 700; color: #888; }
+
+        /* 4. السلم (Service List & Form) */
+        .sellem-box { margin: 15px; display: none; }
+        .sellem-box.active { display: block; animation: fadeInUp 0.4s ease; }
         
-        .nav-group { display: flex; gap: 8px; align-items: center; }
-        .nav-item { 
-            background: var(--card); border: 1px solid var(--border); 
-            padding: 6px 10px; border-radius: 8px; 
-            display: flex; align-items: center; gap: 6px; 
-            cursor: pointer; font-size: 11px; font-weight: bold; color: #ccc;
+        .service-list { background: var(--card); border-radius: 20px; border: 1px solid var(--border); overflow: hidden; margin-bottom: 15px; }
+        .srv-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid var(--border); cursor: pointer; }
+        .srv-row:last-child { border: none; }
+        .srv-info { font-size: 12px; font-weight: bold; color: #ddd; }
+        .srv-price { color: #10b981; font-weight: 900; font-size: 13px; }
+
+        /* 5. تفاصيل الطلب (Form) */
+        .order-form { 
+            background: var(--card); border: 2px solid var(--border); border-radius: 30px; 
+            padding: 25px; position: relative; margin-top: 20px;
         }
-        .nav-item i { color: var(--accent); font-size: 14px; }
-        .pay-val { font-family: monospace; color: #fff; font-size: 11px; }
+        .order-form::before { content: ""; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-bottom: 10px solid var(--border); }
+        
+        .srv-title-badge { color: var(--accent); font-weight: 900; text-align: center; margin-bottom: 15px; font-size: 14px; }
+        .input-wrap { margin-bottom: 15px; }
+        .input-wrap input, .input-wrap select { width: 100%; padding: 15px; background: #000; border: 1px solid var(--border); border-radius: 15px; color: #fff; outline: none; }
 
-        /* 2. STATS BAR */
-        .hero-stats { display: flex; justify-content: space-around; padding: 15px; background: linear-gradient(180deg, #000, var(--bg)); }
-        .stat-circle { text-align: center; }
-        .stat-circle span { display: block; font-size: 16px; font-weight: 900; color: var(--accent); }
-        .stat-circle label { font-size: 9px; color: #555; text-transform: uppercase; }
+        /* إطار الدفع المقطع (BaridiMob) */
+        .payment-dashed { border: 2px dashed var(--accent); border-radius: 15px; padding: 15px; display: flex; justify-content: space-between; align-items: center; margin: 15px 0; }
+        .copy-mini { background: var(--accent); color: #000; border: none; padding: 6px 15px; border-radius: 8px; font-weight: 900; font-size: 11px; cursor: pointer; }
 
-        /* 3. CATEGORY GRID (The Icons) */
-        .main-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .cat-box { background: var(--card); border: 1px solid var(--border); border-radius: 15px; padding: 15px 5px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .cat-box.active { border-color: var(--accent); background: rgba(249,115,22,0.1); transform: translateY(-3px); }
-        .cat-box i { font-size: 22px; margin-bottom: 8px; display: block; }
-        .cat-box span { font-size: 9px; font-weight: 900; color: #888; text-transform: uppercase; }
+        .final-price { font-size: 36px; font-weight: 900; color: #10b981; text-align: center; margin: 15px 0; }
+        .btn-confirm { width: 100%; padding: 20px; background: var(--accent); border: none; border-radius: 20px; color: #000; font-weight: 900; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-        /* 4. THE SELLEM (The Ladder Form) */
-        .sellem-container { margin: 15px; background: var(--card); border-radius: 25px; padding: 20px; border: 1px solid var(--border); display: none; }
-        .sellem-container.active { display: block; animation: slideUp 0.4s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .field-wrap { margin-bottom: 15px; }
-        .field-wrap label { display: block; font-size: 10px; color: var(--accent); font-weight: 900; margin-bottom: 8px; }
-        select, input { width: 100%; padding: 14px; background: #000; border: 1px solid var(--border); border-radius: 12px; color: #fff; outline: none; font-size: 13px; }
-
-        .price-tag { font-size: 32px; font-weight: 900; color: #10b981; text-align: center; margin: 15px 0; }
-        .order-btn { width: 100%; padding: 18px; background: var(--accent); border: none; border-radius: 15px; color: #000; font-weight: 900; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
-        /* Alerts & Modals */
-        #copyAlert { position: fixed; top: 60px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #000; padding: 8px 15px; border-radius: 20px; font-size: 11px; font-weight: bold; display: none; z-index: 3000; }
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2500; }
-        .modal-box { background: var(--card); width: 90%; max-width: 400px; padding: 25px; border-radius: 20px; border: 1px solid var(--border); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="fr">
 
-<div id="copyAlert">Copié! ✅</div>
+<div class="header-pro">
+    <div class="logo">KARIM13 🍬</div>
+    <div class="nav-tools">
+        <div class="tool-btn" onclick="openH()"><i class="fas fa-history"></i></div>
+        <div class="tool-btn" onclick="switchL()"><i class="fas fa-language"></i></div>
+        <div class="tool-btn" onclick="window.open('https://t.me/+213656251947')"><i class="fab fa-telegram-plane"></i></div>
+        <div class="tool-btn" onclick="copy('00799999001465107315')"><i class="fas fa-university"></i><span class="pay-tag">0079...7315</span></div>
+    </div>
+</div>
 
-<div class="top-navbar">
-    <div class="logo-small">KARIM13</div>
-    
-    <div class="nav-group">
-        <div class="nav-item" onclick="openHist()"><i class="fas fa-history"></i></div>
-        <div class="nav-item" onclick="changeLang()"><i class="fas fa-language"></i></div>
-        <div class="nav-item" onclick="window.open('https://t.me/+213656251947')"><i class="fab fa-telegram-plane"></i></div>
+<div class="stats-row">
+    <div class="stat-item"><span>1,842</span><label>Online</label></div>
+    <div class="stat-item"><span>32.5K</span><label>Orders</label></div>
+    <div class="stat-item"><span>0.1s</span><label>Speed</label></div>
+</div>
+
+<div class="icons-grid">
+    <div class="cat-item" id="cat-TikTok" onclick="openCat('TikTok')"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
+    <div class="cat-item" id="cat-Facebook" onclick="openCat('Facebook')"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
+    <div class="cat-item" id="cat-YouTube" onclick="openCat('YouTube')"><i class="fab fa-youtube" style="color:red"></i><span>YouTube</span></div>
+    <div class="cat-item" id="cat-Gaming" onclick="openCat('Gaming')"><i class="fas fa-gamepad" style="color:#22c55e"></i><span>Gaming</span></div>
+</div>
+
+<div class="sellem-box" id="sellem">
+    <div class="service-list" id="srvList"></div>
+
+    <div class="order-form" id="orderForm" style="display: none;">
+        <div class="srv-title-badge" id="selectedTitle">PUBG 60 UC | Global</div>
         
-        <div class="nav-item" onclick="copy('00799999001465107315')">
-            <i class="fas fa-university"></i>
-            <span class="pay-val">0079...7315</span>
+        <div class="input-wrap">
+            <input type="url" id="link" placeholder="Lien / Link">
         </div>
         
-        <div class="nav-item" onclick="copy('1194939141')">
-            <i class="fab fa-binance"></i>
-            <span class="pay-val">1194...41</span>
+        <div class="input-wrap">
+            <select id="payMethod">
+                <option value="BaridiMob">BaridiMob</option>
+                <option value="Binance">Binance Pay</option>
+            </select>
         </div>
-    </div>
-</div>
 
-<div class="hero-stats">
-    <div class="stat-circle"><span>1,842</span><label>Online</label></div>
-    <div class="stat-circle"><span>32K+</span><label>Orders</label></div>
-    <div class="stat-circle"><span>0.1s</span><label>Speed</label></div>
-</div>
+        <div class="payment-dashed">
+            <span style="font-family: monospace; font-size: 13px;">00799999001465107315</span>
+            <button class="copy-mini" onclick="copy('00799999001465107315')">COPY</button>
+        </div>
 
-<div class="main-grid">
-    <div class="cat-box" id="cat-TikTok" onclick="load('TikTok')"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
-    <div class="cat-box" id="cat-Facebook" onclick="load('Facebook')"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
-    <div class="cat-box" id="cat-Instagram" onclick="load('Instagram')"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Insta</span></div>
-    <div class="cat-box" id="cat-YouTube" onclick="load('YouTube')"><i class="fab fa-youtube" style="color:red"></i><span>YouTube</span></div>
-    <div class="cat-box" id="cat-Telegram" onclick="load('Telegram')"><i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
-    <div class="cat-box" id="cat-Snapchat" onclick="load('Snapchat')"><i class="fab fa-snapchat" style="color:#fffc00"></i><span>Snap</span></div>
-    <div class="cat-box" id="cat-Premium" onclick="load('Premium')"><i class="fas fa-gem" style="color:#a855f7"></i><span>Premium</span></div>
-    <div class="cat-box" id="cat-Gaming" onclick="load('Gaming')"><i class="fas fa-gamepad" style="color:#22c55e"></i><span>Gaming</span></div>
-</div>
-
-<div class="sellem-container" id="sellem">
-    <div class="field-wrap">
-        <label data-fr="CHOOSE SERVICE" data-ar="اختر الخدمة">CHOOSE SERVICE</label>
-        <select id="srvMenu" onchange="pick()"></select>
-    </div>
-    <div class="field-wrap">
-        <label data-fr="LINK" data-ar="الرابط">LINK</label>
-        <input type="url" id="srvLink" placeholder="https://...">
-    </div>
-    <div class="field-wrap" id="qtyBox">
-        <label data-fr="QUANTITY" data-ar="الكمية">QUANTITY</label>
-        <input type="number" id="srvQty" value="1000" oninput="math()">
-    </div>
-    <div class="price-tag" id="price">$0.000</div>
-    <button class="order-btn" onclick="send()">
-        <i class="fab fa-whatsapp"></i> <span data-fr="CONFIRM ORDER" data-ar="تأكيد الطلب">CONFIRM ORDER</span>
-    </button>
-</div>
-
-<div id="hModal" class="modal">
-    <div class="modal-box">
-        <h3 style="text-align:center; margin-bottom:15px; font-size:14px;">MY ORDERS</h3>
-        <div id="hList" style="max-height:300px; overflow-y:auto;"></div>
-        <button onclick="closeHist()" style="width:100%; padding:12px; margin-top:10px; background:#222; border:none; border-radius:10px; color:#fff;">CLOSE</button>
+        <div class="final-price" id="totalPrice">$0.0000</div>
+        
+        <button class="btn-confirm" onclick="sendOrder()">
+            WhatsApp Confirm 🍬
+        </button>
     </div>
 </div>
 
 <script>
     const DATA = [
-        {id: 1, cat: "TikTok", n_fr: "👤 Followers | Real HQ", n_ar: "👤 متابعين | حقيقي", p: 1.10},
-        {id: 2, cat: "Gaming", n_fr: "🎮 PUBG 60 UC", n_ar: "🎮 ببجي 60 شدة", p: 1.50, fixed: true},
-        {id: 3, cat: "Premium", n_fr: "🎬 Netflix 1 Month", n_ar: "🎬 نتفليكس شهر", p: 4.50, fixed: true}
+        {id: 9106, cat: "Gaming", n: "🎮 PUBG 60 UC | Global", p: 1.5},
+        {id: 9109, cat: "Gaming", n: "🎮 PUBG 660 UC | Global", p: 12.5},
+        {id: 3231, cat: "TikTok", n: "👤 TikTok Followers | HQ", p: 1.1}
     ];
 
     let currentL = 'fr';
-    let srv = null;
+    let selectedSrv = null;
 
-    function changeLang() {
-        currentL = currentL === 'fr' ? 'ar' : 'fr';
-        document.body.className = currentL;
-        document.querySelectorAll('[data-fr]').forEach(e => e.innerText = e.getAttribute('data-'+currentL));
-    }
-
-    function load(cat) {
-        document.querySelectorAll('.cat-box').forEach(b => b.classList.remove('active'));
+    function openCat(cat) {
+        document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
         document.getElementById('cat-'+cat).classList.add('active');
-        const m = document.getElementById('srvMenu');
-        m.innerHTML = '<option value="">---</option>';
+        
+        const list = document.getElementById('srvList');
+        list.innerHTML = '';
         DATA.filter(d => d.cat === cat).forEach(d => {
-            m.innerHTML += `<option value="${d.id}">${currentL==='fr'?d.n_fr:d.n_ar}</option>`;
+            list.innerHTML += `
+                <div class="srv-row" onclick="pickSrv(${d.id})">
+                    <div class="srv-info">#${d.id} ${d.n}</div>
+                    <div class="srv-price">$${d.p}</div>
+                </div>
+            `;
         });
         document.getElementById('sellem').classList.add('active');
+        document.getElementById('orderForm').style.display = 'none';
     }
 
-    function pick() {
-        const id = document.getElementById('srvMenu').value;
-        srv = DATA.find(d => d.id == id);
-        if(srv) {
-            document.getElementById('qtyBox').style.display = srv.fixed ? 'none' : 'block';
-            document.getElementById('srvQty').value = srv.fixed ? 1 : 1000;
-            math();
-        }
-    }
-
-    function math() {
-        if(!srv) return;
-        const q = document.getElementById('srvQty').value || 1;
-        const total = srv.fixed ? (srv.p * q) : (srv.p * q / 1000);
-        document.getElementById('price').innerText = "$" + total.toFixed(3);
+    function pickSrv(id) {
+        selectedSrv = DATA.find(d => d.id == id);
+        document.getElementById('selectedTitle').innerText = selectedSrv.n;
+        document.getElementById('totalPrice').innerText = "$" + selectedSrv.p.toFixed(4);
+        document.getElementById('orderForm').style.display = 'block';
+        window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
     }
 
     function copy(t) {
         navigator.clipboard.writeText(t);
-        const a = document.getElementById('copyAlert');
-        a.innerText = currentL==='fr'?"Copié! ✅":"تم النسخ! ✅";
-        a.style.display = 'block';
-        setTimeout(() => a.style.display='none', 2000);
+        alert(currentL === 'fr' ? "Copié!" : "تم النسخ!");
     }
 
-    function send() {
-        if(!srv || !document.getElementById('srvLink').value) return;
-        const id = Math.floor(Math.random()*900000);
-        const order = { id, srv: srv.n_fr, status: "En attente", date: new Date().toLocaleString() };
-        let h = JSON.parse(localStorage.getItem('k13_h') || '[]');
-        h.push(order); localStorage.setItem('k13_h', JSON.stringify(h));
-        
-        const msg = `*ORDER #${id}*%0AService: ${order.srv}%0ALink: ${document.getElementById('srvLink').value}%0APrice: ${document.getElementById('price').innerText}`;
+    function sendOrder() {
+        const link = document.getElementById('link').value;
+        if(!selectedSrv || !link) return alert("Link Error!");
+        const msg = `*NEW ORDER*%0AService: ${selectedSrv.n}%0ALink: ${link}%0APrice: ${selectedSrv.p}`;
         window.open(`https://wa.me/213656251947?text=${msg}`);
     }
-
-    function openHist() {
-        const h = JSON.parse(localStorage.getItem('k13_h') || '[]').reverse();
-        document.getElementById('hList').innerHTML = h.map(o => `
-            <div style="background:#000; padding:10px; border-radius:10px; margin-bottom:8px; border-left:3px solid var(--accent)">
-                <div style="display:flex; justify-content:space-between; font-size:11px"><b>#${o.id}</b> <span style="color:var(--accent)">${o.status}</span></div>
-                <div style="font-size:10px; color:#666; margin-top:4px">${o.srv}</div>
-            </div>
-        `).join('') || "No history.";
-        document.getElementById('hModal').style.display = 'flex';
-    }
-
-    function closeHist() { document.getElementById('hModal').style.display = 'none'; }
 </script>
 </body>
 </html>
