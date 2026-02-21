@@ -9,49 +9,55 @@
     
     <style>
         :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --text: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); text-align: center; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.3s; }
+        body { background: var(--bg); color: var(--text); text-align: center; overflow-x: hidden; }
 
-        /* الهيدر المطور */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: #000; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 900; font-size: 18px; color: var(--gold); }
+        /* الهيدر المطور مع العداد */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background: #000; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-weight: 900; font-size: 16px; color: var(--gold); }
+        
         .nav-tools { display: flex; gap: 8px; align-items: center; }
         
-        /* بطاقة وسائل الدفع في الأعلى */
-        .pay-card-trigger { background: rgba(245, 158, 11, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 5px 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 12px; font-weight: bold; }
+        /* العداد بجانب المحفظة */
+        .stats-mini { display: flex; align-items: center; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent); padding: 4px 8px; border-radius: 8px; gap: 5px; }
+        .stats-mini span { font-size: 11px; color: var(--accent); font-weight: bold; }
+        .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); animation: blink 1.5s infinite; }
 
-        .lang-btn { background: #222; border: 1px solid #444; color: white; padding: 5px 8px; border-radius: 6px; cursor: pointer; font-size: 11px; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        .pay-trigger { background: rgba(245, 158, 11, 0.1); border: 1px solid var(--gold); color: var(--gold); padding: 4px 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: bold; }
+
+        .lang-btn { background: #222; border: 1px solid #444; color: white; padding: 4px 6px; border-radius: 5px; cursor: pointer; font-size: 10px; }
         .lang-btn.active { background: var(--gold); color: #000; border: none; }
 
-        /* نافذة وسائل الدفع المنبثقة */
-        #payModal { display: none; position: fixed; top: 60px; right: 15px; background: var(--card); border: 1px solid var(--gold); border-radius: 15px; padding: 10px; z-index: 2000; box-shadow: 0 10px 30px #000; width: 200px; }
+        /* نافذة الدفع */
+        #payModal { display: none; position: fixed; top: 55px; right: 15px; background: var(--card); border: 2px solid var(--gold); border-radius: 15px; padding: 10px; z-index: 2000; width: 220px; box-shadow: 0 15px 40px #000; }
         .pay-mini-item { display: flex; align-items: center; justify-content: space-between; padding: 10px; border-bottom: 1px solid #2d3748; cursor: pointer; }
         .pay-mini-item:last-child { border: none; }
-        .pay-mini-item span { font-size: 11px; font-weight: bold; }
-        .pay-mini-item i { color: var(--gold); font-size: 14px; }
+        .pay-mini-item span { font-size: 10px; font-weight: 900; display: block; }
+        .pay-mini-item small { font-size: 8px; color: var(--gold); }
 
-        /* شبكة الأقسام الثمانية */
+        /* شبكة الأقسام الـ 8 */
         .grid-8 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 15px; }
         .box-cat { background: var(--card); padding: 12px 5px; border-radius: 12px; border: 1px solid var(--border); cursor: pointer; }
         .box-cat.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); }
         .box-cat i { font-size: 20px; margin-bottom: 5px; display: block; }
         .box-cat span { font-size: 9px; font-weight: bold; }
 
-        /* منطقة الطلب */
+        /* منطقة السلم (الطلب) */
         .order-card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); position: relative; }
-        .srv-select { background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 15px; margin-bottom: 15px; cursor: pointer; text-align: left; display: flex; justify-content: space-between; font-size: 13px; }
+        .srv-select { background: var(--bg); border: 1px solid var(--border); padding: 15px; border-radius: 15px; margin-bottom: 12px; cursor: pointer; text-align: left; display: flex; justify-content: space-between; font-size: 12px; }
         
-        input { width: 100%; padding: 15px; margin-bottom: 10px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; }
+        input { width: 100%; padding: 15px; margin-bottom: 12px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; outline: none; }
         
-        .price-badge { font-size: 32px; font-weight: 900; color: var(--accent); margin: 15px 0; }
+        .price-badge { font-size: 30px; font-weight: 900; color: var(--accent); margin: 10px 0; border: 2px dashed var(--accent); border-radius: 15px; padding: 10px; }
 
-        /* زر الواتساب الصغير */
-        .wa-small { width: 75%; margin: 0 auto; padding: 16px; border: none; border-radius: 18px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; }
+        .wa-small { width: 75%; margin: 10px auto 0; padding: 16px; border: none; border-radius: 18px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; }
 
-        .drop-srv { position: absolute; background: var(--card); width: calc(100% - 50px); left: 25px; border: 1px solid var(--border); border-radius: 15px; z-index: 100; max-height: 200px; overflow-y: auto; display: none; }
-        .drop-srv div { padding: 12px; border-bottom: 1px solid #333; text-align: left; font-size: 12px; }
+        .drop-srv { position: absolute; background: var(--card); width: calc(100% - 50px); left: 25px; border: 1px solid var(--border); border-radius: 12px; z-index: 100; max-height: 180px; overflow-y: auto; display: none; }
+        .drop-srv div { padding: 10px; border-bottom: 1px solid #333; text-align: left; font-size: 11px; }
 
-        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #000; padding: 10px 20px; border-radius: 20px; font-weight: bold; display: none; z-index: 3000; }
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #000; padding: 10px 20px; border-radius: 20px; font-weight: bold; display: none; z-index: 3000; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -61,20 +67,29 @@
 <div class="header">
     <div class="logo">KARIM13 🍬</div>
     <div class="nav-tools">
-        <div class="pay-card-trigger" onclick="togglePay()">
+        <div class="stats-mini">
+            <div class="dot"></div>
+            <span id="live-count">1,842</span>
+        </div>
+        <div class="pay-trigger" onclick="togglePay()">
             <i class="fas fa-wallet"></i> <span id="t-pay-btn">Payer</span>
         </div>
         <button class="lang-btn" id="btnAr" onclick="setLang('AR')">AR</button>
         <button class="lang-btn active" id="btnFr" onclick="setLang('FR')">FR</button>
-        <a href="https://t.me/K_13_S" style="color:#0088cc; font-size: 18px;"><i class="fab fa-telegram"></i></a>
+        <a href="https://t.me/K_13_S" target="_blank" style="color:#0088cc; font-size: 18px;"><i class="fab fa-telegram"></i></a>
     </div>
 </div>
 
 <div id="payModal">
-    <div class="pay-mini-item" onclick="copy('00799999001465107315')"><span>BaridiMob</span> <i class="fas fa-university"></i></div>
-    <div class="pay-mini-item" onclick="copy('REDOT-K13')"><span>RedotPay</span> <i class="fas fa-credit-card"></i></div>
-    <div class="pay-mini-item" onclick="copy('1194939141')"><span>Binance</span> <i class="fab fa-binance"></i></div>
-    <div class="pay-mini-item" onclick="copy('0656254700')"><span>Flexy</span> <i class="fas fa-mobile-alt"></i></div>
+    <div class="pay-mini-item" onclick="copy('00799999001465107315', 'BaridiMob')">
+        <div><span>BaridiMob</span><small>00799999001465107315</small></div> <i class="fas fa-university"></i>
+    </div>
+    <div class="pay-mini-item" onclick="copy('REDO-13-K', 'RedotPay')">
+        <div><span>RedotPay</span><small>ID: REDO-13-K</small></div> <i class="fas fa-credit-card"></i>
+    </div>
+    <div class="pay-mini-item" onclick="copy('1194939141', 'Binance')">
+        <div><span>Binance</span><small>ID: 1194939141</small></div> <i class="fab fa-binance"></i>
+    </div>
 </div>
 
 <div class="grid-8">
@@ -93,12 +108,9 @@
         <span id="srvActive">Choisir Service...</span> <i class="fas fa-chevron-down"></i>
     </div>
     <div class="drop-srv" id="srvDrop"></div>
-    
     <input type="text" id="link" placeholder="Lien / URL / ID">
     <input type="number" id="qty" value="1000" oninput="calc()">
-    
     <div class="price-badge" id="total">$0.00000</div>
-
     <button class="wa-small" onclick="goWa()">
         <i class="fab fa-whatsapp"></i> <span id="waTxt">Commander 🍬</span>
     </button>
@@ -108,10 +120,11 @@
     const db = [
         { id: 1, cat: "TikTok", n: "👤 TikTok Followers HQ", p: 1.10 },
         { id: 2, cat: "Facebook", n: "👍 Facebook Likes", p: 0.80 },
-        { id: 3, cat: "Telegram", n: "👥 Telegram Members", p: 1.20 }
+        { id: 3, cat: "Instagram", n: "📸 Instagram Followers", p: 0.95 }
     ];
 
     let current = db[0];
+    let selectedPay = "Non spécifié";
 
     function togglePay() {
         const m = document.getElementById('payModal');
@@ -127,11 +140,6 @@
         document.getElementById('link').placeholder = isAr ? "الرابط / الآيدي" : "Lien / URL / ID";
         const cats = isAr ? ["تيك توك", "فيسبوك", "انستقرام", "يوتيوب", "تيليجرام", "سناب", "بريميوم", "ألعاب"] : ["TikTok", "Facebook", "Instagram", "YouTube", "Telegram", "Snapchat", "Premium", "Gaming"];
         for(let i=1; i<=8; i++) document.getElementById('l'+i).innerText = cats[i-1];
-    }
-
-    function showDrop() {
-        const d = document.getElementById('srvDrop');
-        d.style.display = d.style.display === 'block' ? 'none' : 'block';
     }
 
     function updateCat(cat, el) {
@@ -155,8 +163,9 @@
         document.getElementById('total').innerText = "$" + (current.p / 1000 * q).toFixed(5);
     }
 
-    function copy(v) {
+    function copy(v, method) {
         navigator.clipboard.writeText(v);
+        selectedPay = method;
         document.getElementById('toast').style.display = 'block';
         setTimeout(() => document.getElementById('toast').style.display = 'none', 2000);
         document.getElementById('payModal').style.display = 'none';
@@ -165,8 +174,15 @@
     function goWa() {
         const url = document.getElementById('link').value;
         if(!url) return alert("URL Missing!");
-        window.open(`https://wa.me/2136562547?text=Service: ${current.n} | Link: ${url} | Price: ${document.getElementById('total').innerText}`);
+        const msg = `*New Order - KARIM13*%0A-----------------%0A*Service:* ${current.n}%0A*Link:* ${url}%0A*Price:* ${document.getElementById('total').innerText}%0A*Payment:* ${selectedPay}%0A-----------------`;
+        window.open(`https://wa.me/2136562547?text=${msg}`);
     }
+
+    // تحديث وهمي للعداد لجعله يبدو حياً
+    setInterval(() => {
+        const count = 1800 + Math.floor(Math.random() * 100);
+        document.getElementById('live-count').innerText = count.toLocaleString();
+    }, 5000);
 
     window.onload = () => updateCat('TikTok', document.querySelector('.box-cat'));
 </script>
