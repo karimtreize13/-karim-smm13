@@ -132,8 +132,41 @@
     let activeCat = 'TikTok';
 
     const SERVICES = [
-        { id: 9999, cat: "TikTok", n: "🪙 TikTok Coins - 1000", n_ar: "🪙 شحن عملات تيك توك - 1000", p: 13.00, fix: true },
-        { id: 3231, cat: "TikTok", n: "TikTok Followers | HQ", n_ar: "👤 متابعين تيك توك | حقيقي", p: 1.10 },
+        // --- GIFT & SPECIAL ---
+        { id: 9999, cat: "TikTok", n: "🪙 TikTok Coins - 1000 Pièces | شحن عملات تيك توك - 1000 عملة", p: 14.00 },        
+        {id: 3231, cat: "TikTok", n: "TikTok Followers | HQ Real | 2K/Day", n_ar: "👤 متابعين تيك توك | حقيقي (2000 يومياً) 🛡️", p: 1.10},  
+    
+        {id: 3338, cat: "TikTok", n: "TikTok Followers | HQ Real", n_ar: "👤 متابعين تيك توك جودة عالية | ضمان مدى الحياة ♻️", p: 0.95},
+        {id: 3340, cat: "TikTok", n: "TikTok Followers | Perfect Quality", n_ar: "👤 متابعين تيك توك جودة مثالية | ضمان مدى الحياة ♻️", p: 1.10},
+        {id: 3810, cat: "TikTok", n: "TikTok Followers | HQ Real Profiles", n_ar: "⚡ متابعين تيك توك حقيقيين | سرعة فائقة | ضمان ♻️", p: 1.99},
+        {id: 1973, cat: "TikTok", n: "TikTok Followers | HQ Real Premium", n_ar: "⭐ متابعين Premium VIP | ضمان مدى الحياة ♻️", p: 2.50},
+        {id: 3284, cat: "TikTok", n: "TikTok Followers | Organic 100%", n_ar: "🌱 متابعين تيك توك عضوي 100% | حقيقي | ضمان ♻️", p: 3.00},
+        {id: 3277, cat: "TikTok", n: "TikTok Followers | Organic VIP", n_ar: "💎 متابعين عضوي VIP | سريع | ضمان تيك توك♻️", p: 3.80},
+       {id: 3355, cat: "TikTok", n: "TikTok Followers | 100% USA 🇺🇸 | Real & Non Drop | 365 Days Refill ♻️", n_ar: "متابعين تيك توك | أمريكا 🇺🇸 | حقيقي وضمان سنة | سرعة خارقة ♻️", p: 4.80},
+        
+        {id: 8526, cat: "TikTok", n: "TikTok Followers | Real ADS Saudi", n_ar: "🇸🇦 متابعين تيك توك حقيقيين عبر الإعلانات | السعودية 🇸🇦", p: 7.50},  
+        { id: 8812, cat: "TikTok", n: "🇪🇬 TikTok Followers - Real Egypt (ADS) | متابعين تيك توك - حقيقي مصري (إعلانات)", p: 7.50 },
+       {id: 8522, cat: "TikTok", n: "TikTok Followers | Lebanon 🇱🇧 | Real ADS - High Stability", n_ar: "متابعين تيك توك | لبناني حقيقي 🇱🇧 | عبر الإعلانات - ثبات عالٍ", p: 8.50},     
+        {id: 1521, cat: "TikTok", n: "TikTok Monetizable Followers", n_ar: "💰 متابعين تفعيل الربح (Monetizable) |تيك توك ضمان  ♻️", p: 5.50},
+        {id: 1972, cat: "TikTok", n: "TikTok Likes | Non Drop", n_ar: "❤️ إعجابات تيك توك | ثابت فوري ⚡ ضمان ♻️", p: 0.0368},
+        {id: 3854, cat: "TikTok", n: "TikTok Likes | HQ Real Profiles", n_ar: "❤️ إعجابات تيك توك  حقيقية HQ | سرعة فائقة ⚡ ضمان ♻️", p: 0.0524},
+        {id: 7572, cat: "TikTok", n: "TikTok Likes | HQ Premium", n_ar: "❤️  إعجابات تيك توك VIP حقيقية | ثابت ⚡ ضمان ♻️", p: 0.0692},
+        // --- TIKTOK VIEWS (مشاهدات) ---
+        {id: 7500, cat: "TikTok", n: "TikTok Views | Instant", n_ar: "👀 مشاهدات تيك توك فورية ⚡ مليونية (بدون ضمان)", p: 0.0060},
+        {id: 8387, cat: "TikTok", n: "TikTok Views | Real SuperInstant", n_ar: "👀 مشاهدات تيك توك حقيقية | سرعة جنونية ⚡", p: 0.007},
+        {id: 8332, cat: "TikTok", n: "TikTok Video Views | Fast", n_ar: "👀 مشاهدات تيك توك فيديو | فوري ⚡ ضمان مدى الحياة ♻️", p: 0.0214},
+        // --- TIKTOK MONETIZABLE (تفعيل الربح) ---
+       {id: 3490, cat: "TikTok", n: "Monetizable Views | Min 100K", n_ar: "💰 مشاهدات تفعيل الربح | ثابت (100K+) ♻️", p: 0.0625},
+       {id: 3506, cat: "TikTok", n: "Monetizable Views | Min 50K", n_ar: "💰 مشاهدات تفعيل الربح | ثابت (50K+) ♻️", p: 0.0855},
+       {id: 7635, cat: "TikTok", n: "Monetizable Views | Min 10K", n_ar: "💰 مشاهدات تفعيل الربح | ثابت (10K+) ♻️", p: 0.0900},
+        // --- TIKTOK SAVES & SHARES (إضافات) ---
+       {id: 8119, cat: "TikTok", n: "TikTok Saves | Real", n_ar: "📌 حفظ تيك توك الفيديو (Saves) | حقيقي ⚡ ضمان ♻️", p: 0.0090},
+       {id: 6924, cat: "TikTok", n: "TikTok Saves | Fast", n_ar: "📌 حفظ تيك توك الفيديو | سرعة 500K ⚡ ضمان ♻️", p: 0.0320},
+       {id: 1969, cat: "TikTok", n: "TikTok Shares | SuperFast", n_ar: "🔗 مشاركات تيك توك الفيديو (Shares) | فوري ⚡ ضمان ♻️", p: 0.0268},
+       {id: 7720, cat: "TikTok", n: "TikTok Story Likes | Real", n_ar: "❤️ إعجابات تيك توك ستوري | حقيقي ⚡ ضمان 30 يوم 🔥", p: 0.3365},
+       { id: 3342, cat: "TikTok", n: "💬 TikTok Commentaires - Réel | تعليقات تيك توك مخصصة - حقيقية", p: 2.26 },
+       { id: 9313, cat: "TikTok", n: "💬 TikTok Commentaires - Garantie 30 Jours ♻️ | تعليقات تيك توك - ضمان 30 يوم", p: 4.90 },       
+    
         { id: 8253, cat: "Facebook", n: "FB Page Followers", n_ar: "متابعين صفحة فيسبوك", p: 0.475 },
         { id: 1873, cat: "YouTube", n: "YouTube Premium 1M", n_ar: "يوتيوب بريميوم شهر", p: 2.50, fix: true },
         { id: 9106, cat: "Gaming", n: "PUBG Mobile 60 UC", n_ar: "ببجي موبايل 60 شدة", p: 1.50, fix: true }
