@@ -225,33 +225,54 @@
             link: link
         };
         function sendWA() {
-    // 1. جلب البيانات من المدخلات (تأكد من مطابقة الـ IDs في الـ HTML لديك)
-    const link = document.getElementById('mLink').value;
-    const pay = document.getElementById('mPay').value;
-    const total = document.getElementById('totalDisplay').innerText;
+    // 1. جلب البيانات من المودال
+    const linkInput = document.getElementById('mLink');
+    const payInput = document.getElementById('mPay');
+    const totalDisplay = document.getElementById('totalDisplay');
 
-    // 2. التحقق من ملء البيانات قبل الإرسال
-    if(!link || !pay) {
+    // التأكد من وجود العناصر في الصفحة أولاً
+    if (!linkInput || !payInput || !totalDisplay) {
+        console.error("بعض العناصر غير موجودة في الـ HTML");
+        return;
+    }
+
+    const link = linkInput.value;
+    const pay = payInput.value;
+    const total = totalDisplay.innerText;
+
+    // 2. التحقق من ملء البيانات
+    if (!link || !pay) {
         alert("يرجى ملء الرابط واختيار طريقة الدفع 🍬");
         return;
     }
 
-    // 3. تنسيق الرسالة (استخدام s.id أو current.id حسب تعريف المتغير في كودك)
-    // ملاحظة: الصور تظهر استخدام 's' في السجل و 'current' في دالة الواتساب
-    const msg = "🚀 *طلب جديد من الموقع* 🍬" + "\n" +
-                "--------------------------" + "\n" +
-                "🆔 *الآيدي:* #" + (typeof s !== 'undefined' ? s.id : current.id) + "\n" +
-                "🛠 *الخدمة:* " + (typeof s !== 'undefined' ? (currentLang === 'ar' ? s.n_ar : s.n) : current.n) + "\n" +
+    // 3. تحديد الخدمة الحالية (استخدام s إذا كانت موجودة، وإلا current)
+    let srvID = "0000";
+    let srvName = "خدمة غير معروفة";
+
+    if (typeof s !== 'undefined' && s !== null) {
+        srvID = s.id;
+        srvName = (typeof currentLang !== 'undefined' && currentLang === 'ar') ? s.n_ar : s.n;
+    } else if (typeof current !== 'undefined' && current !== null) {
+        srvID = current.id;
+        srvName = current.n;
+    }
+
+    // 4. بناء الرسالة (تأكد من أن كل شيء بين علامات تنصيص متصل بـ +)
+    const msg = "🚀 *طلب جديد من الموقع* 🍬\n" +
+                "--------------------------\n" +
+                "🆔 *الآيدي:* #" + srvID + "\n" +
+                "🛠 *الخدمة:* " + srvName + "\n" +
                 "🔗 *الرابط:* " + link + "\n" +
                 "💰 *الإجمالي:* " + total + "\n" +
                 "💳 *طريقة الدفع:* " + pay + "\n" +
-                "--------------------------" + "\n" +
-                "💡 *ملاحظة:* يرجى إرسال رقم (1) مع صورة الوصل لتأكيد الشحن.";
+                "--------------------------\n" +
+                "💡 *يرجى إرسال صورة الوصل لتأكيد الشحن.*";
 
-    // 4. فتح الواتساب باستخدام الترميز الصحيح لمنع الحروف الغريبة
-    const waUrl = "https://wa.me/213656251947?text=" + encodeURIComponent(msg);
-    window.open(waUrl, '_blank');
-    }
+    // 5. فتح الواتساب
+    const whatsappUrl = "https://wa.me/213656251947?text=" + encodeURIComponent(msg);
+    window.open(whatsappUrl, '_blank');
+        }
 
     function copyText(text, btn) {
         navigator.clipboard.writeText(text).then(() => {
