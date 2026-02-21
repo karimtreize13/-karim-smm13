@@ -225,13 +225,32 @@
             link: link
         };
         function sendWA() {
-        const link = document.getElementById('mLink').value;
-        const pay = document.getElementById('mPay').value;
-        if(!link || !pay) return alert("يرجى ملء الرابط واختيار طريقة الدفع 🍬");
-        const msg = ` 🚀 ملاحظه اذا تميت بطريقه الدفع يمكنك الضغط على الرقم 1 *طلب جديد*%0AID: ${current.id}%0Aالخدمة: ${current.n}%0Aالرابط: ${link}%0Aالإجمالي: ${document.getElementById('totalDisplay').innerText}%0Aالدفع: ${pay}`;
-        window.open(`https://wa.me/213656251947?text=${encodeURIComponent(msg)}`);
-            
+    // جلب الرابط وطريقة الدفع من المدخلات
+    const link = document.getElementById('mLink').value;
+    const pay = document.getElementById('mPay').value;
+    const total = document.getElementById('totalDisplay').innerText;
+
+    // التحقق من ملء البيانات
+    if(!link || !pay) {
+        alert("يرجى ملء الرابط واختيار طريقة الدفع 🍬");
+        return;
     }
+
+    // تنسيق الرسالة لتبدو احترافية ومنظمة كما طلبت
+    const msg = "🚀 *طلب جديد من الموقع* 🍬" + "\n" +
+                "-----------------------" + "\n" +
+                "🆔 *الآيدي:* #" + current.id + "\n" +
+                "🛠 *الخدمة:* " + current.n + "\n" +
+                "🔗 *الرابط:* " + link + "\n" +
+                "💰 *الإجمالي:* " + total + "\n" +
+                "💳 *طريقة الدفع:* " + pay + "\n" +
+                "-----------------------" + "\n" +
+                "💡 *ملاحظة:* إذا قمت بالدفع بالفعل، يرجى إرسال رقم (1) مع صورة الوصل.";
+
+    // فتح الرابط مع استخدام encodeURIComponent لضمان عدم حدوث أخطاء في الرموز
+    const waUrl = "https://wa.me/213656251947?text=" + encodeURIComponent(msg);
+    window.open(waUrl, '_blank');
+            }
 
     function copyText(text, btn) {
         navigator.clipboard.writeText(text).then(() => {
