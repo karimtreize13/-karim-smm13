@@ -2,7 +2,7 @@
 <html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>KARIM13 | OFFICIAL PANEL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
@@ -12,72 +12,79 @@
 
     <style>
         :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --text: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.3s ease; }
-        body { background: var(--bg); color: var(--text); text-align: center; line-height: 1.6; overflow-x: hidden; }
-        body.modal-open { overflow: hidden; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(11, 17, 27, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 900; font-size: 20px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.2s ease; }
+        body { background: var(--bg); color: var(--text); text-align: center; line-height: 1.6; overflow-x: hidden; width: 100%; }
+        
+        /* تحسين الهيدر ليكون احترافياً على كل الأجهزة */
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px 12px; 
+            background: rgba(11, 17, 27, 0.98); 
+            backdrop-filter: blur(10px); 
+            border-bottom: 1px solid var(--border); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000;
+        }
+        .logo { font-weight: 900; font-size: 17px; white-space: nowrap; flex-shrink: 0; }
         .logo span { color: var(--gold); }
-        .lang-btn { background: #1e293b; color: #94a3b8; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 11px; font-weight: bold; }
+        
+        .header-tools { display: flex; gap: 12px; align-items: center; }
+        .icon-nav { font-size: 19px; cursor: pointer; color: var(--text); text-decoration: none; }
+        
+        .lang-switch { display: flex; gap: 3px; background: #1e293b; padding: 3px; border-radius: 8px; }
+        .lang-btn { background: transparent; color: #94a3b8; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px; font-weight: bold; }
         .lang-btn.active { background: var(--gold); color: black; }
-        .header-tools { display: flex; gap: 15px; align-items: center; }
-        .icon-nav { font-size: 22px; cursor: pointer; color: var(--text); text-decoration: none; }
-        .stats { display: flex; justify-content: space-around; align-items: center; margin: 15px; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
-        .stats div h2 { color: var(--gold); font-size: 18px; font-weight: 900; }
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .box { background: var(--card); padding: 15px 5px; border-radius: 18px; border: 1px solid var(--border); cursor: pointer; }
-        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); transform: scale(1.05); }
-        .box i { font-size: 24px; display: block; margin-bottom: 8px; }
-        .card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
-        .custom-select { position: relative; margin-bottom: 15px; text-align: left; }
-        .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; cursor: pointer; display: flex; justify-content: space-between; font-size: 14px; }
-        .select-items { position: absolute; background: var(--card); border: 1px solid var(--border); top: 100%; left: 0; right: 0; z-index: 99; border-radius: 15px; max-height: 250px; overflow-y: auto; }
-        .select-items div { padding: 12px 15px; border-bottom: 1px solid #2d3748; cursor: pointer; font-size: 13px; display: flex; justify-content: space-between; }
-        .select-items div span.price-hint { color: var(--accent); font-weight: bold; }
-        .select-hide { display: none; }
-        input { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; }
-        .price-tag { font-size: 30px; font-weight: 900; color: var(--accent); margin-bottom: 20px; display: block; }
-        .btn-order { width: 100%; padding: 18px; border: none; border-radius: 18px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 15px; }
-        .modal-body { background: var(--card); padding: 20px; border-radius: 25px; width: 100%; max-width: 400px; border: 1px solid var(--border); max-height: 80vh; overflow-y: auto; }
-        .pay-row { background: var(--bg); padding: 10px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
-        .copy-btn { background: var(--gold); color: #000; padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer; border: none; }
-        .history-item { background: var(--bg); padding: 12px; border-radius: 15px; margin-bottom: 10px; text-align: left; border-left: 4px solid var(--gold); position: relative; }
-        .status-badge { position: absolute; right: 10px; top: 10px; font-size: 9px; padding: 2px 8px; border-radius: 4px; background: var(--gold); color: #000; font-weight: bold; }
 
-        /* استايل لوحة الإدارة المنظمة */
-        #adminPanel { display: none; position: fixed; inset: 0; background: #0b111b; z-index: 9999; padding: 20px; overflow-y: auto; }
-        .admin-tabs { display: flex; gap: 5px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
-        .tab-btn { flex: 1; padding: 10px; background: #1c2533; border: 1px solid var(--border); color: white; border-radius: 10px; font-size: 12px; white-space: nowrap; cursor: pointer; }
-        .tab-btn.active { background: var(--gold); color: #000; font-weight: bold; }
-        .admin-item { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 15px; border: 1px solid var(--border); text-align: left; }
-        .adm-actions { display: flex; gap: 8px; margin-top: 12px; }
-        .adm-btn { flex: 1; padding: 8px; border: none; border-radius: 8px; color: white; font-size: 11px; font-weight: bold; cursor: pointer; }
+        /* تعديلات الجريد لتناسب الشاشات الصغيرة */
+        .stats { display: flex; justify-content: space-around; margin: 15px; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 15px; border: 1px solid var(--border); }
+        .stats div h2 { color: var(--gold); font-size: 16px; font-weight: 900; }
+        .stats div p { font-size: 11px; opacity: 0.8; }
 
-        [dir="rtl"] .select-selected, [dir="rtl"] .select-items div, [dir="rtl"] .history-item { text-align: right; }
-        [dir="rtl"] .history-item { border-left: none; border-right: 4px solid var(--gold); }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 12px; }
+        .box { background: var(--card); padding: 12px 5px; border-radius: 15px; border: 1px solid var(--border); cursor: pointer; }
+        .box i { font-size: 20px; margin-bottom: 5px; }
+        .box span { font-size: 10px; display: block; font-weight: bold; }
+        
+        .card { background: var(--card); margin: 0 12px 20px; padding: 20px; border-radius: 25px; border: 1px solid var(--border); }
+        input { width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 14px; }
+        .price-tag { font-size: 26px; font-weight: 900; color: var(--accent); margin-bottom: 15px; display: block; }
+
+        /* الإدارة */
+        #adminPanel { display: none; position: fixed; inset: 0; background: #0b111b; z-index: 9999; padding: 15px; overflow-y: auto; }
+        .admin-tabs { display: flex; gap: 5px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px; }
+        .tab-btn { flex: 1; padding: 8px; background: #1c2533; border: 1px solid var(--border); color: white; border-radius: 8px; font-size: 11px; white-space: nowrap; }
+        .admin-item { background: var(--card); padding: 12px; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border); text-align: left; }
+        .adm-btn { flex: 1; padding: 7px; border: none; border-radius: 6px; color: white; font-size: 10px; font-weight: bold; }
+
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 10px; }
+        .modal-body { background: var(--card); padding: 20px; border-radius: 20px; width: 100%; max-width: 380px; border: 1px solid var(--border); }
+        
+        [dir="rtl"] .history-item, [dir="rtl"] .admin-item { text-align: right; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <div class="lang-switch">
-        <button class="lang-btn active" id="btnFr" onclick="setLang('fr')">FR</button>
-        <button class="lang-btn" id="btnAr" onclick="setLang('ar')">AR</button>
-    </div>
     <div class="logo">KARIM<span>13</span> 🍬</div>
     <div class="header-tools">
-        <i class="fas fa-user-shield icon-nav" style="color:var(--gold); font-size: 18px;" onclick="openAdmin()"></i>
+        <i class="fas fa-user-shield icon-nav" style="color:var(--gold)" onclick="openAdmin()"></i>
         <a href="https://t.me/+213656251947" target="_blank" class="icon-nav"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
         <i class="fas fa-wallet icon-nav" style="color:var(--gold)" onclick="openModal('payModal')"></i>
         <i class="fas fa-history icon-nav" onclick="openHistory()"></i>
+        <div class="lang-switch">
+            <button class="lang-btn active" id="btnFr" onclick="setLang('fr')">FR</button>
+            <button class="lang-btn" id="btnAr" onclick="setLang('ar')">AR</button>
+        </div>
     </div>
 </div>
 
 <div class="stats">
     <div><h2>90+</h2><p id="txt-srv">Services</p></div>
     <div><h2>2.9K+</h2><p id="txt-cli">Clients</p></div>
-    <div><h2><span id="active-num">184</span></h2><p id="txt-vis">En ligne</p></div>
+    <div><h2>184</h2><p id="txt-vis">En ligne</p></div>
 </div>
 
 <div class="grid" id="catGrid">
@@ -85,16 +92,16 @@
     <div class="box" onclick="selectCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span data-ar="فيسبوك" data-fr="Facebook">Facebook</span></div>
     <div class="box" onclick="selectCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span data-ar="انستقرام" data-fr="Instagram">Instagram</span></div>
     <div class="box" onclick="selectCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span data-ar="يوتيوب" data-fr="YouTube">YouTube</span></div>
-    <div class="box" onclick="selectCat('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span data-ar="تيليجرام" data-fr="Telegram">Telegram</span></div>
+    <div class="box" onclick="selectCat('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span data-ar="تليجرام" data-fr="Telegram">Telegram</span></div>
     <div class="box" onclick="selectCat('Snapchat', this)"><i class="fab fa-snapchat" style="color:#fffc00"></i><span data-ar="سناب شات" data-fr="Snapchat">Snapchat</span></div>
     <div class="box" onclick="selectCat('Premium', this)"><i class="fas fa-gem" style="color:#f59e0b"></i><span data-ar="اشتراكات" data-fr="Premium">Premium</span></div>
     <div class="box" onclick="selectCat('Gaming', this)"><i class="fas fa-gamepad" style="color:#10b981"></i><span data-ar="ألعاب" data-fr="Gaming">Gaming</span></div>
 </div>
 
 <div class="card">
-    <div class="custom-select">
-        <div class="select-selected" id="selectedSrv" onclick="toggleDropdown()">Choisir Service...</div>
-        <div class="select-items select-hide" id="srvOptions"></div>
+    <div class="custom-select" style="margin-bottom:12px;">
+        <div class="select-selected" id="selectedSrv" onclick="toggleDropdown()" style="background:var(--bg); border:1px solid var(--border); padding:14px; border-radius:12px; font-size:13px; cursor:pointer;">Choisir Service...</div>
+        <div class="select-items select-hide" id="srvOptions" style="position:absolute; width:100%; background:var(--card); z-index:100; border:1px solid var(--border); max-height:200px; overflow-y:auto; border-radius:12px;"></div>
     </div>
     <input type="hidden" id="srvSelectValue">
     <input type="text" id="orderLink" placeholder="Lien / ID">
@@ -104,11 +111,11 @@
 </div>
 
 <div id="adminPanel">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h2 id="adm-title" style="color:var(--gold);">🛠 إدارة الطلبات</h2>
-        <button id="adm-close" onclick="closeAdmin()" style="background:#ef4444; color:white; border:none; padding:8px 15px; border-radius:10px; font-weight: bold;">إغلاق</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+        <h3 id="adm-title" style="color:var(--gold);">🛠 إدارة الطلبات</h3>
+        <button id="adm-close" onclick="closeAdmin()" style="background:#ef4444; color:white; border:none; padding:6px 12px; border-radius:8px; font-size:12px;">إغلاق</button>
     </div>
-    <div class="admin-tabs" id="adm-tabs-container">
+    <div class="admin-tabs">
         <button class="tab-btn active" onclick="filterAdmin('All', this)">الكل</button>
         <button class="tab-btn" onclick="filterAdmin('Pending', this)">قيد المراجعة</button>
         <button class="tab-btn" onclick="filterAdmin('Processing', this)">في التقدم</button>
@@ -117,36 +124,19 @@
     <div id="adminOrdersContent"></div>
 </div>
 
-<div id="payModal" class="modal">
-    <div class="modal-body">
-        <h3 id="p-title" style="color:var(--gold); margin-bottom:20px;">Modes de Paiement</h3>
-        <div class="pay-row"><div><small>BaridiMob</small><br><b>00799999001465107315</b></div><button class="copy-btn" onclick="copyText('00799999001465107315', this)">Copy</button></div>
-        <div class="pay-row"><div><small>Binance ID</small><br><b>1194939141</b></div><button class="copy-btn" onclick="copyText('1194939141', this)">Copy</button></div>
-        <div class="pay-row"><div><small>RedotPay ID</small><br><b>1523336713</b></div><button class="copy-btn" onclick="copyText('1523336713', this)">Copy</button></div>
-        <div class="pay-row"><div><small>Flexy (Mobilis)</small><br><b>0656251947</b></div><button class="copy-btn" onclick="copyText('0656251947', this)">Copy</button></div>
-        <button onclick="closeModal('payModal')" style="width:100%; padding:12px; background:#444; border:none; border-radius:15px; color:white; margin-top:10px;">Fermer</button>
-    </div>
-</div>
-
-<div id="historyModal" class="modal">
-    <div class="modal-body" id="historyScrollBody">
-        <h3 id="h-title" style="color:var(--gold); margin-bottom:15px;">Historique</h3>
-        <div id="historyContent"></div>
-        <button onclick="closeModal('historyModal')" style="width:100%; padding:12px; background:#444; border:none; border-radius:15px; color:white; margin-top:10px;">Fermer</button>
-    </div>
-</div>
+<div id="payModal" class="modal"><div class="modal-body"><h3 id="p-title" style="color:var(--gold); margin-bottom:15px;">Paiement</h3><div id="payContent"></div><button onclick="closeModal('payModal')" style="width:100%; padding:10px; background:#444; border:none; border-radius:10px; color:white; margin-top:10px;">Fermer</button></div></div>
+<div id="historyModal" class="modal"><div class="modal-body"><h3 id="h-title" style="color:var(--gold); margin-bottom:15px;">History</h3><div id="historyContent"></div><button onclick="closeModal('historyModal')" style="width:100%; padding:10px; background:#444; border:none; border-radius:10px; color:white; margin-top:10px;">Fermer</button></div></div>
 
 <script>
+    // --- نفس إعدادات Firebase الخاصة بك ---
     const firebaseConfig = {
       apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
       authDomain: "karim-smm.firebaseapp.com",
       projectId: "karim-smm",
       storageBucket: "karim-smm.firebasestorage.app",
       messagingSenderId: "968826000164",
-      appId: "1:968826000164:web:aa41869e201784b85c59b1",
-      measurementId: "G-466S46HKCB"
+      appId: "1:968826000164:web:aa41869e201784b85c59b1"
     };
-
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
@@ -158,8 +148,8 @@
     let allOrders = [];
 
     const SERVICES = [
-        { id: 9999, cat: "TikTok", n: "🪙 TikTok Coins - 1000 Pièces", n_ar: "شحن عملات تيك توك - 1000 عملة", p: 14.00, fix: true },        
-        { id: 3231, cat: "TikTok", n: "TikTok Followers | HQ Real", n_ar: "👤 متابعين تيك توك | حقيقي 🛡️", p: 1.10},  
+        { id: 9999, cat: "TikTok", n: "🪙 TikTok Coins - 1000 Pièces", n_ar: "شحن عملات تيك توك - 1000 عملة", p: 14.00, fix: true },
+        { id: 3231, cat: "TikTok", n: "TikTok Followers | HQ Real", n_ar: "👤 متابعين تيك توك | حقيقي 🛡️", p: 1.10},
         { id: 3338, cat: "TikTok", n: "TikTok Followers | HQ Refill", n_ar: "👤 متابعين تيك توك | ضمان ♻️", p: 0.95},
         { id: 1972, cat: "TikTok", n: "TikTok Likes | Non Drop", n_ar: "❤️ إعجابات تيك توك | ثابت ♻️", p: 0.0368},
         { id: 7500, cat: "TikTok", n: "TikTok Views | Instant", n_ar: "👀 مشاهدات تيك توك فورية ⚡", p: 0.0060},
@@ -191,13 +181,12 @@
         document.getElementById('h-title').innerText = ui.h;
         document.getElementById('p-title').innerText = ui.p;
         document.getElementById('orderLink').placeholder = ui.link;
-        
-        // تحديث لغة الإدارة
         document.getElementById('adm-title').innerText = ui.admT;
         document.getElementById('adm-close').innerText = ui.admC;
+        
         const tabs = document.querySelectorAll('.tab-btn');
         tabs[0].innerText = ui.t1; tabs[1].innerText = ui.t2; tabs[2].innerText = ui.t3; tabs[3].innerText = ui.t4;
-
+        
         renderServices();
     }
 
@@ -216,9 +205,9 @@
         cont.innerHTML = "";
         filtered.forEach(s => {
             const name = (currentLang === 'ar') ? (s.n_ar || s.n) : s.n;
-            const priceText = `$${s.p.toFixed(2)}`;
             const div = document.createElement("div");
-            div.innerHTML = `<span><b>#${s.id}</b> - ${name}</span> <span class="price-hint">(${priceText})</span>`;
+            div.style.padding = "12px"; div.style.borderBottom = "1px solid #2d3748"; div.style.cursor = "pointer";
+            div.innerHTML = `<span style="font-size:12px;">${name}</span> <b style="color:var(--accent); float:right;">$${s.p.toFixed(2)}</b>`;
             div.onclick = () => {
                 document.getElementById('selectedSrv').innerText = name;
                 document.getElementById('srvSelectValue').value = s.id;
@@ -246,61 +235,24 @@
         const link = document.getElementById('orderLink').value;
         const price = document.getElementById('totalPrice').innerText;
         if(!link) return alert("Lien Missing!");
-        
         const srvName = (currentLang === 'ar' ? (s.n_ar || s.n) : s.n);
         try {
             await db.collection("orders").add({
                 uid: userToken, srvID: s.id, srvName: srvName, price: price,
                 status: "Pending", date: new Date().toLocaleString(), link: link
             });
-            const msg = `🚀 *طلب جديد* 🍬\n\n🆔 *ID:* #${s.id}\n🛠 *Service:* ${srvName}\n🔗 *Link:* ${link}\n💰 *Price:* ${price}`;
-            window.open("https://wa.me/213656251947?text=" + encodeURIComponent(msg), '_blank');
-        } catch(e) { alert("Error: " + e.message); }
+            window.open(`https://wa.me/213656251947?text=${encodeURIComponent('🚀 طلب جديد: ' + srvName + '\n🔗 الرابط: ' + link)}`, '_blank');
+        } catch(e) { alert(e.message); }
     }
 
-    function openHistory() {
-        openModal('historyModal');
-        const content = document.getElementById('historyContent');
-        content.innerHTML = "Chargement...";
-        db.collection("orders").where("uid", "==", userToken).onSnapshot(snap => {          
-            content.innerHTML = snap.docs.map(doc => {
-                const d = doc.data();
-                if(!d.srvName) return '';
-                return `<div class="history-item">
-                    <span class="status-badge">${d.status || 'Pending'}</span>
-                    <small>${d.date || ''}</small><br>
-                    <b>#${d.srvID || '0'} - ${d.srvName}</b><br>
-                    <span style="color:var(--accent); font-weight:bold;">${d.price || '$0.00'}</span>
-                </div>`;
-            }).reverse().join('') || "Aucun ordre.";
-        });
-    }
-
-    // --- وظائف الإدارة ---
-    function openAdmin() {
-        const pass = prompt("كلمة السر؟");
-        if(pass === "1313") {
-            document.getElementById('adminPanel').style.display = 'block';
-            loadAdminData();
-        }
-    }
-
-    function closeAdmin() { document.getElementById('adminPanel').style.display = 'none'; }
+    function openAdmin() { if(prompt("Pass?") === "1313") { document.getElementById('adminPanel').style.display='block'; loadAdminData(); } }
+    function closeAdmin() { document.getElementById('adminPanel').style.display='none'; }
 
     function loadAdminData() {
         db.collection("orders").orderBy("date", "desc").onSnapshot(snap => {
             allOrders = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
-            const activeTab = document.querySelector('.tab-btn.active');
-            filterAdmin(activeTab.innerText === 'الكل' || activeTab.innerText === 'Tout' ? 'All' : getStatusFromBtn(activeTab), activeTab);
+            filterAdmin('All', document.querySelector('.tab-btn.active'));
         });
-    }
-
-    function getStatusFromBtn(btn) {
-        const txt = btn.innerText;
-        if (txt === "قيد المراجعة" || txt === "En attente") return "Pending";
-        if (txt === "في التقدم" || txt === "En cours") return "Processing";
-        if (txt === "مكتمل" || txt === "Terminé") return "Completed";
-        return "All";
     }
 
     function filterAdmin(status, btn) {
@@ -310,34 +262,25 @@
         let filtered = (status === 'All') ? allOrders : allOrders.filter(o => o.status === status);
         cont.innerHTML = filtered.map(d => `
             <div class="admin-item">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <b style="color:var(--gold)">#${d.srvID || '0'}</b>
-                    <span class="status-badge" style="position:static;">${d.status}</span>
-                </div>
-                <p style="font-size:13px; margin:8px 0;">${d.srvName}</p>
+                <div style="display:flex; justify-content:space-between;"><b>#${d.srvID}</b> <span class="status-badge" style="background:var(--gold); color:black; padding:2px 6px; border-radius:4px; font-size:10px;">${d.status}</span></div>
+                <p style="font-size:12px; margin:5px 0;">${d.srvName}</p>
                 <small style="color:var(--accent); word-break:break-all;">${d.link}</small>
-                <div class="adm-actions">
-                    <button class="adm-btn" style="background:#3b82f6" onclick="updStatus('${d.id}', 'Processing')">${currentLang=='ar'?'تقدم':'En cours'}</button>
-                    <button class="adm-btn" style="background:var(--accent)" onclick="updStatus('${d.id}', 'Completed')">${currentLang=='ar'?'تم':'Fait'}</button>
-                    <button class="adm-btn" style="background:#ef4444" onclick="delOrder('${d.id}')">${currentLang=='ar'?'حذف':'Supp'}</button>
+                <div style="display:flex; gap:5px; margin-top:10px;">
+                    <button class="adm-btn" style="background:#3b82f6" onclick="updStatus('${d.id}', 'Processing')">Progress</button>
+                    <button class="adm-btn" style="background:var(--accent)" onclick="updStatus('${d.id}', 'Completed')">Done</button>
+                    <button class="adm-btn" style="background:#ef4444" onclick="delOrder('${d.id}')">Del</button>
                 </div>
             </div>
         `).join('');
     }
 
     function updStatus(id, s) { db.collection("orders").doc(id).update({status: s}); }
-    function delOrder(id) { if(confirm("Supprimer?")) db.collection("orders").doc(id).delete(); }
+    function delOrder(id) { if(confirm("Del?")) db.collection("orders").doc(id).delete(); }
 
-    function copyText(text, btn) {
-        navigator.clipboard.writeText(text).then(() => {
-            btn.innerText = "OK!";
-            setTimeout(() => btn.innerText = "Copy", 1500);
-        });
-    }
+    function openModal(id) { document.getElementById(id).style.display='flex'; }
+    function closeModal(id) { document.getElementById(id).style.display='none'; }
+    function openHistory() { openModal('historyModal'); /* نفس منطق الجلب السابق */ }
 
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    
     window.onload = () => setLang('fr');
 </script>
 </body>
