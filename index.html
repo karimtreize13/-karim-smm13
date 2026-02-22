@@ -15,9 +15,9 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.3s ease; }
         body { background: var(--bg); color: var(--text); text-align: center; line-height: 1.6; overflow-x: hidden; }
 
-        /* Navigation Header */
+        /* الهيدر */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(11, 17, 27, 0.98); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 900; font-size: 20px; letter-spacing: 1px; }
+        .logo { font-weight: 900; font-size: 20px; }
         .logo span { color: var(--gold); }
         .header-tools { display: flex; gap: 15px; align-items: center; }
         .icon-nav { font-size: 20px; cursor: pointer; color: var(--text); text-decoration: none; }
@@ -26,45 +26,43 @@
         .lang-btn { background: transparent; color: #94a3b8; border: none; padding: 5px 10px; border-radius: 7px; cursor: pointer; font-size: 11px; font-weight: bold; }
         .lang-btn.active { background: var(--gold); color: black; }
 
-        /* Stats Section */
+        /* الإحصائيات */
         .stats { display: flex; justify-content: space-around; margin: 15px; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
         .stats h2 { color: var(--gold); font-size: 18px; margin-bottom: 5px; }
         .stats p { font-size: 11px; opacity: 0.7; }
 
-        /* Category Grid */
+        /* الشبكة */
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
         .box { background: var(--card); padding: 15px 5px; border-radius: 18px; border: 1px solid var(--border); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90px; }
         .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.12); transform: scale(1.05); }
         .box i { font-size: 24px; margin-bottom: 8px; }
-        .box span { font-size: 10px; font-weight: 700; text-transform: uppercase; }
+        .box span { font-size: 10px; font-weight: 700; }
 
-        /* Main Form Card */
-        .card { background: var(--card); margin: 0 15px 25px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        /* الكارت الرئيسي */
+        .card { background: var(--card); margin: 0 15px 25px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
         .custom-select { position: relative; margin-bottom: 15px; }
-        .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 15px; padding: 16px; cursor: pointer; display: flex; justify-content: space-between; font-size: 14px; align-items: center; }
-        .select-items { position: absolute; background: #1c2533; border: 1px solid var(--gold); top: 100%; left: 0; right: 0; z-index: 100; border-radius: 15px; max-height: 250px; overflow-y: auto; margin-top: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.5); }
-        .select-items div { padding: 15px; border-bottom: 1px solid var(--border); font-size: 13px; display: flex; justify-content: space-between; text-align: left; }
+        .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 15px; padding: 16px; cursor: pointer; display: flex; justify-content: space-between; font-size: 14px; }
+        .select-items { position: absolute; background: #1c2533; border: 1px solid var(--gold); top: 100%; left: 0; right: 0; z-index: 100; border-radius: 15px; max-height: 250px; overflow-y: auto; margin-top: 8px; }
+        .select-items div { padding: 15px; border-bottom: 1px solid var(--border); font-size: 13px; display: flex; justify-content: space-between; }
         
-        input { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 15px; outline: none; }
-        input:focus { border-color: var(--gold); }
-        .price-tag { font-size: 32px; font-weight: 900; color: var(--accent); margin-bottom: 20px; display: block; text-shadow: 0 0 10px rgba(16,185,129,0.3); }
-        .btn-order { width: 100%; padding: 18px; border: none; border-radius: 20px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; font-size: 16px; box-shadow: 0 4px 15px rgba(16,185,129,0.4); }
-        .btn-order:active { transform: scale(0.98); }
+        input { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 15px; }
+        .price-tag { font-size: 32px; font-weight: 900; color: var(--accent); margin-bottom: 20px; display: block; }
+        .btn-order { width: 100%; padding: 18px; border: none; border-radius: 20px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; font-size: 16px; }
 
-        /* Modals */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }
+        /* المودالات */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
         .modal-body { background: var(--card); padding: 25px; border-radius: 25px; width: 100%; max-width: 450px; border: 1px solid var(--border); max-height: 85vh; overflow-y: auto; position: relative; }
-        .close-modal { position: absolute; top: 15px; right: 15px; color: #ff4444; font-size: 20px; cursor: pointer; }
+        .close-modal { position: absolute; top: 15px; right: 15px; color: #ff4444; cursor: pointer; font-size: 20px; }
 
-        .pay-row { background: var(--bg); padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
-        .copy-btn { background: var(--gold); color: #000; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; border: none; font-size: 12px; }
-
-        /* History & Admin items */
+        /* سجل الطلبات والادارة */
         .item-card { background: var(--bg); padding: 15px; border-radius: 15px; margin-bottom: 12px; text-align: left; border-left: 4px solid var(--gold); }
-        .item-header { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 5px; }
-        .status-badge { font-size: 10px; padding: 3px 8px; border-radius: 5px; text-transform: uppercase; }
-        .status-Pending { background: #f59e0b; color: #000; }
-        .status-Completed { background: #10b981; color: #fff; }
+        .status-badge { float: right; font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: bold; }
+        .bg-pending { background: #f59e0b; color: #000; }
+        .bg-completed { background: #10b981; color: #fff; }
+        .bg-processing { background: #3b82f6; color: #fff; }
+
+        .pay-row { background: var(--bg); padding: 15px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); font-size: 12px; }
+        .copy-btn { background: var(--gold); color: black; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         
         .select-hide { display: none; }
     </style>
@@ -78,7 +76,6 @@
         <a href="https://t.me/karim_smm" target="_blank" class="icon-nav"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
         <i class="fas fa-wallet icon-nav" style="color:var(--gold)" onclick="openModal('payModal')"></i>
         <i class="fas fa-history icon-nav" onclick="openHistory()"></i>
-        
         <div class="lang-switch">
             <button class="lang-btn active" id="btnFr" onclick="setLang('fr')">FR</button>
             <button class="lang-btn" id="btnAr" onclick="setLang('ar')">AR</button>
@@ -109,7 +106,7 @@
         <div class="select-items select-hide" id="srvOptions"></div>
     </div>
     <input type="hidden" id="srvIdValue">
-    <input type="text" id="orderLink" placeholder="Lien de la page / ID">
+    <input type="text" id="orderLink" placeholder="Lien / URL / ID">
     <input type="number" id="orderQty" value="1000" oninput="updatePrice()">
     <span class="price-tag" id="totalPrice">$0.00000</span>
     <button class="btn-order" onclick="sendOrder()">Commander Maintenant 🍬</button>
@@ -119,56 +116,47 @@
     <div class="modal-body">
         <i class="fas fa-times close-modal" onclick="closeModal('payModal')"></i>
         <h3 style="color:var(--gold); margin-bottom:20px;">Méthodes de Paiement 💳</h3>
-        <div class="pay-row"><div>CCP:<br><b>00799999001465107315</b></div><button class="copy-btn" onclick="copy('00799999001465107315')">Copy</button></div>
-        <div class="pay-row"><div>BaridiMob:<br><b>00799999001465107315</b></div><button class="copy-btn" onclick="copy('00799999001465107315')">Copy</button></div>
-        <div class="pay-row"><div>Binance ID:<br><b>1194939141</b></div><button class="copy-btn" onclick="copy('1194939141')">Copy</button></div>
-        <div class="pay-row"><div>RedotPay ID:<br><b>1523336713</b></div><button class="copy-btn" onclick="copy('1523336713')">Copy</button></div>
+        <div class="pay-row"><span>CCP: 00799999001465107315</span><button class="copy-btn" onclick="copy('00799999001465107315')">Copy</button></div>
+        <div class="pay-row"><span>BaridiMob: 00799999001465107315</span><button class="copy-btn" onclick="copy('00799999001465107315')">Copy</button></div>
+        <div class="pay-row"><span>Binance ID: 1194939141</span><button class="copy-btn" onclick="copy('1194939141')">Copy</button></div>
+        <div class="pay-row"><span>RedotPay: 1523336713</span><button class="copy-btn" onclick="copy('1523336713')">Copy</button></div>
     </div>
 </div>
 
 <div id="historyModal" class="modal">
     <div class="modal-body">
         <i class="fas fa-times close-modal" onclick="closeModal('historyModal')"></i>
-        <h3 style="color:var(--gold); margin-bottom:20px;">Historique des Commandes 📜</h3>
+        <h3 style="color:var(--gold); margin-bottom:20px;">Mon Historique 📜</h3>
         <div id="historyContent">Chargement...</div>
     </div>
 </div>
 
 <div id="adminModal" class="modal">
-    <div class="modal-body" style="max-width: 90%;">
+    <div class="modal-body" style="max-width: 95%;">
         <i class="fas fa-times close-modal" onclick="closeModal('adminModal')"></i>
-        <h3 style="color:var(--gold); margin-bottom:20px;">Panel Admin 🛠</h3>
+        <h3 style="color:var(--gold); margin-bottom:20px;">Admin Panel 🛠</h3>
         <div id="adminContent"></div>
     </div>
 </div>
 
 <script>
-    // Firebase Configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
-        authDomain: "karim-smm.firebaseapp.com",
-        projectId: "karim-smm",
-        storageBucket: "karim-smm.firebasestorage.app",
-        messagingSenderId: "968826000164",
-        appId: "1:968826000164:web:aa41869e201784b85c59b1"
-    };
+    const firebaseConfig = { apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0", authDomain: "karim-smm.firebaseapp.com", projectId: "karim-smm", storageBucket: "karim-smm.firebasestorage.app", messagingSenderId: "968826000164", appId: "1:968826000164:web:aa41869e201784b85c59b1" };
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Data
     const SERVICES = [
-        { id: 101, cat: "TikTok", n: "TikTok Followers [Real]", n_ar: "متابعين تيك توك حقيقي", p: 1.20 },
-        { id: 102, cat: "TikTok", n: "TikTok Coins [1000]", n_ar: "شحن 1000 عملة تيك توك", p: 14.50, fix: true },
-        { id: 201, cat: "Facebook", n: "FB Page Likes", n_ar: "إعجابات صفحة فيسبوك", p: 0.80 },
-        { id: 301, cat: "Instagram", n: "IG Followers [Refill]", n_ar: "متابعين انستقرام ضمان", p: 0.95 },
-        { id: 401, cat: "YouTube", n: "YT Subscribers", n_ar: "مشتركين يوتيوب", p: 2.10 },
-        { id: 701, cat: "Premium", n: "Netflix 1 Month", n_ar: "نتفليكس شهر", p: 4.00, fix: true },
-        { id: 801, cat: "Gaming", n: "Free Fire 110 Gems", n_ar: "جواهر فري فاير 110", p: 1.15, fix: true }
+        { id: 1, cat: "TikTok", n: "TikTok Followers [Real]", n_ar: "متابعين تيك توك", p: 1.20 },
+        { id: 2, cat: "TikTok", n: "TikTok Coins [1000]", n_ar: "1000 عملة تيك توك", p: 14.50, fix: true },
+        { id: 3, cat: "Facebook", n: "FB Page Likes", n_ar: "لايكات فيسبوك", p: 0.85 },
+        { id: 4, cat: "YouTube", n: "YT Subscribers", n_ar: "مشتركين يوتيوب", p: 2.30 },
+        { id: 5, cat: "Premium", n: "Netflix 1 Month", n_ar: "نتفليكس شهر", p: 4.00, fix: true },
+        { id: 6, cat: "Gaming", n: "Free Fire 210 Gems", n_ar: "جواهر فري فاير", p: 2.10, fix: true }
     ];
 
     let currentLang = 'fr', activeCat = 'TikTok';
-    const userUID = localStorage.getItem('k_uid') || 'ID' + Math.floor(Math.random()*99999);
-    localStorage.setItem('k_uid', userUID);
+    // معرف العميل الثابت لكل متصفح
+    let userUID = localStorage.getItem('k_uid');
+    if(!userUID) { userUID = 'CL' + Math.floor(Math.random()*90000 + 10000); localStorage.setItem('k_uid', userUID); }
 
     function setLang(lang) {
         currentLang = lang;
@@ -214,77 +202,68 @@
         const s = SERVICES.find(x => x.id == document.getElementById('srvIdValue').value);
         const link = document.getElementById('orderLink').value;
         const qty = document.getElementById('orderQty').value;
+        if(!link) return alert("Lien?");
+        
         const price = document.getElementById('totalPrice').innerText;
-        
-        if(!link || !s) return alert("Veuillez remplir les champs!");
-
         const srvName = (currentLang === 'ar' ? s.n_ar : s.n);
-        
-        // حفظ في فايربيس
+
         await db.collection("orders").add({
             uid: userUID,
-            srvName: srvName,
+            srv: srvName,
             link: link,
             qty: qty,
             price: price,
-            status: "Pending",
+            status: "En attente", // الحالة الافتراضية
             date: new Date().toLocaleString()
         });
 
-        // رسالة الواتساب الكاملة
-        const whatsappMsg = `*NOUVELLE COMMANDE - KARIM13*\n\n` +
-                          `🛠 Service: ${srvName}\n` +
-                          `🔗 Lien: ${link}\n` +
-                          `📦 Quantité: ${qty}\n` +
-                          `💰 Prix Total: ${price}\n` +
-                          `⏰ Date: ${new Date().toLocaleString()}\n` +
-                          `🆔 Client ID: ${userUID}`;
-        
-        window.open(`https://wa.me/213656251947?text=${encodeURIComponent(whatsappMsg)}`, '_blank');
-        alert("Commande envoyée avec succès!");
+        const msg = `🚀 *NOUVELLE COMMANDE*\nClient: ${userUID}\nService: ${srvName}\nLien: ${link}\nPrix: ${price}`;
+        window.open(`https://wa.me/213656251947?text=${encodeURIComponent(msg)}`);
+        alert("Success!");
     }
 
     function openHistory() {
         openModal('historyModal');
-        const cont = document.getElementById('historyContent');
         db.collection("orders").where("uid", "==", userUID).orderBy("date", "desc").onSnapshot(snap => {
-            cont.innerHTML = snap.docs.map(doc => {
+            document.getElementById('historyContent').innerHTML = snap.docs.map(doc => {
                 const d = doc.data();
+                const statusClass = d.status === "En attente" ? "bg-pending" : "bg-completed";
                 return `<div class="item-card">
-                    <div class="item-header"><span>${d.srvName}</span><span class="status-badge status-${d.status}">${d.status}</span></div>
-                    <p style="font-size:10px; color:gray;">${d.date}</p>
-                    <p style="font-size:12px;">Link: ${d.link}</p>
+                    <span class="status-badge ${statusClass}">${d.status}</span>
+                    <b>${d.srv}</b><br>
+                    <small>${d.date}</small><br>
+                    <p style="font-size:12px; opacity:0.8;">${d.link}</p>
                     <b style="color:var(--accent)">${d.price}</b>
                 </div>`;
-            }).join('') || "Aucune commande trouvée.";
+            }).join('') || "Aucun ordre.";
         });
     }
 
     function openAdmin() {
-        if(prompt("Code Admin:") === "1313") {
+        if(prompt("Pass?") === "1313") {
             openModal('adminModal');
-            const cont = document.getElementById('adminContent');
             db.collection("orders").orderBy("date", "desc").onSnapshot(snap => {
-                cont.innerHTML = snap.docs.map(doc => {
+                document.getElementById('adminContent').innerHTML = snap.docs.map(doc => {
                     const d = doc.data();
-                    return `<div class="item-card" style="border-left-color:red">
-                        <b>Client: ${d.uid}</b><br>
-                        ${d.srvName} | ${d.price}<br>
+                    return `<div class="item-card" style="border-left-color:#3b82f6">
+                        <small>${d.uid}</small> | <b>${d.status}</b><br>
+                        ${d.srv} - ${d.price}<br>
                         <small>${d.link}</small><br>
-                        <button onclick="updateStat('${doc.id}', 'Completed')" style="background:green; color:white; border:none; padding:5px; margin-top:5px; border-radius:5px;">Terminer</button>
-                        <button onclick="delDoc('${doc.id}')" style="background:red; color:white; border:none; padding:5px; border-radius:5px;">Supprimer</button>
+                        <button onclick="changeStat('${doc.id}', 'Mكتمل')" style="background:green; color:white; border:none; padding:5px; border-radius:5px; margin-top:5px; cursor:pointer;">Terminé</button>
+                        <button onclick="changeStat('${doc.id}', 'En attente')" style="background:orange; color:white; border:none; padding:5px; border-radius:5px; cursor:pointer;">Attente</button>
+                        <button onclick="delDoc('${doc.id}')" style="background:red; color:white; border:none; padding:5px; border-radius:5px; cursor:pointer;">Supprimer</button>
                     </div>`;
                 }).join('');
             });
         }
     }
 
-    function updateStat(id, st) { db.collection("orders").doc(id).update({status: st}); }
+    function changeStat(id, st) { db.collection("orders").doc(id).update({status: st}); }
     function delDoc(id) { if(confirm("Supprimer?")) db.collection("orders").doc(id).delete(); }
-    function copy(t) { navigator.clipboard.writeText(t); alert("Copié!"); }
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
     function toggleDropdown() { document.getElementById('srvOptions').classList.toggle('select-hide'); }
+    function copy(t) { navigator.clipboard.writeText(t); alert("Copié!"); }
 
     window.onload = () => renderServices();
 </script>
