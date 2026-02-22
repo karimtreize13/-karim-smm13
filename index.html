@@ -7,6 +7,7 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
@@ -18,586 +19,224 @@
             --gold: #f59e0b;
             --border: #2d3748;
             --text: #ffffff;
-            --shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
-            transition: all 0.3s ease;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.3s; }
+        body { background: var(--bg); color: var(--text); text-align: center; overflow-x: hidden; }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            text-align: center;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* --- Navigation Header --- */
+        /* Header & Lang Switch */
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background: rgba(11, 17, 27, 0.98);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; padding: 15px;
+            background: rgba(11, 17, 27, 0.98); border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000;
         }
+        .logo { font-weight: 900; font-size: 20px; }
+        .logo span { color: var(--gold); }
+        .nav-icons { display: flex; gap: 12px; align-items: center; }
+        .icon-btn { font-size: 19px; cursor: pointer; color: var(--text); }
+        
+        .lang-container { display: flex; background: #1e293b; border-radius: 10px; padding: 3px; border: 1px solid var(--border); }
+        .lang-toggle { padding: 4px 10px; border-radius: 7px; border: none; font-size: 11px; font-weight: bold; cursor: pointer; background: transparent; color: #94a3b8; }
+        .lang-toggle.active { background: var(--gold); color: #000; }
 
-        .logo {
-            font-weight: 900;
-            font-size: 22px;
-            letter-spacing: 1px;
-        }
+        /* Stats */
+        .stats-bar { display: flex; justify-content: space-around; margin: 15px; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
+        .stat-item h2 { color: var(--gold); font-size: 18px; }
+        .stat-item p { font-size: 10px; opacity: 0.6; }
 
-        .logo span {
-            color: var(--gold);
-        }
+        /* Grid Categories */
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
+        .box { background: var(--card); padding: 15px 5px; border-radius: 18px; border: 1px solid var(--border); cursor: pointer; }
+        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); transform: scale(1.05); }
+        .box i { font-size: 24px; margin-bottom: 8px; display: block; }
+        .box span { font-size: 10px; font-weight: bold; }
 
-        .header-tools {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
+        /* Order Form */
+        .order-card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
+        .select-box { background: var(--bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; margin-bottom: 15px; cursor: pointer; display: flex; justify-content: space-between; font-size: 14px; }
+        .srv-list { position: absolute; background: #1c2533; border: 1px solid var(--gold); width: calc(100% - 60px); left: 30px; z-index: 100; border-radius: 15px; max-height: 200px; overflow-y: auto; display: none; }
+        .srv-list div { padding: 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 12px; }
 
-        .icon-nav {
-            font-size: 20px;
-            cursor: pointer;
-            color: var(--text);
-            text-decoration: none;
-        }
+        input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 15px; outline: none; }
+        .price-display { font-size: 32px; font-weight: 900; color: var(--accent); margin-bottom: 15px; display: block; }
+        .submit-btn { width: 100%; padding: 18px; border: none; border-radius: 20px; background: var(--accent); color: white; font-weight: 900; font-size: 16px; cursor: pointer; }
 
-        .icon-nav:hover {
-            color: var(--gold);
-            transform: scale(1.1);
-        }
+        /* Modals */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: var(--card); padding: 25px; border-radius: 25px; width: 100%; max-width: 450px; border: 1px solid var(--border); position: relative; max-height: 80vh; overflow-y: auto; }
+        .close-x { position: absolute; top: 15px; right: 15px; color: #ff4444; font-size: 22px; cursor: pointer; z-index: 10; }
+        
+        /* Payment Rows */
+        .pay-row { background: var(--bg); padding: 12px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
+        .pay-row span { font-size: 12px; color: #ccc; }
+        .copy-btn { background: var(--gold); color: #000; border: none; padding: 5px 10px; border-radius: 7px; font-weight: bold; cursor: pointer; font-size: 10px; }
 
-        /* --- Language Switcher --- */
-        .lang-switch {
-            display: flex;
-            gap: 4px;
-            background: #1e293b;
-            padding: 4px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-        }
+        /* History & Admin Cards */
+        .order-item { background: var(--bg); padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: left; border-left: 4px solid var(--gold); }
+        .badge { float: right; font-size: 10px; padding: 4px 10px; border-radius: 10px; font-weight: bold; }
+        .pending { background: #f59e0b; color: black; }
+        .done { background: #10b981; color: white; }
 
-        .lang-btn {
-            background: transparent;
-            color: #94a3b8;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        .lang-btn.active {
-            background: var(--gold);
-            color: black;
-        }
-
-        /* --- Stats Section --- */
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 15px;
-            padding: 20px;
-            background: rgba(255,255,255,0.02);
-            border-radius: 25px;
-            border: 1px solid var(--border);
-        }
-
-        .stat-item h2 {
-            color: var(--gold);
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-
-        .stat-item p {
-            font-size: 11px;
-            opacity: 0.7;
-            text-transform: uppercase;
-        }
-
-        /* --- Categories Grid --- */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            padding: 15px;
-        }
-
-        .box {
-            background: var(--card);
-            padding: 18px 5px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100px;
-            box-shadow: var(--shadow);
-        }
-
-        .box.active {
-            border: 2px solid var(--gold);
-            background: rgba(245,158,11,0.12);
-            transform: translateY(-5px);
-        }
-
-        .box i {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .box span {
-            font-size: 10px;
-            font-weight: 700;
-        }
-
-        /* --- Main Order Card --- */
-        .card {
-            background: var(--card);
-            margin: 0 15px 30px;
-            padding: 30px 20px;
-            border-radius: 35px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-        }
-
-        .custom-select {
-            position: relative;
-            margin-bottom: 20px;
-            cursor: pointer;
-        }
-
-        .select-selected {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-        }
-
-        .select-items {
-            position: absolute;
-            background: #1c2533;
-            border: 1px solid var(--gold);
-            top: 100%;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            border-radius: 18px;
-            max-height: 250px;
-            overflow-y: auto;
-            margin-top: 10px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-        }
-
-        .select-items div {
-            padding: 15px;
-            border-bottom: 1px solid var(--border);
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            text-align: left;
-        }
-
-        .select-items div:hover {
-            background: rgba(245,158,11,0.1);
-        }
-
-        input {
-            width: 100%;
-            padding: 18px;
-            margin-bottom: 20px;
-            border-radius: 18px;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            color: white;
-            text-align: center;
-            font-size: 16px;
-            outline: none;
-        }
-
-        input:focus {
-            border-color: var(--gold);
-        }
-
-        .price-tag {
-            font-size: 36px;
-            font-weight: 900;
-            color: var(--accent);
-            margin-bottom: 25px;
-            display: block;
-            text-shadow: 0 0 15px rgba(16,185,129,0.3);
-        }
-
-        .btn-order {
-            width: 100%;
-            padding: 20px;
-            border: none;
-            border-radius: 22px;
-            background: var(--accent);
-            color: white;
-            font-weight: 900;
-            cursor: pointer;
-            font-size: 18px;
-            box-shadow: 0 5px 20px rgba(16,185,129,0.4);
-        }
-
-        .btn-order:active {
-            transform: scale(0.96);
-        }
-
-        /* --- Modals Styling --- */
-        .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.96);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            backdrop-filter: blur(8px);
-        }
-
-        .modal-body {
-            background: var(--card);
-            padding: 30px;
-            border-radius: 30px;
-            width: 100%;
-            max-width: 480px;
-            border: 1px solid var(--border);
-            max-height: 85vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: #ff4444;
-            cursor: pointer;
-            font-size: 24px;
-        }
-
-        /* --- Payment Rows --- */
-        .pay-row {
-            background: var(--bg);
-            padding: 18px;
-            border-radius: 18px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid var(--border);
-        }
-
-        .pay-row span {
-            font-size: 12px;
-            color: #cbd5e1;
-            text-align: left;
-        }
-
-        .copy-btn {
-            background: var(--gold);
-            color: #000;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 10px;
-            font-weight: 800;
-            cursor: pointer;
-            font-size: 11px;
-        }
-
-        /* --- Order Items (History & Admin) --- */
-        .item-card {
-            background: var(--bg);
-            padding: 18px;
-            border-radius: 20px;
-            margin-bottom: 15px;
-            text-align: left;
-            border-left: 5px solid var(--gold);
-            position: relative;
-        }
-
-        .status-badge {
-            float: right;
-            font-size: 11px;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .bg-pending { background: #f59e0b; color: #000; }
-        .bg-completed { background: #10b981; color: #fff; }
-
-        .admin-btns {
-            margin-top: 15px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .adm-btn {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .select-hide { display: none; }
+        /* Admin Controls */
+        .admin-actions { display: flex; gap: 8px; margin-top: 10px; }
+        .adm-btn { flex: 1; padding: 8px; border: none; border-radius: 8px; color: white; font-weight: bold; font-size: 11px; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="header">
     <div class="logo">KARIM<span>13</span> 🍬</div>
-    <div class="header-tools">
-        <i class="fas fa-user-shield icon-nav" style="color:var(--gold)" onclick="openAdmin()"></i>
-        <a href="https://t.me/karim_smm" target="_blank" class="icon-nav"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
-        <i class="fas fa-wallet icon-nav" style="color:var(--gold)" onclick="openModal('payModal')"></i>
-        <i class="fas fa-history icon-nav" onclick="openHistory()"></i>
-        
-        <div class="lang-switch">
-            <button class="lang-btn active" id="btnFr" onclick="setLang('fr')">FR</button>
-            <button class="lang-btn" id="btnAr" onclick="setLang('ar')">AR</button>
+    <div class="nav-icons">
+        <i class="fas fa-user-shield icon-btn" style="color:var(--gold)" onclick="openAdmin()"></i>
+        <a href="https://t.me/karim_smm" target="_blank" class="icon-btn"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
+        <i class="fas fa-wallet icon-btn" style="color:var(--gold)" onclick="showMod('payM')"></i>
+        <i class="fas fa-history icon-btn" onclick="showHistory()"></i>
+        <div class="lang-container">
+            <button class="lang-toggle active" id="fBtn" onclick="changeL('fr')">FR</button>
+            <button class="lang-toggle" id="aBtn" onclick="changeL('ar')">AR</button>
         </div>
     </div>
 </div>
 
-<div class="stats">
-    <div class="stat-item"><h2 id="num-online">215</h2><p id="txt-online">En ligne</p></div>
-    <div class="stat-item"><h2 id="num-clients">3.4K+</h2><p id="txt-clients">Clients</p></div>
-    <div class="stat-item"><h2 id="num-services">150+</h2><p id="txt-services">Services</p></div>
+<div class="stats-bar">
+    <div class="stat-item"><h2>215</h2><p id="t-online">En ligne</p></div>
+    <div class="stat-item"><h2>3.4K+</h2><p id="t-clients">Clients</p></div>
+    <div class="stat-item"><h2>150+</h2><p id="t-services">Services</p></div>
 </div>
 
-<div class="grid" id="catGrid">
-    <div class="box active" onclick="selectCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
-    <div class="box" onclick="selectCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
-    <div class="box" onclick="selectCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Instagram</span></div>
-    <div class="box" onclick="selectCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span>YouTube</span></div>
-    <div class="box" onclick="selectCat('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
-    <div class="box" onclick="selectCat('Snapchat', this)"><i class="fab fa-snapchat" style="color:#fffc00"></i><span>Snapchat</span></div>
-    <div class="box" onclick="selectCat('Premium', this)"><i class="fas fa-gem" style="color:var(--gold)"></i><span>Premium</span></div>
+<div class="grid" id="cats">
+    <div class="box active" onclick="pickCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
+    <div class="box" onclick="pickCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
+    <div class="box" onclick="pickCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Instagram</span></div>
+    <div class="box" onclick="pickCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span>YouTube</span></div>
+    <div class="box" onclick="pickCat('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
+    <div class="box" onclick="pickCat('Snapchat', this)"><i class="fab fa-snapchat" style="color:#fffc00"></i><span>Snapchat</span></div>
+    <div class="box" onclick="pickCat('Premium', this)"><i class="fas fa-gem" style="color:var(--gold)"></i><span>Premium</span></div>
     <div class="box" onclick="selectCat('Gaming', this)"><i class="fas fa-gamepad" style="color:var(--accent)"></i><span>Gaming</span></div>
 </div>
 
-<div class="card">
-    <div class="custom-select" onclick="toggleDropdown()">
-        <div class="select-selected" id="selectedSrv">Choisir Service...</div>
-        <div class="select-items select-hide" id="srvOptions"></div>
+<div class="order-card">
+    <div class="select-box" onclick="toggleSrv()">
+        <span id="curSrv">Choisir Service...</span>
+        <i class="fas fa-chevron-down"></i>
     </div>
-    <input type="hidden" id="srvIdValue">
-    <input type="text" id="orderLink" placeholder="Lien / URL / ID">
-    <input type="number" id="orderQty" value="1000" oninput="updatePrice()">
-    <span class="price-tag" id="totalPrice">$0.00000</span>
-    <button class="btn-order" onclick="sendOrder()" id="btnOrderTxt">Commander Maintenant 🍬</button>
+    <div id="srvList" class="srv-list"></div>
+    <input type="hidden" id="srvId">
+    <input type="text" id="orderL" placeholder="Lien / URL / ID">
+    <input type="number" id="orderQ" value="1000" oninput="calc()">
+    <span class="price-display" id="totalP">$0.00000</span>
+    <button class="submit-btn" onclick="placeOrder()" id="btnSend">Commander Maintenant 🍬</button>
 </div>
 
-<div id="payModal" class="modal">
-    <div class="modal-body">
-        <i class="fas fa-times close-modal" onclick="closeModal('payModal')"></i>
-        <h3 style="color:var(--gold);margin-bottom:25px;" id="title-pay">Méthodes de Paiement 💳</h3>
-        <div class="pay-row"><span>CCP:<br><b>00799999001465107315</b></span><button class="copy-btn" onclick="copy('00799999001465107315')">Copy</button></div>
-        <div class="pay-row"><span>BaridiMob:<br><b>00799999001465107315</b></span><button class="copy-btn" onclick="copy('00799999001465107315')">Copy</button></div>
-        <div class="pay-row"><span>Binance ID:<br><b>1194939141</b></span><button class="copy-btn" onclick="copy('1194939141')">Copy</button></div>
-        <div class="pay-row"><span>RedotPay ID:<br><b>1523336713</b></span><button class="copy-btn" onclick="copy('1523336713')">Copy</button></div>
-    </div>
-</div>
+<div id="payM" class="modal"><div class="modal-content">
+    <i class="fas fa-times close-x" onclick="closeMod('payM')"></i>
+    <h3 style="color:var(--gold);margin-bottom:20px">Paiement 💳</h3>
+    <div class="pay-row"><span>CCP: 00799999001465107315</span><button class="copy-btn" onclick="copy('00799999001465107315')">Copy</button></div>
+    <div class="pay-row"><span>BaridiMob: 00799999001465107315</span><button class="copy-btn" onclick="copy('00799999001465107315')">Copy</button></div>
+    <div class="pay-row"><span>Binance ID: 1194939141</span><button class="copy-btn" onclick="copy('1194939141')">Copy</button></div>
+    <div class="pay-row"><span>RedotPay: 1523336713</span><button class="copy-btn" onclick="copy('1523336713')">Copy</button></div>
+</div></div>
 
-<div id="historyModal" class="modal">
-    <div class="modal-body">
-        <i class="fas fa-times close-modal" onclick="closeModal('historyModal')"></i>
-        <h3 style="color:var(--gold);margin-bottom:25px;" id="title-hist">Mon Historique 📜</h3>
-        <div id="historyContent"></div>
-    </div>
-</div>
+<div id="histM" class="modal"><div class="modal-content">
+    <i class="fas fa-times close-x" onclick="closeMod('histM')"></i>
+    <h3 style="color:var(--gold);margin-bottom:20px">Historique 📜</h3>
+    <div id="hContent"></div>
+</div></div>
 
-<div id="adminModal" class="modal">
-    <div class="modal-body" style="max-width: 95%;">
-        <i class="fas fa-times close-modal" onclick="closeModal('adminModal')"></i>
-        <h3 style="color:var(--gold);margin-bottom:25px;">Admin Control Panel 🛠</h3>
-        <div id="adminContent"></div>
-    </div>
-</div>
+<div id="admM" class="modal"><div class="modal-content" style="max-width:95%">
+    <i class="fas fa-times close-x" onclick="closeMod('admM')"></i>
+    <h3 style="color:var(--gold);margin-bottom:20px">Admin Control 🛠</h3>
+    <div id="aContent"></div>
+</div></div>
 
 <script>
-    // 1. Firebase Configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
-        authDomain: "karim-smm.firebaseapp.com",
-        projectId: "karim-smm",
-        storageBucket: "karim-smm.firebasestorage.app",
-        messagingSenderId: "968826000164",
-        appId: "1:968826000164:web:aa41869e201784b85c59b1"
-    };
-
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const firebaseConfig = { apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0", authDomain: "karim-smm.firebaseapp.com", projectId: "karim-smm", storageBucket: "karim-smm.firebasestorage.app", messagingSenderId: "968826000164", appId: "1:968826000164:web:aa41869e201784b85c59b1" };
+    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // 2. Data
     const SERVICES = [
-        { id: 101, cat: "TikTok", n: "TikTok Followers [Premium]", n_ar: "متابعين تيك توك [ممتاز]", p: 1.10 },
-        { id: 102, cat: "TikTok", n: "TikTok Likes [Fast]", n_ar: "إعجابات تيك توك [سريع]", p: 0.60 },
-        { id: 103, cat: "TikTok", n: "TikTok Coins [1000]", n_ar: "1000 عملة تيك توك", p: 14.50, fix: true },
-        { id: 201, cat: "Facebook", n: "FB Page Likes", n_ar: "لايكات صفحة فيسبوك", p: 0.85 },
-        { id: 301, cat: "Instagram", n: "IG Followers [Refill]", n_ar: "متابعين انستقرام [ضمان]", p: 0.95 },
-        { id: 401, cat: "YouTube", n: "YT Subscribers", n_ar: "مشتركين يوتيوب", p: 2.20 },
-        { id: 501, cat: "Telegram", n: "TG Channel Members", n_ar: "أعضاء قناة تيليجرام", p: 1.15 },
-        { id: 701, cat: "Premium", n: "Netflix 1 Month", n_ar: "نتفليكس شهر واحد", p: 4.00, fix: true },
-        { id: 801, cat: "Gaming", n: "Free Fire 210 Gems", n_ar: "جواهر فري فاير 210", p: 2.10, fix: true }
+        {id:1, cat:'TikTok', n:'Followers [Real]', na:'متابعين تيك توك', p:1.10},
+        {id:2, cat:'TikTok', n:'Coins 1000', na:'1000 عملة تيك توك', p:14.50, f:true},
+        {id:3, cat:'Facebook', n:'FB Page Likes', na:'لايكات فيسبوك', p:0.80},
+        {id:4, cat:'Gaming', n:'PUBG UC 60', na:'60 شدة ببجي', p:1.20, f:true}
     ];
 
-    let currentLang = 'fr', activeCat = 'TikTok';
-    let userUID = localStorage.getItem('k_uid') || 'CL' + Math.floor(Math.random()*90000 + 10000);
-    localStorage.setItem('k_uid', userUID);
+    let L = 'fr', C = 'TikTok', uid = localStorage.getItem('k_uid') || 'U'+Math.floor(Math.random()*99999);
+    localStorage.setItem('k_uid', uid);
 
-    // 3. Language Control
-    function setLang(l) {
-        currentLang = l;
-        document.body.dir = l === 'ar' ? 'rtl' : 'ltr';
-        document.getElementById('btnFr').classList.toggle('active', l === 'fr');
-        document.getElementById('btnAr').classList.toggle('active', l === 'ar');
-        
-        document.getElementById('txt-online').innerText = l === 'ar' ? 'متصل' : 'En ligne';
-        document.getElementById('txt-clients').innerText = l === 'ar' ? 'العملاء' : 'Clients';
-        document.getElementById('txt-services').innerText = l === 'ar' ? 'الخدمات' : 'Services';
-        document.getElementById('btnOrderTxt').innerText = l === 'ar' ? 'اطلب الآن 🍬' : 'Commander Maintenant 🍬';
-        document.getElementById('title-pay').innerText = l === 'ar' ? 'وسائل الدفع 💳' : 'Méthodes de Paiement 💳';
-        document.getElementById('title-hist').innerText = l === 'ar' ? 'سجل طلباتي 📜' : 'Mon Historique 📜';
-        
-        renderServices();
+    function changeL(lang) {
+        L = lang; document.body.dir = L==='ar'?'rtl':'ltr';
+        document.getElementById('fBtn').classList.toggle('active', L==='fr');
+        document.getElementById('aBtn').classList.toggle('active', L==='ar');
+        document.getElementById('t-online').innerText = L==='ar'?'متصل':'En ligne';
+        document.getElementById('btnSend').innerText = L==='ar'?'اطلب الآن 🍬':'Commander Maintenant 🍬';
+        renderSrvs();
     }
 
-    // 4. UI Functions
-    function selectCat(c, el) {
-        activeCat = c;
-        document.querySelectorAll('.box').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        renderServices();
+    function pickCat(cat, el) {
+        C = cat; document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));
+        el.classList.add('active'); renderSrvs();
     }
 
-    function renderServices() {
-        const cont = document.getElementById('srvOptions');
-        const filtered = SERVICES.filter(s => s.cat === activeCat);
-        cont.innerHTML = filtered.map(s => {
-            const name = (currentLang === 'ar') ? s.n_ar : s.n;
-            return `<div onclick="setSrv('${name}', ${s.id})"><span>${name}</span> <b>$${s.p}</b></div>`;
-        }).join('');
-        if(filtered.length > 0) {
-            const first = filtered[0];
-            setSrv((currentLang === 'ar' ? first.n_ar : first.n), first.id);
-        }
+    function renderSrvs() {
+        const list = document.getElementById('srvList');
+        const filt = SERVICES.filter(s=>s.cat === C);
+        list.innerHTML = filt.map(s => `<div onclick="setSrv('${L==='ar'?s.na:s.n}', ${s.id})"><span>${L==='ar'?s.na:s.n}</span><b>$${s.p}</b></div>`).join('');
+        if(filt.length > 0) setSrv(L==='ar'?filt[0].na:filt[0].n, filt[0].id);
     }
 
     function setSrv(n, id) {
-        document.getElementById('selectedSrv').innerText = n;
-        document.getElementById('srvIdValue').value = id;
-        document.getElementById('srvOptions').classList.add('select-hide');
-        updatePrice();
+        document.getElementById('curSrv').innerText = n;
+        document.getElementById('srvId').value = id;
+        document.getElementById('srvList').style.display = 'none';
+        calc();
     }
 
-    function updatePrice() {
-        const s = SERVICES.find(x => x.id == document.getElementById('srvIdValue').value);
+    function calc() {
+        const s = SERVICES.find(x=>x.id == document.getElementById('srvId').value);
         if(!s) return;
-        const q = document.getElementById('orderQty').value || 0;
-        const total = s.fix ? s.p : (s.p / 1000 * q);
-        document.getElementById('totalPrice').innerText = "$" + total.toFixed(5);
+        const q = document.getElementById('orderQ').value || 0;
+        document.getElementById('totalP').innerText = "$" + (s.f ? s.p : (s.p/1000*q)).toFixed(5);
     }
 
-    // 5. Order Action
-    async function sendOrder() {
-        const s = SERVICES.find(x => x.id == document.getElementById('srvIdValue').value);
-        const link = document.getElementById('orderLink').value;
-        const qty = document.getElementById('orderQty').value;
-        const price = document.getElementById('totalPrice').innerText;
-        
-        if(!link || !s) return alert(currentLang === 'ar' ? "يرجى إدخال الرابط!" : "Veuillez entrer le lien!");
-
-        const srvName = (currentLang === 'ar' ? s.n_ar : s.n);
-        const orderTime = new Date().toLocaleString();
-
-        // Save to Firebase
-        await db.collection("orders").add({
-            uid: userUID,
-            srvName: srvName,
-            link: link,
-            qty: qty,
-            price: price,
-            status: "En attente",
-            date: orderTime
-        });
-
-        // WhatsApp Message Full Details
-        const msg = `🍬 *NOUVELLE COMMANDE - KARIM13*\n\n` +
-                    `🛠 *Service:* ${srvName}\n` +
-                    `🔗 *Lien:* ${link}\n` +
-                    `📦 *Quantité:* ${qty}\n` +
-                    `💰 *Prix Total:* ${price}\n` +
-                    `⏰ *Date:* ${orderTime}\n` +
-                    `🆔 *Client ID:* ${userUID}`;
-        
-        window.open(`https://wa.me/213656251947?text=${encodeURIComponent(msg)}`, '_blank');
-        alert(currentLang === 'ar' ? "تم إرسال الطلب بنجاح! 🍬" : "Commande envoyée avec succès! 🍬");
+    async function placeOrder() {
+        const s = SERVICES.find(x=>x.id == document.getElementById('srvId').value);
+        const l = document.getElementById('orderL').value;
+        if(!l) return alert("Link?");
+        const orderData = {
+            uid, srvName: L==='ar'?s.na:s.n, link: l, price: document.getElementById('totalP').innerText,
+            status: 'Attente', date: new Date().toLocaleString()
+        };
+        await db.collection("orders").add(orderData);
+        window.open(`https://wa.me/213656251947?text=${encodeURIComponent("🍬 Order: "+orderData.srvName+"\nLink: "+l+"\nPrice: "+orderData.price)}`);
+        alert("OK! 🍬");
     }
 
-    // 6. History & Admin
-    function openHistory() {
-        openModal('historyModal');
-        const cont = document.getElementById('historyContent');
-        cont.innerHTML = currentLang === 'ar' ? "جاري التحميل..." : "Chargement...";
-        
-        db.collection("orders").where("uid", "==", userUID).orderBy("date", "desc").onSnapshot(snap => {
-            cont.innerHTML = snap.docs.map(doc => {
+    function showHistory() {
+        showMod('histM');
+        db.collection("orders").where("uid","==",uid).orderBy("date","desc").onSnapshot(snap => {
+            document.getElementById('hContent').innerHTML = snap.docs.map(doc => {
                 const d = doc.data();
-                const stClass = d.status === "En attente" ? "bg-pending" : "bg-completed";
-                return `<div class="item-card">
-                    <span class="status-badge ${stClass}">${d.status}</span>
-                    <b style="color:var(--gold)">${d.srvName}</b><br>
-                    <small style="opacity:0.6">${d.date}</small>
-                    <p style="font-size:12px; margin-top:5px; word-break:break-all;">Link: ${d.link}</p>
-                    <b style="color:var(--accent)">${d.price}</b>
+                return `<div class="order-item">
+                    <span class="badge ${d.status==='Attente'?'pending':'done'}">${d.status}</span>
+                    <b>${d.srvName}</b><br><small>${d.price} | ${d.date}</small>
                 </div>`;
-            }).join('') || (currentLang === 'ar' ? "لا يوجد طلبات بعد." : "Aucune commande.");
+            }).join('') || "No orders.";
         });
     }
 
     function openAdmin() {
-        if(prompt("Code Admin:") === "1313") {
-            openModal('adminModal');
-            const cont = document.getElementById('adminContent');
-            db.collection("orders").orderBy("date", "desc").onSnapshot(snap => {
-                cont.innerHTML = snap.docs.map(doc => {
+        if(prompt("Code?") === "1313") {
+            showMod('admM');
+            db.collection("orders").orderBy("date","desc").onSnapshot(snap => {
+                document.getElementById('aContent').innerHTML = snap.docs.map(doc => {
                     const d = doc.data();
-                    return `<div class="item-card" style="border-left-color:red">
-                        <small>ID: ${d.uid}</small> | <b>${d.status}</b><br>
-                        <b>${d.srvName}</b> - ${d.price}<br>
-                        <small>${d.link}</small>
-                        <div class="admin-btns">
-                            <button class="adm-btn" style="background:green" onclick="updStat('${doc.id}', 'Terminé')">Terminé</button>
-                            <button class="adm-btn" style="background:orange" onclick="updStat('${doc.id}', 'En attente')">Attente</button>
-                            <button class="adm-btn" style="background:red" onclick="delDoc('${doc.id}')">Delete</button>
+                    return `<div class="order-item">
+                        <b>${d.uid} | ${d.status}</b><br>${d.srvName} - ${d.price}<br><small>${d.link}</small>
+                        <div class="admin-actions">
+                            <button class="adm-btn" style="background:#10b981" onclick="updStatus('${doc.id}', 'Terminé')">Terminé</button>
+                            <button class="adm-btn" style="background:#f59e0b" onclick="updStatus('${doc.id}', 'Attente')">Attente</button>
+                            <button class="adm-btn" style="background:#ff4444" onclick="delOrder('${doc.id}')">Delete</button>
                         </div>
                     </div>`;
                 }).join('');
@@ -605,15 +244,26 @@
         }
     }
 
-    // 7. Helpers
-    function updStat(id, s) { db.collection("orders").doc(id).update({status: s}); }
-    function delDoc(id) { if(confirm("Supprimer?")) db.collection("orders").doc(id).delete(); }
-    function copy(t) { navigator.clipboard.writeText(t); alert("Copié!"); }
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    function toggleDropdown() { document.getElementById('srvOptions').classList.toggle('select-hide'); }
+    /* إصلاح الدوال التي لم تكن تعمل */
+    window.updStatus = function(id, s) {
+        db.collection("orders").doc(id).update({status: s})
+        .then(() => console.log("Updated"))
+        .catch(e => alert(e));
+    };
 
-    window.onload = () => setLang('fr');
+    window.delOrder = function(id) {
+        if(confirm("Supprimer?")) {
+            db.collection("orders").doc(id).delete()
+            .then(() => console.log("Deleted"));
+        }
+    };
+
+    function showMod(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeMod(id) { document.getElementById(id).style.display = 'none'; }
+    function toggleSrv() { const l = document.getElementById('srvList'); l.style.display = l.style.display==='block'?'none':'block'; }
+    function copy(t) { navigator.clipboard.writeText(t); alert("Copié!"); }
+
+    window.onload = () => changeL('fr');
 </script>
 </body>
 </html>
