@@ -291,7 +291,8 @@
                 return `<div class="order-item"><span class="badge ${d.status==='Attente'?'pending':'done'}">${d.status}</span><b>${d.srvName}</b><br><small>${d.price} | ${d.date}</small></div>`;
             }).join('') || "No orders.";
         });
-         Function openAdmin() {
+    }
+        Function openAdmin() {
         if(prompt("Code?") === "1313") {
             showMod('admM');
             db.collection("orders").orderBy("date","desc").onSnapshot(snap => {
