@@ -11,31 +11,31 @@
     <style>
         :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --text: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.2s ease; }
-        body { background: var(--bg); color: var(--text); text-align: center; overflow-x: hidden; }
+        body { background: var(--bg); color: var(--text); text-align: center; line-height: 1.6; overflow-x: hidden; }
         .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: rgba(11, 17, 27, 0.98); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         .logo { font-weight: 900; font-size: 18px; } .logo span { color: var(--gold); }
         .header-tools { display: flex; gap: 12px; align-items: center; } .icon-nav { font-size: 18px; cursor: pointer; color: var(--text); }
         .lang-switch { display: flex; gap: 4px; background: #1e293b; padding: 3px; border-radius: 8px; }
-        .lang-btn { background: transparent; color: #94a3b8; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px; }
+        .lang-btn { background: transparent; color: #94a3b8; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px; font-weight: bold; }
         .lang-btn.active { background: var(--gold); color: black; }
         .stats { display: flex; justify-content: space-around; margin: 15px; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 15px; border: 1px solid var(--border); }
         .stats h2 { color: var(--gold); font-size: 16px; } .stats p { font-size: 10px; opacity: 0.7; }
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 15px; }
-        .box { background: var(--card); padding: 12px 2px; border-radius: 14px; border: 1px solid var(--border); cursor: pointer; min-height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.08); } .box i { font-size: 20px; margin-bottom: 6px; } .box span { font-size: 9px; font-weight: bold; }
+        .box { background: var(--card); padding: 12px 2px; border-radius: 14px; border: 1px solid var(--border); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80px; }
+        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.08); transform: translateY(-2px); }
+        .box i { font-size: 20px; margin-bottom: 6px; } .box span { font-size: 9px; font-weight: bold; }
         .card { background: var(--card); margin: 0 15px 20px; padding: 20px; border-radius: 25px; border: 1px solid var(--border); }
         .custom-select { position: relative; margin-bottom: 12px; }
-        .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px; cursor: pointer; display: flex; justify-content: space-between; font-size: 13px; }
-        .select-items { position: absolute; background: #1c2533; border: 1px solid var(--gold); top: 100%; left: 0; right: 0; z-index: 100; border-radius: 12px; max-height: 200px; overflow-y: auto; }
-        .select-items div { padding: 12px; border-bottom: 1px solid var(--border); font-size: 12px; display: flex; justify-content: space-between; }
+        .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px; cursor: pointer; display: flex; justify-content: space-between; font-size: 13px; align-items: center; }
+        .select-items { position: absolute; background: #1c2533; border: 1px solid var(--gold); top: 100%; left: 0; right: 0; z-index: 100; border-radius: 12px; max-height: 200px; overflow-y: auto; margin-top: 5px; }
+        .select-items div { padding: 12px; border-bottom: 1px solid var(--border); font-size: 12px; display: flex; justify-content: space-between; text-align: left; }
         input { width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; }
         .price-tag { font-size: 26px; font-weight: 900; color: var(--accent); margin-bottom: 15px; display: block; }
         .btn-order { width: 100%; padding: 16px; border: none; border-radius: 15px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 15px; }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; padding: 15px; }
         .modal-body { background: var(--card); padding: 20px; border-radius: 20px; width: 100%; max-width: 400px; border: 1px solid var(--border); max-height: 80vh; overflow-y: auto; }
-        .pay-row { background: var(--bg); padding: 10px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); font-size: 12px; }
-        .history-item, .admin-item { background: var(--bg); padding: 10px; border-radius: 12px; margin-bottom: 8px; text-align: left; border-left: 3px solid var(--gold); font-size: 12px; }
-        .adm-btn { padding: 4px 8px; border-radius: 5px; border: none; color: white; margin: 4px 2px; font-size: 10px; cursor: pointer; }
+        .pay-row { background: var(--bg); padding: 10px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); font-size: 11px; }
+        .copy-btn { background: var(--gold); border: none; padding: 5px 10px; border-radius: 6px; font-weight: bold; cursor: pointer; }
         .select-hide { display: none; }
     </style>
 </head>
@@ -46,79 +46,55 @@
         <i class="fas fa-user-shield icon-nav" style="color:var(--gold)" onclick="openAdmin()"></i>
         <i class="fas fa-wallet icon-nav" style="color:var(--gold)" onclick="openModal('payModal')"></i>
         <i class="fas fa-history icon-nav" onclick="openHistory()"></i>
-        <div class="lang-switch">
-            <button class="lang-btn active" id="btnFr" onclick="setLang('fr')">FR</button>
-            <button class="lang-btn" id="btnAr" onclick="setLang('ar')">AR</button>
-        </div>
+        <div class="lang-switch"><button class="lang-btn active" id="btnFr" onclick="setLang('fr')">FR</button><button class="lang-btn" id="btnAr" onclick="setLang('ar')">AR</button></div>
     </div>
 </div>
-<div class="stats">
-    <div><h2>90+</h2><p>Services</p></div>
-    <div><h2>2.9K+</h2><p>Clients</p></div>
-    <div><h2>184</h2><p>En ligne</p></div>
-</div>
+<div class="stats"><div><h2>90+</h2><p>Services</p></div><div><h2>2.9K+</h2><p>Clients</p></div><div><h2>184</h2><p>En ligne</p></div></div>
 <div class="grid" id="catGrid">
     <div class="box active" onclick="selectCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
     <div class="box" onclick="selectCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
     <div class="box" onclick="selectCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Instagram</span></div>
     <div class="box" onclick="selectCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span>YouTube</span></div>
+    <div class="box" onclick="selectCat('Premium', this)"><i class="fas fa-gem" style="color:var(--gold)"></i><span>Premium</span></div>
+    <div class="box" onclick="selectCat('Gaming', this)"><i class="fas fa-gamepad" style="color:var(--accent)"></i><span>Gaming</span></div>
 </div>
 <div class="card">
     <div class="custom-select" onclick="toggleDropdown()"><div class="select-selected" id="selectedSrv">Choisir Service...</div><div class="select-items select-hide" id="srvOptions"></div></div>
-    <input type="hidden" id="srvSelectValue"><input type="text" id="orderLink" placeholder="Lien / ID">
-    <input type="number" id="orderQty" value="1000" oninput="updatePrice()">
-    <span class="price-tag" id="totalPrice">$0.00000</span>
-    <button class="btn-order" onclick="sendOrder()">Commander 🍬</button>
+    <input type="hidden" id="srvSelectValue"><input type="text" id="orderLink" placeholder="Lien / ID"><input type="number" id="orderQty" value="1000" oninput="updatePrice()">
+    <span class="price-tag" id="totalPrice">$0.00000</span><button class="btn-order" onclick="sendOrder()">Commander Maintenant 🍬</button>
 </div>
 <div id="payModal" class="modal"><div class="modal-body"><h3 style="color:var(--gold);margin-bottom:15px">Paiement 💳</h3>
-    <div class="pay-row"><span>CCP: <b>00799999001465107315</b></span><button onclick="copyTxt('00799999001465107315')">Copy</button></div>
-    <div class="pay-row"><span>Binance: <b>1194939141</b></span><button onclick="copyTxt('1194939141')">Copy</button></div>
-    <div class="pay-row"><span>RedotPay: <b>1523336713</b></span><button onclick="copyTxt('1523336713')">Copy</button></div>
-    <div class="pay-row"><span>BaridiMob: <b>00799999001465107315</b></span><button onclick="copyTxt('00799999001465107315')">Copy</button></div>
-    <button onclick="closeModal('payModal')" style="width:100%;padding:10px;margin-top:10px;border-radius:10px">Fermer</button></div></div>
-<div id="historyModal" class="modal"><div class="modal-body"><h3 style="color:var(--gold);margin-bottom:15px">Historique 📜</h3><div id="historyContent"></div><button onclick="closeModal('historyModal')" style="width:100%;padding:10px;margin-top:10px;border-radius:10px">Fermer</button></div></div>
-<div id="adminPanel" class="modal"><div class="modal-body" style="max-width:90%"><h3 style="color:var(--gold);margin-bottom:15px">Admin Panel 🛠</h3><div id="adminContent"></div><button onclick="closeModal('adminPanel')" style="width:100%;padding:10px;margin-top:10px;border-radius:10px">Fermer</button></div></div>
+    <div class="pay-row"><span>CCP: 00799999001465107315</span><button class="copy-btn" onclick="copy('00799999001465107315')">Copy</button></div>
+    <div class="pay-row"><span>BaridiMob: 00799999001465107315</span><button class="copy-btn" onclick="copy('00799999001465107315')">Copy</button></div>
+    <div class="pay-row"><span>Binance ID: 1194939141</span><button class="copy-btn" onclick="copy('1194939141')">Copy</button></div>
+    <div class="pay-row"><span>RedotPay: 1523336713</span><button class="copy-btn" onclick="copy('1523336713')">Copy</button></div>
+    <button onclick="closeModal('payModal')" style="width:100%;padding:10px;background:#444;border:none;border-radius:10px;color:#fff;margin-top:10px">Fermer</button></div></div>
+<div id="historyModal" class="modal"><div class="modal-body"><h3 style="color:var(--gold);margin-bottom:15px">Historique 📜</h3><div id="historyContent"></div><button onclick="closeModal('historyModal')" style="width:100%;padding:10px;background:#444;border:none;border-radius:10px;color:#fff;margin-top:10px">Fermer</button></div></div>
 <script>
     const firebaseConfig = { apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0", authDomain: "karim-smm.firebaseapp.com", projectId: "karim-smm", storageBucket: "karim-smm.firebasestorage.app", messagingSenderId: "968826000164", appId: "1:968826000164:web:aa41869e201784b85c59b1" };
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore(), userUID = localStorage.getItem('k_uid') || 'U'+Math.floor(Math.random()*1000000); localStorage.setItem('k_uid', userUID);
-    const SERVICES = [{id:9999,cat:"TikTok",n:"🪙 TikTok Coins",n_ar:"عملات تيك توك",p:14.00,fix:true},{id:3231,cat:"TikTok",n:"Followers",n_ar:"متابعين",p:1.10}];
-    let currentLang = 'fr', activeCat = 'TikTok';
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig); const db = firebase.firestore();
+    const SERVICES = [
+        {id:1,cat:"TikTok",n:"TikTok Followers",n_ar:"متابعين تيك توك",p:1.10},{id:2,cat:"TikTok",n:"TikTok Coins",n_ar:"عملات تيك توك",p:14.0,fix:true},
+        {id:3,cat:"Facebook",n:"FB Followers",n_ar:"متابعين فيسبوك",p:0.45},{id:4,cat:"Instagram",n:"IG Followers",n_ar:"متابعين انستغرام",p:0.85},
+        {id:5,cat:"YouTube",n:"YT Premium",n_ar:"يوتيوب بريميوم",p:2.5,fix:true},{id:6,cat:"Premium",n:"Netflix",n_ar:"نتفليكس",p:4.0,fix:true},
+        {id:7,cat:"Gaming",n:"PUBG UC",n_ar:"شدات ببجي",p:1.2,fix:true}
+    ];
+    let currentLang = 'fr', activeCat = 'TikTok', uid = localStorage.getItem('karim_uid') || 'ID'+Math.floor(Math.random()*9999); localStorage.setItem('karim_uid', uid);
     function setLang(l){ currentLang=l; document.body.dir=l==='ar'?'rtl':'ltr'; renderServices(); }
     function selectCat(c,e){ activeCat=c; document.querySelectorAll('.box').forEach(b=>b.classList.remove('active')); e.classList.add('active'); renderServices(); }
     function renderServices(){
-        const cont = document.getElementById('srvOptions'), filtered = SERVICES.filter(s=>s.cat===activeCat);
-        cont.innerHTML = filtered.map(s=>`<div onclick="selectSrv('${currentLang==='ar'?s.n_ar:s.n}',${s.id})"><span>#${s.id} - ${currentLang==='ar'?s.n_ar:s.n}</span><b>$${s.p}</b></div>`).join('');
+        const cont = document.getElementById('srvOptions'), filtered = SERVICES.filter(s=>s.cat===activeCat); cont.innerHTML = "";
+        filtered.forEach(s=>{ const d=document.createElement("div"); d.innerHTML=`<span>${currentLang==='ar'?s.n_ar:s.n}</span><b>$${s.p}</b>`; d.onclick=()=>{document.getElementById('selectedSrv').innerText=currentLang==='ar'?s.n_ar:s.n;document.getElementById('srvSelectValue').value=s.id;updatePrice();}; cont.appendChild(d); });
     }
-    function selectSrv(n,i){ document.getElementById('selectedSrv').innerText=n; document.getElementById('srvSelectValue').value=i; updatePrice(); }
-    function updatePrice(){
-        const s = SERVICES.find(x=>x.id==document.getElementById('srvSelectValue').value); if(!s)return;
-        const q = document.getElementById('orderQty').value||0;
-        document.getElementById('totalPrice').innerText = "$" + (s.fix?s.p:(s.p/1000*q)).toFixed(5);
-    }
+    function updatePrice(){ const s=SERVICES.find(x=>x.id==document.getElementById('srvSelectValue').value); if(!s)return; const q=document.getElementById('orderQty').value||0; document.getElementById('totalPrice').innerText="$"+(s.fix?s.p:(s.p/1000*q)).toFixed(5); }
     async function sendOrder(){
-        const s=SERVICES.find(x=>x.id==document.getElementById('srvSelectValue').value), link=document.getElementById('orderLink').value;
-        if(!link)return alert("Link?");
-        await db.collection("orders").add({uid:userUID,srvID:s.id,srvName:s.n,price:document.getElementById('totalPrice').innerText,status:"Pending",date:new Date().toLocaleString(),link:link});
-        window.open(`https://wa.me/213656251947?text=${encodeURIComponent('Commande: '+s.n+'\nLien: '+link)}`);
+        const sid=document.getElementById('srvSelectValue').value, link=document.getElementById('orderLink').value; if(!sid||!link) return alert("Error!");
+        const s=SERVICES.find(x=>x.id==sid); await db.collection("orders").add({uid, srv:s.n, link, price:document.getElementById('totalPrice').innerText, status:'Pending', date:new Date().toLocaleString()});
+        alert("Succès!"); window.open(`https://wa.me/213656251947?text=New Order: ${s.n} | Link: ${link}`);
     }
-    function openHistory(){
-        openModal('historyModal'); db.collection("orders").where("uid","==",userUID).onSnapshot(s=>{
-            document.getElementById('historyContent').innerHTML = s.docs.map(d=>{const o=d.data(); return `<div class="history-item"><b>${o.srvName}</b><br><small>${o.date}</small><br>${o.status}</div>`}).reverse().join('');
-        });
-    }
-    function openAdmin(){
-        if(prompt("Pass?")==="1313"){ openModal('adminPanel'); db.collection("orders").orderBy("date","desc").onSnapshot(s=>{
-            document.getElementById('adminContent').innerHTML = s.docs.map(d=>{const o=d.data(); return `<div class="admin-item"><b>#${o.srvID}</b> [${o.status}]<br>${o.link}<br>
-            <button class="adm-btn" style="background:blue" onclick="db.collection('orders').doc('${d.id}').update({status:'Processing'})">Proc</button>
-            <button class="adm-btn" style="background:green" onclick="db.collection('orders').doc('${d.id}').update({status:'Completed'})">Done</button>
-            <button class="adm-btn" style="background:red" onclick="db.collection('orders').doc('${d.id}').delete()">Del</button></div>`}).join('');
-        });}
-    }
-    function openModal(i){ document.getElementById(i).style.display='flex'; }
-    function closeModal(i){ document.getElementById(i).style.display='none'; }
-    function toggleDropdown(){ document.getElementById('srvOptions').classList.toggle('select-hide'); }
-    function copyTxt(t){ navigator.clipboard.writeText(t); alert("OK"); }
+    function openHistory(){ openModal('historyModal'); db.collection("orders").where("uid","==",uid).onSnapshot(snap=>{ document.getElementById('historyContent').innerHTML = snap.docs.map(doc=>{ const d=doc.data(); return `<div style="background:#1e293b;padding:10px;margin-bottom:5px;border-radius:8px"><b>${d.srv}</b><br><small>${d.status} - ${d.price}</small></div>`}).join(''); }); }
+    function openModal(id){ document.getElementById(id).style.display='flex'; } function closeModal(id){ document.getElementById(id).style.display='none'; }
+    function toggleDropdown(){ document.getElementById('srvOptions').classList.toggle('select-hide'); } function copy(t){ navigator.clipboard.writeText(t); alert("Copié!"); }
     window.onload = () => renderServices();
 </script>
 </body>
