@@ -3,95 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM13 | OFFICIAL PANEL</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    
+    <title>KARIM13 | PANEL</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
-        :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --text: #ffffff; --danger: #ef4444; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); text-align: center; overflow-x: hidden; }
-        
-        /* Header & Stats */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(11, 17, 27, 0.95); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 900; font-size: 20px; }
-        .logo span { color: var(--gold); }
-        .stats { display: flex; justify-content: space-around; margin: 15px; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
-        .stats h2 { color: var(--gold); font-size: 18px; }
-
-        /* Grid & Boxes */
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .box { background: var(--card); padding: 10px 5px; border-radius: 15px; border: 1px solid var(--border); cursor: pointer; font-size: 11px; }
-        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); }
-        .box i { font-size: 20px; display: block; margin-bottom: 5px; }
-
-        /* Order Card */
-        .card { background: var(--card); margin: 0 15px 20px; padding: 20px; border-radius: 25px; border: 1px solid var(--border); }
-        select, input { width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; }
-        .price-tag { font-size: 28px; font-weight: 900; color: var(--accent); margin-bottom: 15px; display: block; }
-        .btn-order { width: 100%; padding: 15px; border: none; border-radius: 15px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; }
-
-        /* Admin & History Items */
-        .item-card { background: var(--card); margin: 10px; padding: 15px; border-radius: 15px; border-left: 4px solid var(--gold); text-align: left; position: relative; }
-        .badge { position: absolute; right: 10px; top: 10px; font-size: 10px; padding: 3px 8px; border-radius: 5px; background: var(--gold); color: black; font-weight: bold; }
-        .admin-btns { display: flex; gap: 5px; margin-top: 10px; }
-        .adm-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; }
-        
-        #adminArea { display: none; padding-bottom: 50px; }
-        #openAdmin { opacity: 0.1; margin: 40px auto; display: block; background: none; border: none; color: gray; }
-
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; }
-        .modal-content { background: var(--card); padding: 20px; border-radius: 20px; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto; }
+        :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --text: #ffffff; }
+        body { background: var(--bg); color: var(--text); font-family: sans-serif; text-align: center; margin: 0; }
+        .card { background: var(--card); margin: 15px; padding: 20px; border-radius: 20px; border: 1px solid #2d3748; }
+        .btn { width: 100%; padding: 15px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .history-item { background: #0b111b; padding: 15px; border-radius: 10px; margin-bottom: 10px; text-align: left; position: relative; border: 1px solid #2d3748; }
+        .status { position: absolute; right: 10px; top: 10px; background: var(--gold); color: black; padding: 2px 8px; border-radius: 5px; font-size: 12px; }
+        /* لوحة الإدارة الواضحة */
+        #adminView { display: none; padding: 20px; background: #000; min-height: 100vh; }
+        .admin-card { background: #1a1a1a; padding: 15px; border-radius: 15px; margin-bottom: 15px; border-left: 5px solid var(--accent); text-align: left; }
+        .controls { display: flex; gap: 10px; margin-top: 10px; }
+        .btn-ok { background: var(--accent); color: white; flex: 1; padding: 10px; border-radius: 5px; border: none; }
+        .btn-del { background: #ef4444; color: white; flex: 1; padding: 10px; border-radius: 5px; border: none; }
+        #openAdminBtn { opacity: 0.1; background: none; color: gray; border: none; margin-top: 50px; }
     </style>
 </head>
 <body>
 
-<div id="userArea">
-    <div class="header">
-        <div class="logo">KARIM<span>13</span> 🍬</div>
-        <div style="display:flex; gap:15px;">
-            <i class="fas fa-history" onclick="showHistory()" style="font-size:20px; cursor:pointer;"></i>
-        </div>
-    </div>
-
-    <div class="stats">
-        <div><h2 id="active-num">184</h2><p style="font-size:12px;">En ligne</p></div>
-        <div><h2>2.9K+</h2><p style="font-size:12px;">Clients</p></div>
-    </div>
-
-    <div class="grid">
-        <div class="box active" onclick="selCat('TikTok', this)"><i class="fab fa-tiktok"></i>TikTok</div>
-        <div class="box" onclick="selCat('Facebook', this)"><i class="fab fa-facebook"></i>Facebook</div>
-        <div class="box" onclick="selCat('Instagram', this)"><i class="fab fa-instagram"></i>Insta</div>
-        <div class="box" onclick="selCat('YouTube', this)"><i class="fab fa-youtube"></i>YouTube</div>
-    </div>
-
+<div id="userView">
+    <h2 style="margin-top:20px;">KARIM<span>13</span> 🍬</h2>
     <div class="card">
-        <select id="srvSelect" onchange="upPrice()"></select>
-        <input type="text" id="orderLink" placeholder="Lien / URL / ID">
-        <input type="number" id="orderQty" value="1000" oninput="upPrice()">
-        <span class="price-tag" id="totalPrice">$0.00</span>
-        <button class="btn-order" onclick="send()">Commander Maintenant 🍬</button>
+        <input type="text" id="link" placeholder="Lien / URL" style="width:90%; padding:10px; margin-bottom:10px;">
+        <button class="btn" style="background:var(--accent); color:white;" onclick="send()">Commander</button>
+        <button class="btn" style="background:var(--gold);" onclick="showHistory()">Historique</button>
     </div>
-
-    <button id="openAdmin" onclick="toAdmin()">Admin Space</button>
+    <button id="openAdminBtn" onclick="activateAdmin()">Admin Space</button>
 </div>
 
-<div id="adminArea">
-    <h2 style="color:var(--gold); margin:20px 0;">🛠 لوحة إدارة الطلبات</h2>
-    <button onclick="location.reload()" style="background:#444; color:white; border:none; padding:10px 20px; border-radius:10px; margin-bottom:20px;">خروج</button>
-    <div id="adminList"></div>
-</div>
-
-<div id="hModal" class="modal">
-    <div class="modal-content">
-        <h3 style="margin-bottom:15px; color:var(--gold);">Mon Historique</h3>
-        <div id="hList"></div>
-        <button onclick="document.getElementById('hModal').style.display='none'" style="margin-top:15px; width:100%; padding:10px; border-radius:10px; border:none; background:#444; color:white;">Fermer</button>
-    </div>
+<div id="adminView">
+    <h2 style="color:var(--gold);">🍬 إدارة طلبات كريم</h2>
+    <button onclick="location.reload()" style="background:gray; color:white; border:none; padding:10px; border-radius:5px; margin-bottom:20px;">خروج</button>
+    <div id="adminOrders"></div>
 </div>
 
 <script>
@@ -105,99 +52,46 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    const myID = localStorage.getItem('k_id') || 'U'+Math.floor(Math.random()*10000);
-    localStorage.setItem('k_id', myID);
 
-    const SERVICES = [
-        { id: 9999, cat: "TikTok", n: "🪙 TikTok Coins - 1000", p: 14.00, fix: true },
-        { id: 3231, cat: "TikTok", n: "👤 Followers Real", p: 1.10 },
-        { id: 8253, cat: "Facebook", n: "👤 Facebook Followers", p: 0.47 },
-        { id: 2594, cat: "Instagram", n: "👤 Instagram Followers", p: 0.96 },
-        { id: 1873, cat: "YouTube", n: "📺 YouTube Premium", p: 2.50, fix: true }
-    ];
-
-    let currentCat = 'TikTok';
-
-    function selCat(c, el) {
-        currentCat = c;
-        document.querySelectorAll('.box').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        fillSrv();
+    function send() {
+        const link = document.getElementById('link').value;
+        if(!link) return alert("Link?");
+        db.collection("orders").add({
+            link: link, status: "Pending", date: new Date().toLocaleString(), uid: 'user1'
+        }).then(() => alert("OK!"));
     }
 
-    function fillSrv() {
-        const s = document.getElementById('srvSelect');
-        s.innerHTML = SERVICES.filter(x => x.cat === currentCat).map(x => `<option value="${x.id}">${x.n} ($${x.p})</option>`).join('');
-        upPrice();
-    }
-
-    function upPrice() {
-        const s = SERVICES.find(x => x.id == document.getElementById('srvSelect').value);
-        const q = document.getElementById('orderQty').value || 0;
-        const total = s.fix ? s.p : (s.p / 1000 * q);
-        document.getElementById('totalPrice').innerText = "$" + total.toFixed(3);
-    }
-
-    async function send() {
-        const s = SERVICES.find(x => x.id == document.getElementById('srvSelect').value);
-        const link = document.getElementById('orderLink').value;
-        if(!link) return alert("Ajouter le lien!");
-        const price = document.getElementById('totalPrice').innerText;
-        
-        await db.collection("orders").add({
-            uid: myID, srvID: s.id, srvName: s.n, link: link,
-            price: price, status: "Pending", date: new Date().toLocaleString()
-        });
-        window.open(`https://wa.me/213656251947?text=Nouveau الطلب:%0A- ${s.n}%0A- Link: ${link}%0A- Price: ${price}`);
-        alert("Envoyé!");
-    }
-
-    function showHistory() {
-        document.getElementById('hModal').style.display='flex';
-        db.collection("orders").where("uid", "==", myID).onSnapshot(snap => {
-            document.getElementById('hList').innerHTML = snap.docs.map(doc => {
-                const d = doc.data();
-                return `<div class="item-card"><span class="badge">${d.status}</span><b>${d.srvName}</b><br><small>${d.price} - ${d.date}</small></div>`;
-            }).reverse().join('') || "Aucun ordre.";
-        });
-    }
-
-    function toAdmin() {
-        const p = prompt("Password?");
-        if(p === "1313") {
-            document.getElementById('userArea').style.display='none';
-            document.getElementById('adminArea').style.display='block';
-            loadAdmin();
+    function activateAdmin() {
+        const pass = prompt("Password?");
+        if(pass === "1313") {
+            document.getElementById('userView').style.display = 'none';
+            document.getElementById('adminView').style.display = 'block';
+            loadOrders();
         }
     }
 
-    function loadAdmin() {
+    function loadOrders() {
         db.collection("orders").orderBy("date", "desc").onSnapshot(snap => {
-            document.getElementById('adminList').innerHTML = snap.docs.map(doc => {
+            let html = "";
+            snap.forEach(doc => {
                 const d = doc.data();
-                return `
-                <div class="item-card">
-                    <span class="badge">${d.status}</span>
-                    <b>#${d.srvID} - ${d.srvName}</b><br>
-                    <p style="color:var(--accent); font-size:12px;">Link: ${d.link}</p>
-                    <small>${d.date} | Price: ${d.price}</small>
-                    <div class="admin-btns">
-                        <button class="adm-btn" style="background:var(--accent)" onclick="upStat('${doc.id}', 'Completed')">مكتمل ✅</button>
-                        <button class="adm-btn" style="background:var(--danger)" onclick="delOrd('${doc.id}')">حذف 🗑️</button>
+                html += `
+                <div class="admin-card">
+                    <span style="color:var(--gold)">Status: ${d.status}</span><br>
+                    <small>${d.date}</small><br>
+                    <b>Link: ${d.link}</b>
+                    <div class="controls">
+                        <button class="btn-ok" onclick="update('${doc.id}', 'Completed')">مكتمل ✅</button>
+                        <button class="btn-del" onclick="del('${doc.id}')">حذف 🗑️</button>
                     </div>
                 </div>`;
-            }).join('');
+            });
+            document.getElementById('adminOrders').innerHTML = html;
         });
     }
 
-    function upStat(id, s) { db.collection("orders").doc(id).update({status: s}); }
-    function delOrd(id) { if(confirm("Supprimer?")) db.collection("orders").doc(id).delete(); }
-
-    window.onload = fillSrv;
-    setInterval(() => {
-        const n = document.getElementById('active-num');
-        n.innerText = parseInt(n.innerText) + (Math.random() > 0.5 ? 1 : -1);
-    }, 4000);
+    function update(id, s) { db.collection("orders").doc(id).update({status: s}); }
+    function del(id) { if(confirm("حذف؟")) db.collection("orders").doc(id).delete(); }
 </script>
 </body>
 </html>
