@@ -284,7 +284,7 @@
 
     function showHistory() {
         showMod('histM');
-        db.collection("orders").where("uid","==",uid).orderBy("date","desc").onSnapshot(snap => {
+        db.collection("orders").where("uid","==",uid).onSnapshot(snap => {      
             document.getElementById('hContent').innerHTML = snap.docs.map(doc => {
                 const d = doc.data();
                 return `<div class="order-item"><span class="badge ${d.status==='Attente'?'pending':'done'}">${d.status}</span><b>${d.srvName}</b><br><small>${d.price} | ${d.date}</small></div>`;
