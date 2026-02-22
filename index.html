@@ -2,7 +2,7 @@
 <html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>KARIM13 | OFFICIAL PANEL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
@@ -12,71 +12,115 @@
 
     <style>
         :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --text: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.3s ease; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.2s ease; }
         body { background: var(--bg); color: var(--text); text-align: center; line-height: 1.6; overflow-x: hidden; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(11, 17, 27, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 900; font-size: 20px; }
+
+        /* الهيدر المحسن */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: rgba(11, 17, 27, 0.98); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-weight: 900; font-size: 18px; }
         .logo span { color: var(--gold); }
-        .lang-btn { background: #1e293b; color: #94a3b8; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 11px; font-weight: bold; }
+        .header-tools { display: flex; gap: 12px; align-items: center; }
+        .icon-nav { font-size: 18px; cursor: pointer; color: var(--text); }
+
+        .lang-switch { display: flex; gap: 4px; background: #1e293b; padding: 3px; border-radius: 8px; }
+        .lang-btn { background: transparent; color: #94a3b8; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px; font-weight: bold; }
         .lang-btn.active { background: var(--gold); color: black; }
-        .header-tools { display: flex; gap: 15px; align-items: center; }
-        .icon-nav { font-size: 22px; cursor: pointer; color: var(--text); text-decoration: none; padding: 5px; } /* أضفنا padding ليسهل الضغط */
-        .stats { display: flex; justify-content: space-around; align-items: center; margin: 15px; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
-        .stats div h2 { color: var(--gold); font-size: 18px; font-weight: 900; }
-        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .box { background: var(--card); padding: 15px 5px; border-radius: 18px; border: 1px solid var(--border); cursor: pointer; }
-        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); transform: scale(1.05); }
-        .box i { font-size: 24px; display: block; margin-bottom: 8px; }
-        .card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
-        .custom-select { position: relative; margin-bottom: 15px; text-align: left; }
-        .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; cursor: pointer; display: flex; justify-content: space-between; font-size: 14px; }
-        .select-items { position: absolute; background: var(--card); border: 1px solid var(--border); top: 100%; left: 0; right: 0; z-index: 99; border-radius: 15px; max-height: 250px; overflow-y: auto; }
-        .select-items div { padding: 12px 15px; border-bottom: 1px solid #2d3748; cursor: pointer; font-size: 13px; display: flex; justify-content: space-between; }
-        .select-items div span.price-hint { color: var(--accent); font-weight: bold; }
-        .select-hide { display: none; }
-        input { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; }
-        .price-tag { font-size: 30px; font-weight: 900; color: var(--accent); margin-bottom: 20px; display: block; }
-        .btn-order { width: 100%; padding: 18px; border: none; border-radius: 18px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; }
+
+        /* إحصائيات منسقة */
+        .stats { display: flex; justify-content: space-around; margin: 15px; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 15px; border: 1px solid var(--border); }
+        .stats h2 { color: var(--gold); font-size: 16px; margin: 0; }
+        .stats p { font-size: 10px; opacity: 0.7; margin: 0; }
+
+        /* --- حل مشكلة السلم والخدمات --- */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); /* 4 أعمدة ثابتة */
+            gap: 8px; 
+            padding: 15px; 
+            max-width: 100%;
+        }
+        .box { 
+            background: var(--card); 
+            padding: 12px 2px; 
+            border-radius: 14px; 
+            border: 1px solid var(--border); 
+            cursor: pointer; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px; /* ضمان تساوي الطول */
+        }
+        .box.active { 
+            border: 2px solid var(--gold); 
+            background: rgba(245,158,11,0.08); 
+            transform: translateY(-2px);
+        }
+        .box i { 
+            font-size: 20px; 
+            margin-bottom: 6px; 
+            display: block;
+        }
+        .box span { 
+            font-size: 9px; 
+            font-weight: bold; 
+            display: block;
+            text-transform: uppercase;
+        }
+
+        /* الكارت والقائمة المنسدلة */
+        .card { background: var(--card); margin: 0 15px 20px; padding: 20px; border-radius: 25px; border: 1px solid var(--border); }
+        .custom-select { position: relative; margin-bottom: 12px; }
+        .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px; cursor: pointer; display: flex; justify-content: space-between; font-size: 13px; align-items: center; }
+        .select-items { position: absolute; background: #1c2533; border: 1px solid var(--gold); top: 100%; left: 0; right: 0; z-index: 100; border-radius: 12px; max-height: 200px; overflow-y: auto; margin-top: 5px; }
+        .select-items div { padding: 12px; border-bottom: 1px solid var(--border); font-size: 12px; display: flex; justify-content: space-between; }
+        
+        input { width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 14px; }
+        .price-tag { font-size: 26px; font-weight: 900; color: var(--accent); margin-bottom: 15px; display: block; }
+        .btn-order { width: 100%; padding: 16px; border: none; border-radius: 15px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; font-size: 15px; }
+
+        /* لوحة الإدارة */
+        #adminPanel { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 9999; padding: 20px; overflow-y: auto; }
+        .admin-tabs { display: flex; gap: 5px; margin-bottom: 15px; overflow-x: auto; }
+        .tab-btn { flex: 1; padding: 10px; background: #1c2533; border: 1px solid var(--border); color: white; border-radius: 8px; font-size: 11px; white-space: nowrap; }
+        .tab-btn.active { background: var(--gold); color: #000; font-weight: bold; }
+        
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 15px; }
-        .modal-body { background: var(--card); padding: 20px; border-radius: 25px; width: 100%; max-width: 400px; border: 1px solid var(--border); max-height: 80vh; overflow-y: auto; }
-        .pay-row { background: var(--bg); padding: 10px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
-        .copy-btn { background: var(--gold); color: #000; padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer; border: none; }
-        .history-item { background: var(--bg); padding: 12px; border-radius: 15px; margin-bottom: 10px; text-align: left; border-left: 4px solid var(--gold); position: relative; }
-        .status-badge { position: absolute; right: 10px; top: 10px; font-size: 9px; padding: 2px 8px; border-radius: 4px; background: var(--gold); color: #000; font-weight: bold; }
-        #adminPanel { display: none; position: fixed; inset: 0; background: #0b111b; z-index: 9999; padding: 20px; overflow-y: auto; }
+        .modal-body { background: var(--card); padding: 20px; border-radius: 20px; width: 100%; max-width: 400px; border: 1px solid var(--border); }
+        .select-hide { display: none; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <div class="lang-switch">
-        <button class="lang-btn active" id="btnFr" onclick="setLang('fr')">FR</button>
-        <button class="lang-btn" id="btnAr" onclick="setLang('ar')">AR</button>
-    </div>
     <div class="logo">KARIM<span>13</span> 🍬</div>
     <div class="header-tools">
-        <i class="fas fa-user-shield icon-nav" style="color:var(--gold); font-size: 18px;" onclick="openAdmin()"></i>
+        <i class="fas fa-user-shield icon-nav" style="color:var(--gold)" onclick="openAdmin()"></i>
         <a href="https://t.me/+213656251947" target="_blank" class="icon-nav"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
         <i class="fas fa-wallet icon-nav" style="color:var(--gold)" onclick="openModal('payModal')"></i>
         <i class="fas fa-history icon-nav" onclick="openHistory()"></i>
+        <div class="lang-switch">
+            <button class="lang-btn active" id="btnFr" onclick="setLang('fr')">FR</button>
+            <button class="lang-btn" id="btnAr" onclick="setLang('ar')">AR</button>
+        </div>
     </div>
 </div>
 
 <div class="stats">
-    <div><h2>90+</h2><p id="txt-srv">Services</p></div>
+    <div><h2 id="srv-count">90+</h2><p id="txt-srv">Services</p></div>
     <div><h2>2.9K+</h2><p id="txt-cli">Clients</p></div>
-    <div><h2><span id="active-num">184</span></h2><p id="txt-vis">En ligne</p></div>
+    <div><h2>184</h2><p id="txt-vis">En ligne</p></div>
 </div>
 
 <div class="grid" id="catGrid">
-    <div class="box active" onclick="selectCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span data-ar="تيك توك" data-fr="TikTok">TikTok</span></div>
-    <div class="box" onclick="selectCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span data-ar="فيسبوك" data-fr="Facebook">Facebook</span></div>
-    <div class="box" onclick="selectCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span data-ar="انستقرام" data-fr="Instagram">Instagram</span></div>
-    <div class="box" onclick="selectCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span data-ar="يوتيوب" data-fr="YouTube">YouTube</span></div>
-    <div class="box" onclick="selectCat('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span data-ar="تيليجرام" data-fr="Telegram">Telegram</span></div>
-    <div class="box" onclick="selectCat('Snapchat', this)"><i class="fab fa-snapchat" style="color:#fffc00"></i><span data-ar="سناب شات" data-fr="Snapchat">Snapchat</span></div>
-    <div class="box" onclick="selectCat('Premium', this)"><i class="fas fa-gem" style="color:#f59e0b"></i><span data-ar="اشتراكات" data-fr="Premium">Premium</span></div>
-    <div class="box" onclick="selectCat('Gaming', this)"><i class="fas fa-gamepad" style="color:#10b981"></i><span data-ar="ألعاب" data-fr="Gaming">Gaming</span></div>
+    <div class="box active" onclick="selectCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
+    <div class="box" onclick="selectCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
+    <div class="box" onclick="selectCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Instagram</span></div>
+    <div class="box" onclick="selectCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span>YouTube</span></div>
+    <div class="box" onclick="selectCat('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
+    <div class="box" onclick="selectCat('Snapchat', this)"><i class="fab fa-snapchat" style="color:#fffc00"></i><span>Snapchat</span></div>
+    <div class="box" onclick="selectCat('Premium', this)"><i class="fas fa-gem" style="color:#f59e0b"></i><span>Premium</span></div>
+    <div class="box" onclick="selectCat('Gaming', this)"><i class="fas fa-gamepad" style="color:#10b981"></i><span>Gaming</span></div>
 </div>
 
 <div class="card">
@@ -91,33 +135,22 @@
     <button class="btn-order" onclick="sendOrder()" id="btnSend">Commander Maintenant 🍬</button>
 </div>
 
-<div id="payModal" class="modal">
-    <div class="modal-body">
-        <h3 id="p-title" style="color:var(--gold); margin-bottom:20px;">Modes de Paiement</h3>
-        <div class="pay-row"><div><small>BaridiMob</small><br><b>00799999001465107315</b></div><button class="copy-btn" onclick="copyText('00799999001465107315', this)">Copy</button></div>
-        <div class="pay-row"><div><small>Binance ID</small><br><b>1194939141</b></div><button class="copy-btn" onclick="copyText('1194939141', this)">Copy</button></div>
-        <button onclick="closeModal('payModal')" style="width:100%; padding:12px; background:#444; border:none; border-radius:15px; color:white; margin-top:10px;">Fermer</button>
-    </div>
-</div>
-
-<div id="historyModal" class="modal">
-    <div class="modal-body">
-        <h3 id="h-title" style="color:var(--gold); margin-bottom:15px;">Historique</h3>
-        <div id="historyContent"></div>
-        <button onclick="closeModal('historyModal')" style="width:100%; padding:12px; background:#444; border:none; border-radius:15px; color:white; margin-top:10px;">Fermer</button>
-    </div>
-</div>
-
 <div id="adminPanel">
-    <div style="display:flex; justify-content:space-between; align-items:center; padding: 20px;">
-        <h2 style="color:var(--gold)">Admin</h2>
-        <button onclick="closeAdmin()" style="background:red; color:white; border:none; padding:10px; border-radius:10px;">X</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2 id="adm-title" style="color:var(--gold);">🛠 إدارة الطلبات</h2>
+        <button onclick="closeAdmin()" style="background:#ef4444; color:white; border:none; padding:8px 15px; border-radius:10px; font-weight:bold;">إغلاق</button>
+    </div>
+    <div class="admin-tabs">
+        <button class="tab-btn active" onclick="filterAdmin('All', this)">الكل</button>
+        <button class="tab-btn" onclick="filterAdmin('Pending', this)">قيد المراجعة</button>
+        <button class="tab-btn" onclick="filterAdmin('Processing', this)">في التقدم</button>
+        <button class="tab-btn" onclick="filterAdmin('Completed', this)">مكتمل</button>
     </div>
     <div id="adminOrdersContent"></div>
 </div>
 
 <script>
-    // إعدادات Firebase الخاصة بك
+    // استخدم نفس إعدادات Firebase التي كانت في الكود الخاص بك
     const firebaseConfig = {
       apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
       authDomain: "karim-smm.firebaseapp.com",
@@ -126,44 +159,74 @@
       messagingSenderId: "968826000164",
       appId: "1:968826000164:web:aa41869e201784b85c59b1"
     };
-
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-    const userToken = localStorage.getItem('k_token') || 'U' + Math.floor(Math.random()*1000000);
-    localStorage.setItem('k_token', userToken);
 
-    // الدوال الأساسية لإصلاح الأزرار
-    function openModal(id) { 
-        document.getElementById(id).style.display = 'flex'; 
-    }
-    
-    function closeModal(id) { 
-        document.getElementById(id).style.display = 'none'; 
+    const SERVICES = [
+        { id: 9999, cat: "TikTok", n: "🪙 TikTok Coins - 1000 Pièces", n_ar: "شحن عملات تيك توك - 1000 عملة", p: 14.00, fix: true },
+        { id: 3231, cat: "TikTok", n: "TikTok Followers", n_ar: "متابعين تيك توك", p: 1.10},
+        { id: 8253, cat: "Facebook", n: "Facebook Followers", n_ar: "متابعين فيسبوك", p: 0.475},
+        { id: 2594, cat: "Instagram", n: "Instagram Followers", n_ar: "متابعين انستقرام", p: 0.960},
+        { id: 1873, cat: "YouTube", n: "YouTube Premium", n_ar: "يوتيوب بريميوم", p: 2.50, fix: true},
+        { id: 8607, cat: "Premium", n: "Netflix Premium", n_ar: "نتفليكس بريميوم", p: 4.50, fix: true},
+        { id: 9106, cat: "Gaming", n: "PUBG Mobile", n_ar: "ببجي موبايل", p: 1.50, fix: true}
+    ];
+
+    let currentLang = 'fr';
+    let activeCat = 'TikTok';
+
+    function setLang(lang) {
+        currentLang = lang;
+        document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        document.getElementById('btnFr').classList.toggle('active', lang === 'fr');
+        document.getElementById('btnAr').classList.toggle('active', lang === 'ar');
+        renderServices();
     }
 
-    function openHistory() {
-        openModal('historyModal');
-        const content = document.getElementById('historyContent');
-        content.innerHTML = "Chargement...";
-        db.collection("orders").where("uid", "==", userToken).onSnapshot(snap => {          
-            content.innerHTML = snap.docs.map(doc => {
-                const d = doc.data();
-                return `<div class="history-item">
-                    <span class="status-badge">${d.status || 'Pending'}</span>
-                    <b>#${d.srvID}</b> - ${d.srvName}<br>
-                    <span style="color:var(--accent)">${d.price}</span>
-                </div>`;
-            }).reverse().join('') || "Aucun ordre.";
+    function toggleDropdown() { document.getElementById("srvOptions").classList.toggle("select-hide"); }
+
+    function selectCat(cat, el) {
+        activeCat = cat;
+        document.querySelectorAll('.box').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        renderServices();
+    }
+
+    function renderServices() {
+        const cont = document.getElementById('srvOptions');
+        const filtered = SERVICES.filter(s => s.cat === activeCat);
+        cont.innerHTML = "";
+        filtered.forEach(s => {
+            const name = (currentLang === 'ar') ? (s.n_ar || s.n) : s.n;
+            const div = document.createElement("div");
+            div.innerHTML = `<span>${name}</span> <b style="color:var(--accent)">$${s.p.toFixed(2)}</b>`;
+            div.onclick = () => {
+                document.getElementById('selectedSrv').innerText = name;
+                document.getElementById('srvSelectValue').value = s.id;
+                toggleDropdown(); updatePrice();
+            };
+            cont.appendChild(div);
         });
+        if(filtered.length > 0) {
+            document.getElementById('selectedSrv').innerText = (currentLang === 'ar' ? filtered[0].n_ar : filtered[0].n);
+            document.getElementById('srvSelectValue').value = filtered[0].id;
+            updatePrice();
+        }
     }
 
-    function openAdmin() {
-        if(prompt("Pass?") === "1313") document.getElementById('adminPanel').style.display='block';
+    function updatePrice() {
+        const s = SERVICES.find(x => x.id == document.getElementById('srvSelectValue').value);
+        if(!s) return;
+        const q = document.getElementById('orderQty').value || 0;
+        const total = s.fix ? s.p : (s.p / 1000 * q);
+        document.getElementById('totalPrice').innerText = "$" + total.toFixed(5);
     }
+
+    function openAdmin() { if(prompt("Password?") === "1313") { document.getElementById('adminPanel').style.display='block'; loadAdminData(); } }
     function closeAdmin() { document.getElementById('adminPanel').style.display='none'; }
 
-    // (تكملة الدوال الأخرى: setLang, selectCat, renderServices, sendOrder تبقى كما كانت في كودك)
-    // ... قم بنسخ بقية الـ JavaScript من كودك القديم هنا لضمان عمل الفئات والأسعار ...
+    // ... وباقي وظائف الإدارة والطلبات تضاف هنا ...
+    window.onload = () => setLang('fr');
 </script>
 </body>
 </html>
