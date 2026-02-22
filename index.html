@@ -3,81 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KARIM-SMM13</title>
+    <title>KARIM13 OFFICIAL</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <style>
-        /* ستايل موقعك الأصلي */
         :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --text: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); text-align: center; }
-        
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(11, 17, 27, 0.95); border-bottom: 1px solid var(--border); }
+        body { background: var(--bg); color: var(--text); text-align: center; overflow-x: hidden; }
+
+        /* الهيدر الأصلي مع الأيقونات التي طلبتها */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #0b111b; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); }
         .logo { font-weight: 900; font-size: 20px; }
-        .logo span { color: var(--gold); }
+        .nav-icons { display: flex; gap: 15px; align-items: center; }
+        .nav-icons i, .nav-icons button { color: var(--text); font-size: 18px; cursor: pointer; background: none; border: none; }
+        .lang-btns { display: flex; gap: 5px; }
+        .btn-lang { background: #1f2937; color: var(--gold); border: none; padding: 5px 10px; border-radius: 5px; font-size: 10px; font-weight: bold; }
 
-        /* زر الإدارة الجديد - واضح جداً */
-        .admin-btn-top { background: var(--gold); color: black; border: none; padding: 8px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        /* إحصائياتك الأصلية */
+        .stats { display: flex; justify-content: space-around; margin: 20px 15px; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid var(--border); }
+        .stats div h2 { font-size: 22px; color: #fff; }
+        .stats div p { font-size: 12px; color: #aaa; margin-top: 5px; }
 
-        .stats { display: flex; justify-content: space-around; margin: 15px; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
+        /* الشبكة الكاملة للأيقونات كما في الصورة الأولى */
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .box { background: var(--card); padding: 15px 5px; border-radius: 18px; border: 1px solid var(--border); cursor: pointer; }
+        .box { background: var(--card); padding: 15px 5px; border-radius: 20px; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
+        .box i { font-size: 22px; margin-bottom: 8px; display: block; }
+        .box p { font-size: 11px; font-weight: bold; }
         .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); }
 
-        .card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
-        input, select { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; }
-        .price-tag { font-size: 30px; font-weight: 900; color: var(--accent); margin-bottom: 20px; display: block; }
-        .btn-order { width: 100%; padding: 18px; border: none; border-radius: 18px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; }
+        /* كارت الطلب */
+        .order-card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
+        select, input { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 14px; }
+        .price-tag { font-size: 32px; font-weight: 900; color: var(--accent); margin-bottom: 20px; display: block; }
+        .btn-main { width: 100%; padding: 18px; border: none; border-radius: 18px; background: var(--accent); color: white; font-weight: 900; font-size: 16px; cursor: pointer; }
 
-        /* لوحة التحكم التي طلبتها */
-        #adminArea { display: none; padding: 20px; text-align: left; }
-        .admin-card { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 10px; border-left: 5px solid var(--gold); }
-        .admin-ctrls { display: flex; gap: 10px; margin-top: 10px; }
-        .btn-status { flex: 1; padding: 10px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
+        /* لوحة التحكم */
+        #adminArea { display: none; padding: 20px; text-align: left; background: #000; min-height: 100vh; position: fixed; top: 0; width: 100%; z-index: 2000; overflow-y: auto; }
+        .admin-item { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 10px; border-left: 5px solid var(--gold); }
     </style>
 </head>
 <body>
 
-<div id="mainView">
+<div id="userView">
     <div class="header">
+        <div class="lang-btns">
+            <button class="btn-lang" style="background:var(--gold); color:black">FR</button>
+            <button class="btn-lang">AR</button>
+        </div>
         <div class="logo">KARIM<span>13</span> 🍬</div>
-        <button class="admin-btn-top" onclick="checkAdmin()">إدارة الطلبات</button>
+        <div class="nav-icons">
+            <i class="fab fa-telegram"></i>
+            <i class="fas fa-wallet" style="color:var(--gold)"></i>
+            <i class="fas fa-history" onclick="alert('Historique bientôt disponible')"></i>
+            <button onclick="enterAdmin()" style="font-size:12px; color:var(--gold)">ADMIN</button>
+        </div>
     </div>
 
     <div class="stats">
-        <div><h2>184</h2><p>En ligne</p></div>
+        <div><h2>94</h2><p>Services</p></div>
         <div><h2>2.9K</h2><p>Clients</p></div>
+        <div><h2>184</h2><p>En ligne</p></div>
     </div>
 
     <div class="grid">
         <div class="box active"><i class="fab fa-tiktok" style="color:#ff0050"></i><p>TikTok</p></div>
         <div class="box"><i class="fab fa-facebook" style="color:#1877f2"></i><p>Facebook</p></div>
-        <div class="box"><i class="fab fa-instagram" style="color:#e1306c"></i><p>Insta</p></div>
+        <div class="box"><i class="fab fa-instagram" style="color:#e1306c"></i><p>Instagram</p></div>
         <div class="box"><i class="fab fa-youtube" style="color:#ff0000"></i><p>YouTube</p></div>
+        <div class="box"><i class="fab fa-telegram" style="color:#0088cc"></i><p>Telegram</p></div>
+        <div class="box"><i class="fab fa-snapchat" style="color:#fffc00"></i><p>Snapchat</p></div>
+        <div class="box"><i class="fas fa-gem" style="color:#f59e0b"></i><p>Premium</p></div>
+        <div class="box"><i class="fas fa-gamepad" style="color:#10b981"></i><p>Gaming</p></div>
     </div>
 
-    <div class="card">
-        <select id="srv"><option value="14">TikTok Coins - $14.00</option></select>
-        <input type="text" id="link" placeholder="Lien / URL">
-        <span class="price-tag">$14.00</span>
-        <button class="btn-order" onclick="addOrder()">Commander Now 🍬</button>
+    <div class="order-card">
+        <select><option>TikTok Coins - 1000 Pièces</option></select>
+        <input type="text" placeholder="Lien / ID">
+        <input type="number" value="1000">
+        <span class="price-tag">$0.00000</span>
+        <button class="btn-main" onclick="sendToWhatsApp()">Commander Maintenant 🍬</button>
     </div>
 </div>
 
 <div id="adminArea">
-    <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-        <h2 style="color:var(--gold)">🛠 لوحة الإدارة</h2>
-        <button onclick="location.reload()" style="background:red; color:white; padding:5px 10px; border-radius:5px; border:none;">خروج</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2 style="color:var(--gold)">🛠 إدارة الطلبات</h2>
+        <button onclick="location.reload()" style="background:red; color:white; border:none; padding:8px 15px; border-radius:8px;">خروج</button>
     </div>
-    <div id="adminOrdersList"></div>
+    <div id="adminList"></div>
 </div>
 
 <script>
-    // إعدادات Firebase الخاصة بك (لا تقم بتغييرها)
+    // إعدادات Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
       authDomain: "karim-smm.firebaseapp.com",
@@ -89,49 +109,41 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // وظيفة الطلب العادية
-    async function addOrder() {
-        const link = document.getElementById('link').value;
-        if(!link) return alert("الرابط مطلوب");
-        await db.collection("orders").add({
-            link: link, status: "Pending", date: new Date().toLocaleString()
-        });
-        alert("تم الطلب!");
+    function sendToWhatsApp() {
+        const msg = "New Order: TikTok Coins - $14.00";
+        window.open(`https://wa.me/213555555555?text=${encodeURIComponent(msg)}`, '_blank');
+        // تسجيل في Firebase أيضاً للمتابعة
+        db.collection("orders").add({status: "Pending", date: new Date().toLocaleString()});
     }
 
-    // وظيفة الدخول للإدارة (الباسوورد 1313)
-    function checkAdmin() {
-        const p = prompt("كلمة سر الإدارة؟");
+    function enterAdmin() {
+        const p = prompt("Password?");
         if(p === "1313") {
-            document.getElementById('mainView').style.display = 'none';
-            document.getElementById('adminArea').style.display = 'block';
-            loadAdminData();
+            document.getElementById('userView').style.display='none';
+            document.getElementById('adminArea').style.display='block';
+            loadOrders();
         }
     }
 
-    // عرض الطلبات لك لكي تعدلها
-    function loadAdminData() {
+    function loadOrders() {
         db.collection("orders").orderBy("date", "desc").onSnapshot(snap => {
-            let html = "";
-            snap.forEach(doc => {
+            document.getElementById('adminList').innerHTML = snap.docs.map(doc => {
                 const d = doc.data();
-                html += `
-                <div class="admin-card">
+                return `
+                <div class="admin-item">
                     <b>الحالة: ${d.status}</b><br>
-                    <small>${d.date}</small><br>
-                    <p style="color:var(--accent)">Link: ${d.link}</p>
-                    <div class="admin-ctrls">
-                        <button class="btn-status" style="background:var(--accent); color:white" onclick="updateS('${doc.id}', 'Completed')">مكتمل ✅</button>
-                        <button class="btn-status" style="background:red; color:white" onclick="delO('${doc.id}')">حذف 🗑️</button>
+                    <small>${d.date}</small>
+                    <div style="margin-top:10px; display:flex; gap:10px;">
+                        <button onclick="up('${doc.id}', 'Completed')" style="background:green; color:white; flex:1; padding:8px; border-radius:5px; border:none;">مكتمل</button>
+                        <button onclick="del('${doc.id}')" style="background:red; color:white; flex:1; padding:8px; border-radius:5px; border:none;">حذف</button>
                     </div>
                 </div>`;
-            });
-            document.getElementById('adminOrdersList').innerHTML = html;
+            }).join('');
         });
     }
 
-    function updateS(id, s) { db.collection("orders").doc(id).update({status: s}); }
-    function delO(id) { if(confirm("حذف؟")) db.collection("orders").doc(id).delete(); }
+    function up(id, s) { db.collection("orders").doc(id).update({status: s}); }
+    function del(id) { if(confirm("حذف؟")) db.collection("orders").doc(id).delete(); }
 </script>
 </body>
 </html>
