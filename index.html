@@ -318,7 +318,7 @@ function loadAdminOrders() {
         html += filtered.map(doc => {
             const d = doc.data();
             // هذا السطر يحل مشكلة الـ undefined نهائياً
-            const serviceName = d.srvName || d.service || d.name || "خدمة غير معروفة";
+            const serviceName = d.srvName || d.srvNameAr || d.service || d.name || "طلب جديد";
             
             return `<div class="admin-card">
                 <span style="color:#f59e0b;">#${d.uid ? d.uid.substring(0,5) : '000'}</span>
