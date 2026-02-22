@@ -292,22 +292,56 @@
         });
     }
 
-    function openAdmin() {
-        if(prompt("Code?") === "1313") {
-            showMod('admM');
-            db.collection("orders").orderBy("date","desc").onSnapshot(snap => {
-                document.getElementById('aContent').innerHTML = snap.docs.map(doc => {
-                    const d = doc.data();
-                    return `<div class="order-item"><b>${d.uid} | ${d.status}</b><br>${d.srvName} - ${d.price}<br><small>${d.link}</small>
-                        <div class="admin-actions">
-                            <button class="adm-btn" style="background:#10b981" onclick="updStatus('${doc.id}', 'Terminé')">Terminé</button>
-                            <button class="adm-btn" style="background:#f59e0b" onclick="updStatus('${doc.id}', 'Attente')">Attente</button>
-                            <button class="adm-btn" style="background:#ff4444" onclick="delOrder('${doc.id}')">Delete</button>
-                        </div></div>`;
-                }).join('');
-            });
-        }
+    // 1. تعريف المتغير (خارج الدالة لكي لا يختفي)
+let currentFilter = 'الكل'; 
+
+// 2. دالة فتح لوحة الإدارة
+function openAdmin() {
+    if(prompt("كود الدخول؟") === "1313") {
+        showMod('admM');
+        loadAdminOrders();
     }
+}
+
+// 3. دالة جلب وعرض الطلبات بشكل احترافي
+function loadAdminOrders() {
+    db.collection("orders").orderBy("date", "desc").onSnapshot(snap => {
+        let html = `
+            <div class="admin-nav" style="display:flex; gap:5px; margin-bottom:20px; flex-wrap:wrap; justify-content:center; direction:rtl;">
+                <button class="nav-filter ${currentFilter==='الكل'?'active':''}" onclick="filterAdmin('الكل')">الكل</button>
+                <button class="nav-filter ${currentFilter==='قيد المراجعة'?'active':''}" onclick="filterAdmin('قيد المراجعة')">قيد المراجعة</button>
+                <button class="nav-filter ${currentFilter==='في التقدم'?'active':''}" onclick="filterAdmin('في التقدم')">في التقدم</button>
+                <button class="nav-filter ${currentFilter==='مكتمل'?'active':''}" onclick="filterAdmin('مكتمل')">مكتمل</button>
+            </div><div id="adminOrdersList">`;
+
+        const filtered = snap.docs.filter(doc => currentFilter === 'الكل' || doc.data().status === currentFilter);
+
+        html += filtered.map(doc => {
+            const d = doc.data();
+            return `
+            <div class="admin-card" style="background:#161c26; border-radius:15px; padding:15px; margin-bottom:10px; border:1px solid #2d3748; text-align:right; position:relative; direction:rtl;">
+                <span style="color:#f59e0b; font-weight:bold; font-size:14px;">#${d.uid ? d.uid.substring(0,5) : '9999'}</span>
+                <span style="position:absolute; top:15px; left:15px; background:#f59e0b; color:#000; padding:3px 10px; border-radius:8px; font-size:11px; font-weight:bold;">${d.status}</span>
+                <div style="margin:10px 0; color:#fff; font-size:14px;"><i class="fas fa-shopping-cart" style="color:#f59e0b"></i> ${d.srvName}</div>
+                <div style="color:#10b981; font-size:12px; margin-bottom:15px; word-break:break-all;">${d.link}</div>
+                <div style="display:flex; gap:5px;">
+                    <button class="btn-adm" style="background:#ff4444; flex:1; padding:10px; border-radius:8px; border:none; color:#fff; font-weight:bold;" onclick="delOrder('${doc.id}')">حذف</button>
+                    <button class="btn-adm" style="background:#10b981; flex:1; padding:10px; border-radius:8px; border:none; color:#fff; font-weight:bold;" onclick="updStatus('${doc.id}', 'مكتمل')">تم</button>
+                    <button class="btn-adm" style="background:#1877f2; flex:1; padding:10px; border-radius:8px; border:none; color:#fff; font-weight:bold;" onclick="updStatus('${doc.id}', 'في التقدم')">تقدم</button>
+                </div>
+            </div>`;
+        }).join('') || "<p style='text-align:center;'>لا توجد طلبات</p>";
+        
+        document.getElementById('aContent').innerHTML = html + "</div>";
+    });
+}
+
+// 4. دالة التبديل بين الأقسام
+function filterAdmin(f) {
+    currentFilter = f;
+    loadAdminOrders();
+    }
+       
 
     window.updStatus = (id, s) => db.collection("orders").doc(id).update({status: s});
     window.delOrder = (id) => confirm("Supprimer?") && db.collection("orders").doc(id).delete();
