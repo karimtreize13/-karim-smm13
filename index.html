@@ -11,89 +11,99 @@
 
     <style>
         :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --text: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background: var(--bg); color: var(--text); text-align: center; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.3s; }
+        body { background: var(--bg); color: var(--text); text-align: center; }
 
-        /* الهيدر الأصلي مع الأيقونات التي طلبتها */
+        /* الهيدر الاحترافي */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #0b111b; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); }
-        .logo { font-weight: 900; font-size: 20px; }
+        .logo { font-weight: 900; font-size: 20px; cursor: pointer; }
+        .logo span { color: var(--gold); }
         .nav-icons { display: flex; gap: 15px; align-items: center; }
-        .nav-icons i, .nav-icons button { color: var(--text); font-size: 18px; cursor: pointer; background: none; border: none; }
-        .lang-btns { display: flex; gap: 5px; }
-        .btn-lang { background: #1f2937; color: var(--gold); border: none; padding: 5px 10px; border-radius: 5px; font-size: 10px; font-weight: bold; }
+        .nav-icons i { color: var(--text); font-size: 19px; cursor: pointer; }
+        .admin-trigger { font-size: 10px; color: var(--gold); border: 1px solid var(--gold); padding: 2px 5px; border-radius: 4px; cursor: pointer; }
 
-        /* إحصائياتك الأصلية */
-        .stats { display: flex; justify-content: space-around; margin: 20px 15px; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid var(--border); }
-        .stats div h2 { font-size: 22px; color: #fff; }
-        .stats div p { font-size: 12px; color: #aaa; margin-top: 5px; }
+        /* الإحصائيات */
+        .stats { display: flex; justify-content: space-around; margin: 15px; padding: 15px; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid var(--border); }
+        .stats h2 { font-size: 18px; color: #fff; }
+        .stats p { font-size: 11px; color: #888; }
 
-        /* الشبكة الكاملة للأيقونات كما في الصورة الأولى */
+        /* الشبكة الكاملة */
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .box { background: var(--card); padding: 15px 5px; border-radius: 20px; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
-        .box i { font-size: 22px; margin-bottom: 8px; display: block; }
-        .box p { font-size: 11px; font-weight: bold; }
+        .box { background: var(--card); padding: 12px 5px; border-radius: 18px; border: 1px solid var(--border); cursor: pointer; }
+        .box i { font-size: 20px; margin-bottom: 5px; display: block; }
+        .box p { font-size: 10px; font-weight: bold; }
         .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); }
 
         /* كارت الطلب */
-        .order-card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
-        select, input { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 14px; }
+        .card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
+        select, input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 14px; outline: none; }
         .price-tag { font-size: 32px; font-weight: 900; color: var(--accent); margin-bottom: 20px; display: block; }
-        .btn-main { width: 100%; padding: 18px; border: none; border-radius: 18px; background: var(--accent); color: white; font-weight: 900; font-size: 16px; cursor: pointer; }
+        .btn-main { width: 100%; padding: 18px; border: none; border-radius: 18px; background: var(--accent); color: white; font-weight: 900; font-size: 16px; cursor: pointer; box-shadow: 0 5px 15px rgba(16,185,129,0.3); }
 
-        /* لوحة التحكم */
-        #adminArea { display: none; padding: 20px; text-align: left; background: #000; min-height: 100vh; position: fixed; top: 0; width: 100%; z-index: 2000; overflow-y: auto; }
-        .admin-item { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 10px; border-left: 5px solid var(--gold); }
+        /* لوحة الإدارة */
+        #adminArea { display: none; position: fixed; inset: 0; background: #000; z-index: 2000; padding: 20px; overflow-y: auto; text-align: left; }
+        .admin-card { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 15px; border-left: 5px solid var(--gold); position: relative; }
+        .status-badge { position: absolute; right: 10px; top: 10px; background: var(--gold); color: #000; padding: 2px 8px; border-radius: 5px; font-size: 10px; font-weight: bold; }
+
+        /* المودال (نافذة الدفع والتاريخ) */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: var(--card); padding: 20px; border-radius: 20px; width: 100%; max-width: 400px; border: 1px solid var(--border); }
     </style>
 </head>
 <body>
 
-<div id="userView">
+<div id="app">
     <div class="header">
-        <div class="lang-btns">
-            <button class="btn-lang" style="background:var(--gold); color:black">FR</button>
-            <button class="btn-lang">AR</button>
-        </div>
-        <div class="logo">KARIM<span>13</span> 🍬</div>
+        <div class="admin-trigger" onclick="openAdmin()">ADMIN</div>
+        <div class="logo" onclick="location.reload()">KARIM<span>13</span> 🍬</div>
         <div class="nav-icons">
-            <i class="fab fa-telegram"></i>
-            <i class="fas fa-wallet" style="color:var(--gold)"></i>
-            <i class="fas fa-history" onclick="alert('Historique bientôt disponible')"></i>
-            <button onclick="enterAdmin()" style="font-size:12px; color:var(--gold)">ADMIN</button>
+            <a href="https://t.me/+213656251947" style="text-decoration:none;"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
+            <i class="fas fa-wallet" style="color:var(--gold)" onclick="showModal('payModal')"></i>
+            <i class="fas fa-history" onclick="showHistory()"></i>
         </div>
     </div>
 
     <div class="stats">
         <div><h2>94</h2><p>Services</p></div>
         <div><h2>2.9K</h2><p>Clients</p></div>
-        <div><h2>184</h2><p>En ligne</p></div>
+        <div><h2 id="online">184</h2><p>En ligne</p></div>
     </div>
 
-    <div class="grid">
-        <div class="box active"><i class="fab fa-tiktok" style="color:#ff0050"></i><p>TikTok</p></div>
-        <div class="box"><i class="fab fa-facebook" style="color:#1877f2"></i><p>Facebook</p></div>
-        <div class="box"><i class="fab fa-instagram" style="color:#e1306c"></i><p>Instagram</p></div>
-        <div class="box"><i class="fab fa-youtube" style="color:#ff0000"></i><p>YouTube</p></div>
-        <div class="box"><i class="fab fa-telegram" style="color:#0088cc"></i><p>Telegram</p></div>
-        <div class="box"><i class="fab fa-snapchat" style="color:#fffc00"></i><p>Snapchat</p></div>
-        <div class="box"><i class="fas fa-gem" style="color:#f59e0b"></i><p>Premium</p></div>
-        <div class="box"><i class="fas fa-gamepad" style="color:#10b981"></i><p>Gaming</p></div>
+    <div class="grid" id="catGrid">
+        <div class="box active" onclick="setCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><p>TikTok</p></div>
+        <div class="box" onclick="setCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><p>Facebook</p></div>
+        <div class="box" onclick="setCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><p>Instagram</p></div>
+        <div class="box" onclick="setCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><p>YouTube</p></div>
+        <div class="box" onclick="setCat('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><p>Telegram</p></div>
+        <div class="box" onclick="setCat('Snapchat', this)"><i class="fab fa-snapchat" style="color:#fffc00"></i><p>Snapchat</p></div>
+        <div class="box" onclick="setCat('Premium', this)"><i class="fas fa-gem" style="color:#f59e0b"></i><p>Premium</p></div>
+        <div class="box" onclick="setCat('Gaming', this)"><i class="fas fa-gamepad" style="color:#10b981"></i><p>Gaming</p></div>
     </div>
 
-    <div class="order-card">
-        <select><option>TikTok Coins - 1000 Pièces</option></select>
-        <input type="text" placeholder="Lien / ID">
-        <input type="number" value="1000">
-        <span class="price-tag">$0.00000</span>
-        <button class="btn-main" onclick="sendToWhatsApp()">Commander Maintenant 🍬</button>
+    <div class="card">
+        <select id="srvSelect" onchange="updatePrice()"></select>
+        <input type="text" id="orderLink" placeholder="Lien / URL / ID">
+        <input type="number" id="orderQty" value="1000" oninput="updatePrice()">
+        <span class="price-tag" id="priceDisplay">$0.00</span>
+        <button class="btn-main" onclick="processOrder()">Commander Maintenant 🍬</button>
     </div>
 </div>
 
 <div id="adminArea">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h2 style="color:var(--gold)">🛠 إدارة الطلبات</h2>
-        <button onclick="location.reload()" style="background:red; color:white; border:none; padding:8px 15px; border-radius:8px;">خروج</button>
+        <h2 style="color:var(--gold)">🛠 GESTION DES ORDRES</h2>
+        <button onclick="location.reload()" style="background:#444; color:white; border:none; padding:8px 15px; border-radius:10px;">FERMER</button>
     </div>
     <div id="adminList"></div>
+</div>
+
+<div id="payModal" class="modal">
+    <div class="modal-content">
+        <h3 style="color:var(--gold); margin-bottom:15px;">Paiement</h3>
+        <p>CCP: 00799999001465107315</p>
+        <p>Binance ID: 1194939141</p>
+        <button onclick="closeModals()" style="margin-top:15px; width:100%; padding:10px; border:none; border-radius:10px; background:#444; color:white;">Fermer</button>
+    </div>
 </div>
 
 <script>
@@ -108,42 +118,96 @@
     };
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    const myID = localStorage.getItem('karim_uid') || 'U' + Math.floor(Math.random()*10000);
+    localStorage.setItem('karim_uid', myID);
 
-    function sendToWhatsApp() {
-        const msg = "New Order: TikTok Coins - $14.00";
-        window.open(`https://wa.me/213555555555?text=${encodeURIComponent(msg)}`, '_blank');
-        // تسجيل في Firebase أيضاً للمتابعة
-        db.collection("orders").add({status: "Pending", date: new Date().toLocaleString()});
+    // قاعدة بيانات الخدمات
+    const SERVICES = [
+        { id: 9999, cat: "TikTok", n: "🪙 TikTok Coins - 1000", p: 14.00, fix: true },
+        { id: 3231, cat: "TikTok", n: "👤 Followers HQ", p: 1.10 },
+        { id: 101, cat: "Facebook", n: "👤 Facebook Followers", p: 0.80 },
+        { id: 201, cat: "Instagram", n: "👤 Instagram Followers", p: 0.95 },
+        { id: 301, cat: "YouTube", n: "📺 YouTube Views", p: 2.10 },
+        { id: 401, cat: "Telegram", n: "👥 Telegram Members", p: 1.20 },
+        { id: 501, cat: "Snapchat", n: "👤 Snapchat Followers", p: 3.50 },
+        { id: 601, cat: "Premium", n: "💎 YouTube Premium 1 Mois", p: 2.50, fix: true },
+        { id: 701, cat: "Gaming", n: "🎮 Free Fire 100 Diamonds", p: 1.00, fix: true }
+    ];
+
+    let currentCat = "TikTok";
+
+    function setCat(cat, el) {
+        currentCat = cat;
+        document.querySelectorAll('.box').forEach(b => b.classList.remove('active'));
+        el.classList.add('active');
+        renderSrv();
     }
 
-    function enterAdmin() {
+    function renderSrv() {
+        const s = document.getElementById('srvSelect');
+        const filtered = SERVICES.filter(x => x.cat === currentCat);
+        s.innerHTML = filtered.map(x => `<option value="${x.id}">${x.n}</option>`).join('');
+        updatePrice();
+    }
+
+    function updatePrice() {
+        const s = SERVICES.find(x => x.id == document.getElementById('srvSelect').value);
+        const q = document.getElementById('orderQty').value || 0;
+        const total = s.fix ? s.p : (s.p / 1000 * q);
+        document.getElementById('priceDisplay').innerText = "$" + total.toFixed(3);
+    }
+
+    async function processOrder() {
+        const s = SERVICES.find(x => x.id == document.getElementById('srvSelect').value);
+        const link = document.getElementById('orderLink').value;
+        if(!link) return alert("Lien obligatoire!");
+        const price = document.getElementById('priceDisplay').innerText;
+
+        await db.collection("orders").add({
+            uid: myID, srvName: s.n, link: link, price: price, status: "Pending", date: new Date().toLocaleString()
+        });
+
+        const waMsg = `Nouveau Order:%0A- Service: ${s.n}%0A- Link: ${link}%0A- Price: ${price}`;
+        window.open(`https://wa.me/213656251947?text=${waMsg}`, '_blank');
+    }
+
+    function openAdmin() {
         const p = prompt("Password?");
         if(p === "1313") {
-            document.getElementById('userView').style.display='none';
-            document.getElementById('adminArea').style.display='block';
-            loadOrders();
+            document.getElementById('app').style.display = 'none';
+            document.getElementById('adminArea').style.display = 'block';
+            loadAdmin();
         }
     }
 
-    function loadOrders() {
+    function loadAdmin() {
         db.collection("orders").orderBy("date", "desc").onSnapshot(snap => {
             document.getElementById('adminList').innerHTML = snap.docs.map(doc => {
                 const d = doc.data();
                 return `
-                <div class="admin-item">
-                    <b>الحالة: ${d.status}</b><br>
-                    <small>${d.date}</small>
+                <div class="admin-card">
+                    <span class="status-badge">${d.status}</span>
+                    <b>${d.srvName}</b><br>
+                    <small style="color:var(--accent)">${d.link}</small><br>
                     <div style="margin-top:10px; display:flex; gap:10px;">
-                        <button onclick="up('${doc.id}', 'Completed')" style="background:green; color:white; flex:1; padding:8px; border-radius:5px; border:none;">مكتمل</button>
-                        <button onclick="del('${doc.id}')" style="background:red; color:white; flex:1; padding:8px; border-radius:5px; border:none;">حذف</button>
+                        <button onclick="upS('${doc.id}', 'Completed')" style="background:green; color:white; flex:1; padding:8px; border:none; border-radius:5px;">مكتمل</button>
+                        <button onclick="delS('${doc.id}')" style="background:red; color:white; flex:1; padding:8px; border:none; border-radius:5px;">حذف</button>
                     </div>
                 </div>`;
             }).join('');
         });
     }
 
-    function up(id, s) { db.collection("orders").doc(id).update({status: s}); }
-    function del(id) { if(confirm("حذف؟")) db.collection("orders").doc(id).delete(); }
+    function upS(id, s) { db.collection("orders").doc(id).update({status: s}); }
+    function delS(id) { if(confirm("Supprimer?")) db.collection("orders").doc(id).delete(); }
+    function showModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display='none'); }
+
+    window.onload = renderSrv;
+    setInterval(() => {
+        const n = document.getElementById('online');
+        n.innerText = parseInt(n.innerText) + (Math.random() > 0.5 ? 1 : -1);
+    }, 3000);
 </script>
 </body>
 </html>
