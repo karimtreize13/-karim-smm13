@@ -267,7 +267,7 @@
         const s = SERVICES.find(x=>x.id == document.getElementById('srvId').value);
         const l = document.getElementById('orderL').value; const q = document.getElementById('orderQ').value;
         if(!l) return alert("Lien?");
-        const orderData = { uid, srvName: L==='ar'?s.na:s.n, link: l, qty: q, price: document.getElementById('totalP').innerText, status: 'Attente', date: new Date().toLocaleString() };
+        const orderData = { uid, srvName: L==='ar'?(s.n_ar || s.n):s.n, link: l, qty: q, price: document.getElementById('totalP').innerText, status: 'Attente', date: new Date().toLocaleString() };         
         await db.collection("orders").add(orderData);
         
         // WhatsApp Message - Full Info
