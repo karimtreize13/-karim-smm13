@@ -11,6 +11,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <style>
+        /* ستايل موقعك الأصلي بدون تغيير */
         :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --text: #ffffff; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.3s ease; }
         body { background: var(--bg); color: var(--text); text-align: center; line-height: 1.6; overflow-x: hidden; }
@@ -40,6 +41,15 @@
         .btn-order { width: 100%; padding: 18px; border: none; border-radius: 18px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; }
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 15px; }
         .modal-body { background: var(--card); padding: 20px; border-radius: 25px; width: 100%; max-width: 400px; border: 1px solid var(--border); max-height: 80vh; overflow-y: auto; }
+        
+        /* إضافات ستايل لوحة الإدارة */
+        #adminPanel { display: none; position: fixed; inset: 0; background: #000; z-index: 5000; padding: 20px; overflow-y: auto; text-align: left; }
+        .admin-item { background: var(--card); padding: 15px; border-radius: 15px; margin-bottom: 15px; border-left: 5px solid var(--gold); position: relative; }
+        .admin-btns { display: flex; gap: 10px; margin-top: 15px; }
+        .adm-btn { flex: 1; padding: 10px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; }
+        .admin-secret-trigger { opacity: 0.1; position: fixed; bottom: 0; right: 0; width: 30px; height: 30px; z-index: 999; border: none; background: none; }
+
+        /* الأنماط المتبقية كما هي */
         .pay-row { background: var(--bg); padding: 10px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
         .copy-btn { background: var(--gold); color: #000; padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer; border: none; }
         .history-item { background: var(--bg); padding: 12px; border-radius: 15px; margin-bottom: 10px; text-align: left; border-left: 4px solid var(--gold); position: relative; }
@@ -92,6 +102,16 @@
     <button class="btn-order" onclick="sendOrder()" id="btnSend">Commander Maintenant 🍬</button>
 </div>
 
+<button class="admin-secret-trigger" onclick="adminLogin()"></button>
+
+<div id="adminPanel">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2 style="color:var(--gold);">🛠 GESTION ADMIN</h2>
+        <button onclick="location.reload()" style="background:#444; color:white; border:none; padding:8px 15px; border-radius:10px;">FERMER</button>
+    </div>
+    <div id="adminOrdersContent"></div>
+</div>
+
 <div id="payModal" class="modal">
     <div class="modal-body">
         <h3 id="p-title" style="color:var(--gold); margin-bottom:20px;">Modes de Paiement</h3>
@@ -112,6 +132,7 @@
 </div>
 
 <script>
+    // إعدادات الفايربيز والبيانات الأصلية دون تغيير
     const firebaseConfig = {
       apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
       authDomain: "karim-smm.firebaseapp.com",
@@ -147,6 +168,7 @@
         { id: 9106, cat: "Gaming", n: "PUBG Mobile | 60 UC", n_ar: "ببجي موبايل | 60 شدة ⚡", p: 1.50, fix: true}
     ];
 
+    // الوظائف الأصلية (setLang, toggleDropdown, selectCat, renderServices, updatePrice, copyText, Modal)
     function setLang(lang) {
         currentLang = lang;
         document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
@@ -183,7 +205,6 @@
             const name = (currentLang === 'ar') ? (s.n_ar || s.n) : s.n;
             const priceText = `$${s.p.toFixed(2)}`;
             const div = document.createElement("div");
-            // هنا إضافة السعر بجانب الخدمة في القائمة المنسدلة
             div.innerHTML = `<span><b>#${s.id}</b> - ${name}</span> <span class="price-hint">(${priceText})</span>`;
             div.onclick = () => {
                 document.getElementById('selectedSrv').innerText = name;
@@ -207,6 +228,11 @@
         document.getElementById('totalPrice').innerText = "$" + total.toFixed(5);
     }
 
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; document.body.classList.add('modal-open'); }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; document.body.classList.remove('modal-open'); }
+    function copyText(text, btn) { navigator.clipboard.writeText(text).then(() => { btn.innerText = "OK!"; setTimeout(() => btn.innerText = "Copy", 1500); }); }
+
+    // إرسال الطلب للواتساب والفايربيز
     async function sendOrder() {
         const s = SERVICES.find(x => x.id == document.getElementById('srvSelectValue').value);
         const link = document.getElementById('orderLink').value;
@@ -219,7 +245,7 @@
                 uid: userToken, srvID: s.id, srvName: srvName, price: price,
                 status: "Pending", date: new Date().toLocaleString(), link: link
             });
-            const msg = `🚀 *طلب جديد* 🍬<br /><br />🆔 *ID:* #${s.id}<br />🛠 *Service:* ${srvName}<br />🔗 *Link:* ${link}<br />💰 *Price:* ${price}`;
+            const msg = `🚀 *طلب جديد* 🍬\n\n🆔 *ID:* #${s.id}\n🛠 *Service:* ${srvName}\n🔗 *Link:* ${link}\n💰 *Price:* ${price}`;
             window.open("https://wa.me/213656251947?text=" + encodeURIComponent(msg), '_blank');
         } catch(e) { alert("Error: " + e.message); }
     }
@@ -231,33 +257,49 @@
         db.collection("orders").where("uid", "==", userToken).onSnapshot(snap => {          
             content.innerHTML = snap.docs.map(doc => {
                 const d = doc.data();
-                if(!d.srvName && !d.srv) return '';
+                if(!d.srvName) return '';
                 return `<div class="history-item">
                     <span class="status-badge">${d.status || 'Pending'}</span>
                     <small>${d.date || ''}</small><br>
-                    <b>#${d.srvID || '0'} - ${d.srvName || d.srv}</b><br>
+                    <b>#${d.srvID || '0'} - ${d.srvName}</b><br>
                     <span style="color:var(--accent); font-weight:bold;">${d.price || '$0.00'}</span>
                 </div>`;
             }).reverse().join('') || "Aucun ordre.";
         });
     }
 
-    function copyText(text, btn) {
-        navigator.clipboard.writeText(text).then(() => {
-            btn.innerText = "OK!";
-            setTimeout(() => btn.innerText = "Copy", 1500);
+    // --- نظام الإدارة الجديد ---
+    function adminLogin() {
+        const p = prompt("Password Admin?");
+        if(p === "1313") {
+            document.getElementById('adminPanel').style.display = 'block';
+            loadAdminOrders();
+        }
+    }
+
+    function loadAdminOrders() {
+        db.collection("orders").orderBy("date", "desc").onSnapshot(snap => {
+            const cont = document.getElementById('adminOrdersContent');
+            cont.innerHTML = snap.docs.map(doc => {
+                const d = doc.data();
+                return `
+                <div class="admin-item">
+                    <span class="status-badge">${d.status}</span>
+                    <b>${d.srvName}</b><br>
+                    <small>Lien: <a href="${d.link}" target="_blank" style="color:var(--accent)">${d.link}</a></small><br>
+                    <small>${d.date} | ${d.price}</small>
+                    <div class="admin-btns">
+                        <button class="adm-btn" style="background:var(--accent)" onclick="updateStatus('${doc.id}', 'Completed')">مكتمل ✅</button>
+                        <button class="adm-btn" style="background:#ef4444" onclick="deleteOrder('${doc.id}')">حذف 🗑️</button>
+                    </div>
+                </div>`;
+            }).join('');
         });
     }
 
-    function openModal(id) { 
-        document.getElementById(id).style.display = 'flex'; 
-        document.body.classList.add('modal-open'); 
-    }
-    function closeModal(id) { 
-        document.getElementById(id).style.display = 'none'; 
-        document.body.classList.remove('modal-open'); 
-    }
-    
+    function updateStatus(id, s) { db.collection("orders").doc(id).update({status: s}); }
+    function deleteOrder(id) { if(confirm("Supprimer?")) db.collection("orders").doc(id).delete(); }
+
     window.onload = () => setLang('fr');
 </script>
 </body>
