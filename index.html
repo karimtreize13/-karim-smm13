@@ -15,7 +15,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.2s ease; }
         body { background: var(--bg); color: var(--text); text-align: center; line-height: 1.6; overflow-x: hidden; }
 
-        /* الهيدر المحسن */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: rgba(11, 17, 27, 0.98); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         .logo { font-weight: 900; font-size: 18px; }
         .logo span { color: var(--gold); }
@@ -26,67 +25,32 @@
         .lang-btn { background: transparent; color: #94a3b8; border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 10px; font-weight: bold; }
         .lang-btn.active { background: var(--gold); color: black; }
 
-        /* إحصائيات منسقة */
         .stats { display: flex; justify-content: space-around; margin: 15px; padding: 12px; background: rgba(255,255,255,0.02); border-radius: 15px; border: 1px solid var(--border); }
         .stats h2 { color: var(--gold); font-size: 16px; margin: 0; }
         .stats p { font-size: 10px; opacity: 0.7; margin: 0; }
 
-        /* --- حل مشكلة السلم والخدمات --- */
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); /* 4 أعمدة ثابتة */
-            gap: 8px; 
-            padding: 15px; 
-            max-width: 100%;
-        }
-        .box { 
-            background: var(--card); 
-            padding: 12px 2px; 
-            border-radius: 14px; 
-            border: 1px solid var(--border); 
-            cursor: pointer; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 80px; /* ضمان تساوي الطول */
-        }
-        .box.active { 
-            border: 2px solid var(--gold); 
-            background: rgba(245,158,11,0.08); 
-            transform: translateY(-2px);
-        }
-        .box i { 
-            font-size: 20px; 
-            margin-bottom: 6px; 
-            display: block;
-        }
-        .box span { 
-            font-size: 9px; 
-            font-weight: bold; 
-            display: block;
-            text-transform: uppercase;
-        }
+        .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 15px; max-width: 100%; }
+        .box { background: var(--card); padding: 12px 2px; border-radius: 14px; border: 1px solid var(--border); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80px; }
+        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.08); transform: translateY(-2px); }
+        .box i { font-size: 20px; margin-bottom: 6px; display: block; }
+        .box span { font-size: 9px; font-weight: bold; display: block; text-transform: uppercase; }
 
-        /* الكارت والقائمة المنسدلة */
         .card { background: var(--card); margin: 0 15px 20px; padding: 20px; border-radius: 25px; border: 1px solid var(--border); }
         .custom-select { position: relative; margin-bottom: 12px; }
         .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 14px; cursor: pointer; display: flex; justify-content: space-between; font-size: 13px; align-items: center; }
         .select-items { position: absolute; background: #1c2533; border: 1px solid var(--gold); top: 100%; left: 0; right: 0; z-index: 100; border-radius: 12px; max-height: 200px; overflow-y: auto; margin-top: 5px; }
-        .select-items div { padding: 12px; border-bottom: 1px solid var(--border); font-size: 12px; display: flex; justify-content: space-between; }
+        .select-items div { padding: 12px; border-bottom: 1px solid var(--border); font-size: 12px; display: flex; justify-content: space-between; text-align: left; }
         
         input { width: 100%; padding: 14px; margin-bottom: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 14px; }
         .price-tag { font-size: 26px; font-weight: 900; color: var(--accent); margin-bottom: 15px; display: block; }
         .btn-order { width: 100%; padding: 16px; border: none; border-radius: 15px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; font-size: 15px; }
 
-        /* لوحة الإدارة */
-        #adminPanel { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 9999; padding: 20px; overflow-y: auto; }
-        .admin-tabs { display: flex; gap: 5px; margin-bottom: 15px; overflow-x: auto; }
-        .tab-btn { flex: 1; padding: 10px; background: #1c2533; border: 1px solid var(--border); color: white; border-radius: 8px; font-size: 11px; white-space: nowrap; }
-        .tab-btn.active { background: var(--gold); color: #000; font-weight: bold; }
-        
+        /* المودالات (وسائل الدفع والسجل) */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 15px; }
-        .modal-body { background: var(--card); padding: 20px; border-radius: 20px; width: 100%; max-width: 400px; border: 1px solid var(--border); }
+        .modal-body { background: var(--card); padding: 20px; border-radius: 20px; width: 100%; max-width: 400px; border: 1px solid var(--border); max-height: 80vh; overflow-y: auto; }
+        .pay-row { background: var(--bg); padding: 10px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); font-size: 12px; }
+        .copy-btn { background: var(--gold); color: #000; padding: 4px 8px; border-radius: 6px; font-weight: bold; cursor: pointer; border: none; font-size: 10px; }
+        .history-item { background: var(--bg); padding: 10px; border-radius: 12px; margin-bottom: 8px; text-align: left; border-left: 3px solid var(--gold); font-size: 12px; }
         .select-hide { display: none; }
     </style>
 </head>
@@ -135,41 +99,38 @@
     <button class="btn-order" onclick="sendOrder()" id="btnSend">Commander Maintenant 🍬</button>
 </div>
 
-<div id="adminPanel">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h2 id="adm-title" style="color:var(--gold);">🛠 إدارة الطلبات</h2>
-        <button onclick="closeAdmin()" style="background:#ef4444; color:white; border:none; padding:8px 15px; border-radius:10px; font-weight:bold;">إغلاق</button>
+<div id="payModal" class="modal">
+    <div class="modal-body">
+        <h3 style="color:var(--gold); margin-bottom:15px;">Paiement 💳</h3>
+        <div class="pay-row"><div>CCP:<br><b>00799999001465107315</b></div><button class="copy-btn" onclick="copyTxt('00799999001465107315')">Copy</button></div>
+        <div class="pay-row"><div>Binance:<br><b>1194939141</b></div><button class="copy-btn" onclick="copyTxt('1194939141')">Copy</button></div>
+        <div class="pay-row"><div>RedotPay:<br><b>1523336713</b></div><button class="copy-btn" onclick="copyTxt('1523336713')">Copy</button></div>
+        <div class="pay-row"><div>BaridiMob:<br><b>00799999001465107315</b></div><button class="copy-btn" onclick="copyTxt('00799999001465107315')">Copy</button></div>
+        <button onclick="closeModal('payModal')" style="width:100%; padding:10px; background:#444; border:none; border-radius:10px; color:white;">Fermer</button>
     </div>
-    <div class="admin-tabs">
-        <button class="tab-btn active" onclick="filterAdmin('All', this)">الكل</button>
-        <button class="tab-btn" onclick="filterAdmin('Pending', this)">قيد المراجعة</button>
-        <button class="tab-btn" onclick="filterAdmin('Processing', this)">في التقدم</button>
-        <button class="tab-btn" onclick="filterAdmin('Completed', this)">مكتمل</button>
+</div>
+
+<div id="historyModal" class="modal">
+    <div class="modal-body">
+        <h3 style="color:var(--gold); margin-bottom:15px;">Historique 📜</h3>
+        <div id="historyContent">Chargement...</div>
+        <button onclick="closeModal('historyModal')" style="width:100%; padding:10px; background:#444; border:none; border-radius:10px; color:white; margin-top:10px;">Fermer</button>
     </div>
-    <div id="adminOrdersContent"></div>
 </div>
 
 <script>
-    // استخدم نفس إعدادات Firebase التي كانت في الكود الخاص بك
-    const firebaseConfig = {
-      apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0",
-      authDomain: "karim-smm.firebaseapp.com",
-      projectId: "karim-smm",
-      storageBucket: "karim-smm.firebasestorage.app",
-      messagingSenderId: "968826000164",
-      appId: "1:968826000164:web:aa41869e201784b85c59b1"
-    };
+    const firebaseConfig = { apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0", authDomain: "karim-smm.firebaseapp.com", projectId: "karim-smm", storageBucket: "karim-smm.firebasestorage.app", messagingSenderId: "968826000164", appId: "1:968826000164:web:aa41869e201784b85c59b1" };
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    const userUID = localStorage.getItem('k_uid') || 'U' + Math.floor(Math.random()*1000000);
+    localStorage.setItem('k_uid', userUID);
 
     const SERVICES = [
         { id: 9999, cat: "TikTok", n: "🪙 TikTok Coins - 1000 Pièces", n_ar: "شحن عملات تيك توك - 1000 عملة", p: 14.00, fix: true },
         { id: 3231, cat: "TikTok", n: "TikTok Followers", n_ar: "متابعين تيك توك", p: 1.10},
         { id: 8253, cat: "Facebook", n: "Facebook Followers", n_ar: "متابعين فيسبوك", p: 0.475},
         { id: 2594, cat: "Instagram", n: "Instagram Followers", n_ar: "متابعين انستقرام", p: 0.960},
-        { id: 1873, cat: "YouTube", n: "YouTube Premium", n_ar: "يوتيوب بريميوم", p: 2.50, fix: true},
-        { id: 8607, cat: "Premium", n: "Netflix Premium", n_ar: "نتفليكس بريميوم", p: 4.50, fix: true},
-        { id: 9106, cat: "Gaming", n: "PUBG Mobile", n_ar: "ببجي موبايل", p: 1.50, fix: true}
+        { id: 1873, cat: "YouTube", n: "YouTube Premium", n_ar: "يوتيوب بريميوم", p: 2.50, fix: true}
     ];
 
     let currentLang = 'fr';
@@ -199,7 +160,7 @@
         filtered.forEach(s => {
             const name = (currentLang === 'ar') ? (s.n_ar || s.n) : s.n;
             const div = document.createElement("div");
-            div.innerHTML = `<span>${name}</span> <b style="color:var(--accent)">$${s.p.toFixed(2)}</b>`;
+            div.innerHTML = `<span>#${s.id} - ${name}</span> <b style="color:var(--accent)">$${s.p.toFixed(2)}</b>`;
             div.onclick = () => {
                 document.getElementById('selectedSrv').innerText = name;
                 document.getElementById('srvSelectValue').value = s.id;
@@ -222,10 +183,34 @@
         document.getElementById('totalPrice').innerText = "$" + total.toFixed(5);
     }
 
-    function openAdmin() { if(prompt("Password?") === "1313") { document.getElementById('adminPanel').style.display='block'; loadAdminData(); } }
-    function closeAdmin() { document.getElementById('adminPanel').style.display='none'; }
+    async function sendOrder() {
+        const s = SERVICES.find(x => x.id == document.getElementById('srvSelectValue').value);
+        const link = document.getElementById('orderLink').value;
+        const price = document.getElementById('totalPrice').innerText;
+        if(!link) return alert("Lien Missing!");
+        
+        const srvName = (currentLang === 'ar' ? (s.n_ar || s.n) : s.n);
+        await db.collection("orders").add({ uid: userUID, srvID: s.id, srvName: srvName, price: price, status: "Pending", date: new Date().toLocaleString(), link: link });
+        
+        const msg = `🚀 *NOUVELLE COMMANDE*\n🆔 ID: #${s.id}\n🛠 Service: ${srvName}\n🔗 Link: ${link}\n💰 Price: ${price}`;
+        window.open("https://wa.me/213656251947?text=" + encodeURIComponent(msg), '_blank');
+    }
 
-    // ... وباقي وظائف الإدارة والطلبات تضاف هنا ...
+    function openHistory() {
+        openModal('historyModal');
+        db.collection("orders").where("uid", "==", userUID).onSnapshot(snap => {
+            document.getElementById('historyContent').innerHTML = snap.docs.map(doc => {
+                const d = doc.data();
+                return `<div class="history-item"><b>${d.srvName}</b><br><small>${d.date}</small><br><span style="color:var(--gold)">${d.status}</span> - ${d.price}</div>`;
+            }).reverse().join('') || "Aucun ordre.";
+        });
+    }
+
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function copyTxt(t) { navigator.clipboard.writeText(t); alert("Copié!"); }
+    function openAdmin() { if(prompt("Password?") === "1313") { alert("Admin mode - use Firebase console for full control"); } }
+
     window.onload = () => setLang('fr');
 </script>
 </body>
