@@ -30,15 +30,16 @@
         .box i { font-size: 24px; display: block; margin-bottom: 8px; }
         .card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
         .custom-select { position: relative; margin-bottom: 15px; text-align: left; }
-        .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; cursor: pointer; display: flex; justify-content: space-between; }
+        .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; cursor: pointer; display: flex; justify-content: space-between; font-size: 14px; }
         .select-items { position: absolute; background: var(--card); border: 1px solid var(--border); top: 100%; left: 0; right: 0; z-index: 99; border-radius: 15px; max-height: 250px; overflow-y: auto; }
-        .select-items div { padding: 12px 15px; border-bottom: 1px solid #2d3748; cursor: pointer; }
+        .select-items div { padding: 12px 15px; border-bottom: 1px solid #2d3748; cursor: pointer; font-size: 13px; display: flex; justify-content: space-between; }
+        .select-items div span.price-hint { color: var(--accent); font-weight: bold; }
         .select-hide { display: none; }
         input { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; }
         .price-tag { font-size: 30px; font-weight: 900; color: var(--accent); margin-bottom: 20px; display: block; }
         .btn-order { width: 100%; padding: 18px; border: none; border-radius: 18px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; }
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 15px; }
-        .modal-body { background: var(--card); padding: 20px; border-radius: 25px; width: 100%; max-width: 400px; border: 1px solid var(--border); max-height: 80vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        .modal-body { background: var(--card); padding: 20px; border-radius: 25px; width: 100%; max-width: 400px; border: 1px solid var(--border); max-height: 80vh; overflow-y: auto; }
         .pay-row { background: var(--bg); padding: 10px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
         .copy-btn { background: var(--gold); color: #000; padding: 5px 10px; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer; border: none; }
         .history-item { background: var(--bg); padding: 12px; border-radius: 15px; margin-bottom: 10px; text-align: left; border-left: 4px solid var(--gold); position: relative; }
@@ -121,9 +122,7 @@
       measurementId: "G-466S46HKCB"
     };
 
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
     const userToken = localStorage.getItem('k_token') || 'U' + Math.floor(Math.random()*1000000);
@@ -153,7 +152,6 @@
         document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
         document.getElementById('btnFr').classList.toggle('active', lang === 'fr');
         document.getElementById('btnAr').classList.toggle('active', lang === 'ar');
-        document.querySelectorAll('.box span').forEach(el => el.innerText = el.getAttribute('data-' + lang));
         const ui = {
             fr: { srv:"Services", cli:"Clients", vis:"En ligne", send:"Commander 🍬", h:"Historique", p:"Paiement", link:"Lien / ID" },
             ar: { srv:"الخدمات", cli:"العملاء", vis:"نشط الآن", send:"إرسال الطلب الآن 🍬", h:"سجل الطلبات", p:"وسائل الدفع", link:"الرابط أو الآيدي" }
@@ -183,8 +181,10 @@
         cont.innerHTML = "";
         filtered.forEach(s => {
             const name = (currentLang === 'ar') ? (s.n_ar || s.n) : s.n;
+            const priceText = `$${s.p.toFixed(2)}`;
             const div = document.createElement("div");
-            div.innerHTML = `<b>#${s.id}</b> - ${name}`;
+            // هنا إضافة السعر بجانب الخدمة في القائمة المنسدلة
+            div.innerHTML = `<span><b>#${s.id}</b> - ${name}</span> <span class="price-hint">(${priceText})</span>`;
             div.onclick = () => {
                 document.getElementById('selectedSrv').innerText = name;
                 document.getElementById('srvSelectValue').value = s.id;
@@ -210,43 +210,35 @@
     async function sendOrder() {
         const s = SERVICES.find(x => x.id == document.getElementById('srvSelectValue').value);
         const link = document.getElementById('orderLink').value;
-        const qty = document.getElementById('orderQty').value;
         const price = document.getElementById('totalPrice').innerText;
-        if(!link) return alert(currentLang === 'ar' ? "يرجى وضع الرابط!" : "Lien Manquant!");
+        if(!link) return alert("Lien Missing!");
         
         const srvName = (currentLang === 'ar' ? (s.n_ar || s.n) : s.n);
         try {
             await db.collection("orders").add({
                 uid: userToken, srvID: s.id, srvName: srvName, price: price,
-                qty: qty, status: "Pending", date: new Date().toLocaleString(), link: link
+                status: "Pending", date: new Date().toLocaleString(), link: link
             });
-            const msg = `🚀 *طلب جديد* 🍬\n\n🆔 *ID:* #${s.id}\n🛠 *الخدمة:* ${srvName}\n🔗 *الرابط:* ${link}\n💰 *السعر:* ${price}`;
+            const msg = `🚀 *طلب جديد* 🍬\n\n🆔 *ID:* #${s.id}\n🛠 *Service:* ${srvName}\n🔗 *Link:* ${link}\n💰 *Price:* ${price}`;
             window.open("https://wa.me/213656251947?text=" + encodeURIComponent(msg), '_blank');
-            alert(currentLang === 'ar' ? "تم الإرسال بنجاح!" : "Envoyé avec succès!");
         } catch(e) { alert("Error: " + e.message); }
     }
 
     function openHistory() {
         openModal('historyModal');
         const content = document.getElementById('historyContent');
-        content.innerHTML = "<p style='padding:20px;'>Chargement...</p>";
-        
+        content.innerHTML = "Chargement...";
         db.collection("orders").where("uid", "==", userToken).onSnapshot(snap => {          
-            if (snap.empty) {
-                content.innerHTML = "<p style='padding:20px;'>Aucun ordre.</p>";
-                return;
-            }
             content.innerHTML = snap.docs.map(doc => {
                 const d = doc.data();
-                if (!d.srvID && !d.srvName && !d.srv) return ''; // تجاهل التالف
-                const name = d.srvName || d.srv || 'Service';
+                if(!d.srvName && !d.srv) return '';
                 return `<div class="history-item">
                     <span class="status-badge">${d.status || 'Pending'}</span>
                     <small>${d.date || ''}</small><br>
-                    <b>#${d.srvID || '0'} - ${name}</b><br>
+                    <b>#${d.srvID || '0'} - ${d.srvName || d.srv}</b><br>
                     <span style="color:var(--accent); font-weight:bold;">${d.price || '$0.00'}</span>
                 </div>`;
-            }).reverse().join('');
+            }).reverse().join('') || "Aucun ordre.";
         });
     }
 
@@ -266,14 +258,7 @@
         document.body.classList.remove('modal-open'); 
     }
     
-    window.onload = () => {
-        setLang('fr');
-        setInterval(() => {
-            const num = document.getElementById('active-num');
-            let val = parseInt(num.innerText);
-            num.innerText = val + (Math.random() > 0.5 ? 1 : -1);
-        }, 3000);
-    };
+    window.onload = () => setLang('fr');
 </script>
 </body>
 </html>
