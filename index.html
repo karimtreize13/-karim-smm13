@@ -307,7 +307,7 @@
             });
         }
               
-       
+         }
 
     window.updStatus = (id, s) => db.collection("orders").doc(id).update({status: s});
     window.delOrder = (id) => confirm("Supprimer?") && db.collection("orders").doc(id).delete();
