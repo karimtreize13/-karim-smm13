@@ -12,260 +12,245 @@
 
     <style>
         :root { --bg: #0b111b; --card: #161c26; --accent: #10b981; --gold: #f59e0b; --border: #2d3748; --text: #ffffff; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; transition: 0.3s ease; }
-        body { background: var(--bg); color: var(--text); text-align: center; line-height: 1.6; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background: var(--bg); color: var(--text); text-align: center; overflow-x: hidden; }
 
-        /* الهيدر */
+        /* الهيدر مع أزرار اللغة الجديدة */
         .header { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(11, 17, 27, 0.98); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-weight: 900; font-size: 20px; }
+        .logo { font-weight: 900; font-size: 20px; color: white; text-decoration: none; }
         .logo span { color: var(--gold); }
-        .header-tools { display: flex; gap: 15px; align-items: center; }
-        .icon-nav { font-size: 20px; cursor: pointer; color: var(--text); text-decoration: none; }
+        
+        .nav-icons { display: flex; gap: 15px; align-items: center; }
+        .icon-btn { font-size: 18px; cursor: pointer; color: var(--text); transition: 0.3s; }
+        .icon-btn:hover { color: var(--gold); }
 
-        .lang-switch { display: flex; gap: 4px; background: #1e293b; padding: 4px; border-radius: 10px; }
-        .lang-btn { background: transparent; color: #94a3b8; border: none; padding: 5px 10px; border-radius: 7px; cursor: pointer; font-size: 11px; font-weight: bold; }
-        .lang-btn.active { background: var(--gold); color: black; }
+        /* تحسين شكل أزرار اللغة */
+        .lang-container { display: flex; background: #1e293b; border-radius: 12px; padding: 3px; border: 1px solid var(--border); }
+        .lang-toggle { padding: 5px 12px; border-radius: 9px; border: none; font-size: 12px; font-weight: bold; cursor: pointer; background: transparent; color: #94a3b8; transition: 0.3s; }
+        .lang-toggle.active { background: var(--gold); color: #000; }
 
-        /* الإحصائيات */
-        .stats { display: flex; justify-content: space-around; margin: 15px; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid var(--border); }
-        .stats h2 { color: var(--gold); font-size: 18px; margin-bottom: 5px; }
-        .stats p { font-size: 11px; opacity: 0.7; }
+        /* الإحصائيات (كما في الصورة) */
+        .stats-bar { display: flex; justify-content: space-around; margin: 15px; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 25px; border: 1px solid var(--border); }
+        .stat-item h2 { color: var(--gold); font-size: 18px; }
+        .stat-item p { font-size: 11px; opacity: 0.6; }
 
-        /* الشبكة */
+        /* شبكة الخدمات (4 أعمدة) */
         .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; }
-        .box { background: var(--card); padding: 15px 5px; border-radius: 18px; border: 1px solid var(--border); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90px; }
-        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.12); transform: scale(1.05); }
-        .box i { font-size: 24px; margin-bottom: 8px; }
-        .box span { font-size: 10px; font-weight: 700; }
+        .box { background: var(--card); padding: 15px 5px; border-radius: 20px; border: 1px solid var(--border); cursor: pointer; transition: 0.3s; }
+        .box.active { border: 2px solid var(--gold); background: rgba(245,158,11,0.1); transform: translateY(-3px); }
+        .box i { font-size: 24px; margin-bottom: 8px; display: block; }
+        .box span { font-size: 10px; font-weight: bold; }
 
-        /* الكارت الرئيسي */
-        .card { background: var(--card); margin: 0 15px 25px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
-        .custom-select { position: relative; margin-bottom: 15px; }
-        .select-selected { background: var(--bg); border: 1px solid var(--border); border-radius: 15px; padding: 16px; cursor: pointer; display: flex; justify-content: space-between; font-size: 14px; }
-        .select-items { position: absolute; background: #1c2533; border: 1px solid var(--gold); top: 100%; left: 0; right: 0; z-index: 100; border-radius: 15px; max-height: 250px; overflow-y: auto; margin-top: 8px; }
-        .select-items div { padding: 15px; border-bottom: 1px solid var(--border); font-size: 13px; display: flex; justify-content: space-between; }
+        /* كارت الطلب */
+        .order-card { background: var(--card); margin: 0 15px 20px; padding: 25px; border-radius: 30px; border: 1px solid var(--border); }
+        .select-box { background: var(--bg); border: 1px solid var(--border); border-radius: 15px; padding: 15px; margin-bottom: 15px; cursor: pointer; display: flex; justify-content: space-between; font-size: 14px; }
+        .srv-list { position: absolute; background: #1c2533; border: 1px solid var(--gold); width: calc(100% - 60px); left: 30px; z-index: 100; border-radius: 15px; max-height: 200px; overflow-y: auto; display: none; }
+        .srv-list div { padding: 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; }
+
+        input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; }
+        .price-display { font-size: 32px; font-weight: 900; color: var(--accent); margin-bottom: 15px; display: block; }
+        .submit-btn { width: 100%; padding: 18px; border: none; border-radius: 20px; background: var(--accent); color: white; font-weight: 900; font-size: 16px; cursor: pointer; }
+
+        /* مودالات (سجل، دفع، أدمن) */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: var(--card); padding: 25px; border-radius: 25px; width: 100%; max-width: 450px; border: 1px solid var(--border); position: relative; }
+        .close-x { position: absolute; top: 15px; right: 15px; color: #ff4444; font-size: 22px; cursor: pointer; }
         
-        input { width: 100%; padding: 16px; margin-bottom: 15px; border-radius: 15px; border: 1px solid var(--border); background: var(--bg); color: white; text-align: center; font-size: 15px; }
-        .price-tag { font-size: 32px; font-weight: 900; color: var(--accent); margin-bottom: 20px; display: block; }
-        .btn-order { width: 100%; padding: 18px; border: none; border-radius: 20px; background: var(--accent); color: white; font-weight: 900; cursor: pointer; font-size: 16px; }
-
-        /* المودالات */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
-        .modal-body { background: var(--card); padding: 25px; border-radius: 25px; width: 100%; max-width: 450px; border: 1px solid var(--border); max-height: 85vh; overflow-y: auto; position: relative; }
-        .close-modal { position: absolute; top: 15px; right: 15px; color: #ff4444; cursor: pointer; font-size: 20px; }
-
-        /* سجل الطلبات والادارة */
-        .item-card { background: var(--bg); padding: 15px; border-radius: 15px; margin-bottom: 12px; text-align: left; border-left: 4px solid var(--gold); }
-        .status-badge { float: right; font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: bold; }
-        .bg-pending { background: #f59e0b; color: #000; }
-        .bg-completed { background: #10b981; color: #fff; }
-        .bg-processing { background: #3b82f6; color: #fff; }
-
-        .pay-row { background: var(--bg); padding: 15px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); font-size: 12px; }
-        .copy-btn { background: var(--gold); color: black; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        
-        .select-hide { display: none; }
+        .order-item { background: var(--bg); padding: 15px; border-radius: 15px; margin-bottom: 10px; text-align: left; border-left: 4px solid var(--gold); }
+        .badge { float: right; font-size: 10px; padding: 4px 10px; border-radius: 10px; font-weight: bold; }
+        .pending { background: #f59e0b; color: black; }
+        .done { background: #10b981; color: white; }
     </style>
 </head>
 <body>
 
 <div class="header">
     <div class="logo">KARIM<span>13</span> 🍬</div>
-    <div class="header-tools">
-        <i class="fas fa-user-shield icon-nav" style="color:var(--gold)" onclick="openAdmin()"></i>
-        <a href="https://t.me/karim_smm" target="_blank" class="icon-nav"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
-        <i class="fas fa-wallet icon-nav" style="color:var(--gold)" onclick="openModal('payModal')"></i>
-        <i class="fas fa-history icon-nav" onclick="openHistory()"></i>
-        <div class="lang-switch">
-            <button class="lang-btn active" id="btnFr" onclick="setLang('fr')">FR</button>
-            <button class="lang-btn" id="btnAr" onclick="setLang('ar')">AR</button>
+    
+    <div class="nav-icons">
+        <i class="fas fa-user-shield icon-btn" style="color:var(--gold)" onclick="checkAdmin()"></i>
+        <a href="https://t.me/karim_smm" target="_blank" class="icon-btn"><i class="fab fa-telegram" style="color:#0088cc"></i></a>
+        <i class="fas fa-wallet icon-btn" style="color:var(--gold)" onclick="showModal('payM')"></i>
+        <i class="fas fa-history icon-btn" onclick="showHistory()"></i>
+        
+        <div class="lang-container">
+            <button class="lang-toggle active" id="fBtn" onclick="changeLang('fr')">FR</button>
+            <button class="lang-toggle" id="aBtn" onclick="changeLang('ar')">AR</button>
         </div>
     </div>
 </div>
 
-<div class="stats">
-    <div><h2 id="srv-count">150+</h2><p>Services</p></div>
-    <div><h2>3.4K+</h2><p>Clients</p></div>
-    <div><h2>215</h2><p>En ligne</p></div>
+<div class="stats-bar">
+    <div class="stat-item"><h2>215</h2><p id="t-online">En ligne</p></div>
+    <div class="stat-item"><h2>3.4K+</h2><p id="t-clients">Clients</p></div>
+    <div class="stat-item"><h2>150+</h2><p id="t-services">Services</p></div>
 </div>
 
-<div class="grid" id="catGrid">
-    <div class="box active" onclick="selectCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
-    <div class="box" onclick="selectCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
-    <div class="box" onclick="selectCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Instagram</span></div>
-    <div class="box" onclick="selectCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span>YouTube</span></div>
-    <div class="box" onclick="selectCat('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
-    <div class="box" onclick="selectCat('Snapchat', this)"><i class="fab fa-snapchat" style="color:#fffc00"></i><span>Snapchat</span></div>
-    <div class="box" onclick="selectCat('Premium', this)"><i class="fas fa-gem" style="color:var(--gold)"></i><span>Premium</span></div>
-    <div class="box" onclick="selectCat('Gaming', this)"><i class="fas fa-gamepad" style="color:var(--accent)"></i><span>Gaming</span></div>
+<div class="grid" id="cats">
+    <div class="box active" onclick="pickCat('TikTok', this)"><i class="fab fa-tiktok" style="color:#ff0050"></i><span>TikTok</span></div>
+    <div class="box" onclick="pickCat('Facebook', this)"><i class="fab fa-facebook" style="color:#1877f2"></i><span>Facebook</span></div>
+    <div class="box" onclick="pickCat('Instagram', this)"><i class="fab fa-instagram" style="color:#e1306c"></i><span>Instagram</span></div>
+    <div class="box" onclick="pickCat('YouTube', this)"><i class="fab fa-youtube" style="color:#ff0000"></i><span>YouTube</span></div>
+    <div class="box" onclick="pickCat('Telegram', this)"><i class="fab fa-telegram" style="color:#0088cc"></i><span>Telegram</span></div>
+    <div class="box" onclick="pickCat('Snapchat', this)"><i class="fab fa-snapchat" style="color:#fffc00"></i><span>Snapchat</span></div>
+    <div class="box" onclick="pickCat('Premium', this)"><i class="fas fa-gem" style="color:var(--gold)"></i><span>Premium</span></div>
+    <div class="box" onclick="pickCat('Gaming', this)"><i class="fas fa-gamepad" style="color:var(--accent)"></i><span>Gaming</span></div>
 </div>
 
-<div class="card">
-    <div class="custom-select">
-        <div class="select-selected" id="selectedSrv" onclick="toggleDropdown()">Choisir Service...</div>
-        <div class="select-items select-hide" id="srvOptions"></div>
+<div class="order-card">
+    <div class="select-box" onclick="toggleSrv()">
+        <span id="curSrv">Choisir Service...</span>
+        <i class="fas fa-chevron-down"></i>
     </div>
-    <input type="hidden" id="srvIdValue">
-    <input type="text" id="orderLink" placeholder="Lien / URL / ID">
-    <input type="number" id="orderQty" value="1000" oninput="updatePrice()">
-    <span class="price-tag" id="totalPrice">$0.00000</span>
-    <button class="btn-order" onclick="sendOrder()">Commander Maintenant 🍬</button>
+    <div id="srvList" class="srv-list"></div>
+    
+    <input type="hidden" id="srvId">
+    <input type="text" id="orderL" placeholder="Lien / URL / ID">
+    <input type="number" id="orderQ" value="1000" oninput="calcPrice()">
+    
+    <span class="price-display" id="totalP">$0.00000</span>
+    <button class="submit-btn" onclick="placeOrder()" id="btnSend">Commander Maintenant 🍬</button>
 </div>
 
-<div id="payModal" class="modal">
-    <div class="modal-body">
-        <i class="fas fa-times close-modal" onclick="closeModal('payModal')"></i>
-        <h3 style="color:var(--gold); margin-bottom:20px;">Méthodes de Paiement 💳</h3>
-        <div class="pay-row"><span>CCP: 00799999001465107315</span><button class="copy-btn" onclick="copy('00799999001465107315')">Copy</button></div>
-        <div class="pay-row"><span>BaridiMob: 00799999001465107315</span><button class="copy-btn" onclick="copy('00799999001465107315')">Copy</button></div>
-        <div class="pay-row"><span>Binance ID: 1194939141</span><button class="copy-btn" onclick="copy('1194939141')">Copy</button></div>
-        <div class="pay-row"><span>RedotPay: 1523336713</span><button class="copy-btn" onclick="copy('1523336713')">Copy</button></div>
-    </div>
-</div>
+<div id="payM" class="modal"><div class="modal-content">
+    <i class="fas fa-times close-x" onclick="closeM('payM')"></i>
+    <h3 style="color:var(--gold);margin-bottom:20px">Paiement 💳</h3>
+    <p style="font-size:12px;margin-bottom:10px">CCP / BaridiMob: 00799999001465107315</p>
+    <p style="font-size:12px;margin-bottom:10px">Binance ID: 1194939141</p>
+    <button class="submit-btn" onclick="closeM('payM')">OK</button>
+</div></div>
 
-<div id="historyModal" class="modal">
-    <div class="modal-body">
-        <i class="fas fa-times close-modal" onclick="closeModal('historyModal')"></i>
-        <h3 style="color:var(--gold); margin-bottom:20px;">Mon Historique 📜</h3>
-        <div id="historyContent">Chargement...</div>
-    </div>
-</div>
+<div id="histM" class="modal"><div class="modal-content">
+    <i class="fas fa-times close-x" onclick="closeM('histM')"></i>
+    <h3 style="color:var(--gold);margin-bottom:20px">Historique 📜</h3>
+    <div id="hContent"></div>
+</div></div>
 
-<div id="adminModal" class="modal">
-    <div class="modal-body" style="max-width: 95%;">
-        <i class="fas fa-times close-modal" onclick="closeModal('adminModal')"></i>
-        <h3 style="color:var(--gold); margin-bottom:20px;">Admin Panel 🛠</h3>
-        <div id="adminContent"></div>
-    </div>
-</div>
+<div id="admM" class="modal"><div class="modal-content" style="max-width:95%">
+    <i class="fas fa-times close-x" onclick="closeM('admM')"></i>
+    <h3 style="color:var(--gold);margin-bottom:20px">Admin Panel 🛠</h3>
+    <div id="aContent"></div>
+</div></div>
 
 <script>
     const firebaseConfig = { apiKey: "AIzaSyBAGmBZN-aa6ywe3dPYFVABPMJQPzgZxP0", authDomain: "karim-smm.firebaseapp.com", projectId: "karim-smm", storageBucket: "karim-smm.firebasestorage.app", messagingSenderId: "968826000164", appId: "1:968826000164:web:aa41869e201784b85c59b1" };
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
     const SERVICES = [
-        { id: 1, cat: "TikTok", n: "TikTok Followers [Real]", n_ar: "متابعين تيك توك", p: 1.20 },
-        { id: 2, cat: "TikTok", n: "TikTok Coins [1000]", n_ar: "1000 عملة تيك توك", p: 14.50, fix: true },
-        { id: 3, cat: "Facebook", n: "FB Page Likes", n_ar: "لايكات فيسبوك", p: 0.85 },
-        { id: 4, cat: "YouTube", n: "YT Subscribers", n_ar: "مشتركين يوتيوب", p: 2.30 },
-        { id: 5, cat: "Premium", n: "Netflix 1 Month", n_ar: "نتفليكس شهر", p: 4.00, fix: true },
-        { id: 6, cat: "Gaming", n: "Free Fire 210 Gems", n_ar: "جواهر فري فاير", p: 2.10, fix: true }
+        {id:1, cat:'TikTok', n:'Followers', n_ar:'متابعين تيك توك', p:1.10},
+        {id:2, cat:'TikTok', n:'Coins 1000', n_ar:'1000 عملة تيك توك', p:14.00, fix:true},
+        {id:3, cat:'Facebook', n:'Followers', n_ar:'متابعين فيسبوك', p:0.80},
+        {id:4, cat:'Gaming', n:'PUBG UC', n_ar:'شدات ببجي', p:1.50, fix:true}
     ];
 
-    let currentLang = 'fr', activeCat = 'TikTok';
-    // معرف العميل الثابت لكل متصفح
-    let userUID = localStorage.getItem('k_uid');
-    if(!userUID) { userUID = 'CL' + Math.floor(Math.random()*90000 + 10000); localStorage.setItem('k_uid', userUID); }
+    let L = 'fr', C = 'TikTok', uid = localStorage.getItem('k_uid') || 'U'+Math.floor(Math.random()*900000);
+    localStorage.setItem('k_uid', uid);
 
-    function setLang(lang) {
-        currentLang = lang;
-        document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
-        document.getElementById('btnFr').classList.toggle('active', lang === 'fr');
-        document.getElementById('btnAr').classList.toggle('active', lang === 'ar');
-        renderServices();
-    }
-
-    function selectCat(cat, el) {
-        activeCat = cat;
-        document.querySelectorAll('.box').forEach(b => b.classList.remove('active'));
-        el.classList.add('active');
-        renderServices();
-    }
-
-    function renderServices() {
-        const cont = document.getElementById('srvOptions');
-        const filtered = SERVICES.filter(s => s.cat === activeCat);
-        cont.innerHTML = filtered.map(s => {
-            const name = (currentLang === 'ar') ? s.n_ar : s.n;
-            return `<div onclick="setSrv('${name}', ${s.id})"><span>${name}</span> <b>$${s.p}</b></div>`;
-        }).join('');
-        if(filtered.length > 0) setSrv((currentLang === 'ar' ? filtered[0].n_ar : filtered[0].n), filtered[0].id);
-    }
-
-    function setSrv(name, id) {
-        document.getElementById('selectedSrv').innerText = name;
-        document.getElementById('srvIdValue').value = id;
-        document.getElementById('srvOptions').classList.add('select-hide');
-        updatePrice();
-    }
-
-    function updatePrice() {
-        const s = SERVICES.find(x => x.id == document.getElementById('srvIdValue').value);
-        if(!s) return;
-        const q = document.getElementById('orderQty').value || 0;
-        const total = s.fix ? s.p : (s.p / 1000 * q);
-        document.getElementById('totalPrice').innerText = "$" + total.toFixed(5);
-    }
-
-    async function sendOrder() {
-        const s = SERVICES.find(x => x.id == document.getElementById('srvIdValue').value);
-        const link = document.getElementById('orderLink').value;
-        const qty = document.getElementById('orderQty').value;
-        if(!link) return alert("Lien?");
+    function changeLang(lang) {
+        L = lang;
+        document.body.dir = L==='ar'?'rtl':'ltr';
+        document.getElementById('fBtn').classList.toggle('active', L==='fr');
+        document.getElementById('aBtn').classList.toggle('active', L==='ar');
         
-        const price = document.getElementById('totalPrice').innerText;
-        const srvName = (currentLang === 'ar' ? s.n_ar : s.n);
+        // تحديث نصوص الواجهة
+        document.getElementById('t-online').innerText = L==='ar'?'متصل':'En ligne';
+        document.getElementById('t-clients').innerText = L==='ar'?'عملاء':'Clients';
+        document.getElementById('t-services').innerText = L==='ar'?'خدمات':'Services';
+        document.getElementById('btnSend').innerText = L==='ar'?'اطلب الآن 🍬':'Commander Maintenant 🍬';
+        
+        renderSrvs();
+    }
 
-        await db.collection("orders").add({
-            uid: userUID,
-            srv: srvName,
+    function pickCat(cat, el) {
+        C = cat;
+        document.querySelectorAll('.box').forEach(b=>b.classList.remove('active'));
+        el.classList.add('active');
+        renderSrvs();
+    }
+
+    function renderSrvs() {
+        const list = document.getElementById('srvList');
+        const filtered = SERVICES.filter(s=>s.cat === C);
+        list.innerHTML = filtered.map(s => {
+            const name = L==='ar'?s.n_ar:s.n;
+            return `<div onclick="setSrv('${name}', ${s.id})"><span>${name}</span><b>$${s.p}</b></div>`;
+        }).join('');
+        if(filtered.length > 0) setSrv(L==='ar'?filtered[0].n_ar:filtered[0].n, filtered[0].id);
+    }
+
+    function setSrv(n, id) {
+        document.getElementById('curSrv').innerText = n;
+        document.getElementById('srvId').value = id;
+        document.getElementById('srvList').style.display = 'none';
+        calcPrice();
+    }
+
+    function calcPrice() {
+        const s = SERVICES.find(x=>x.id == document.getElementById('srvId').value);
+        if(!s) return;
+        const q = document.getElementById('orderQ').value || 0;
+        const total = s.fix ? s.p : (s.p / 1000 * q);
+        document.getElementById('totalP').innerText = "$" + total.toFixed(5);
+    }
+
+    async function placeOrder() {
+        const s = SERVICES.find(x=>x.id == document.getElementById('srvId').value);
+        const link = document.getElementById('orderL').value;
+        if(!link) return alert(L==='ar'?'أدخل الرابط!':'Entrez le lien!');
+        
+        const orderData = {
+            uid: uid,
+            srvName: L==='ar'?s.n_ar:s.n, // حفظ الاسم بلغة الطلب
             link: link,
-            qty: qty,
-            price: price,
-            status: "En attente", // الحالة الافتراضية
+            price: document.getElementById('totalP').innerText,
+            status: 'Attente',
             date: new Date().toLocaleString()
-        });
+        };
 
-        const msg = `🚀 *NOUVELLE COMMANDE*\nClient: ${userUID}\nService: ${srvName}\nLien: ${link}\nPrix: ${price}`;
-        window.open(`https://wa.me/213656251947?text=${encodeURIComponent(msg)}`);
-        alert("Success!");
+        await db.collection("orders").add(orderData);
+        alert(L==='ar'?'تم الطلب!':'Succès!');
+        window.open(`https://wa.me/213656251947?text=New Order: ${orderData.srvName} | Link: ${link}`);
     }
 
-    function openHistory() {
-        openModal('historyModal');
-        db.collection("orders").where("uid", "==", userUID).orderBy("date", "desc").onSnapshot(snap => {
-            document.getElementById('historyContent').innerHTML = snap.docs.map(doc => {
+    function showHistory() {
+        showModal('histM');
+        db.collection("orders").where("uid","==",uid).onSnapshot(snap => {
+            document.getElementById('hContent').innerHTML = snap.docs.map(doc => {
                 const d = doc.data();
-                const statusClass = d.status === "En attente" ? "bg-pending" : "bg-completed";
-                return `<div class="item-card">
-                    <span class="status-badge ${statusClass}">${d.status}</span>
-                    <b>${d.srv}</b><br>
-                    <small>${d.date}</small><br>
-                    <p style="font-size:12px; opacity:0.8;">${d.link}</p>
-                    <b style="color:var(--accent)">${d.price}</b>
+                return `<div class="order-item">
+                    <span class="badge ${d.status==='Attente'?'pending':'done'}">${d.status}</span>
+                    <b>${d.srvName}</b><br><small>${d.price} | ${d.date}</small>
                 </div>`;
-            }).join('') || "Aucun ordre.";
+            }).join('') || "No orders.";
         });
     }
 
-    function openAdmin() {
-        if(prompt("Pass?") === "1313") {
-            openModal('adminModal');
-            db.collection("orders").orderBy("date", "desc").onSnapshot(snap => {
-                document.getElementById('adminContent').innerHTML = snap.docs.map(doc => {
+    function checkAdmin() {
+        if(prompt("Code?") === "1313") {
+            showModal('admM');
+            db.collection("orders").orderBy("date","desc").onSnapshot(snap => {
+                document.getElementById('aContent').innerHTML = snap.docs.map(doc => {
                     const d = doc.data();
-                    return `<div class="item-card" style="border-left-color:#3b82f6">
-                        <small>${d.uid}</small> | <b>${d.status}</b><br>
-                        ${d.srv} - ${d.price}<br>
-                        <small>${d.link}</small><br>
-                        <button onclick="changeStat('${doc.id}', 'Mكتمل')" style="background:green; color:white; border:none; padding:5px; border-radius:5px; margin-top:5px; cursor:pointer;">Terminé</button>
-                        <button onclick="changeStat('${doc.id}', 'En attente')" style="background:orange; color:white; border:none; padding:5px; border-radius:5px; cursor:pointer;">Attente</button>
-                        <button onclick="delDoc('${doc.id}')" style="background:red; color:white; border:none; padding:5px; border-radius:5px; cursor:pointer;">Supprimer</button>
+                    return `<div class="order-item">
+                        <b>${d.uid} | ${d.status}</b><br>
+                        ${d.srvName} - ${d.price}<br><small>${d.link}</small><br>
+                        <button onclick="upd('${doc.id}','Terminé')" style="background:green;color:white;border:none;padding:5px;border-radius:5px">Terminé</button>
+                        <button onclick="upd('${doc.id}','Attente')" style="background:orange;color:white;border:none;padding:5px;border-radius:5px">Attente</button>
+                        <button onclick="del('${doc.id}')" style="background:red;color:white;border:none;padding:5px;border-radius:5px">Supprimer</button>
                     </div>`;
                 }).join('');
             });
         }
     }
 
-    function changeStat(id, st) { db.collection("orders").doc(id).update({status: st}); }
-    function delDoc(id) { if(confirm("Supprimer?")) db.collection("orders").doc(id).delete(); }
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-    function toggleDropdown() { document.getElementById('srvOptions').classList.toggle('select-hide'); }
-    function copy(t) { navigator.clipboard.writeText(t); alert("Copié!"); }
+    function upd(id, s) { db.collection("orders").doc(id).update({status:s}); }
+    function del(id) { if(confirm("Del?")) db.collection("orders").doc(id).delete(); }
+    function showModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeM(id) { document.getElementById(id).style.display = 'none'; }
+    function toggleSrv() { const l = document.getElementById('srvList'); l.style.display = l.style.display==='block'?'none':'block'; }
 
-    window.onload = () => renderServices();
+    window.onload = () => changeLang('fr');
 </script>
 </body>
 </html>
