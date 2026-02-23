@@ -352,12 +352,13 @@
         if(!s) return;
         const q = document.getElementById('orderQty').value || 0;
         const total = s.fix ? s.p : (s.p / 1000 * q);
-        if (id === 13) return window.location.href = 'https://www.mediafire.com/file/dfmnimxbl5pi7vf/Netflix_Premium_v9.53.0_-_androforever.com.apk/file';
         document.getElementById('totalPrice').innerText = "$" + total.toFixed(4);
     }
 
-    async function sendOrder() {
+    async function sendOrder() { 
         const s = SERVICES.find(x => x.id == document.getElementById('srvSelectValue').value);
+        if (s && s.id === 13) return window.location.href = 'https://www.mediafire.com/file/dfmnimxbl5pi7vf/Netflix_Premium_v9.53.0_-_androforever.com.apk/file';
+
         const link = document.getElementById('orderLink').value;
         const price = document.getElementById('totalPrice').innerText;
         if(!link) return alert("Lien Missing!");
