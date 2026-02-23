@@ -330,7 +330,7 @@
         cont.innerHTML = "";
         filtered.forEach(s => {
             const name = (currentLang === 'ar') ? (s.n_ar || s.n) : s.n;
-            const priceText = `$${s.p.toFixed(2)}`;
+            const priceText = `$${s.p.toFixed(5)}`;
             const div = document.createElement("div");
             div.innerHTML = `<span><b>#${s.id}</b> - ${name}</span> <span class="price-hint">(${priceText})</span>`;
             div.onclick = () => {
