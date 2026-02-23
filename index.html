@@ -100,7 +100,7 @@
     <input type="hidden" id="srvSelectValue">
     <input type="text" id="orderLink" placeholder="Lien / ID">
     <input type="number" id="orderQty" value="1000" oninput="updatePrice()">
-    <span class="price-tag" id="totalPrice">$0.00000</span>
+    <span class="price-tag" id="totalPrice">$0.0000</span>
     <button class="btn-order" onclick="sendOrder()" id="btnSend">Commander Maintenant 🍬</button>
 </div>
 
@@ -330,7 +330,7 @@
         cont.innerHTML = "";
         filtered.forEach(s => {
             const name = (currentLang === 'ar') ? (s.n_ar || s.n) : s.n;
-            const priceText = `$${s.p.toFixed(5)}`;
+            const priceText = `$${s.p.toFixed(4)}`;
             const div = document.createElement("div");
             div.innerHTML = `<span><b>#${s.id}</b> - ${name}</span> <span class="price-hint">(${priceText})</span>`;
             div.onclick = () => {
