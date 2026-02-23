@@ -352,7 +352,7 @@
         if(!s) return;
         const q = document.getElementById('orderQty').value || 0;
         const total = s.fix ? s.p : (s.p / 1000 * q);
-        document.getElementById('totalPrice').innerText = "$" + total.toFixed(5);
+        document.getElementById('totalPrice').innerText = "$" + total.toFixed(4);
     }
 
     async function sendOrder() {
