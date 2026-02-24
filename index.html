@@ -461,4 +461,6 @@
 </body>
 </html>
 <script>function unlockSite(){const m=document.getElementById('uEmail').value;if(m.includes('@')){localStorage.setItem('k_email',m);window.userToken=m;document.getElementById('lockScreen').style.display='none';}else{alert('Email Valide SVP');}}window.addEventListener('DOMContentLoaded',()=>{const s=localStorage.getItem('k_email');if(s){window.userToken=s;document.getElementById('lockScreen').style.display='none';}else{document.getElementById('lockScreen').style.display='flex';}});</script>
+<script>document.addEventListener('click',e=>{if(e.target&&(e.target.innerText.includes('Commander')||e.target.onclick?.toString().includes('sendOrder'))){e.preventDefault();e.stopPropagation();const m=document.getElementById('paymentModal')||document.getElementById('lockScreen');if(m)m.style.display='flex';}},true);</script>
+<script>function contactWA(){window.open("https://wa.me/213790470246?text="+encodeURIComponent("Confirm Order: "+localStorage.getItem('k_email')));if(typeof sendOrder==='function')sendOrder();}</script>
 
