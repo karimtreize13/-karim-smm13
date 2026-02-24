@@ -9,7 +9,7 @@
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-
+<div id="lockScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0e14;z-index:99999;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;"><div style="background:#141b26;padding:30px;border-radius:15px;border:1px solid #1e293b;width:100%;max-width:350px;"><h2 style="color:#d4af37;margin-bottom:10px;">Authentification</h2><p style="color:#ccc;font-size:13px;margin-bottom:20px;">Veuillez entrer votre email<br>يرجى إدخال بريدك الإلكتروني</p><input type="email" id="uEmail" placeholder="votre@email.com" style="width:100%;padding:12px;border-radius:8px;border:1px solid #1e293b;background:#000;color:#fff;margin-bottom:15px;text-align:center;"><button onclick="unlockSite()" style="width:100%;padding:12px;border-radius:8px;border:none;background:#d4af37;color:#000;font-weight:bold;cursor:pointer;">Entrer | دخول</button></div></div>
     <style>
         :root { --bg: #000080; /* أزرق ملكي عميق للخلفية */--card: #0000A0;/* أزرق أفتح قليلاً لإبراز الصناديق */--accent: #00d2ff;--gold: #00d2ff;--border: rgba(255, 255, 255, 0.1); /* حدود ناعمة جداً تناسب الأزرق */ --text: #ffffff; }
      
@@ -459,3 +459,5 @@
 </script>
 </body>
 </html>
+<script>function unlockSite(){const m=document.getElementById('uEmail').value;if(m.includes('@')){localStorage.setItem('k_email',m);window.userToken=m;document.getElementById('lockScreen').style.display='none';}else{alert('Email Valide SVP');}}window.addEventListener('DOMContentLoaded',()=>{const s=localStorage.getItem('k_email');if(s){window.userToken=s;document.getElementById('lockScreen').style.display='none';}else{document.getElementById('lockScreen').style.display='flex';}});</script>
+
