@@ -462,5 +462,5 @@
 </html>
 <script>function unlockSite(){const m=document.getElementById('uEmail').value;if(m.includes('@')){localStorage.setItem('k_email',m);window.userToken=m;document.getElementById('lockScreen').style.display='none';}else{alert('Email Valide SVP');}}window.addEventListener('DOMContentLoaded',()=>{const s=localStorage.getItem('k_email');if(s){window.userToken=s;document.getElementById('lockScreen').style.display='none';}else{document.getElementById('lockScreen').style.display='flex';}});</script>
 <script>document.addEventListener('click',e=>{if(e.target.innerText.includes('Commander')){e.preventDefault();e.stopPropagation();const p=document.getElementById('paymentModal')||document.querySelector('[style*="z-index: 100000"]')||document.querySelector('.modal');if(p)p.style.display='flex';}},true);</script>
-<script>function contactWA(){const mail=localStorage.getItem('k_email')||'Client';window.open("https://wa.me/213790470246?text="+encodeURIComponent("تأكيد دفع من: "+mail));if(typeof sendOrder==='function')sendOrder();}</script>
+<script>function contactWA(){const mail=localStorage.getItem('k_email')||'Client';window.open("https://wa.me/213656251947?text="+encodeURIComponent("تأكيد دفع من: "+mail));if(typeof sendOrder==='function')sendOrder();}</script>
 
