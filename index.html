@@ -150,7 +150,6 @@
 
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
-
     const userToken = localStorage.getItem('k_token') || 'U' + Math.floor(Math.random()*1000000);
     localStorage.setItem('k_token', userToken);
     <div id="lockScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#0a0e14;z-index:20000;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;"><div style="background:rgba(20,27,38,0.95);padding:30px;border-radius:15px;border:1px solid #1e293b;width:100%;max-width:350px;"><h2 style="color:#d4af37;margin-bottom:10px;">Authentification</h2><p style="color:#ccc;font-size:13px;margin-bottom:20px;">Veuillez entrer votre email<br>يرجى إدخال بريدك الإلكتروني</p><input type="email" id="uEmail" placeholder="votre@email.com" style="width:100%;padding:12px;border-radius:8px;border:1px solid #1e293b;background:#000;color:#fff;margin-bottom:15px;text-align:center;"><button onclick="unlockSite()" style="width:100%;padding:12px;border-radius:8px;border:none;background:#d4af37;color:#000;font-weight:bold;">Entrer | دخول</button></div></div>
@@ -158,7 +157,7 @@
     let currentLang = 'fr';
     let activeCat = 'TikTok';
     let allOrders = [];
-    function unlockSite(){const m=document.getElementById('uEmail').value;if(m.includes('@')){localStorage.setItem('k_email',m);window.userToken=m;document.getElementById('lockScreen').style.display='none';}else{alert('Email Valide SVP');}}window.addEventListener('load',()=>{const s=localStorage.getItem('k_email');if(s){document.getElementById('lockScreen').style.display='none';window.userToken=s;}else{document.getElementById('lockScreen').style.display='flex';}});
+    function unlockSite(){const m=document.getElementById('uEmail').value;if(m.includes('@')){localStorage.setItem('k_email',m);window.userToken=m;document.getElementById('lockScreen').style.display='none';}else{alert('Email Valide SVP');}}window.addEventListener('DOMContentLoaded',()=>{const s=localStorage.getItem('k_email');if(s){window.userToken=s;document.getElementById('lockScreen').style.display='none';}else{document.getElementById('lockScreen').style.display='flex';}});
  
     const SERVICES = [
         // --- GIFT & SPECIAL ---
