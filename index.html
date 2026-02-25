@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr" dir="ltr">
 <head>
     <meta charset="UTF-8">
@@ -372,7 +372,7 @@
                 uid: userToken, srvID: s.id, srvName: srvName, price: price,
                 status: "Pending", date: new Date().toLocaleString(), link: link
             });
-            const msg = `🚀 *طلب جديد* 🍬\n\n🆔 *ID:* #${s.id}\n🛠 *Service:* ${srvName}\n🔗 *Link:* ${link}\n💰 *Price:* ${price}`;
+            const msg = `🚀 *طلب جديد* 🍬<br /><br />🆔 *ID:* #${s.id}<br />🛠 *Service:* ${srvName}<br />🔗 *Link:* ${link}<br />💰 *Price:* ${price}`;
             window.open("https://wa.me/213656251947?text=" + encodeURIComponent(msg), '_blank');
         } catch(e) { alert("Error: " + e.message); }
     }
@@ -455,9 +455,12 @@
     }
 
     function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-      
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    
     window.onload = () => setLang('fr');
-   <div id="site-lock" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#000;z-index:999999;color:#fff;text-align:center;display:flex;align-items:center;justify-content:center;font-family:Arial;"><div style="padding:20px;border:2px solid #0866ff;border-radius:15px"><h2>🔒 Karim SMM</h2><p>تابع صفحتنا للدخول</p><a href="https://www.facebook.com/profile.php?id=61584067674521" target="_blank" onclick="document.getElementById('site-lock').style.display='none';localStorage.setItem('fb_unlocked','true')" style="background:#0866ff;color:#fff;padding:10px 20px;text-decoration:none;border-radius:10px;display:inline-block">متابعة 🔵</a></div></div>
-<script>if(localStorage.getItem('fb_unlocked')==='true')document.getElementById('site-lock').style.display='none'; function unlockSite(){const m=document.getElementById('uEmail').value;if(m.includes('@')){localStorage.setItem('k_email',m);window.userToken=m;document.getElementById('lockScreen').style.display='none';}else{alert('Email Valide SVP');}}window.addEventListener('DOMContentLoaded',()=>{const s=localStorage.getItem('k_email');if(s){window.userToken=s;if(document.getElementById('lockScreen'))document.getElementById('lockScreen').style.display='none';}});document.addEventListener('click',e=>{if(e.target.innerText.includes('Commander')||e.target.innerText.includes('طلب')){setTimeout(()=>{const m=document.querySelectorAll('div[style*="display: block"], .modal, #paymentModal');m.forEach(d=>{if((d.innerHTML.includes('Baridi')||d.innerHTML.includes('00799999'))&&!document.getElementById('waB')){const b=document.createElement('button');b.id='waB';b.innerHTML='تأكيد عبر الواتساب ✅';b.style='width:100%;padding:12px;margin-top:10px;background:#25d366;color:#fff;border-radius:8px;border:none;font-weight:bold;cursor:pointer;width:100%';b.onclick=()=>{const id=document.querySelector('.order-id')?.innerText||'جديد';const s=document.querySelector('.service-title')?.innerText||'خدمة';window.open("https://wa.me/213656251947?text="+encodeURIComponent("طلب جديد برقم: "+id+"\nالخدمة: "+s));};(d.querySelector('div')||d).appendChild(b);}})},500)}},true);</script>
-</body></html>
-
+   </script>
+<script>function unlockSite(){const m=document.getElementById('uEmail').value;if(m.includes('@')){localStorage.setItem('k_email',m);window.userToken=m;document.getElementById('lockScreen').style.display='none';}else{alert('Email Valide SVP');}}window.addEventListener('DOMContentLoaded',()=>{const s=localStorage.getItem('k_email');if(s){window.userToken=s;document.getElementById('lockScreen').style.display='none';}else{document.getElementById('lockScreen').style.display='flex';}});</script>
+<script>document.addEventListener('click',e=>{if(e.target.innerText.includes('Commander')||e.target.innerText.includes('طلب')){e.preventDefault();const m=document.querySelectorAll('div[style*="display: none"], .modal, #paymentModal');m.forEach(d=>{if(d.innerHTML.includes('Baridi')||d.innerHTML.includes('00799999')){d.style.display='flex';if(!document.getElementById('waB')){const b=document.createElement('button');b.id='waB';b.innerHTML='تأكيد عبر الواتساب ✅';b.style='width:100%;padding:12px;margin-top:10px;background:#25d366;color:#fff;border-radius:8px;border:none;font-weight:bold;cursor:pointer;width:100%';b.onclick=()=>{const id=document.querySelector('.order-id')?.innerText||'جديد';const s=document.querySelector('.service-title')?.innerText||'خدمة';if(typeof sendOrder==='function')sendOrder();window.open("https://wa.me/213656251947?text="+encodeURIComponent("طلب جديد برقم: "+id+"<br />الخدمة: "+s));};d.querySelector('div').appendChild(b);}}})}},true);</script>
+ </body>
+</html>
+ 
