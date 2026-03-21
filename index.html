@@ -391,10 +391,10 @@
                 uid: userToken, srvID: s.id, srvName: srvName, price: price,
                 status: "Pending", date: new Date().toLocaleString(), link: link
             });
-            const msg = `🚀 * طلب جديد* 🍬<br /><br />🆔 *ID:* #${s.id}<br />🛠 *Service:* ${srvName}<br />🔗 *Link:* ${link}<br />💰 *Price:* ${price}`;
-            window.open("https://wa.me/213656251947?text=" + encodeURIComponent(msg), '_blank');
-        } catch(e) { alert("Error: " + e.message); }
-    }
+            const msg = `🚀 *طلب جديد* 🍬\n\n🆔 *ID:* #${s.id}\n🛠 *Service:* ${srvName}\n🔗 *Link:* ${link}\n💰 *Price:* ${price}`;
+        }  window.open("https://wa.me/213656251947?text=" + encodeURIComponent(msg), '_blank');
+            
+        }
 
     function openHistory() {
         openModal('historyModal');
