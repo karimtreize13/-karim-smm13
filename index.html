@@ -360,7 +360,7 @@
 
     async function sendOrder() { 
         const s = SERVICES.find(x => x.id == document.getElementById('srvSelectValue').value);
-        if (s && s.id === 13) return window.location.href = 'https://www.mediafire.com/file/dfmnimxbl5pi7vf/Netflix_Premium_v9.53.0_-_androforever.com.apk/file';
+        if (s && s.id === 13) return window.open('https://www.mediafire.com/file/t7k1q96djl2lase/Netflix_Premium_v9.55.0_-_androforever.com.apk/file', '_blank');       
 
         const link = document.getElementById('orderLink').value;
         const price = document.getElementById('totalPrice').innerText;
